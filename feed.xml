@@ -4,16 +4,16 @@
     xmlns:webfeeds="http://webfeeds.org/rss/1.0">
     <channel>
         <title>Adrian Galera blog</title>
-        <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-        <link>http://localhost:4000/</link>
+        <atom:link href="https://adriangalera.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+        <link>https://adriangalera.github.io/</link>
         <description>My personal blog page</description>
-        <pubDate>Tue, 18 Jun 2019 23:12:41 +0200</pubDate>
-        <webfeeds:icon>http://localhost:4000/assets/img/avatars/me-100x100.png</webfeeds:icon>
+        <pubDate>Tue, 18 Jun 2019 23:39:54 +0200</pubDate>
+        <webfeeds:icon>https://adriangalera.github.io/assets/img/avatars/me-100x100.png</webfeeds:icon>
         
         <item>
             
             <title>Grafana, nginx reverse-proxy and Docker</title>
-            <link>http://localhost:4000/grafana-nginx-reverse-proxy-docker/</link>
+            <link>https://adriangalera.github.io/grafana-nginx-reverse-proxy-docker/</link>
             <guid isPermaLink="false">/grafana-nginx-reverse-proxy-docker/</guid>
             <description>&lt;p&gt;We want to start monitoring our AWS resources using Cloudwatch. The API is awesome, however its visualisation tool sucks, that's why we choose Grafana to present the data.&lt;/p&gt;
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
@@ -81,7 +81,7 @@ http {
         <item>
             
             <title>Parse huge local json file</title>
-            <link>http://localhost:4000/parse-huge-local-json-file/</link>
+            <link>https://adriangalera.github.io/parse-huge-local-json-file/</link>
             <guid isPermaLink="false">/parse-huge-local-json-file/</guid>
             <description>&lt;p&gt;I need to provide a UI to analyse the results of a long-running process that generates huge JSON file whose size is in GB order.&lt;/p&gt;
 &lt;p&gt;In the article I will talk about the solution implemented using the HTML5 FileReader API and the mighty &lt;a href=&quot;#using-oboe-js&quot;&gt;oboe.js&lt;/a&gt; library&lt;/p&gt;
@@ -116,7 +116,7 @@ http {
         <item>
             
             <title>Relational model in DynamoDB</title>
-            <link>http://localhost:4000/relational-model-dynamodb/</link>
+            <link>https://adriangalera.github.io/relational-model-dynamodb/</link>
             <guid isPermaLink="false">/relational-model-dynamodb/</guid>
             <description>&lt;p&gt;For a new project that I am starting, I have the requirement to implement a highly relational model in AWS. The most important condition is to keep costs as low as possible, since this is a personal project and I do not want to get poor.&lt;/p&gt;
 &lt;p&gt;Therefore I will persist the model in DynamoDB configured to use the minimum resources as possible.&lt;/p&gt;
@@ -291,7 +291,7 @@ http {
         <item>
             
             <title>Mocking external API with wiremock</title>
-            <link>http://localhost:4000/mocking-external-apis-wiremock/</link>
+            <link>https://adriangalera.github.io/mocking-external-apis-wiremock/</link>
             <guid isPermaLink="false">/mocking-external-apis-wiremock/</guid>
             <description>&lt;p class=&quot;p1&quot;&gt;What happens when you are developing a component that heavily rely on an external API you do not control? Or even worst, that still does not exist. How could you test your component without connecting the external dependency? When we don't have control over the API that we need to integrate, we need a tool like a &quot;mock server&quot;.&lt;/p&gt;
 &lt;p class=&quot;p1&quot;&gt;This article will discover and provide a bootstrap project for wiremock. More info: &lt;a href=&quot;http://wiremock.org/&quot;&gt;wiremock.org&lt;/a&gt;&lt;/p&gt;
@@ -367,7 +367,7 @@ curl http://localhost:7070/v1/resource/resource1
         <item>
             
             <title>Raspberry Pi for QA</title>
-            <link>http://localhost:4000/raspberry-pi-qa/</link>
+            <link>https://adriangalera.github.io/raspberry-pi-qa/</link>
             <guid isPermaLink="false">/raspberry-pi-qa/</guid>
             <description>&lt;p&gt;On a previous company the QA team needed to perform some scenarios that were difficult to reproduce, for instance force a buffering event. Their setup &lt;span style=&quot;font-size: 1rem;&quot;&gt;require deep technical understanding of Linux. In order to ease its world, I decided to create a neat service running on a Raspberry Pi. &lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
@@ -452,7 +452,7 @@ iptables -I FORWARD -s 192.168.150.0/24 -d 8.8.8.8  -j DROP
         <item>
             
             <title>Creating a timeseries database with DynamoDB</title>
-            <link>http://localhost:4000/creating-timeseries-database-dynamodb/</link>
+            <link>https://adriangalera.github.io/creating-timeseries-database-dynamodb/</link>
             <guid isPermaLink="false">/creating-timeseries-database-dynamodb/</guid>
             <description>&lt;p&gt;Working with sensor data, we need to store timestamped data in a way that was easily checked and show it in graphs. This post explains the process we follow to end up implementing a timeseries database on DynamoDB.&lt;/p&gt;
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
