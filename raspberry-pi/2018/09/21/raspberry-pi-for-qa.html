@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/img/avatars/me-100x100.png" type="image/x-icon">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="http://localhost:4000/raspberry-pi/2018/09/21/raspberry-pi-for-qa.html">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Adrian Galera blog" href="http://localhost:4000/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Google Analytics -->
+    
+    
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Raspberry Pi for QA | Adrian Galera blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Raspberry Pi for QA" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="On a previous company the QA team needed to perform some scenarios that were difficult to reproduce, for instance force a buffering event. Their setup require deep technical understanding of Linux. In order to ease its world, I decided to create a neat service running on a Raspberry Pi. " />
+<meta property="og:description" content="On a previous company the QA team needed to perform some scenarios that were difficult to reproduce, for instance force a buffering event. Their setup require deep technical understanding of Linux. In order to ease its world, I decided to create a neat service running on a Raspberry Pi. " />
+<link rel="canonical" href="http://localhost:4000/raspberry-pi/2018/09/21/raspberry-pi-for-qa.html" />
+<meta property="og:url" content="http://localhost:4000/raspberry-pi/2018/09/21/raspberry-pi-for-qa.html" />
+<meta property="og:site_name" content="Adrian Galera blog" />
+<meta property="og:image" content="http://localhost:4000/assets/img/triangle.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-09-21T00:00:00+02:00" />
+<script type="application/ld+json">
+{"headline":"Raspberry Pi for QA","dateModified":"2018-09-21T00:00:00+02:00","datePublished":"2018-09-21T00:00:00+02:00","image":"http://localhost:4000/assets/img/triangle.png","url":"http://localhost:4000/raspberry-pi/2018/09/21/raspberry-pi-for-qa.html","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/raspberry-pi/2018/09/21/raspberry-pi-for-qa.html"},"description":"On a previous company the QA team needed to perform some scenarios that were difficult to reproduce, for instance force a buffering event. Their setup require deep technical understanding of Linux. In order to ease its world, I decided to create a neat service running on a Raspberry Pi. ","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>Raspberry Pi for QA | Adrian Galera blog</title>
+    <meta name="description" content="On a previous company the QA team needed to perform some scenarios that were difficult to reproduce, for instance force a buffering event. Their setup requir...">
+    -->
+</head>
+
+  <body>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Adrian Galera blog" href="/">
+        Adrian Galera blog
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About" title="About" href="/about/">
+                     About 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Portfolio" title="Portfolio" href="/portfolio/">
+                     Portfolio 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    
+      <h1 id="Raspberry+Pi+for+QA" class="title">Raspberry Pi for QA</h1>
+      
+
+<div class="post-info"><a href="https://www.agalera.eu" target="_blank">
+      <img src="/assets/img/avatars/me-100x100.png">
+    
+    <p class="meta">
+      Adrian Galera - September 21, 2018
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <p>On a previous company the QA team needed to perform some scenarios that were difficult to reproduce, for instance force a buffering event. Their setup <span style="font-size: 1rem;">require deep technical understanding of Linux. In order to ease its world, I decided to create a neat service running on a Raspberry Pi. </span></p>
+<p><!--more--></p>
+<h2>The problems:</h2>
+<p>Concretely, the scenarios that the QA needed to cover were:</p>
+<h3><a href="#network-performance"><em>Restrict the network performance</em></a></h3>
+<p>The test that the QA team were performing, included provoking buffering issues in media players. They found issues on how this could be achieved: in Chrome it could be achieved through Developer Tools, but what about mobile devices, or even worst: some weird embedded media players?</p>
+<h3><a href="#geoblock"><em>Access Geo-blocked content</em></a></h3>
+<p>Since the company had customers world-wide and some of them used Geo-blocked content, they need to access those contents through the use of VPNs. This required spending some time configuration the VPN clients on their side</p>
+<h3><a href="#ipblock"><em>IP Blocking</em></a></h3>
+<p>There were some scenarios (I cannot remember right now) that required to block the connection to some IP. This is really easy to do on a UNIX machine with iptables, but good luck doing that on Windows.</p>
+<h3><a href="#dnsspoof"><em>Modify DNS records</em></a></h3>
+<p>It were some scenario where they needed to change the DNS records. For instance: www.google.com -&gt; 192.168.1.100. I don't remember the rationale to this requirement :(</p>
+<h3><a href="#httpssniffer"><i>Analyse</i><em> HTTPS traffic</em></a></h3>
+<p>In the majority of the environments the connections with the company server's were made with HTTPS. This caused a little bit of headache while analysing the HTTP traffic.</p>
+<h2>The solutions ...</h2>
+<p>Since most of the scenarios require some networking tweaks, the obvious decision was Linux, even better: Raspberry Pi. The project consist in a NodeJS Express application that executed scripts on the RaspberryPi.</p>
+<p>The raspberry PI have two network interfaces: the LAN and the WiFi. The configuration is setup in the interfaces file:</p>
+<pre class="attributes" title="Network interfaces">
+auto lo
+iface lo inet loopback
+auto eth0
+auto wlan0
+#static ethernet conf
+iface eth0 inet static
+address 192.168.1.100
+netmask 255.255.255.0
+gateway	192.168.1.1
+dns-nameservers 8.8.4.4
+iface wlan0 inet static
+address 192.168.150.1
+netmask 255.255.255.0
+</pre>
+<p>In the WiFi interface hostapd service is configured in order to serve a WiFi connection. This will configure the traffic outgoing traffic from wlan0 to eth0.</p>
+<h3>Playing with tc and ifb</h3>
+<p>The network performance restrictions can be applied using the tc command and the ifb module on Linux. This module redirects the traffic from one real network interface to a virtual one. When the traffic passes through the ifb0 interface the token bucket (<a href="https://en.wikipedia.org/wiki/Token_bucket#Hierarchical_token_bucket">htb</a>) applies the network configuration</p>
+<pre lang="bash" class="attributes" title="Traffic shaping script" id="network-performance">
+#Enable ifb module and setup the ifb0 interface
+modprobe ifb numifbs=1 &amp;&amp; ip link set dev ifb0 up
+#Create a device that redirects all the traffic
+#from eth0 to ifb0
+tc qdisc add dev eth0 handle ffff: ingress &amp;&amp; \
+tc filter add dev eth0 parent ffff: protocol ip u32 \
+match u32 0 0 action mirred egress redirect dev ifb0
+#Modify the token bucket configuration
+tc qdisc add dev ifb0 root handle 1: htb default 10 &amp;&amp; \
+tc class add dev ifb0 parent 1: classid 1:1 htb rate 1mb &amp;&amp; \
+tc class add dev ifb0 parent 1:1 classid 1:10 htb rate 1mb
+</pre>
+<h3>OpenVPN and Iptables</h3>
+<p>In order to be able to avoid the Geo-blocking of contents, the company provide us a commercial VPN. This consisted on a series of OpenVPN configuration scripts for multiple countries. Therefore, the app only needs to call openvpn:</p>
+<pre lang="bash" class="attributes" title="openvpn" id="geoblock">
+openvpn ALBANIA-TCP.ovpn
+</pre>
+<p>It's really easy to block an IP on a Linux box, the app only needs to call the iptables, for example:</p>
+<pre lang="bash" class="attributes" title="iptables" id="ipblock">
+iptables -I FORWARD -s 192.168.150.0/24 -d 8.8.8.8  -j DROP
+</pre>
+<p>This snippet blocks the outgoing connections to 8.8.8.8 that goes out from the WiFi network</p>
+<h3>Networking stuff ...</h3>
+<p id="dnsspoof">Regarding DNS Spoofing, it's a little bit trickier, however the <strong>dnsmasq</strong> service is very useful in that situation.</p>
+<p>[caption id="attachment_127" align="alignnone" width="578"]<img class="wp-image-127 size-full" src="http://localhost/wp-content/uploads/2018/09/dnsmasq.png" alt="DNS Masq Schema" width="578" height="301" /> DNS Masq schema[/caption]</p>
+<p>The clients connected to the WiFi will resolve the DNS queries thanks to the dnsmasq client listening to incoming connections. This service is able to perform custom DNS resolutions based on a file that works like a /etc/hosts file.</p>
+<pre lang="bash" class="attributes" title="dnsmasq configuration" id="dnsspoof">
+192.168.56.1   ubuntu.tecmint.lan
+192.168.56.10  centos.tecmint.lan
+</pre>
+<p id="httpssniffer">Regarding the HTTPS Sniffer, the implemented solution implies having the SSL certificates from the company installed in a reverse proxy that terminates the SSL connection and forwards the HTTP traffic to an internal server that stores the decrypted requests on a cache.</p>
+<p>[caption id="attachment_129" align="alignnone" width="551"]<img class="size-full wp-image-129" src="http://localhost/wp-content/uploads/2018/09/httpsproxy.png" alt="HTTPS Proxy Setup" width="551" height="201" /> HTTPS Proxy Setup[/caption]</p>
+<p>This cache can be queried from the GUI to inspect the requests. There's an additional implementation that allows to run pcap capture software directly on the network interface to inspect the packets from the UI.</p>
+<p>This environment requires a little setup, that is the configuration of the proxy on the computers of the QA team.</p>
+<p>Finally, the QA team were able to save a lot of time setting up their scenarios. With this app it's only a matter of clicking buttons instead of executing weird scripts</p>
+<h2>The code ...</h2>
+<p>Don't blame too much on the code quality: the whole project was implemented few years ago and as a side project on one or two weekends</p>
+<p><a href="https://bitbucket.org/agaleraegea/rpitester">https://bitbucket.org/agaleraegea/rpitester</a></p>
+<p>Here's a video of me presenting that project ;)</p>
+<p><iframe src="https://www.youtube.com/embed/aUaEF87pdms?rel=0&amp;showinfo=0" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/raspberry-pi/2018/09/21/raspberry-pi-for-qa.html" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=http://localhost:4000/raspberry-pi/2018/09/21/raspberry-pi-for-qa.html&text=Raspberry+Pi+for+QA%20%7C%20Adrian+Galera+blog:%20http://localhost:4000/raspberry-pi/2018/09/21/raspberry-pi-for-qa.html" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+                
+        <li>
+            <a href="mailto:?subject=Raspberry+Pi+for+QA%20%7C%20Adrian+Galera+blog&body=:%20http://localhost:4000/raspberry-pi/2018/09/21/raspberry-pi-for-qa.html" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/tags#linux">
+      <p><i class="fa fa-tag fa-fw"></i> linux</p>
+    </a>
+    
+    <a class="button" href="/tags#nodejs">
+      <p><i class="fa fa-tag fa-fw"></i> nodejs</p>
+    </a>
+    
+    <a class="button" href="/tags#raspberry-pi">
+      <p><i class="fa fa-tag fa-fw"></i> raspberry-pi</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    <div id="previous-post">
+        <p>Next post</p>
+        <a alt="Mocking External Apis With Wiremock" href="/testing/2018/11/27/mocking-external-apis-with-wiremock.html">
+            Mocking External Apis With Wiremock
+        </a>
+    </div>
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="Creating a timeseries database with DynamoDB" href="/aws/2018/09/21/creating-a-timeseries-database-with-dynamodb.html">
+            Creating a timeseries database with DynamoDB
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('');
+  }
+</style>
+    </div>
+    
+
+
+
+  </body>
+</html>

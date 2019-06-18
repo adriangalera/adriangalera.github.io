@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/img/avatars/me-100x100.png" type="image/x-icon">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="http://localhost:4000/creating-timeseries-database-dynamodb/">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Adrian Galera blog" href="http://localhost:4000/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Google Analytics -->
+    
+    
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Creating a timeseries database with DynamoDB | Adrian Galera blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Creating a timeseries database with DynamoDB" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Design, challenges and implementation of a DynamoDB timeseries database using AWS Lambda, Kinesis and DynamoDB Streams" />
+<meta property="og:description" content="Design, challenges and implementation of a DynamoDB timeseries database using AWS Lambda, Kinesis and DynamoDB Streams" />
+<link rel="canonical" href="http://localhost:4000/creating-timeseries-database-dynamodb/" />
+<meta property="og:url" content="http://localhost:4000/creating-timeseries-database-dynamodb/" />
+<meta property="og:site_name" content="Adrian Galera blog" />
+<meta property="og:image" content="http://localhost:4000/assets/img/avatars/me.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-09-21T00:00:00+02:00" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/creating-timeseries-database-dynamodb/","headline":"Creating a timeseries database with DynamoDB","dateModified":"2018-09-21T00:00:00+02:00","datePublished":"2018-09-21T00:00:00+02:00","image":"http://localhost:4000/assets/img/avatars/me.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/creating-timeseries-database-dynamodb/"},"description":"Design, challenges and implementation of a DynamoDB timeseries database using AWS Lambda, Kinesis and DynamoDB Streams","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>Creating a timeseries database with DynamoDB | Adrian Galera blog</title>
+    <meta name="description" content="Working with sensor data, we need to store timestamped data in a way that was easily checked and show it in graphs. This post explains the process we follow ...">
+    -->
+</head>
+
+  <body>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Adrian Galera blog" href="/">
+        Adrian Galera blog
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    
+      <h1 id="Creating+a+timeseries+database+with+DynamoDB" class="title">Creating a timeseries database with DynamoDB</h1>
+      
+
+<div class="post-info"><a href="https://www.agalera.eu" target="_blank">
+    <p class="meta">
+      Adrian Galera - September 21, 2018
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <p>Working with sensor data, we need to store timestamped data in a way that was easily checked and show it in graphs. This post explains the process we follow to end up implementing a timeseries database on DynamoDB.</p>
+<p><!--more--></p>
+<h1>Requirements</h1>
+<p>The problem was pretty straightforward at the beginning: store temporal data that came from multiple sensors where one sensor could have more than one metric. For instance: one battery sensor might monitor the battery level as well as the battery voltage. The sensor data data flows continuously at an undetermined interval, it can be 1 minute, 5 minutes, ... Generally speaking the data can be represented as:</p>
+<p><strong>METRIC NAME - TIMESTAMP - VALUE</strong></p>
+<p>In order to support the defined usage scenarios we need to provide a tool able to:</p>
+
+<ul>
+  <li>Perform temporal queries: give me the metric between 2017/05/21 00:00:00 and 2017/08/21 00:30</li>
+  <li>Support multiple granularity: second, minute, hour, …</li>
+  <li>Support TTL for cold data: expire cold data</li>
+  <li>Perform in a cost-efficient manner</li>
+</ul>
+
+<h1>Available technologies</h1>
+<p>When one thinks about database at first the relational ones appear as the first option. The problem with relational databases such as MySQL, PostgreSQL, .. is that we the database becomes very unusable when the size of the tables grows. And in this case the data  will grow a lot with the usage.</p>
+<p>Furthermore, when the data is so big the indexes start to generate headaches making the queries take a lot of time.</p>
+<p>Finding these drawbacks in the traditional relational databases, we shift towards NoSQL databases.</p>
+<p>The first one that came into our mind (because we had some previous experience with it) was whisper <a href="https://github.com/graphite-project/whisper">https://github.com/graphite-project/whisper</a>. This database is a small component of the graphite project, basically is a wrapper to write the temporal data to a file performing multiple roll-up aggregations on the fly. This looked promising, however, when we heavy loaded it performed very poorly.</p>
+<p>Since the platform we were building it was AWS based, we decided to analyse what Amazon can provide us and finally found <strong>DynamoDB</strong>!</p>
+<h1>DynamoDB at the rescue!</h1>
+<p>DynamoDB is a key-value database that supports the configuration of item TTL and its costs are predictable because are in function of the required capacity.</p>
+<p>One might ask: <em>how can I store the presented model in a key-value database?</em> The magic comes with the composite key feature: <a href="https://aws.amazon.com/es/blogs/database/choosing-the-right-dynamodb-partition-key/">https://aws.amazon.com/es/blogs/database/choosing-the-right-dynamodb-partition-key/</a></p>
+
+<h2>Knowing DynamoDB</h2>
+<p>Quoting AWS documentation:</p>
+<blockquote><p>This type of key is composed of two attributes. The first attribute is the <em>partition key</em>, and the second attribute is the<em> sort key</em>.</p></blockquote>
+<p>Therefore, we can use the metric name as the partition key and the timestamp and the sort key and the sensor value as the DynamoDB object:</p>
+
+<p><a href="/assets/img/posts/dynamodbts/dynamo-db-key.png"> <img src="/assets/img/posts/dynamodbts/dynamo-db-key.png" alt="DynamoDB Key Schema" /> </a>
+<em>DynamoDB Key Schema</em></p>
+
+<h2>Rollup aggregations?</h2>
+<p>Now we can store the timestamped data in DynamoDB, however, what happens with the multiple granularity requirement? DynamoDB has a nice feature called DynamoDB Streams.</p>
+<p>DynamoDB Streams sends the events generated in the database (new records, edit, delete, ...) to a an AWS Lambda. Hence, we can perform the aggregations for the multiple granularities as soon as a new data value arrives. In order to perform the storage of the multiple aggregations, we can define one table for each aggregation.</p>
+<h2>The implementation: DynamoDB Timeseries Database</h2>
+<p>Finally, in order to complete the setup we have used a serverless approach in order to allocate the cost of the project to the required capacity.</p>
+<p>The final structure of the implemented solution looked like this:</p>
+
+<p><a href="/assets/img/posts/dynamodbts/dynamo-db-database-2.png"><img src="/assets/img/posts/dynamodbts/dynamo-db-database-2.png" alt="Components of DynamoDB TimeseriesDB" /></a>
+<em>Components of DynamoDB TimeseriesDB</em></p>
+
+<p>1) The service that uses the DynamoDB Timeseries database is a serverless application with an API Gateway calling an Lambda function. One of the steps of the business logic is communicate with the DynamoDB Insert Lambda.</p>
+<p>2) The insertion mechanism of the database is by invoking an AWS Lambda function. This function inserts the timestamped data into the lower granularity table.</p>
+<p>3) When the Insert function inserts the data into the lower granularity table, DynamoDB Streams invokes the AWS Lambda involved in performing the roll-up aggregations.</p>
+<p>4) The Aggregate function has the logic implemented on how to perform multiple aggregations (average, sum, count, ...).</p>
+<p>5) Each time serie can be configured to have different aggregations, TTL, timezone to perform temporal aggregation, etc... There are an additional lambda in order to configure the timeserie parameters.</p>
+<p>6) Once the aggregation is performed, the data is stored into the appropriate DynamoDB table according to the granularity: minute, hour, day, month, year, ...</p>
+<p>With this solution we achieve a solution where we can fine tune the capacity of the database.</p>
+<h1>Production time!</h1>
+<p>When we put this system into production, some issues arises with the capacity of the DynamoDB. When the incoming data flows faster than the reserved capacity in DynamoDB, the lambda functions became very slow and resulting in a high number of timeout errors.</p>
+<p>The reasons for this is that when DynamoDB is running at capacity, it throttle requests, making the client adjust its speed to the reserved capacity. This works good for a traditional client, however it breaks with the serverless approach, because the Lambda functions were taking too much time.</p>
+<p>In order to fix situation, we add another component to the system: an AWS Kinesis Stream <a href="https://aws.amazon.com/kinesis">https://aws.amazon.com/kinesis</a>. Instead of writing directly to the DynamoDB table, the service Lambda function now writes the data into a Kinesis stream.</p>
+<p>In the other side of the stream, we place a Kinesis consumer that is able to consume items from the stream in batches of items. Additionally, we are able to control the insertion speed of items in DynamoDB by sleeping some time between batch consumption. Since this consumer needs to be 24/7, it runs on a traditional EC2 instance.</p>
+<p>Now the scheme looks like this:</p>
+
+<p><a href="/assets/img/posts/dynamodbts/dynamo-db-kinesis-database.png"><img src="/assets/img/posts/dynamodbts/dynamo-db-kinesis-database.png" alt="Adding Kinesis into the TimeseriesDB" /></a>
+<em>Adding Kinesis into the TimeseriesDB</em></p>
+
+<p>The additional point (7) shows the Kinesis stream where the items are being inserted by the Service Lambda function and consumed by the DynamoDB Timeseries DB Kinesis Consumer. The configured batch size (B) and sleep time (T) allows the consumer to buffer the insertion of data up to the reserved DynamoDB capacity.</p>
+<h1>Show me the code</h1>
+<p>An open sourced version of the production code can be found here:</p>
+<p><a href="https://github.com/adriangalera/dynamodb-timeseries">https://github.com/adriangalera/dynamodb-timeseries</a></p>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/creating-timeseries-database-dynamodb/" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=http://localhost:4000/creating-timeseries-database-dynamodb/&text=Creating+a+timeseries+database+with+DynamoDB%20%7C%20Adrian+Galera+blog:%20http://localhost:4000/creating-timeseries-database-dynamodb/" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+                
+        <li>
+            <a href="mailto:?subject=Creating+a+timeseries+database+with+DynamoDB%20%7C%20Adrian+Galera+blog&body=:%20http://localhost:4000/creating-timeseries-database-dynamodb/" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/tags#aws">
+      <p><i class="fa fa-tag fa-fw"></i> aws</p>
+    </a>
+    
+    <a class="button" href="/tags#cloud">
+      <p><i class="fa fa-tag fa-fw"></i> cloud</p>
+    </a>
+    
+    <a class="button" href="/tags#dynamodb">
+      <p><i class="fa fa-tag fa-fw"></i> dynamodb</p>
+    </a>
+    
+    <a class="button" href="/tags#kinesis">
+      <p><i class="fa fa-tag fa-fw"></i> kinesis</p>
+    </a>
+    
+    <a class="button" href="/tags#python">
+      <p><i class="fa fa-tag fa-fw"></i> python</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    <div id="previous-post">
+        <p>Next post</p>
+        <a alt="Raspberry Pi for QA" href="/raspberry-pi-qa/">
+            Raspberry Pi for QA
+        </a>
+    </div>
+    
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('');
+  }
+</style>
+    </div>
+    
+
+
+
+  </body>
+</html>

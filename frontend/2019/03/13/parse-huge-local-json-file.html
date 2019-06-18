@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/img/avatars/me-100x100.png" type="image/x-icon">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="http://localhost:4000/frontend/2019/03/13/parse-huge-local-json-file.html">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Adrian Galera blog" href="http://localhost:4000/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Google Analytics -->
+    
+    
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Parse Huge Local Json File | Adrian Galera blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Parse Huge Local Json File" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I need to provide a UI to analyse the results of a long-running process that generates huge JSON file whose size is in GB order. In the article I will talk about the solution implemented using the HTML5 FileReader API and the mighty oboe.js library" />
+<meta property="og:description" content="I need to provide a UI to analyse the results of a long-running process that generates huge JSON file whose size is in GB order. In the article I will talk about the solution implemented using the HTML5 FileReader API and the mighty oboe.js library" />
+<link rel="canonical" href="http://localhost:4000/frontend/2019/03/13/parse-huge-local-json-file.html" />
+<meta property="og:url" content="http://localhost:4000/frontend/2019/03/13/parse-huge-local-json-file.html" />
+<meta property="og:site_name" content="Adrian Galera blog" />
+<meta property="og:image" content="http://localhost:4000/assets/img/triangle.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-03-13T00:00:00+01:00" />
+<script type="application/ld+json">
+{"headline":"Parse Huge Local Json File","dateModified":"2019-03-13T00:00:00+01:00","datePublished":"2019-03-13T00:00:00+01:00","image":"http://localhost:4000/assets/img/triangle.png","url":"http://localhost:4000/frontend/2019/03/13/parse-huge-local-json-file.html","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/frontend/2019/03/13/parse-huge-local-json-file.html"},"description":"I need to provide a UI to analyse the results of a long-running process that generates huge JSON file whose size is in GB order. In the article I will talk about the solution implemented using the HTML5 FileReader API and the mighty oboe.js library","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>Parse Huge Local Json File | Adrian Galera blog</title>
+    <meta name="description" content="I need to provide a UI to analyse the results of a long-running process that generates huge JSON file whose size is in GB order.In the article I will talk ab...">
+    -->
+</head>
+
+  <body>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Adrian Galera blog" href="/">
+        Adrian Galera blog
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About" title="About" href="/about/">
+                     About 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Portfolio" title="Portfolio" href="/portfolio/">
+                     Portfolio 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    
+      <h1 id="Parse+Huge+Local+Json+File" class="title">Parse Huge Local Json File</h1>
+      
+
+<div class="post-info"><a href="https://www.agalera.eu" target="_blank">
+      <img src="/assets/img/avatars/me-100x100.png">
+    
+    <p class="meta">
+      Adrian Galera - March 13, 2019
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <p>I need to provide a UI to analyse the results of a long-running process that generates huge JSON file whose size is in GB order.</p>
+<p>In the article I will talk about the solution implemented using the HTML5 FileReader API and the mighty <a href="#using-oboe-js">oboe.js</a> library</p>
+<p><!--more--></p>
+<p>TL;DR: <a href="#code">The code</a></p>
+<p>Thanks to <a href="https://www.html5rocks.com/en/tutorials/file/dndfiles/">HTML5 FileReader API</a> , files can be read locally in the browser without any need for servers. Even better, files can be read in <a href="https://gist.github.com/alediaferia/cfb3a7503039f9278381">chunks</a> in order to keep the memory footprint as low as desired.</p>
+<p>If you search in Google about how to parse huge JSON files, eventually the streaming techniques will appear. In the XML world there are two different techniques for parsing files:</p>
+<ul>
+<li>SAX: Read the XML as events, keeping a little memory footprint</li>
+<li>DOM: Read the whole XML in memory allowing easy manipulation</li>
+</ul>
+<p>Working with JSON the DOM technique is the most used. For instance</p>
+<pre class="lang:default decode:true ">JSON.parse</pre>
+<p>loads the whole string in memory before parsing the JSON. What will happen if the string is really big? The browser will explode.</p>
+<p>We need to apply the SAX loading technique to read the big JSON file. In order to achieve that we can use <a href="http://oboejs.com/">Oboejs</a> library:</p>
+<blockquote><p>Oboe.js is an <a href="http://oboejs.com/LICENCE">open source</a> Javascript library for loading JSON using streaming, combining the convenience of DOM with the speed and fluidity of SAX.</p></blockquote>
+<h5 id="using-oboe-js">Using oboe.js</h5>
+<p>Reading the documentation it is not clear if one can use the FileReader API with oboe-js. It clearly says you can pass an URL or a NodeJs stream to its initializer method:</p>
+<p>[caption id="attachment_207" align="alignnone" width="1346"]<img class="size-full wp-image-207" src="http://localhost/wp-content/uploads/2019/03/Screen-Shot-2019-03-13-at-19.07.34.png" alt="OboeJS URL configuration" width="1346" height="466" /> OboeJS URL configuration[/caption]</p>
+<p>[caption id="attachment_208" align="alignnone" width="1374"]<img class="wp-image-208 size-full" src="http://localhost/wp-content/uploads/2019/03/Screen-Shot-2019-03-13-at-19.07.47.png" alt="Oboe-js Stream configuration" width="1374" height="150" /> Oboe-js Stream configuration[/caption]</p>
+<p>Searching over the internet I have found this Gitlab <a href="https://github.com/jimhigson/oboe.js/issues/112">issue</a> where it's author is asking for some solution to not using an URL nor NodeJs stream.</p>
+<p>So, finally there's a way to combine the power of the FileReader API and the streaming capabilities of oboe-js</p>
+<h5 id="code">The code</h5>
+<p>Since the UI we are building is built in React, I have made this project as a plug-and-play React component:</p>
+<p><a href="https://bitbucket.org/agaleraegea/parse-huge-json">https://bitbucket.org/agaleraegea/parse-huge-json</a></p>
+<p>P.S: The plug-and-play worked like a charm!</p>
+<p>&nbsp;</p>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/frontend/2019/03/13/parse-huge-local-json-file.html" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=http://localhost:4000/frontend/2019/03/13/parse-huge-local-json-file.html&text=Parse+Huge+Local+Json+File%20%7C%20Adrian+Galera+blog:%20http://localhost:4000/frontend/2019/03/13/parse-huge-local-json-file.html" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+                
+        <li>
+            <a href="mailto:?subject=Parse+Huge+Local+Json+File%20%7C%20Adrian+Galera+blog&body=:%20http://localhost:4000/frontend/2019/03/13/parse-huge-local-json-file.html" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/tags#frontend">
+      <p><i class="fa fa-tag fa-fw"></i> frontend</p>
+    </a>
+    
+    <a class="button" href="/tags#json">
+      <p><i class="fa fa-tag fa-fw"></i> json</p>
+    </a>
+    
+    <a class="button" href="/tags#oboejs">
+      <p><i class="fa fa-tag fa-fw"></i> oboejs</p>
+    </a>
+    
+    <a class="button" href="/tags#react">
+      <p><i class="fa fa-tag fa-fw"></i> react</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    <div id="previous-post">
+        <p>Next post</p>
+        <a alt="Grafana Nginx Reverse Proxy And Docker" href="/docker/2019/06/15/grafana-nginx-reverse-proxy-and-docker.html">
+            Grafana Nginx Reverse Proxy And Docker
+        </a>
+    </div>
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="Relational Model In Dynamodb" href="/aws/2019/01/28/relational-model-in-dynamodb.html">
+            Relational Model In Dynamodb
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('');
+  }
+</style>
+    </div>
+    
+
+
+
+  </body>
+</html>
