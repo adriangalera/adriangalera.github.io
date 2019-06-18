@@ -41,7 +41,7 @@
       } ,
    
       {
-        "title"    : "Creating a timeseries database with DynamoDB",
+        "title"    : "Timeseries database with DynamoDB",
         "category" : "",
         "tags"     : " aws, cloud, dynamodb, kinesis, python",
         "url"      : "/timeseries-db-dynamodb/",
