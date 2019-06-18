@@ -7,7 +7,7 @@
         <atom:link href="https://adriangalera.github.io/feed.xml" rel="self" type="application/rss+xml"/>
         <link>https://adriangalera.github.io/</link>
         <description>My personal blog page</description>
-        <pubDate>Wed, 19 Jun 2019 00:28:51 +0200</pubDate>
+        <pubDate>Wed, 19 Jun 2019 00:31:03 +0200</pubDate>
         <webfeeds:icon>https://adriangalera.github.io/assets/img/avatars/me-100x100.png</webfeeds:icon>
         
         <item>
@@ -367,8 +367,8 @@ curl http://localhost:7070/v1/resource/resource1
         <item>
             
             <title>Creating a timeseries database with DynamoDB</title>
-            <link>https://adriangalera.github.io/timeseries-database-dynamodb/</link>
-            <guid isPermaLink="false">/timeseries-database-dynamodb/</guid>
+            <link>https://adriangalera.github.io/timeseries-db-dynamodb/</link>
+            <guid isPermaLink="false">/timeseries-db-dynamodb/</guid>
             <description>&lt;p&gt;Working with sensor data, we need to store timestamped data in a way that was easily checked and show it in graphs. This post explains the process we follow to end up implementing a timeseries database on DynamoDB.&lt;/p&gt;
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 &lt;h1&gt;Requirements&lt;/h1&gt;
