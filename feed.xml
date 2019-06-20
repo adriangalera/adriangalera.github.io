@@ -7,7 +7,7 @@
         <atom:link href="https://adriangalera.github.io/feed.xml" rel="self" type="application/rss+xml"/>
         <link>https://adriangalera.github.io/</link>
         <description>My personal blog page</description>
-        <pubDate>Thu, 20 Jun 2019 18:42:56 +0200</pubDate>
+        <pubDate>Thu, 20 Jun 2019 18:47:04 +0200</pubDate>
         <webfeeds:icon>https://adriangalera.github.io/assets/img/avatars/me-100x100.png</webfeeds:icon>
         
         <item>
@@ -453,7 +453,7 @@ curl http://localhost:7070/v1/resource/resource1
         
         <item>
             
-                <enclosure length="1" type="image" url="https://adriangalera.github.io/assets/img/posts/dynamodbts/featured.png"/>
+                <enclosure length="1" type="image" url="https://adriangalera.github.io/assets/img/posts/dynamodbts/featured.jpg"/>
             
             <title>Timeseries database with DynamoDB</title>
             <link>https://adriangalera.github.io/timeseries-db-dynamodb/</link>
