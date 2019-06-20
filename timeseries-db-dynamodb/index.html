@@ -160,7 +160,7 @@
   
       <p>Working with sensor data, we need to store timestamped data in a way that was easily checked and show it in graphs. This post explains the process we follow to end up implementing a timeseries database on DynamoDB.</p>
 <p><!--more--></p>
-<h1>Requirements</h1>
+<h2>Requirements</h2>
 <p>The problem was pretty straightforward at the beginning: store temporal data that came from multiple sensors where one sensor could have more than one metric. For instance: one battery sensor might monitor the battery level as well as the battery voltage. The sensor data data flows continuously at an undetermined interval, it can be 1 minute, 5 minutes, ... Generally speaking the data can be represented as:</p>
 <p><strong>METRIC NAME - TIMESTAMP - VALUE</strong></p>
 <p>In order to support the defined usage scenarios we need to provide a tool able to:</p>
@@ -172,13 +172,13 @@
   <li>Perform in a cost-efficient manner</li>
 </ul>
 
-<h1>Available technologies</h1>
+<h2>Available technologies</h2>
 <p>When one thinks about database at first the relational ones appear as the first option. The problem with relational databases such as MySQL, PostgreSQL, .. is that we the database becomes very unusable when the size of the tables grows. And in this case the data  will grow a lot with the usage.</p>
 <p>Furthermore, when the data is so big the indexes start to generate headaches making the queries take a lot of time.</p>
 <p>Finding these drawbacks in the traditional relational databases, we shift towards NoSQL databases.</p>
 <p>The first one that came into our mind (because we had some previous experience with it) was whisper <a href="https://github.com/graphite-project/whisper">https://github.com/graphite-project/whisper</a>. This database is a small component of the graphite project, basically is a wrapper to write the temporal data to a file performing multiple roll-up aggregations on the fly. This looked promising, however, when we heavy loaded it performed very poorly.</p>
 <p>Since the platform we were building it was AWS based, we decided to analyse what Amazon can provide us and finally found <strong>DynamoDB</strong>!</p>
-<h1>DynamoDB at the rescue!</h1>
+<h2>DynamoDB at the rescue!</h2>
 <p>DynamoDB is a key-value database that supports the configuration of item TTL and its costs are predictable because are in function of the required capacity.</p>
 <p>One might ask: <em>how can I store the presented model in a key-value database?</em> The magic comes with the composite key feature: <a href="https://aws.amazon.com/es/blogs/database/choosing-the-right-dynamodb-partition-key/">https://aws.amazon.com/es/blogs/database/choosing-the-right-dynamodb-partition-key/</a></p>
 
@@ -207,7 +207,7 @@
 <p>5) Each time serie can be configured to have different aggregations, TTL, timezone to perform temporal aggregation, etc... There are an additional lambda in order to configure the timeserie parameters.</p>
 <p>6) Once the aggregation is performed, the data is stored into the appropriate DynamoDB table according to the granularity: minute, hour, day, month, year, ...</p>
 <p>With this solution we achieve a solution where we can fine tune the capacity of the database.</p>
-<h1>Production time!</h1>
+<h2>Production time!</h2>
 <p>When we put this system into production, some issues arises with the capacity of the DynamoDB. When the incoming data flows faster than the reserved capacity in DynamoDB, the lambda functions became very slow and resulting in a high number of timeout errors.</p>
 <p>The reasons for this is that when DynamoDB is running at capacity, it throttle requests, making the client adjust its speed to the reserved capacity. This works good for a traditional client, however it breaks with the serverless approach, because the Lambda functions were taking too much time.</p>
 <p>In order to fix situation, we add another component to the system: an AWS Kinesis Stream <a href="https://aws.amazon.com/kinesis">https://aws.amazon.com/kinesis</a>. Instead of writing directly to the DynamoDB table, the service Lambda function now writes the data into a Kinesis stream.</p>
@@ -218,7 +218,7 @@
 <em>Adding Kinesis into the TimeseriesDB</em></p>
 
 <p>The additional point (7) shows the Kinesis stream where the items are being inserted by the Service Lambda function and consumed by the DynamoDB Timeseries DB Kinesis Consumer. The configured batch size (B) and sleep time (T) allows the consumer to buffer the insertion of data up to the reserved DynamoDB capacity.</p>
-<h1>Show me the code</h1>
+<h2>Show me the code</h2>
 <p>An open sourced version of the production code can be found here:</p>
 <p><a href="https://github.com/adriangalera/dynamodb-timeseries">https://github.com/adriangalera/dynamodb-timeseries</a></p>
 

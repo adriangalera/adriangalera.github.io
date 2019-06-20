@@ -6,8 +6,8 @@
         <title>Adrian Galera blog</title>
         <atom:link href="https://adriangalera.github.io/feed.xml" rel="self" type="application/rss+xml"/>
         <link>https://adriangalera.github.io/</link>
-        <description>My personal blog page</description>
-        <pubDate>Thu, 20 Jun 2019 18:47:04 +0200</pubDate>
+        <description>My personal blog page. I blog about developing things that are worth remembering for me and I wanted to shared with the community</description>
+        <pubDate>Thu, 20 Jun 2019 18:54:46 +0200</pubDate>
         <webfeeds:icon>https://adriangalera.github.io/assets/img/avatars/me-100x100.png</webfeeds:icon>
         
         <item>
@@ -46,6 +46,8 @@
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Even though this can be improved, we didn’t have much time to think about it. That’s the first way we could develop.&lt;/p&gt;
 </description>
             <pubDate>Wed, 19 Jun 2019 00:00:00 +0200</pubDate>
         </item>
@@ -460,7 +462,7 @@ curl http://localhost:7070/v1/resource/resource1
             <guid isPermaLink="false">/timeseries-db-dynamodb/</guid>
             <description>&lt;p&gt;Working with sensor data, we need to store timestamped data in a way that was easily checked and show it in graphs. This post explains the process we follow to end up implementing a timeseries database on DynamoDB.&lt;/p&gt;
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
-&lt;h1&gt;Requirements&lt;/h1&gt;
+&lt;h2&gt;Requirements&lt;/h2&gt;
 &lt;p&gt;The problem was pretty straightforward at the beginning: store temporal data that came from multiple sensors where one sensor could have more than one metric. For instance: one battery sensor might monitor the battery level as well as the battery voltage. The sensor data data flows continuously at an undetermined interval, it can be 1 minute, 5 minutes, ... Generally speaking the data can be represented as:&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;METRIC NAME - TIMESTAMP - VALUE&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;In order to support the defined usage scenarios we need to provide a tool able to:&lt;/p&gt;
@@ -472,13 +474,13 @@ curl http://localhost:7070/v1/resource/resource1
   &lt;li&gt;Perform in a cost-efficient manner&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1&gt;Available technologies&lt;/h1&gt;
+&lt;h2&gt;Available technologies&lt;/h2&gt;
 &lt;p&gt;When one thinks about database at first the relational ones appear as the first option. The problem with relational databases such as MySQL, PostgreSQL, .. is that we the database becomes very unusable when the size of the tables grows. And in this case the data  will grow a lot with the usage.&lt;/p&gt;
 &lt;p&gt;Furthermore, when the data is so big the indexes start to generate headaches making the queries take a lot of time.&lt;/p&gt;
 &lt;p&gt;Finding these drawbacks in the traditional relational databases, we shift towards NoSQL databases.&lt;/p&gt;
 &lt;p&gt;The first one that came into our mind (because we had some previous experience with it) was whisper &lt;a href=&quot;https://github.com/graphite-project/whisper&quot;&gt;https://github.com/graphite-project/whisper&lt;/a&gt;. This database is a small component of the graphite project, basically is a wrapper to write the temporal data to a file performing multiple roll-up aggregations on the fly. This looked promising, however, when we heavy loaded it performed very poorly.&lt;/p&gt;
 &lt;p&gt;Since the platform we were building it was AWS based, we decided to analyse what Amazon can provide us and finally found &lt;strong&gt;DynamoDB&lt;/strong&gt;!&lt;/p&gt;
-&lt;h1&gt;DynamoDB at the rescue!&lt;/h1&gt;
+&lt;h2&gt;DynamoDB at the rescue!&lt;/h2&gt;
 &lt;p&gt;DynamoDB is a key-value database that supports the configuration of item TTL and its costs are predictable because are in function of the required capacity.&lt;/p&gt;
 &lt;p&gt;One might ask: &lt;em&gt;how can I store the presented model in a key-value database?&lt;/em&gt; The magic comes with the composite key feature: &lt;a href=&quot;https://aws.amazon.com/es/blogs/database/choosing-the-right-dynamodb-partition-key/&quot;&gt;https://aws.amazon.com/es/blogs/database/choosing-the-right-dynamodb-partition-key/&lt;/a&gt;&lt;/p&gt;
 
@@ -507,7 +509,7 @@ curl http://localhost:7070/v1/resource/resource1
 &lt;p&gt;5) Each time serie can be configured to have different aggregations, TTL, timezone to perform temporal aggregation, etc... There are an additional lambda in order to configure the timeserie parameters.&lt;/p&gt;
 &lt;p&gt;6) Once the aggregation is performed, the data is stored into the appropriate DynamoDB table according to the granularity: minute, hour, day, month, year, ...&lt;/p&gt;
 &lt;p&gt;With this solution we achieve a solution where we can fine tune the capacity of the database.&lt;/p&gt;
-&lt;h1&gt;Production time!&lt;/h1&gt;
+&lt;h2&gt;Production time!&lt;/h2&gt;
 &lt;p&gt;When we put this system into production, some issues arises with the capacity of the DynamoDB. When the incoming data flows faster than the reserved capacity in DynamoDB, the lambda functions became very slow and resulting in a high number of timeout errors.&lt;/p&gt;
 &lt;p&gt;The reasons for this is that when DynamoDB is running at capacity, it throttle requests, making the client adjust its speed to the reserved capacity. This works good for a traditional client, however it breaks with the serverless approach, because the Lambda functions were taking too much time.&lt;/p&gt;
 &lt;p&gt;In order to fix situation, we add another component to the system: an AWS Kinesis Stream &lt;a href=&quot;https://aws.amazon.com/kinesis&quot;&gt;https://aws.amazon.com/kinesis&lt;/a&gt;. Instead of writing directly to the DynamoDB table, the service Lambda function now writes the data into a Kinesis stream.&lt;/p&gt;
@@ -518,7 +520,7 @@ curl http://localhost:7070/v1/resource/resource1
 &lt;em&gt;Adding Kinesis into the TimeseriesDB&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;The additional point (7) shows the Kinesis stream where the items are being inserted by the Service Lambda function and consumed by the DynamoDB Timeseries DB Kinesis Consumer. The configured batch size (B) and sleep time (T) allows the consumer to buffer the insertion of data up to the reserved DynamoDB capacity.&lt;/p&gt;
-&lt;h1&gt;Show me the code&lt;/h1&gt;
+&lt;h2&gt;Show me the code&lt;/h2&gt;
 &lt;p&gt;An open sourced version of the production code can be found here:&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://github.com/adriangalera/dynamodb-timeseries&quot;&gt;https://github.com/adriangalera/dynamodb-timeseries&lt;/a&gt;&lt;/p&gt;
 </description>
