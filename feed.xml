@@ -7,8 +7,48 @@
         <atom:link href="https://adriangalera.github.io/feed.xml" rel="self" type="application/rss+xml"/>
         <link>https://adriangalera.github.io/</link>
         <description>My personal blog page</description>
-        <pubDate>Wed, 19 Jun 2019 00:36:09 +0200</pubDate>
+        <pubDate>Thu, 20 Jun 2019 18:42:56 +0200</pubDate>
         <webfeeds:icon>https://adriangalera.github.io/assets/img/avatars/me-100x100.png</webfeeds:icon>
+        
+        <item>
+            
+            <title>Java Unit Test to check UTF-8 chars</title>
+            <link>https://adriangalera.github.io/java-test-utf8/</link>
+            <guid isPermaLink="false">/java-test-utf8/</guid>
+            <description>&lt;p&gt;During a migration to a new plattform, we have detected an issue with the character encoding. Some of the messages contained the UTF-8 replacement character (�)&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Fortunately, we have been able to fix the configuration issue and to make sure it does not happen again we have put in place a variation of the following unit test:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.junit.Assert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.junit.Test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CheckUtf8ReplacementChar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;containsUtf8ReplacementCharacter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;REPLACEMENT_CHARACTER_VALUE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;65533&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;charAt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;REPLACEMENT_CHARACTER_VALUE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;shouldDetectUtf8ReplacementChar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wrongString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Wrong characters ������������������&amp;lt;br&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;okString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;OK characters&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;Assert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;assertTrue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;containsUtf8ReplacementCharacter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wrongString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;Assert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;assertFalse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;containsUtf8ReplacementCharacter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;okString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+            <pubDate>Wed, 19 Jun 2019 00:00:00 +0200</pubDate>
+        </item>
         
         <item>
             
@@ -27,22 +67,25 @@
 &lt;h5&gt;The solution&lt;/h5&gt;
 &lt;p&gt;Now that we have discarded the scripting, we chose nginx to implement the reverse proxy and we delegate the health-check endpoint to a static content under webroot of nginx.&lt;/p&gt;
 &lt;p&gt;Hereunder is the Dockerfile, which is self-explanatory:&lt;/p&gt;
-&lt;pre&gt;FROM grafana/grafana
-EXPOSE 8080 8080
-COPY health-check /health-check
-COPY start-nginx-grafana.sh /start-nginx-grafana.sh
-USER root
-RUN apt-get update &amp;amp;&amp;amp; apt-get install -y nginx
-RUN chown -R grafana:grafana /etc/nginx/nginx.conf /var/log/nginx /var/lib/nginx /start-nginx-grafana.sh
-RUN chmod +x /start-nginx-grafana.sh
-USER grafana
-RUN cp /health-check/nginx.conf /etc/nginx/nginx.conf
-ENTRYPOINT [ &quot;/start-nginx-grafana.sh&quot; ]&lt;/pre&gt;
+
+&lt;div class=&quot;language-docker highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; grafana/grafana&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;EXPOSE&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; 8080 8080&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;COPY&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; health-check /health-check&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;COPY&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; start-nginx-grafana.sh /start-nginx-grafana.sh&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;USER&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; root&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;apt-get update &amp;amp;amp&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&amp;amp;amp&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; apt-get &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; nginx
+&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chown&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-R&lt;/span&gt; grafana:grafana /etc/nginx/nginx.conf /var/log/nginx /var/lib/nginx /start-nginx-grafana.sh
+&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chmod&lt;/span&gt; +x /start-nginx-grafana.sh
+&lt;span class=&quot;k&quot;&gt;USER&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; grafana&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cp&lt;/span&gt; /health-check/nginx.conf /etc/nginx/nginx.conf
+&lt;span class=&quot;k&quot;&gt;ENTRYPOINT&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; [ &quot;/start-nginx-grafana.sh&quot; ]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;The tricky part we found was that installing nginx required sudo permissions, however this could be easily achieved changing to the user root in the Dockerfile. Grafana service runs as grafana user, so, some permissions of files and folders of the nginx services need to be changed to the grafana user.&lt;/p&gt;
 &lt;p&gt;The following snippet shows the nginx.conf file:&lt;/p&gt;
-&lt;pre&gt;worker_processes  1;
-pid /var/lib/nginx/nginx.pid;
 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;worker_processes  1;
+pid /var/lib/nginx/nginx.pid;
 
 events {
     worker_connections  1024;
@@ -71,9 +114,11 @@ http {
         #    return 403;
         #}
     }
-}&lt;/pre&gt;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;This configuration enables the health-check endpoint to be compatible with our governance tool. Precisely nginx returns the file health-check.json in response to this endpoint. nginx proxies any other request to the Grafana instance running inside the container. The presence of the nginx reverse proxy enables the user to implement more features, like blocking the Grafana API, etc...&lt;/p&gt;
-&lt;p&gt;You can check the code to provide Grafana,nginx and Docker here: &lt;a href=&quot;https://bitbucket.org/agaleraegea/nginx-grafana-docker/src/master/&quot;&gt;https://bitbucket.org/agaleraegea/nginx-grafana-docker/src/master/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;You can check the code to provide Grafana,nginx and Docker here: &lt;a href=&quot;https://github.com/adriangalera/nginx-grafana-docker&quot;&gt;https://github.com/adriangalera/nginx-grafana-docker&lt;/a&gt;&lt;/p&gt;
 </description>
             <pubDate>Sat, 15 Jun 2019 00:00:00 +0200</pubDate>
         </item>
@@ -93,20 +138,31 @@ http {
 &lt;li&gt;SAX: Read the XML as events, keeping a little memory footprint&lt;/li&gt;
 &lt;li&gt;DOM: Read the whole XML in memory allowing easy manipulation&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Working with JSON the DOM technique is the most used. For instance&lt;/p&gt;
-&lt;pre class=&quot;lang:default decode:true &quot;&gt;JSON.parse&lt;/pre&gt;
-&lt;p&gt;loads the whole string in memory before parsing the JSON. What will happen if the string is really big? The browser will explode.&lt;/p&gt;
+&lt;p&gt;Working with JSON the DOM technique is the most used. For instance &quot;JSON.parse&quot; loads the whole string in memory before parsing the JSON. What will happen if the string is really big? The browser will explode.&lt;/p&gt;
 &lt;p&gt;We need to apply the SAX loading technique to read the big JSON file. In order to achieve that we can use &lt;a href=&quot;http://oboejs.com/&quot;&gt;Oboejs&lt;/a&gt; library:&lt;/p&gt;
 &lt;blockquote&gt;&lt;p&gt;Oboe.js is an &lt;a href=&quot;http://oboejs.com/LICENCE&quot;&gt;open source&lt;/a&gt; Javascript library for loading JSON using streaming, combining the convenience of DOM with the speed and fluidity of SAX.&lt;/p&gt;&lt;/blockquote&gt;
 &lt;h5 id=&quot;using-oboe-js&quot;&gt;Using oboe.js&lt;/h5&gt;
 &lt;p&gt;Reading the documentation it is not clear if one can use the FileReader API with oboe-js. It clearly says you can pass an URL or a NodeJs stream to its initializer method:&lt;/p&gt;
-&lt;p&gt;[caption id=&quot;attachment_207&quot; align=&quot;alignnone&quot; width=&quot;1346&quot;]&lt;img class=&quot;size-full wp-image-207&quot; src=&quot;http://localhost/wp-content/uploads/2019/03/Screen-Shot-2019-03-13-at-19.07.34.png&quot; alt=&quot;OboeJS URL configuration&quot; width=&quot;1346&quot; height=&quot;466&quot; /&gt; OboeJS URL configuration[/caption]&lt;/p&gt;
-&lt;p&gt;[caption id=&quot;attachment_208&quot; align=&quot;alignnone&quot; width=&quot;1374&quot;]&lt;img class=&quot;wp-image-208 size-full&quot; src=&quot;http://localhost/wp-content/uploads/2019/03/Screen-Shot-2019-03-13-at-19.07.47.png&quot; alt=&quot;Oboe-js Stream configuration&quot; width=&quot;1374&quot; height=&quot;150&quot; /&gt; Oboe-js Stream configuration[/caption]&lt;/p&gt;
-&lt;p&gt;Searching over the internet I have found this Gitlab &lt;a href=&quot;https://github.com/jimhigson/oboe.js/issues/112&quot;&gt;issue&lt;/a&gt; where it's author is asking for some solution to not using an URL nor NodeJs stream.&lt;/p&gt;
-&lt;p&gt;So, finally there's a way to combine the power of the FileReader API and the streaming capabilities of oboe-js&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;oboe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;oboe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;cached&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Boolean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;withCredentials&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Boolean&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;oboe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Searching over the internet I have found this Github &lt;a href=&quot;https://github.com/jimhigson/oboe.js/issues/112&quot;&gt;issue&lt;/a&gt; where it's author is asking for some solution to not using an URL nor NodeJs stream.&lt;/p&gt;
+&lt;p&gt;So, finally there's a way to combine the power of the FileReader API and the streaming capabilities of oboejs&lt;/p&gt;
 &lt;h5 id=&quot;code&quot;&gt;The code&lt;/h5&gt;
 &lt;p&gt;Since the UI we are building is built in React, I have made this project as a plug-and-play React component:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://bitbucket.org/agaleraegea/parse-huge-json&quot;&gt;https://bitbucket.org/agaleraegea/parse-huge-json&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/adriangalera/parse-huge-json&quot;&gt;https://github.com/adriangalera/parse-huge-json&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;P.S: The plug-and-play worked like a charm!&lt;/p&gt;
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
 </description>
@@ -123,165 +179,188 @@ http {
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 &lt;p&gt;The application consist on three entities: User,Map and Points.&lt;/p&gt;
 &lt;p&gt;Users can create multiple maps that contain several points. The following UML schema explain the relationships:&lt;/p&gt;
-&lt;p&gt;[caption id=&quot;attachment_176&quot; align=&quot;alignnone&quot; width=&quot;602&quot;]&lt;img class=&quot;size-full wp-image-176&quot; src=&quot;http://localhost/wp-content/uploads/2019/01/estuve-model.png&quot; alt=&quot;Relational model UML&quot; width=&quot;602&quot; height=&quot;114&quot; /&gt; Relational model UML[/caption]&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/img/posts/relationalmodel/estuve-model.png&quot;&gt; &lt;img src=&quot;/assets/img/posts/relationalmodel/estuve-model.png&quot; alt=&quot;Relational model UML&quot; /&gt; &lt;/a&gt;
+&lt;em&gt;Relational model UML&lt;/em&gt;&lt;/p&gt;
+
 &lt;p&gt;DynamoDB is a key-value store with support for range key. Thanks to that I am able to implement the following queries:&lt;/p&gt;
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;em&gt;CRUD User,Map,Point&lt;/em&gt;&lt;/p&gt;
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;em&gt;Add a map for one user&lt;/em&gt;&lt;/p&gt;
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;em&gt;Add a point in a map&lt;/em&gt;&lt;/p&gt;
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;em&gt;Get points from a map&lt;/em&gt;&lt;/p&gt;
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;em&gt;Remove map from user&lt;/em&gt;&lt;/p&gt;
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;em&gt;Remove point from user&lt;/em&gt;&lt;/p&gt;
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;em&gt;Get maps for a user&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;CRUD User,Map,Point&lt;/li&gt;
+  &lt;li&gt;Add a map for one user&lt;/li&gt;
+  &lt;li&gt;Add a point in a map&lt;/li&gt;
+  &lt;li&gt;Get points from a map&lt;/li&gt;
+  &lt;li&gt;Remove map from user&lt;/li&gt;
+  &lt;li&gt;Remove point from user&lt;/li&gt;
+  &lt;li&gt;Get maps for a user&lt;/li&gt;
+&lt;/ul&gt;
+
 &lt;h2&gt;The DynamoDB model&lt;/h2&gt;
 &lt;h5&gt;Users table&lt;/h5&gt;
 &lt;p&gt;The user table is straightforward, the only key is a unique identifier for the user.&lt;/p&gt;
-&lt;pre class=&quot;&quot;&gt;{
-    &quot;TableName&quot;: USER_TABLE,
-    &quot;KeySchema&quot;: [
-        {
-            &quot;AttributeName&quot;: &quot;user_id&quot;,
-            &quot;KeyType&quot;: &quot;HASH&quot;
-        }
-    ],
-    &quot;AttributeDefinitions&quot;: [
-        {
-            &quot;AttributeName&quot;: &quot;user_id&quot;,
-            &quot;AttributeType&quot;: &quot;S&quot;
-        }
-    ]
-}
-&lt;/pre&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;TableName&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;USER_TABLE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;KeySchema&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;AttributeName&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;user_id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;KeyType&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;HASH&quot;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;AttributeDefinitions&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;AttributeName&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;user_id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;AttributeType&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;S&quot;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;There are additional attributes that keep track of the number of points and maps stored for that user:&lt;/p&gt;
-&lt;pre class=&quot;&quot;&gt;record = {
-    'user_id': {
-        'S': str(obj.user_id)
-    },
-    'num_points': {
-        'N': str(obj.num_points)
-    },
-    'num_maps': {
-        'N': str(obj.num_maps)
-    }
-}&lt;/pre&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;record&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'user_id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'S'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'num_points'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'N'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_points&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'num_maps'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'N'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_maps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;h5&gt;Maps table&lt;/h5&gt;
 &lt;p&gt;The map table is a little bit more complex, because it has to keep relations between users and maps. Therefore, I use the range key to save the unique identifier of the map:&lt;/p&gt;
-&lt;pre class=&quot;&quot;&gt;{
-    &quot;TableName&quot;: MAPS_TABLE,
-    &quot;KeySchema&quot;: [
-        {
-            &quot;AttributeName&quot;: &quot;user_id&quot;,
-            &quot;KeyType&quot;: &quot;HASH&quot;
-        },
-{
-            &quot;AttributeName&quot;: &quot;map_id&quot;,
-            &quot;KeyType&quot;: &quot;RANGE&quot;
-        },
-    ],
-    &quot;AttributeDefinitions&quot;: [
-        {
-            &quot;AttributeName&quot;: &quot;map_id&quot;,
-            &quot;AttributeType&quot;: &quot;S&quot;
-        },
-{
-            &quot;AttributeName&quot;: &quot;user_id&quot;,
-            &quot;AttributeType&quot;: &quot;S&quot;
-        }
-    ]
-}&lt;/pre&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;TableName&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MAPS_TABLE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;KeySchema&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;AttributeName&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;user_id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;KeyType&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;HASH&quot;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;AttributeName&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;map_id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;KeyType&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;RANGE&quot;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;AttributeDefinitions&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;AttributeName&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;map_id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;AttributeType&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;S&quot;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;AttributeName&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;user_id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;AttributeType&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;S&quot;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;There are additional attributes associated to the map (self-explanatory):&lt;/p&gt;
-&lt;pre class=&quot;&quot;&gt;{
-    'user_id': {
-        'S': str(obj.user_id)
-    },
-    'map_id': {
-        'S': str(obj.map_id)
-    },
-    'name': {
-        'S': str(obj.name)
-    },
-    'description': {
-        'S': str(obj.description)
-    },
-    'num_points': {
-        'N': str(obj.num_points)
-    }
-}&lt;/pre&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'user_id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'S'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'map_id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'S'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;map_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'S'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'description'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'S'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'num_points'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'N'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_points&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;h5&gt;Points table&lt;/h5&gt;
 &lt;p&gt;This is most complex table. The keys are similar to the maps, the range key is used to store the unique identifier of the map:&lt;/p&gt;
-&lt;pre class=&quot;&quot;&gt;{
-    &quot;TableName&quot;: POINTS_TABLE,
-    &quot;KeySchema&quot;: [
-        {
-            &quot;AttributeName&quot;: &quot;map_id&quot;,
-            &quot;KeyType&quot;: &quot;HASH&quot;
-        },
-        {
-            &quot;AttributeName&quot;: &quot;point_id&quot;,
-            &quot;KeyType&quot;: &quot;RANGE&quot;
-        },
-    ],
-    &quot;AttributeDefinitions&quot;: [
-        {
-            &quot;AttributeName&quot;: &quot;map_id&quot;,
-            &quot;AttributeType&quot;: &quot;S&quot;
-        },
-        {
-            &quot;AttributeName&quot;: &quot;point_id&quot;,
-            &quot;AttributeType&quot;: &quot;S&quot;
-        },
-    ]
-}&lt;/pre&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;TableName&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;POINTS_TABLE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;KeySchema&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;AttributeName&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;map_id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;KeyType&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;HASH&quot;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;AttributeName&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;point_id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;KeyType&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;RANGE&quot;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;AttributeDefinitions&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;AttributeName&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;map_id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;AttributeType&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;S&quot;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;AttributeName&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;point_id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;AttributeType&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;S&quot;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;And the additional parameters:&lt;/p&gt;
-&lt;pre class=&quot;&quot;&gt;{
-    'point_id': {
-        'S': obj.point_id
-    },
-    'map_id': {
-        'S': str(obj.map_id)
-    },
-    'lat': {
-        'S': str(obj.lat)
-    },
-    'lon': {
-        'S': str(obj.lon)
-    },
-    'date': {
-        'N': str(obj.epoch)
-    },
-    'name': {
-        'S': str(obj.name)
-    },
-}&lt;/pre&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'point_id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'S'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;point_id&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'map_id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'S'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;map_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'lat'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'S'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'lon'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'S'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'N'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;epoch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'S'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;The challenge with this model is to be able to delete a map with a large number of points. It is counter-intuitive, because one might think that removing only the points with the primary key of the map will make the work but ...&lt;/p&gt;
 &lt;blockquote&gt;&lt;p&gt;&lt;strong&gt;THIS WILL NOT WORK!&lt;/strong&gt;&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;Due to the way DynamoDB is implemented, this is not possible (&lt;a href=&quot;https://stackoverflow.com/questions/34259358/dynamodb-delete-all-items-having-same-hash-key&quot;&gt;https://stackoverflow.com/questions/34259358/dynamodb-delete-all-items-having-same-hash-key&lt;/a&gt;). In that kind of tables, you need to provide the primary key and the range key in order to delete an item.&lt;/p&gt;
 &lt;p&gt;Since the number of items can be large, it could take a lot of capacity to delete a the points. I do not want to consume that capacity, so I will let DynamoDB throttle the deletes to adapt to the capacity.&lt;/p&gt;
 &lt;p&gt;The project is serverless (Lambda) based and trying to delete a large number of points will result in timeouts when DynamoDB throttle the deletes. There are two possible solutions here: increase the write capacity of the table (increase cost) or increase the Lambda timeout (increase cost).&lt;/p&gt;
 &lt;p&gt;After thinking a little bit, the valid solution I choose is to launch an ECS Task with the logic to delete the large number of maps:&lt;/p&gt;
-&lt;pre class=&quot;&quot;&gt;client.run_task(
-    cluster=&quot;arn:aws:ecs:eu-west-1:***:cluster/remove-points-cluster&quot;,
-    taskDefinition=&quot;arn:aws:ecs:eu-west-1:***:task-definition/remove-points&quot;,
-    overrides={
-        &quot;containerOverrides&quot;: [
-            {
-                &quot;name&quot;: &quot;remove-points&quot;,
-                &quot;environment&quot;: [
-                    {
-                        &quot;name&quot;: &quot;MAP_ID&quot;,
-                        &quot;value&quot;: map_id
-                    }
-                ]
-            }
-        ]
-    },
-    launchType=&quot;FARGATE&quot;,
-    networkConfiguration={
-        &quot;awsvpcConfiguration&quot;: {
-            &quot;subnets&quot;: [&quot;1&quot;, &quot;2&quot;],
-            &quot;assignPublicIp&quot;: &quot;ENABLED&quot;
-        }
-    }
-)&lt;/pre&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;run_task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cluster&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;arn:aws:ecs:eu-west-1:***:cluster/remove-points-cluster&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;taskDefinition&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;arn:aws:ecs:eu-west-1:***:task-definition/remove-points&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;overrides&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;containerOverrides&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;remove-points&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                &lt;span class=&quot;s&quot;&gt;&quot;environment&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+                    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                        &lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;MAP_ID&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        &lt;span class=&quot;s&quot;&gt;&quot;value&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;map_id&lt;/span&gt;
+                    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;launchType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;FARGATE&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;networkConfiguration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;awsvpcConfiguration&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;subnets&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;assignPublicIp&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;ENABLED&quot;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;The best part of this ECS Task is that only took 5 minutes to use the same code base and Dockerize the logic of removing the points!&lt;/p&gt;
 &lt;p&gt;Now the long-running task of delete a large number of points is done in ECS, where the pricing model is pay per use. Since this is a feature that is not going to happen a lot, it's perfectly fine.&lt;/p&gt;
 </description>
@@ -299,32 +378,36 @@ http {
 &lt;p&gt;Quoting from their website:&lt;/p&gt;
 &lt;blockquote&gt;&lt;p&gt;WireMock is a simulator for HTTP-based APIs. Some might consider it a &lt;strong&gt;service virtualization&lt;/strong&gt; tool or a &lt;strong&gt;mock server&lt;/strong&gt;.&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;At its core is a Java software that receives HTTP requests with some mapped requests to responses&lt;/p&gt;
-&lt;p&gt;TL;DR: &lt;a href=&quot;https://bitbucket.org/agaleraegea/docker-compose-wiremock/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://bitbucket.org/agaleraegea/docker-compose-wiremock/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;TL;DR: &lt;a href=&quot;https://github.com/adriangalera/docker-compose-wiremock/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://github.com/adriangalera/docker-compose-wiremock/&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;Configuring wiremock&lt;/h3&gt;
 &lt;p&gt;Configuring wiremock only consists on defining the requests to be mocked and the response that should be answered on the presence of the mocked request.&lt;/p&gt;
 &lt;h3&gt;Docker&lt;/h3&gt;
 &lt;p&gt;One nice way of integrate wiremock with your current testing environment is using it inside docker. There's this project &lt;a href=&quot;https://github.com/rodolpheche/wiremock-docker&quot;&gt;https://github.com/rodolpheche/wiremock-docker&lt;/a&gt; that provides the wiremock service to docker.&lt;/p&gt;
 &lt;p&gt;In order to configure it, you must create the following folder structure:&lt;/p&gt;
-&lt;pre&gt;.
-.
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.
 ├── Dockerfile
 └── stubs
     ├── __files
     │   └── response.json
     └── mappings
         └── request.json
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;The mappings folder contains all the mocked requests definitions and __files contains the response JSON for the mocked requests as shown before.&lt;/p&gt;
 &lt;h3&gt;Example&lt;/h3&gt;
 &lt;p&gt;Let's say we have an external API developed by another team in the company under the host externalapi.com and is not yet finished. The call that our service needs to perform is externalapi.com/v1/resource/resource1 and will respond:&lt;/p&gt;
-&lt;pre lang=&quot;json&quot; class=&quot;attributes&quot; title=&quot;External API response&quot;&gt;{
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
     &quot;hello&quot;:&quot;world&quot;
 }
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;Let's configure wiremock, so we can start working on our service in parallel with the other team.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Configure the request mapping
-&lt;pre lang=&quot;json&quot; class=&quot;attributes&quot; title=&quot;request.json&quot;&gt;{
+
+&lt;ul&gt;
+  &lt;li&gt;Configure the request mapping&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
     &quot;request&quot;:{
         &quot;method&quot;:&quot;GET&quot;,
         &quot;urlPathPattern&quot;:&quot;/v1/resource/([a-zA-Z0-9-\\_]*)&quot;
@@ -337,34 +420,40 @@ http {
         }
     }
 }
-&lt;/pre&gt;
-&lt;/li&gt;
-&lt;li&gt;Configure the response
-&lt;pre lang=&quot;json&quot; class=&quot;attributes&quot; title=&quot;response.json&quot;&gt;{
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;Configure the response&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
     &quot;hello&quot;:&quot;world&quot;
-}&lt;/pre&gt;
-&lt;/li&gt;
-&lt;li&gt;Test it
-&lt;pre language=&quot;bash&quot; class=&quot;attributes&quot; title=&quot;Testing wiremock&quot;&gt;docker-compose up --build -d
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Test it&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker-compose up --build -d
 curl http://localhost:7070/v1/resource/resource1
 {
 &quot;hello&quot; : &quot;world&quot;
 }
-&lt;/pre&gt;
-&lt;p&gt;Yay! It worked!&amp;lt;/li&amp;gt;
-&amp;lt;/ol&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Yay! It worked!&lt;/p&gt;
+
 &lt;p&gt;The only missing point is configure the actual component to point to the mocked server. For example with &lt;a href=&quot;https://github.com/Netflix/ribbon&quot;&gt;ribbon&lt;/a&gt;:&lt;/p&gt;
-&lt;div&gt;
-&lt;div&gt;
-&lt;pre&gt;externalservice.ribbon.listOfServers=http://localhost:7070&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/p&gt;&lt;/li&gt;&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;externalservice.ribbon.listOfServers=http://localhost:7070
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
             <pubDate>Tue, 27 Nov 2018 00:00:00 +0100</pubDate>
         </item>
         
         <item>
+            
+                <enclosure length="1" type="image" url="https://adriangalera.github.io/assets/img/posts/dynamodbts/featured.png"/>
             
             <title>Timeseries database with DynamoDB</title>
             <link>https://adriangalera.github.io/timeseries-db-dynamodb/</link>
@@ -438,10 +527,12 @@ curl http://localhost:7070/v1/resource/resource1
         
         <item>
             
+                <enclosure length="1" type="image" url="https://adriangalera.github.io/assets/img/posts/rpiqa/featured-image.jpg"/>
+            
             <title>Raspberry Pi for QA</title>
             <link>https://adriangalera.github.io/raspberry-pi-qa/</link>
             <guid isPermaLink="false">/raspberry-pi-qa/</guid>
-            <description>&lt;p&gt;On a previous company the QA team needed to perform some scenarios that were difficult to reproduce, for instance force a buffering event. Their setup &lt;span style=&quot;font-size: 1rem;&quot;&gt;require deep technical understanding of Linux. In order to ease its world, I decided to create a neat service running on a Raspberry Pi. &lt;/span&gt;&lt;/p&gt;
+            <description>&lt;p&gt;On a previous company the QA team needed to perform some scenarios that were difficult to reproduce, for instance force a buffering event. Their setup require deep technical understanding of Linux. In order to ease its world, I decided to create a neat service running on a Raspberry Pi.&lt;/p&gt;
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 &lt;h2&gt;The problems:&lt;/h2&gt;
 &lt;p&gt;Concretely, the scenarios that the QA needed to cover were:&lt;/p&gt;
@@ -458,8 +549,8 @@ curl http://localhost:7070/v1/resource/resource1
 &lt;h2&gt;The solutions ...&lt;/h2&gt;
 &lt;p&gt;Since most of the scenarios require some networking tweaks, the obvious decision was Linux, even better: Raspberry Pi. The project consist in a NodeJS Express application that executed scripts on the RaspberryPi.&lt;/p&gt;
 &lt;p&gt;The raspberry PI have two network interfaces: the LAN and the WiFi. The configuration is setup in the interfaces file:&lt;/p&gt;
-&lt;pre class=&quot;attributes&quot; title=&quot;Network interfaces&quot;&gt;
-auto lo
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;auto lo
 iface lo inet loopback
 auto eth0
 auto wlan0
@@ -472,49 +563,60 @@ dns-nameservers 8.8.4.4
 iface wlan0 inet static
 address 192.168.150.1
 netmask 255.255.255.0
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;In the WiFi interface hostapd service is configured in order to serve a WiFi connection. This will configure the traffic outgoing traffic from wlan0 to eth0.&lt;/p&gt;
 &lt;h3&gt;Playing with tc and ifb&lt;/h3&gt;
 &lt;p&gt;The network performance restrictions can be applied using the tc command and the ifb module on Linux. This module redirects the traffic from one real network interface to a virtual one. When the traffic passes through the ifb0 interface the token bucket (&lt;a href=&quot;https://en.wikipedia.org/wiki/Token_bucket#Hierarchical_token_bucket&quot;&gt;htb&lt;/a&gt;) applies the network configuration&lt;/p&gt;
-&lt;pre lang=&quot;bash&quot; class=&quot;attributes&quot; title=&quot;Traffic shaping script&quot; id=&quot;network-performance&quot;&gt;
-#Enable ifb module and setup the ifb0 interface
-modprobe ifb numifbs=1 &amp;amp;&amp;amp; ip link set dev ifb0 up
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#Enable ifb module and setup the ifb0 interface
+modprobe ifb numifbs=1 &amp;amp;amp;&amp;amp;amp; ip link set dev ifb0 up
 #Create a device that redirects all the traffic
 #from eth0 to ifb0
-tc qdisc add dev eth0 handle ffff: ingress &amp;amp;&amp;amp; \
+tc qdisc add dev eth0 handle ffff: ingress &amp;amp;amp;&amp;amp;amp; \
 tc filter add dev eth0 parent ffff: protocol ip u32 \
 match u32 0 0 action mirred egress redirect dev ifb0
 #Modify the token bucket configuration
-tc qdisc add dev ifb0 root handle 1: htb default 10 &amp;amp;&amp;amp; \
-tc class add dev ifb0 parent 1: classid 1:1 htb rate 1mb &amp;amp;&amp;amp; \
+tc qdisc add dev ifb0 root handle 1: htb default 10 &amp;amp;amp;&amp;amp;amp; \
+tc class add dev ifb0 parent 1: classid 1:1 htb rate 1mb &amp;amp;amp;&amp;amp;amp; \
 tc class add dev ifb0 parent 1:1 classid 1:10 htb rate 1mb
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;h3&gt;OpenVPN and Iptables&lt;/h3&gt;
 &lt;p&gt;In order to be able to avoid the Geo-blocking of contents, the company provide us a commercial VPN. This consisted on a series of OpenVPN configuration scripts for multiple countries. Therefore, the app only needs to call openvpn:&lt;/p&gt;
-&lt;pre lang=&quot;bash&quot; class=&quot;attributes&quot; title=&quot;openvpn&quot; id=&quot;geoblock&quot;&gt;
-openvpn ALBANIA-TCP.ovpn
-&lt;/pre&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;openvpn ALBANIA-TCP.ovpn
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;It's really easy to block an IP on a Linux box, the app only needs to call the iptables, for example:&lt;/p&gt;
-&lt;pre lang=&quot;bash&quot; class=&quot;attributes&quot; title=&quot;iptables&quot; id=&quot;ipblock&quot;&gt;
-iptables -I FORWARD -s 192.168.150.0/24 -d 8.8.8.8  -j DROP
-&lt;/pre&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;iptables -I FORWARD -s 192.168.150.0/24 -d 8.8.8.8  -j DROP
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;This snippet blocks the outgoing connections to 8.8.8.8 that goes out from the WiFi network&lt;/p&gt;
 &lt;h3&gt;Networking stuff ...&lt;/h3&gt;
 &lt;p id=&quot;dnsspoof&quot;&gt;Regarding DNS Spoofing, it's a little bit trickier, however the &lt;strong&gt;dnsmasq&lt;/strong&gt; service is very useful in that situation.&lt;/p&gt;
-&lt;p&gt;[caption id=&quot;attachment_127&quot; align=&quot;alignnone&quot; width=&quot;578&quot;]&lt;img class=&quot;wp-image-127 size-full&quot; src=&quot;http://localhost/wp-content/uploads/2018/09/dnsmasq.png&quot; alt=&quot;DNS Masq Schema&quot; width=&quot;578&quot; height=&quot;301&quot; /&gt; DNS Masq schema[/caption]&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/img/posts/rpiqa/dnsmasq.png&quot;&gt;&lt;img src=&quot;/assets/img/posts/rpiqa/dnsmasq.png&quot; alt=&quot;dnsmasq schema&quot; /&gt;&lt;/a&gt;
+&lt;em&gt;dnsmasq schema&lt;/em&gt;&lt;/p&gt;
+
 &lt;p&gt;The clients connected to the WiFi will resolve the DNS queries thanks to the dnsmasq client listening to incoming connections. This service is able to perform custom DNS resolutions based on a file that works like a /etc/hosts file.&lt;/p&gt;
-&lt;pre lang=&quot;bash&quot; class=&quot;attributes&quot; title=&quot;dnsmasq configuration&quot; id=&quot;dnsspoof&quot;&gt;
-192.168.56.1   ubuntu.tecmint.lan
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;192.168.56.1   ubuntu.tecmint.lan
 192.168.56.10  centos.tecmint.lan
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p id=&quot;httpssniffer&quot;&gt;Regarding the HTTPS Sniffer, the implemented solution implies having the SSL certificates from the company installed in a reverse proxy that terminates the SSL connection and forwards the HTTP traffic to an internal server that stores the decrypted requests on a cache.&lt;/p&gt;
-&lt;p&gt;[caption id=&quot;attachment_129&quot; align=&quot;alignnone&quot; width=&quot;551&quot;]&lt;img class=&quot;size-full wp-image-129&quot; src=&quot;http://localhost/wp-content/uploads/2018/09/httpsproxy.png&quot; alt=&quot;HTTPS Proxy Setup&quot; width=&quot;551&quot; height=&quot;201&quot; /&gt; HTTPS Proxy Setup[/caption]&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/img/posts/rpiqa/httpsproxy.png&quot;&gt;&lt;img src=&quot;/assets/img/posts/rpiqa/httpsproxy.png&quot; alt=&quot;https proxy setup&quot; /&gt;&lt;/a&gt;
+&lt;em&gt;dnsmasq schema&lt;/em&gt;&lt;/p&gt;
+
 &lt;p&gt;This cache can be queried from the GUI to inspect the requests. There's an additional implementation that allows to run pcap capture software directly on the network interface to inspect the packets from the UI.&lt;/p&gt;
 &lt;p&gt;This environment requires a little setup, that is the configuration of the proxy on the computers of the QA team.&lt;/p&gt;
 &lt;p&gt;Finally, the QA team were able to save a lot of time setting up their scenarios. With this app it's only a matter of clicking buttons instead of executing weird scripts&lt;/p&gt;
 &lt;h2&gt;The code ...&lt;/h2&gt;
 &lt;p&gt;Don't blame too much on the code quality: the whole project was implemented few years ago and as a side project on one or two weekends&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://bitbucket.org/agaleraegea/rpitester&quot;&gt;https://bitbucket.org/agaleraegea/rpitester&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/adriangalera/rpitester&quot;&gt;https://github.com/adriangalera/rpitester&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Here's a video of me presenting that project ;)&lt;/p&gt;
 &lt;p&gt;&lt;iframe src=&quot;https://www.youtube.com/embed/aUaEF87pdms?rel=0&amp;amp;showinfo=0&quot; width=&quot;560&quot; height=&quot;315&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;allowfullscreen&quot;&gt;&lt;/iframe&gt;&lt;/p&gt;
 </description>

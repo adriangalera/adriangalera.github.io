@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/img/avatars/me-100x100.png" type="image/x-icon">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://adriangalera.github.io/java-test-utf8/">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Adrian Galera blog" href="https://adriangalera.github.io/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Google Analytics -->
+    
+    
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Java Unit Test to check UTF-8 chars | Adrian Galera blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Java Unit Test to check UTF-8 chars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="We have experienced an issue with UTF-8 characters in Java and we have designed a unit test to prevent that to happen again." />
+<meta property="og:description" content="We have experienced an issue with UTF-8 characters in Java and we have designed a unit test to prevent that to happen again." />
+<link rel="canonical" href="https://adriangalera.github.io/java-test-utf8/" />
+<meta property="og:url" content="https://adriangalera.github.io/java-test-utf8/" />
+<meta property="og:site_name" content="Adrian Galera blog" />
+<meta property="og:image" content="https://adriangalera.github.io/assets/img/avatars/me.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-06-19T00:00:00+02:00" />
+<script type="application/ld+json">
+{"dateModified":"2019-06-19T00:00:00+02:00","image":"https://adriangalera.github.io/assets/img/avatars/me.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://adriangalera.github.io/java-test-utf8/"},"url":"https://adriangalera.github.io/java-test-utf8/","description":"We have experienced an issue with UTF-8 characters in Java and we have designed a unit test to prevent that to happen again.","headline":"Java Unit Test to check UTF-8 chars","@type":"BlogPosting","datePublished":"2019-06-19T00:00:00+02:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>Java Unit Test to check UTF-8 chars | Adrian Galera blog</title>
+    <meta name="description" content="During a migration to a new plattform, we have detected an issue with the character encoding. Some of the messages contained the UTF-8 replacement character (�)">
+    -->
+</head>
+
+  <body>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Adrian Galera blog" href="/">
+        Adrian Galera blog
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    
+      <h2 id="Java+Unit+Test+to+check+UTF-8+chars" class="title">Java Unit Test to check UTF-8 chars</h2>
+      
+
+<div class="post-info"><a href="https://www.agalera.eu" target="_blank">
+    <p class="meta">
+      Adrian Galera - June 19, 2019
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <p>During a migration to a new plattform, we have detected an issue with the character encoding. Some of the messages contained the UTF-8 replacement character (�)</p>
+
+<!--more-->
+
+<p>Fortunately, we have been able to fix the configuration issue and to make sure it does not happen again we have put in place a variation of the following unit test:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.junit.Assert</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.Test</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CheckUtf8ReplacementChar</span> <span class="o">{</span>
+
+
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">containsUtf8ReplacementCharacter</span><span class="o">(</span><span class="nc">String</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">final</span> <span class="kt">int</span> <span class="no">REPLACEMENT_CHARACTER_VALUE</span> <span class="o">=</span> <span class="mi">65533</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">target</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">((</span><span class="kt">int</span><span class="o">)</span> <span class="n">target</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">==</span> <span class="no">REPLACEMENT_CHARACTER_VALUE</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDetectUtf8ReplacementChar</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">final</span> <span class="nc">String</span> <span class="n">wrongString</span> <span class="o">=</span> <span class="s">"Wrong characters ������������������&lt;br&gt;"</span><span class="o">;</span>
+        <span class="kd">final</span> <span class="nc">String</span> <span class="n">okString</span> <span class="o">=</span> <span class="s">"OK characters"</span><span class="o">;</span>
+        <span class="nc">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">containsUtf8ReplacementCharacter</span><span class="o">(</span><span class="n">wrongString</span><span class="o">));</span>
+        <span class="nc">Assert</span><span class="o">.</span><span class="na">assertFalse</span><span class="o">(</span><span class="n">containsUtf8ReplacementCharacter</span><span class="o">(</span><span class="n">okString</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://adriangalera.github.io/java-test-utf8/" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=https://adriangalera.github.io/java-test-utf8/&text=Java+Unit+Test+to+check+UTF-8+chars%20%7C%20Adrian+Galera+blog:%20https://adriangalera.github.io/java-test-utf8/" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+                
+        <li>
+            <a href="mailto:?subject=Java+Unit+Test+to+check+UTF-8+chars%20%7C%20Adrian+Galera+blog&body=:%20https://adriangalera.github.io/java-test-utf8/" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/tags#i18n">
+      <p><i class="fa fa-tag fa-fw"></i> i18n</p>
+    </a>
+    
+    <a class="button" href="/tags#java">
+      <p><i class="fa fa-tag fa-fw"></i> java</p>
+    </a>
+    
+    <a class="button" href="/tags#unit-test">
+      <p><i class="fa fa-tag fa-fw"></i> unit-test</p>
+    </a>
+    
+    <a class="button" href="/tags#utf8">
+      <p><i class="fa fa-tag fa-fw"></i> utf8</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="Grafana, nginx reverse-proxy and Docker" href="/grafana-nginx-reverse-proxy-docker/">
+            Grafana, nginx reverse-proxy and Docker
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('');
+  }
+</style>
+    </div>
+    
+
+
+
+  </body>
+</html>

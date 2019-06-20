@@ -36,8 +36,8 @@
 <meta name="generator" content="Jekyll v3.8.5" />
 <meta property="og:title" content="Mocking external API with wiremock" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Mocking external API with wiremock. Prepare a docker-compose bootstrap project for wiremock. https://bitbucket.org/agaleraegea/docker-compose-wiremock" />
-<meta property="og:description" content="Mocking external API with wiremock. Prepare a docker-compose bootstrap project for wiremock. https://bitbucket.org/agaleraegea/docker-compose-wiremock" />
+<meta name="description" content="Mocking external API with wiremock. Prepare a docker-compose bootstrap project for wiremock. https://github.com/adriangalera/docker-compose-wiremock" />
+<meta property="og:description" content="Mocking external API with wiremock. Prepare a docker-compose bootstrap project for wiremock. https://github.com/adriangalera/docker-compose-wiremock" />
 <link rel="canonical" href="https://adriangalera.github.io/mocking-external-apis-wiremock/" />
 <meta property="og:url" content="https://adriangalera.github.io/mocking-external-apis-wiremock/" />
 <meta property="og:site_name" content="Adrian Galera blog" />
@@ -45,7 +45,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2018-11-27T00:00:00+01:00" />
 <script type="application/ld+json">
-{"url":"https://adriangalera.github.io/mocking-external-apis-wiremock/","headline":"Mocking external API with wiremock","dateModified":"2018-11-27T00:00:00+01:00","datePublished":"2018-11-27T00:00:00+01:00","image":"https://adriangalera.github.io/assets/img/avatars/me.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://adriangalera.github.io/mocking-external-apis-wiremock/"},"description":"Mocking external API with wiremock. Prepare a docker-compose bootstrap project for wiremock. https://bitbucket.org/agaleraegea/docker-compose-wiremock","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"dateModified":"2018-11-27T00:00:00+01:00","image":"https://adriangalera.github.io/assets/img/avatars/me.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://adriangalera.github.io/mocking-external-apis-wiremock/"},"url":"https://adriangalera.github.io/mocking-external-apis-wiremock/","description":"Mocking external API with wiremock. Prepare a docker-compose bootstrap project for wiremock. https://github.com/adriangalera/docker-compose-wiremock","headline":"Mocking external API with wiremock","@type":"BlogPosting","datePublished":"2018-11-27T00:00:00+01:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     <!-- Manual seo tags -->
@@ -164,32 +164,36 @@
 <p>Quoting from their website:</p>
 <blockquote><p>WireMock is a simulator for HTTP-based APIs. Some might consider it a <strong>service virtualization</strong> tool or a <strong>mock server</strong>.</p></blockquote>
 <p>At its core is a Java software that receives HTTP requests with some mapped requests to responses</p>
-<p>TL;DR: <a href="https://bitbucket.org/agaleraegea/docker-compose-wiremock/" target="_blank" rel="noopener">https://bitbucket.org/agaleraegea/docker-compose-wiremock/</a></p>
+<p>TL;DR: <a href="https://github.com/adriangalera/docker-compose-wiremock/" target="_blank" rel="noopener">https://github.com/adriangalera/docker-compose-wiremock/</a></p>
 <h3>Configuring wiremock</h3>
 <p>Configuring wiremock only consists on defining the requests to be mocked and the response that should be answered on the presence of the mocked request.</p>
 <h3>Docker</h3>
 <p>One nice way of integrate wiremock with your current testing environment is using it inside docker. There's this project <a href="https://github.com/rodolpheche/wiremock-docker">https://github.com/rodolpheche/wiremock-docker</a> that provides the wiremock service to docker.</p>
 <p>In order to configure it, you must create the following folder structure:</p>
-<pre>.
-.
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
 ├── Dockerfile
 └── stubs
     ├── __files
     │   └── response.json
     └── mappings
         └── request.json
-</pre>
+</code></pre></div></div>
+
 <p>The mappings folder contains all the mocked requests definitions and __files contains the response JSON for the mocked requests as shown before.</p>
 <h3>Example</h3>
 <p>Let's say we have an external API developed by another team in the company under the host externalapi.com and is not yet finished. The call that our service needs to perform is externalapi.com/v1/resource/resource1 and will respond:</p>
-<pre lang="json" class="attributes" title="External API response">{
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
     "hello":"world"
 }
-</pre>
+</code></pre></div></div>
 <p>Let's configure wiremock, so we can start working on our service in parallel with the other team.</p>
-<ol>
-<li>Configure the request mapping
-<pre lang="json" class="attributes" title="request.json">{
+
+<ul>
+  <li>Configure the request mapping</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
     "request":{
         "method":"GET",
         "urlPathPattern":"/v1/resource/([a-zA-Z0-9-\\_]*)"
@@ -202,29 +206,33 @@
         }
     }
 }
-</pre>
-</li>
-<li>Configure the response
-<pre lang="json" class="attributes" title="response.json">{
+</code></pre></div></div>
+<ul>
+  <li>Configure the response</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
     "hello":"world"
-}</pre>
-</li>
-<li>Test it
-<pre language="bash" class="attributes" title="Testing wiremock">docker-compose up --build -d
+}
+</code></pre></div></div>
+
+<ul>
+  <li>Test it</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up --build -d
 curl http://localhost:7070/v1/resource/resource1
 {
 "hello" : "world"
 }
-</pre>
-<p>Yay! It worked!&lt;/li&gt;
-&lt;/ol&gt;
+</code></pre></div></div>
+
+<p>Yay! It worked!</p>
+
 <p>The only missing point is configure the actual component to point to the mocked server. For example with <a href="https://github.com/Netflix/ribbon">ribbon</a>:</p>
-<div>
-<div>
-<pre>externalservice.ribbon.listOfServers=http://localhost:7070</pre>
-</div>
-</div>
-</p></li></ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>externalservice.ribbon.listOfServers=http://localhost:7070
+</code></pre></div></div>
 
     
   </section>
@@ -270,6 +278,10 @@ curl http://localhost:7070/v1/resource/resource1
     
 
     
+    <a class="button" href="/tags#docker">
+      <p><i class="fa fa-tag fa-fw"></i> docker</p>
+    </a>
+    
     <a class="button" href="/tags#e2e">
       <p><i class="fa fa-tag fa-fw"></i> e2e</p>
     </a>
@@ -280,6 +292,10 @@ curl http://localhost:7070/v1/resource/resource1
     
     <a class="button" href="/tags#testing">
       <p><i class="fa fa-tag fa-fw"></i> testing</p>
+    </a>
+    
+    <a class="button" href="/tags#wiremock">
+      <p><i class="fa fa-tag fa-fw"></i> wiremock</p>
     </a>
     
   </div>

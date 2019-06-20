@@ -45,7 +45,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-06-15T00:00:00+02:00" />
 <script type="application/ld+json">
-{"url":"https://adriangalera.github.io/grafana-nginx-reverse-proxy-docker/","headline":"Grafana, nginx reverse-proxy and Docker","dateModified":"2019-06-15T00:00:00+02:00","datePublished":"2019-06-15T00:00:00+02:00","image":"https://adriangalera.github.io/assets/img/avatars/me.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://adriangalera.github.io/grafana-nginx-reverse-proxy-docker/"},"description":"Deploy Grafana using Docker and nginx as reverse-proxy providing health-check and more advanced features such as blocking requests.","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"dateModified":"2019-06-15T00:00:00+02:00","image":"https://adriangalera.github.io/assets/img/avatars/me.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://adriangalera.github.io/grafana-nginx-reverse-proxy-docker/"},"url":"https://adriangalera.github.io/grafana-nginx-reverse-proxy-docker/","description":"Deploy Grafana using Docker and nginx as reverse-proxy providing health-check and more advanced features such as blocking requests.","headline":"Grafana, nginx reverse-proxy and Docker","@type":"BlogPosting","datePublished":"2019-06-15T00:00:00+02:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     <!-- Manual seo tags -->
@@ -170,22 +170,25 @@
 <h5>The solution</h5>
 <p>Now that we have discarded the scripting, we chose nginx to implement the reverse proxy and we delegate the health-check endpoint to a static content under webroot of nginx.</p>
 <p>Hereunder is the Dockerfile, which is self-explanatory:</p>
-<pre>FROM grafana/grafana
-EXPOSE 8080 8080
-COPY health-check /health-check
-COPY start-nginx-grafana.sh /start-nginx-grafana.sh
-USER root
-RUN apt-get update &amp;&amp; apt-get install -y nginx
-RUN chown -R grafana:grafana /etc/nginx/nginx.conf /var/log/nginx /var/lib/nginx /start-nginx-grafana.sh
-RUN chmod +x /start-nginx-grafana.sh
-USER grafana
-RUN cp /health-check/nginx.conf /etc/nginx/nginx.conf
-ENTRYPOINT [ "/start-nginx-grafana.sh" ]</pre>
+
+<div class="language-docker highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> grafana/grafana</span>
+<span class="k">EXPOSE</span><span class="s"> 8080 8080</span>
+<span class="k">COPY</span><span class="s"> health-check /health-check</span>
+<span class="k">COPY</span><span class="s"> start-nginx-grafana.sh /start-nginx-grafana.sh</span>
+<span class="k">USER</span><span class="s"> root</span>
+<span class="k">RUN </span>apt-get update &amp;amp<span class="p">;</span>&amp;amp<span class="p">;</span> apt-get <span class="nb">install</span> <span class="nt">-y</span> nginx
+<span class="k">RUN </span><span class="nb">chown</span> <span class="nt">-R</span> grafana:grafana /etc/nginx/nginx.conf /var/log/nginx /var/lib/nginx /start-nginx-grafana.sh
+<span class="k">RUN </span><span class="nb">chmod</span> +x /start-nginx-grafana.sh
+<span class="k">USER</span><span class="s"> grafana</span>
+<span class="k">RUN </span><span class="nb">cp</span> /health-check/nginx.conf /etc/nginx/nginx.conf
+<span class="k">ENTRYPOINT</span><span class="s"> [ "/start-nginx-grafana.sh" ]</span>
+</code></pre></div></div>
+
 <p>The tricky part we found was that installing nginx required sudo permissions, however this could be easily achieved changing to the user root in the Dockerfile. Grafana service runs as grafana user, so, some permissions of files and folders of the nginx services need to be changed to the grafana user.</p>
 <p>The following snippet shows the nginx.conf file:</p>
-<pre>worker_processes  1;
-pid /var/lib/nginx/nginx.pid;
 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>worker_processes  1;
+pid /var/lib/nginx/nginx.pid;
 
 events {
     worker_connections  1024;
@@ -214,9 +217,11 @@ http {
         #    return 403;
         #}
     }
-}</pre>
+}
+</code></pre></div></div>
+
 <p>This configuration enables the health-check endpoint to be compatible with our governance tool. Precisely nginx returns the file health-check.json in response to this endpoint. nginx proxies any other request to the Grafana instance running inside the container. The presence of the nginx reverse proxy enables the user to implement more features, like blocking the Grafana API, etc...</p>
-<p>You can check the code to provide Grafana,nginx and Docker here: <a href="https://bitbucket.org/agaleraegea/nginx-grafana-docker/src/master/">https://bitbucket.org/agaleraegea/nginx-grafana-docker/src/master/</a></p>
+<p>You can check the code to provide Grafana,nginx and Docker here: <a href="https://github.com/adriangalera/nginx-grafana-docker">https://github.com/adriangalera/nginx-grafana-docker</a></p>
 
     
   </section>
@@ -290,6 +295,13 @@ http {
 <!-- Post navigation -->
 
   <div id="post-nav">
+    
+    <div id="previous-post">
+        <p>Next post</p>
+        <a alt="Java Unit Test to check UTF-8 chars" href="/java-test-utf8/">
+            Java Unit Test to check UTF-8 chars
+        </a>
+    </div>
     
     
 

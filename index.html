@@ -44,7 +44,7 @@
 <meta property="og:image" content="https://adriangalera.github.io/assets/img/avatars/me.png" />
 <link rel="next" href="https://adriangalera.github.io/blog/page2" />
 <script type="application/ld+json">
-{"url":"https://adriangalera.github.io/","headline":"Adrian Galera blog","image":"https://adriangalera.github.io/assets/img/avatars/me.png","name":"Adrian Galera blog","description":"My personal blog page","@type":"WebSite","@context":"https://schema.org"}</script>
+{"image":"https://adriangalera.github.io/assets/img/avatars/me.png","url":"https://adriangalera.github.io/","name":"Adrian Galera blog","description":"My personal blog page","headline":"Adrian Galera blog","@type":"WebSite","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     <!-- Manual seo tags -->
@@ -157,6 +157,31 @@
         <span>
           <header>
             <h2>
+              <a aria-label="Java Unit Test to check UTF-8 chars" class="post-link" href="/java-test-utf8/">
+                Java Unit Test to check UTF-8 chars
+              </a>
+            </h2>
+            
+
+<div class="post-info"><a href="https://www.agalera.eu" target="_blank">
+    <p class="meta">
+      Adrian Galera - June 19, 2019
+    </p></a></div>
+
+          </header>
+          <div class="excerpt">
+              During a migration to a new plattform, we have detected an issue with the character encoding. Some of the messages contained the UTF-8 replacement character (�)
+
+
+          </div>
+      </span>
+    </div>
+    
+    <div class="post-teaser">
+        
+        <span>
+          <header>
+            <h2>
               <a aria-label="Grafana, nginx reverse-proxy and Docker" class="post-link" href="/grafana-nginx-reverse-proxy-docker/">
                 Grafana, nginx reverse-proxy and Docker
               </a>
@@ -255,33 +280,6 @@ Therefore I will persist the model in DynamoDB configured to use the minimum res
           <div class="excerpt">
               What happens when you are developing a component that heavily rely on an external API you do not control? Or even worst, that still does not exist. How could you test your component without connecting the external dependency? When we don&#39;t have control over the API that we need to integrate, we need a tool like a &quot;mock server&quot;.
 This article will discover and provide a bootstrap project for wiremock. More info: wiremock.org
-
-
-
-
-          </div>
-      </span>
-    </div>
-    
-    <div class="post-teaser">
-        
-        <span>
-          <header>
-            <h2>
-              <a aria-label="Timeseries database with DynamoDB" class="post-link" href="/timeseries-db-dynamodb/">
-                Timeseries database with DynamoDB
-              </a>
-            </h2>
-            
-
-<div class="post-info"><a href="https://www.agalera.eu" target="_blank">
-    <p class="meta">
-      Adrian Galera - September 21, 2018
-    </p></a></div>
-
-          </header>
-          <div class="excerpt">
-              Working with sensor data, we need to store timestamped data in a way that was easily checked and show it in graphs. This post explains the process we follow to end up implementing a timeseries database on DynamoDB.
 
 
 
