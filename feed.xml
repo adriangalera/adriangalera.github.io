@@ -6,8 +6,8 @@
         <title>Adrian Galera blog</title>
         <atom:link href="https://adriangalera.github.io/feed.xml" rel="self" type="application/rss+xml"/>
         <link>https://adriangalera.github.io/</link>
-        <description>My personal blog page. I blog about developing things that are worth remembering for me and I wanted to shared with the community</description>
-        <pubDate>Thu, 20 Jun 2019 18:54:46 +0200</pubDate>
+        <description>My personal blog page. I blog about developing things that are worth remembering</description>
+        <pubDate>Thu, 20 Jun 2019 19:01:21 +0200</pubDate>
         <webfeeds:icon>https://adriangalera.github.io/assets/img/avatars/me-100x100.png</webfeeds:icon>
         
         <item>
