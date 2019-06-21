@@ -7,10 +7,12 @@
         <atom:link href="https://www.agalera.eu/feed.xml" rel="self" type="application/rss+xml"/>
         <link>https://www.agalera.eu/</link>
         <description>My personal developer blog page.</description>
-        <pubDate>Fri, 21 Jun 2019 16:32:25 +0200</pubDate>
+        <pubDate>Fri, 21 Jun 2019 17:38:04 +0200</pubDate>
         <webfeeds:icon>https://www.agalera.eu/assets/img/avatars/me-100x100.png</webfeeds:icon>
         
         <item>
+            
+                <enclosure length="1" type="image" url="https://www.agalera.eu/assets/img/posts/java-utf8/featured.jpg"/>
             
             <title>Java Unit Test to check UTF-8 chars</title>
             <link>https://www.agalera.eu/java-test-utf8/</link>
@@ -53,6 +55,8 @@
         </item>
         
         <item>
+            
+                <enclosure length="1" type="image" url="https://www.agalera.eu/assets/img/posts/grafana/featured.jpg"/>
             
             <title>Grafana, nginx reverse-proxy and Docker</title>
             <link>https://www.agalera.eu/grafana-nginx-reverse-proxy-docker/</link>
@@ -127,6 +131,8 @@ http {
         
         <item>
             
+                <enclosure length="1" type="image" url="https://www.agalera.eu/assets/img/posts/oboe/featured.png"/>
+            
             <title>Parse huge local json file</title>
             <link>https://www.agalera.eu/parse-huge-local-json-file/</link>
             <guid isPermaLink="false">/parse-huge-local-json-file/</guid>
@@ -172,6 +178,8 @@ http {
         </item>
         
         <item>
+            
+                <enclosure length="1" type="image" url="https://www.agalera.eu/assets/img/posts/relationalmodel/featured.jpg"/>
             
             <title>Relational model in DynamoDB</title>
             <link>https://www.agalera.eu/relational-model-dynamodb/</link>
@@ -370,6 +378,8 @@ http {
         </item>
         
         <item>
+            
+                <enclosure length="1" type="image" url="https://www.agalera.eu/assets/img/posts/wiremock/featured.jpg"/>
             
             <title>Mocking external API with wiremock</title>
             <link>https://www.agalera.eu/mocking-external-apis-wiremock/</link>
