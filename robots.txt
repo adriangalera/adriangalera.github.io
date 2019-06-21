@@ -1,1 +1,1 @@
-Sitemap: https://adriangalera.github.io/sitemap.xml
+Sitemap: https://www.agalera.eu/sitemap.xml

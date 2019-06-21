@@ -4,16 +4,16 @@
     xmlns:webfeeds="http://webfeeds.org/rss/1.0">
     <channel>
         <title>Adrian Galera blog</title>
-        <atom:link href="https://adriangalera.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-        <link>https://adriangalera.github.io/</link>
+        <atom:link href="https://www.agalera.eu/feed.xml" rel="self" type="application/rss+xml"/>
+        <link>https://www.agalera.eu/</link>
         <description>My personal developer blog page.</description>
-        <pubDate>Fri, 21 Jun 2019 07:06:33 +0200</pubDate>
-        <webfeeds:icon>https://adriangalera.github.io/assets/img/avatars/me-100x100.png</webfeeds:icon>
+        <pubDate>Fri, 21 Jun 2019 16:32:25 +0200</pubDate>
+        <webfeeds:icon>https://www.agalera.eu/assets/img/avatars/me-100x100.png</webfeeds:icon>
         
         <item>
             
             <title>Java Unit Test to check UTF-8 chars</title>
-            <link>https://adriangalera.github.io/java-test-utf8/</link>
+            <link>https://www.agalera.eu/java-test-utf8/</link>
             <guid isPermaLink="false">/java-test-utf8/</guid>
             <description>&lt;p&gt;During a migration to a new plattform, we have detected an issue with the character encoding. Some of the messages contained the UTF-8 replacement character (�)&lt;/p&gt;
 
@@ -55,7 +55,7 @@
         <item>
             
             <title>Grafana, nginx reverse-proxy and Docker</title>
-            <link>https://adriangalera.github.io/grafana-nginx-reverse-proxy-docker/</link>
+            <link>https://www.agalera.eu/grafana-nginx-reverse-proxy-docker/</link>
             <guid isPermaLink="false">/grafana-nginx-reverse-proxy-docker/</guid>
             <description>&lt;p&gt;We want to start monitoring our AWS resources using Cloudwatch. The API is awesome, however its visualisation tool sucks, that's why we choose Grafana to present the data.&lt;/p&gt;
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
@@ -128,7 +128,7 @@ http {
         <item>
             
             <title>Parse huge local json file</title>
-            <link>https://adriangalera.github.io/parse-huge-local-json-file/</link>
+            <link>https://www.agalera.eu/parse-huge-local-json-file/</link>
             <guid isPermaLink="false">/parse-huge-local-json-file/</guid>
             <description>&lt;p&gt;I need to provide a UI to analyse the results of a long-running process that generates huge JSON file whose size is in GB order.&lt;/p&gt;
 &lt;p&gt;In the article I will talk about the solution implemented using the HTML5 FileReader API and the mighty &lt;a href=&quot;#using-oboe-js&quot;&gt;oboe.js&lt;/a&gt; library&lt;/p&gt;
@@ -174,7 +174,7 @@ http {
         <item>
             
             <title>Relational model in DynamoDB</title>
-            <link>https://adriangalera.github.io/relational-model-dynamodb/</link>
+            <link>https://www.agalera.eu/relational-model-dynamodb/</link>
             <guid isPermaLink="false">/relational-model-dynamodb/</guid>
             <description>&lt;p&gt;For a new project that I am starting, I have the requirement to implement a highly relational model in AWS. The most important condition is to keep costs as low as possible, since this is a personal project and I do not want to get poor.&lt;/p&gt;
 &lt;p&gt;Therefore I will persist the model in DynamoDB configured to use the minimum resources as possible.&lt;/p&gt;
@@ -372,7 +372,7 @@ http {
         <item>
             
             <title>Mocking external API with wiremock</title>
-            <link>https://adriangalera.github.io/mocking-external-apis-wiremock/</link>
+            <link>https://www.agalera.eu/mocking-external-apis-wiremock/</link>
             <guid isPermaLink="false">/mocking-external-apis-wiremock/</guid>
             <description>&lt;p class=&quot;p1&quot;&gt;What happens when you are developing a component that heavily rely on an external API you do not control? Or even worst, that still does not exist. How could you test your component without connecting the external dependency? When we don't have control over the API that we need to integrate, we need a tool like a &quot;mock server&quot;.&lt;/p&gt;
 &lt;p class=&quot;p1&quot;&gt;This article will discover and provide a bootstrap project for wiremock. More info: &lt;a href=&quot;http://wiremock.org/&quot;&gt;wiremock.org&lt;/a&gt;&lt;/p&gt;
@@ -455,10 +455,10 @@ curl http://localhost:7070/v1/resource/resource1
         
         <item>
             
-                <enclosure length="1" type="image" url="https://adriangalera.github.io/assets/img/posts/dynamodbts/featured.jpg"/>
+                <enclosure length="1" type="image" url="https://www.agalera.eu/assets/img/posts/dynamodbts/featured.jpg"/>
             
             <title>Timeseries database with DynamoDB</title>
-            <link>https://adriangalera.github.io/timeseries-db-dynamodb/</link>
+            <link>https://www.agalera.eu/timeseries-db-dynamodb/</link>
             <guid isPermaLink="false">/timeseries-db-dynamodb/</guid>
             <description>&lt;p&gt;Working with sensor data, we need to store timestamped data in a way that was easily checked and show it in graphs. This post explains the process we follow to end up implementing a timeseries database on DynamoDB.&lt;/p&gt;
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
@@ -529,10 +529,10 @@ curl http://localhost:7070/v1/resource/resource1
         
         <item>
             
-                <enclosure length="1" type="image" url="https://adriangalera.github.io/assets/img/posts/rpiqa/featured-image.jpg"/>
+                <enclosure length="1" type="image" url="https://www.agalera.eu/assets/img/posts/rpiqa/featured-image.jpg"/>
             
             <title>Raspberry Pi for QA</title>
-            <link>https://adriangalera.github.io/raspberry-pi-qa/</link>
+            <link>https://www.agalera.eu/raspberry-pi-qa/</link>
             <guid isPermaLink="false">/raspberry-pi-qa/</guid>
             <description>&lt;p&gt;On a previous company the QA team needed to perform some scenarios that were difficult to reproduce, for instance force a buffering event. Their setup require deep technical understanding of Linux. In order to ease its world, I decided to create a neat service running on a Raspberry Pi.&lt;/p&gt;
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
