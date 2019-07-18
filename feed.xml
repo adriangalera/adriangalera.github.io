@@ -7,8 +7,103 @@
         <atom:link href="https://www.agalera.eu/feed.xml" rel="self" type="application/rss+xml"/>
         <link>https://www.agalera.eu/</link>
         <description>My personal developer blog page.</description>
-        <pubDate>Mon, 01 Jul 2019 22:05:07 +0200</pubDate>
+        <pubDate>Thu, 18 Jul 2019 19:10:36 +0200</pubDate>
         <webfeeds:icon>https://www.agalera.eu/assets/img/avatars/me-100x100.png</webfeeds:icon>
+        
+        <item>
+            
+                <enclosure length="1" type="image" url="https://www.agalera.eu/assets/img/posts/gradle-bom/featured.png"/>
+            
+            <title>Publishing versions in Gradle BOM</title>
+            <link>https://www.agalera.eu/gradle-bom-publish-dependency-version/</link>
+            <guid isPermaLink="false">/gradle-bom-publish-dependency-version/</guid>
+            <description>&lt;p&gt;We are planning to use the concept of Bill Of Materials (BOM) to define the version of our dependencies. However this externalization do not allow us to have the version variable in the projects that import the bom. Here you will find out how we managed to get the version in our components.&lt;/p&gt;
+&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+&lt;h2&gt;Bill of Materials&lt;/h2&gt;
+&lt;p&gt;Everyone knows dependencies are hell, specially dealing with versions. That’s why we want to centralize all the version definition in a Bill Of Materials file. This approach is used for instance by &lt;a href=&quot;https://spring.io/blog/2015/02/23/better-dependency-management-for-gradle&quot;&gt;Spring framework&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;However in our projects we need to provide the current version of libraries for some external component configuration.&lt;/p&gt;
+
+&lt;p&gt;In this sense, the two requirements collide because the versions cannot be extracted from the bom file.&lt;/p&gt;
+
+&lt;h2&gt;Publishing the versions&lt;/h2&gt;
+
+&lt;p&gt;Here’s our bom gradle script:&lt;/p&gt;
+
+&lt;div class=&quot;language-groovy highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;plugins&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'java'&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'maven-publish'&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'io.spring.dependency-management'&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;version&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'1.0.6.RELEASE'&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;group&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'com.example'&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;versions&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;library1:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'5.14.13'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;library2:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'1.0.6.RELEASE'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;  
+&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;dependencyManagement&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;dependencies&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;group:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'com.example'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'library1'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;version:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;versions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;library1&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;group:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'com.example'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'library2'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;version:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;versions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;library2&lt;/span&gt;    
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;publishing&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;repositories&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;maven&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'https://repo.com/maven-releases'&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;credentials&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;credentials&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;publications&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;mavenBom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MavenPublication&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;artifacts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;When we execute the publish it correctly generates the bom file. However the versions are not accesible from the projects that import the bom.&lt;/p&gt;
+
+&lt;p&gt;In order to extract the version, we can add it as properties to the bom file:&lt;/p&gt;
+
+&lt;div class=&quot;language-groovy highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;n&quot;&gt;publications&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;mavenBom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MavenPublication&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;artifacts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;pom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;withXml&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;kt&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;propertiesNode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;properties&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;versions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;entry&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;propertiesNode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;appendNode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;entry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;entry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;asNode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;propertiesNode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;It took like 3 hours to get these 3 lines working because Groovy sucks … After that we get the versions in the pom.xml:&lt;/p&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;project&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://maven.apache.org/POM/4.0.0&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xsi:schemaLocation=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns:xsi=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;modelVersion&amp;gt;&lt;/span&gt;4.0.0&lt;span class=&quot;nt&quot;&gt;&amp;lt;/modelVersion&amp;gt;&lt;/span&gt;
+  ...
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;properties&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;library1&amp;gt;&lt;/span&gt;5.14.13&lt;span class=&quot;nt&quot;&gt;&amp;lt;/library1&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;library2&amp;gt;&lt;/span&gt;1.0.6.RELEASE&lt;span class=&quot;nt&quot;&gt;&amp;lt;/library2&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/properties&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/project&amp;gt;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;From the project that want to use the bom we can access these versions like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-groovy highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;dependencyManagement&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;importedProperties&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'library1'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+            <pubDate>Thu, 18 Jul 2019 00:00:00 +0200</pubDate>
+        </item>
         
         <item>
             
