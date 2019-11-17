@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/img/avatars/me-100x100.png" type="image/x-icon">
+
+    <!-- Canonical -->
+    <!--link rel="canonical" href="https://www.agalera.eu/unix-useful-commands/" -->
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Adrian Galera blog" href="https://www.agalera.eu/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Google Analytics -->
+    
+    
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-126206451-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+    
+    
+    
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Unix useful commands | Adrian Galera blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Unix useful commands" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Compilation of unix (Linux/Mac OS X) useful commands, for instance, getting env variables by variables" />
+<meta property="og:description" content="Compilation of unix (Linux/Mac OS X) useful commands, for instance, getting env variables by variables" />
+<link rel="canonical" href="https://www.agalera.eu/unix-useful-commands/" />
+<meta property="og:url" content="https://www.agalera.eu/unix-useful-commands/" />
+<meta property="og:site_name" content="Adrian Galera blog" />
+<meta property="og:image" content="https://www.agalera.eu/assets/img/posts/unix/featured-image.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-17T00:00:00+01:00" />
+<script type="application/ld+json">
+{"url":"https://www.agalera.eu/unix-useful-commands/","headline":"Unix useful commands","dateModified":"2019-11-17T00:00:00+01:00","datePublished":"2019-11-17T00:00:00+01:00","image":"https://www.agalera.eu/assets/img/posts/unix/featured-image.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/unix-useful-commands/"},"description":"Compilation of unix (Linux/Mac OS X) useful commands, for instance, getting env variables by variables","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>Unix useful commands | Adrian Galera blog</title>
+    <meta name="description" content="This article is a compilation of Unix useful commands to solve multiple issues found in my career.">
+    -->
+</head>
+
+  <body>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Adrian Galera blog" href="/">
+        Adrian Galera blog
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article class="feature-image">
+  <header id="main" style="">
+    
+      <h2 id="Unix+useful+commands" class="title">Unix useful commands</h2>
+      
+
+<div class="post-info"><a href="https://www.agalera.eu" target="_blank">
+    <p class="meta">
+      Adrian Galera - November 17, 2019
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <p>This article is a compilation of Unix useful commands to solve multiple issues found in my career.</p>
+<p><!--more--></p>
+<h2>Environment variables by variable</h2>
+
+<p>Image we need to access the contents of an environment variable, but its name is stored in another variable.</p>
+
+<p>For example:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">DEV_AWS_ACCESS_KEY_ID</span><span class="o">=</span><span class="s2">"1234-dev"</span>
+<span class="nv">RD_AWS_ACCESS_KEY_ID</span><span class="o">=</span><span class="s2">"abcd-prd"</span>
+</code></pre></div></div>
+<p>This could happen for instance while configuring multiple AWS in a CI system.</p>
+
+<p>Let’s continue with the example, the CI system provide a variable called “stage”, which can be <code class="highlighter-rouge">dev</code> or <code class="highlighter-rouge">prd</code>; then we want to prepend the content of this variable to get the credentials to the proper account:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">CUR_ENV</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">stage</span><span class="k">}</span> | <span class="nb">tr </span>a-z A-Z<span class="sb">`</span>
+<span class="nv">ENV_ACCESS_KEY</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">CUR_ENV</span><span class="k">}</span><span class="s2">_AWS_ACCESS_KEY_ID"</span>
+</code></pre></div></div>
+
+<p>Now the magic comes, if this the shell is based in <code class="highlighter-rouge">bash</code>, we could the technique called as “variable indirection”, like this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">ACTUAL_KEY</span><span class="o">=</span><span class="nb">echo</span> <span class="k">${</span><span class="p">!ENV_ACCESS_KEY</span><span class="k">}</span>
+</code></pre></div></div>
+
+<p>However, this will not work on all the shells, a more general solution could be:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">eval </span><span class="nv">ACTUAL_KEY</span><span class="o">=</span><span class="se">\$</span><span class="nv">$ENV_ACCESS_KEY</span>
+</code></pre></div></div>
+
+<p>However, there might be security implications by using <code class="highlighter-rouge">eval</code></p>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.agalera.eu/unix-useful-commands/" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=https://www.agalera.eu/unix-useful-commands/&text=Unix+useful+commands%20%7C%20Adrian+Galera+blog:%20https://www.agalera.eu/unix-useful-commands/" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+                
+        <li>
+            <a href="mailto:?subject=Unix+useful+commands%20%7C%20Adrian+Galera+blog&body=:%20https://www.agalera.eu/unix-useful-commands/" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/tags#linux">
+      <p><i class="fa fa-tag fa-fw"></i> linux</p>
+    </a>
+    
+    <a class="button" href="/tags#macosx">
+      <p><i class="fa fa-tag fa-fw"></i> macosx</p>
+    </a>
+    
+    <a class="button" href="/tags#scripting">
+      <p><i class="fa fa-tag fa-fw"></i> scripting</p>
+    </a>
+    
+    <a class="button" href="/tags#unix">
+      <p><i class="fa fa-tag fa-fw"></i> unix</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="Discovering terraform" href="/discovering-terraform/">
+            Discovering terraform
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('/assets/img/posts/unix/featured-image.jpg');
+  }
+</style>
+    </div>
+    
+
+
+
+  </body>
+</html>
