@@ -1,6 +1,16 @@
 [
    
       {
+        "title"    : "Lombok tricks",
+        "category" : "",
+        "tags"     : " java, lombok",
+        "url"      : "/lombok-tricks/",
+        "date"     : "December 31, 2019",
+        "excerpt"  : "\nLombok is this very beatiful tool to reduce the burden of writing Java code, but sometimes it could \nbe hard to tame. In this article I write down some issues and solutions I found while using lombok.\n\n\n\nInmutable obj...",
+        "content"  : "\nLombok is this very beatiful tool to reduce the burden of writing Java code, but sometimes it could \nbe hard to tame. In this article I write down some issues and solutions I found while using lombok.\n\n\n\nInmutable objects and Jackson\n\nLet’s say we want to have an inmutable object (@Value) such as:\n\n@Value\n@Builder\npublic class Foo {\n\n    private String id;\n    private String description;\n}\n\n\nIf that’s the structure returned by some API, one could do the following to consume it:\n\nRestTemplate restTemplate = new RestTemplate();\nHttpEntity&amp;lt;String&amp;gt; entity = new HttpEntity&amp;lt;&amp;gt;();\ntry {\n    ResponseEntity&amp;lt;Foo&amp;gt; response = restTemplate.exchange(url HttpMethod.GET, entity,Foo.class);\n    return Optional.ofNullable(response.getBody());\n} catch (Exception ex) {\n    log.error(&quot;Error requesting to API: {}&quot;, ex);\n}\n\n\nHowever, in this case, some exception like the following will be thrown by Jackson JSON deserialization library:\n\nCaused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: \nCannot construct instance of `com.gal.Foo` (no Creators, like \ndefault construct, exist): cannot deserialize from Object value \n(no delegate- or property-based Creator)\n\n\nThe solution for this is pretty simple, we need to configure lombok with a private no-arg constructor and a constructor with all arguments:\n\n@Value\n@NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)\n@AllArgsConstructor\n@Builder\npublic class Foo {\n\n    private String id;\n    private String description;\n}\n\n\nThis way, Jackson can deserialize the object with minimal lombok configuration\n"
+      } ,
+   
+      {
         "title"    : "Unix useful commands",
         "category" : "",
         "tags"     : " unix, scripting, linux, macosx",
