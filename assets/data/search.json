@@ -1,6 +1,16 @@
 [
    
       {
+        "title"    : "Java big memory limit",
+        "category" : "",
+        "tags"     : " java, jvm, jvmOptions, profiling",
+        "url"      : "/java-big-memory-limit/",
+        "date"     : "February 3, 2020",
+        "excerpt"  : "While at work, we were fine tuning some java application, to do that, we were setting up jvm options, such as -Xmx, -Xms and so on. That lead me to asking me the foll...",
+        "content"  : "While at work, we were fine tuning some java application, to do that, we were setting up jvm options, such as -Xmx, -Xms and so on. That lead me to asking me the following question:\n\n\n  What would happen if you start the jvm with the minimum memory to be higher than the computer memory?\n\n\n\n\nOur initial assumption is that -Xms will try to reserve the specified amount of memory. If that is bigger than computer memory, the JVM will stop with a OutOfMemoryError and/or the SO will start swapping and of course cause really poor performance.\n\nSetting up\n\nTo answer that question, I prepared a little experiment. A very silly gradle to project that prints something:\n\nhttps://github.com/adriangalera/jvm-big-xms\n\nBasically it runs this dummy code:\n\npublic class Boom {\n  \n    public static void main(String[] args) throws InterruptedException {\n        while (true) {\n            System.out.println(&quot;I&#39;m here&quot;);\n            Thread.sleep(1000);\n        }\n    }\n}\n\nAnd then, generate the jar file:\n./gradlew build\n\n\nFirst experiment\n\nFirst thing to do is run in a controlled environment, let’s say with 2 GB of initial memory:\n\njava -Xms2G -jar build/libs/boom-1.0-SNAPSHOT.jar\n\n\nThe program is responding, the memory profile seems fine; everything works as expected:\n\n\n\nLet’s go wild!\n\nNow, I’ll try with more memory than the available for the computer:\n\njava -Xms100G -jar build/libs/boom-1.0-SNAPSHOT.jar\n\n\nProgram is responding, and checking the memory profile I got a surprise: it is resporting 100GB!\n\n\n\n\n\nAfter some discussion with some collegues, we agreed that this did not explode at the begining because the JVM is using virtual memory. In Linux setup this allocated in 64 bit for userland processes.\n\nThe initial assumption also was wrong about swap, we check swap usage and was completely normal.\n\nTherefore, the JVM does not really reserve the initial memory as it seems initially.\n\nLet’s break it\n\nIf we want to actually pre reserve the memory, there’s a jvm option for that:\n\njava -XX:+AlwaysPreTouch -Xms100g -jar build/libs/boom-1.0-SNAPSHOT.jar \n\n\nExecuting this, the computer will become unusuable because the JVM is taking the whole memory and the SO is taking the rest of the swap disk.\n"
+      } ,
+   
+      {
         "title"    : "Lombok tricks",
         "category" : "",
         "tags"     : " java, lombok",

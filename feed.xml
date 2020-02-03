@@ -7,8 +7,89 @@
         <atom:link href="https://www.agalera.eu/feed.xml" rel="self" type="application/rss+xml"/>
         <link>https://www.agalera.eu/</link>
         <description>My personal developer blog page.</description>
-        <pubDate>Tue, 31 Dec 2019 21:41:17 +0100</pubDate>
+        <pubDate>Mon, 03 Feb 2020 23:20:03 +0100</pubDate>
         <webfeeds:icon>https://www.agalera.eu/assets/img/avatars/me-100x100.png</webfeeds:icon>
+        
+        <item>
+            
+                <enclosure length="1" type="image" url="https://www.agalera.eu/assets/img/posts/java-xms/featured-image.jpg"/>
+            
+            <title>Java big memory limit</title>
+            <link>https://www.agalera.eu/java-big-memory-limit/</link>
+            <guid isPermaLink="false">/java-big-memory-limit/</guid>
+            <description>&lt;p&gt;While at work, we were fine tuning some java application, to do that, we were setting up jvm options, such as &lt;code class=&quot;highlighter-rouge&quot;&gt;-Xmx&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;-Xms&lt;/code&gt; and so on. That lead me to asking me the following question:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;What would happen if you start the jvm with the minimum memory to be higher than the computer memory?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;p&gt;Our initial assumption is that &lt;code class=&quot;highlighter-rouge&quot;&gt;-Xms&lt;/code&gt; will try to reserve the specified amount of memory. If that is bigger than computer memory, the JVM will stop with a &lt;code class=&quot;highlighter-rouge&quot;&gt;OutOfMemoryError&lt;/code&gt; and/or the SO will start swapping and of course cause really poor performance.&lt;/p&gt;
+
+&lt;h2 id=&quot;setting-up&quot;&gt;Setting up&lt;/h2&gt;
+
+&lt;p&gt;To answer that question, I prepared a little experiment. A very silly gradle to project that prints something:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/adriangalera/jvm-big-xms&quot;&gt;https://github.com/adriangalera/jvm-big-xms&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Basically it runs this dummy code:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Boom&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;InterruptedException&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;I'm here&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;nc&quot;&gt;Thread&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;And then, generate the jar file:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;./gradlew build
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;first-experiment&quot;&gt;First experiment&lt;/h2&gt;
+
+&lt;p&gt;First thing to do is run in a controlled environment, let’s say with 2 GB of initial memory:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;java -Xms2G -jar build/libs/boom-1.0-SNAPSHOT.jar
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The program is responding, the memory profile seems fine; everything works as expected:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/img/posts/java-xms/1.png&quot;&gt;&lt;img src=&quot;/assets/img/posts/java-xms/1.png&quot; alt=&quot;Memory consumption 2 GB&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;lets-go-wild&quot;&gt;Let’s go wild!&lt;/h2&gt;
+
+&lt;p&gt;Now, I’ll try with more memory than the available for the computer:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;java -Xms100G -jar build/libs/boom-1.0-SNAPSHOT.jar
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Program is responding, and checking the memory profile I got a surprise: &lt;b&gt;it is resporting 100GB!&lt;/b&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/img/posts/java-xms/2.png&quot;&gt;&lt;img src=&quot;/assets/img/posts/java-xms/2.png&quot; alt=&quot;Memory consumption 100 GB&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/img/posts/java-xms/wat.png&quot;&gt;&lt;img src=&quot;/assets/img/posts/java-xms/wat.png&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;After some discussion with some collegues, we agreed that this did not explode at the begining because the JVM is using virtual memory. In Linux setup this allocated in 64 bit for userland processes.&lt;/p&gt;
+
+&lt;p&gt;The initial assumption also was wrong about swap, we check swap usage and was completely normal.&lt;/p&gt;
+
+&lt;p&gt;Therefore, the JVM does not really reserve the initial memory as it seems initially.&lt;/p&gt;
+
+&lt;h2 id=&quot;lets-break-it&quot;&gt;Let’s break it&lt;/h2&gt;
+
+&lt;p&gt;If we want to actually pre reserve the memory, there’s a jvm option for that:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;java -XX:+AlwaysPreTouch -Xms100g -jar build/libs/boom-1.0-SNAPSHOT.jar 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Executing this, the computer will become unusuable because the JVM is taking the whole memory and the SO is taking the rest of the swap disk.&lt;/p&gt;
+</description>
+            <pubDate>Mon, 03 Feb 2020 00:00:00 +0100</pubDate>
+        </item>
         
         <item>
             
