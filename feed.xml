@@ -7,8 +7,480 @@
         <atom:link href="https://www.agalera.eu/feed.xml" rel="self" type="application/rss+xml"/>
         <link>https://www.agalera.eu/</link>
         <description>My personal developer blog page.</description>
-        <pubDate>Sat, 25 Apr 2020 11:02:51 +0200</pubDate>
+        <pubDate>Fri, 22 May 2020 14:52:34 +0200</pubDate>
         <webfeeds:icon>https://www.agalera.eu/assets/img/avatars/me-100x100.png</webfeeds:icon>
+        
+        <item>
+            
+                <enclosure length="1" type="image" url="https://www.agalera.eu/assets/img/posts/docker-gitlab/featured.jpg"/>
+            
+            <title>Gitlab improvements: caches and Docker</title>
+            <link>https://www.agalera.eu/gitlab-docker-image/</link>
+            <guid isPermaLink="false">/gitlab-docker-image/</guid>
+            <description>&lt;p&gt;Gitlab or any other CI/CD system works really great to have an automated build system. However, you can waste lots of time if you don’t think about carefully. Every job needs to download the build tools and dependencies, so that’s a lot of time that could be reduced.&lt;/p&gt;
+
+&lt;p&gt;In this article I describe two techniques to avoid wasting that much time. First one is using a cache for the dependencies and the second is using a pre-built Docker image with the required build tools.&lt;/p&gt;
+
+&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;scenario&quot;&gt;Scenario&lt;/h2&gt;
+
+&lt;p&gt;We will be building a simple react application to be deployed into an S3 Bucket. This simple react application contains a bunch of npm dependencies to simulate a real application. You can find the code here: &lt;a href=&quot;https://gitlab.com/adrian.galera/gitlab-docker-react&quot;&gt;https://gitlab.com/adrian.galera/gitlab-docker-react&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;To simulate a real work environment, let’s define a pipeline consisting in three steps:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;test: runs the tests defined in the project&lt;/li&gt;
+  &lt;li&gt;build: produce the artifact to be deployed&lt;/li&gt;
+  &lt;li&gt;deploy: deploy the artifact to an AWS S3 Bucket&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;basic-pipeline&quot;&gt;Basic pipeline&lt;/h2&gt;
+
+&lt;p&gt;In this basic pipeline, no cache nor Docker is configured. Each job needs to download everything:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;test frontend&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;node:12.13-alpine&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;test&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm install&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm test&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;build frontend&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;node:12.13-alpine&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;build&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm install&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm build&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;only&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;master&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;deploy frontend&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;node:12.13-alpine&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;deploy&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;apk add python curl build-base zip&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;curl &quot;https://s3.amazonaws.com/aws-cli/awscli-bundle.zip&quot; -o &quot;awscli-bundle.zip&quot;&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;unzip -o awscli-bundle.zip&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;aws --version&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;aws s3 sync build s3://random-bucket&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;only&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;master&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;test&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;build&lt;/code&gt; jobs use a nodejs Docker image and install all the dependencies and run the scripts. &lt;code class=&quot;highlighter-rouge&quot;&gt;deploy&lt;/code&gt; job uses the same image and downloads and install the awsclient in order to upload the built artifact to a S3 bucket.&lt;/p&gt;
+
+&lt;p&gt;Next step is to measure the time:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Test&lt;/td&gt;
+      &lt;td&gt;Build&lt;/td&gt;
+      &lt;td&gt;Deploy&lt;/td&gt;
+      &lt;td&gt;Total&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1m 24s&lt;/td&gt;
+      &lt;td&gt;1m 26s&lt;/td&gt;
+      &lt;td&gt;57 s&lt;/td&gt;
+      &lt;td&gt;3m 48 s&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;That’s a lot of time wasted downloading dependencies or installing tools. In the next section we will reduce it by using caches&lt;/p&gt;
+
+&lt;h2 id=&quot;caching-node_modules&quot;&gt;Caching node_modules&lt;/h2&gt;
+
+&lt;p&gt;We can use Gitlab cache feature to keep the contents of the node_modules folder instead of downloading them every time. It’s really simple to set it up:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;stages&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;test&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;build&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;deploy&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;test frontend&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;node:12.13-alpine&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;test&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm ci --cache .npm --prefer-offline&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm test&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;node-modules&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.npm/&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;build frontend&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;node:12.13-alpine&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;build&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm ci --cache .npm --prefer-offline&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm build&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;only&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;master&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;node-modules&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.npm/&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;deploy frontend&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;node:12.13-alpine&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;deploy&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;apk add python curl build-base zip&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;curl &quot;https://s3.amazonaws.com/aws-cli/awscli-bundle.zip&quot; -o &quot;awscli-bundle.zip&quot;&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;unzip -o awscli-bundle.zip&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;aws --version&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;aws s3 sync build s3://random-bucket&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;only&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;master&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;node-modules&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.npm/&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We only need to tell &lt;code class=&quot;highlighter-rouge&quot;&gt;npm&lt;/code&gt; to work with the cache with this line:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;npm ci --cache .npm --prefer-offline&lt;/code&gt; instead of the traditional &lt;code class=&quot;highlighter-rouge&quot;&gt;npm install&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;and configure the cache in each job:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;node-modules&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.npm/&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We are telling gitlab to store the &lt;code class=&quot;highlighter-rouge&quot;&gt;.npm&lt;/code&gt; folder in the cache named &lt;code class=&quot;highlighter-rouge&quot;&gt;node-modules&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The time improvement can observed in the following table:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Test&lt;/td&gt;
+      &lt;td&gt;Build&lt;/td&gt;
+      &lt;td&gt;Deploy&lt;/td&gt;
+      &lt;td&gt;Total&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1m 3s&lt;/td&gt;
+      &lt;td&gt;57s&lt;/td&gt;
+      &lt;td&gt;56s&lt;/td&gt;
+      &lt;td&gt;2m 54s&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;We can observe a huge decrease in the &lt;code class=&quot;highlighter-rouge&quot;&gt;test&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;build&lt;/code&gt; jobs. The time spent on deploy is pretty similar to the one before.&lt;/p&gt;
+
+&lt;h2 id=&quot;using-docker-image&quot;&gt;Using Docker image&lt;/h2&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;deploy&lt;/code&gt; job is downloading and installing the awsclient to upload the built artifact to S3 bucket. We could improve that time by using a Docker image which already contains
+the awslcient. In order to do so, we can build our own image and store it in Gitlab Container Registry. The Container registry can be found in the side bar: &lt;code class=&quot;highlighter-rouge&quot;&gt;Packages &amp;amp; Resgistries -&amp;gt; Container Registry&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;We will build an image with nodejs 12:13 and the aws client. In order to do so, we will use the following Dockerfile:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;FROM node:12.13-alpine
+RUN apk add python curl build-base zip
+RUN curl &quot;https://s3.amazonaws.com/aws-cli/awscli-bundle.zip&quot; -o &quot;awscli-bundle.zip&quot;
+RUN unzip -o awscli-bundle.zip
+RUN ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+RUN aws --version
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Basically, the Dockerfile is running the same commands as the pipeline, but only once. Once is the image is built, we push it to the registry and we start using it. No need to install anything!&lt;/p&gt;
+
+&lt;p&gt;To build and push the image, you only need to run the following commands:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker login registry.gitlab.com
+docker build &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; registry.gitlab.com/&amp;lt;user&amp;gt;/&amp;lt;project&amp;gt;/node_python_aws &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+docker push registry.gitlab.com/&amp;lt;user&amp;gt;/&amp;lt;project&amp;gt;/node_python_aws
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Once is pushed we can use it in the pipeline in combination with the cache:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;stages&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;test&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;build&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;deploy&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;test frontend&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry.gitlab.com/&amp;lt;user&amp;gt;/&amp;lt;project&amp;gt;/node_python_aws&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;test&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm ci --cache .npm --prefer-offline&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm test&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;node-modules&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.npm/&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;build frontend&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry.gitlab.com/&amp;lt;user&amp;gt;/&amp;lt;project&amp;gt;/node_python_aws&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;build&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm ci --cache .npm --prefer-offline&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm build&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;only&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;master&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;node-modules&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.npm/&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;deploy frontend&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry.gitlab.com/&amp;lt;user&amp;gt;/&amp;lt;project&amp;gt;/node_python_aws&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;deploy&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;aws s3 sync build s3://random-bucket&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;only&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;master&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;node-modules&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.npm/&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Note that in the &lt;code class=&quot;highlighter-rouge&quot;&gt;deploy&lt;/code&gt; job, we’re only using the aws command directly.&lt;/p&gt;
+
+&lt;p&gt;We can notice and decrease in time on the deploy pipeline, as we were expecting:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Test&lt;/td&gt;
+      &lt;td&gt;Build&lt;/td&gt;
+      &lt;td&gt;Deploy&lt;/td&gt;
+      &lt;td&gt;Total&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1m 9s&lt;/td&gt;
+      &lt;td&gt;1m 2s&lt;/td&gt;
+      &lt;td&gt;35s&lt;/td&gt;
+      &lt;td&gt;2m 46s&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The decrease of time, might not look like it’s very big, but that’s because that’s a very simple example.&lt;/p&gt;
+
+&lt;p&gt;For bigger projects, the improvements can be huge, since there are lots of dependencies and build tools that could be cached or pre-installed&lt;/p&gt;
+
+&lt;h2 id=&quot;wrap-up&quot;&gt;Wrap up&lt;/h2&gt;
+
+&lt;p&gt;We have seen different techniques to speedup Gitlab pipeline: using caches for dependencies and Docker image to pre-install build tools.&lt;/p&gt;
+
+&lt;p&gt;You can find the comparisson tables of the different approaches hereunder:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Improvement&lt;/td&gt;
+      &lt;td&gt;Test&lt;/td&gt;
+      &lt;td&gt;Build&lt;/td&gt;
+      &lt;td&gt;Deploy&lt;/td&gt;
+      &lt;td&gt;Total&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;1m 24s&lt;/td&gt;
+      &lt;td&gt;1m 26s&lt;/td&gt;
+      &lt;td&gt;57s&lt;/td&gt;
+      &lt;td&gt;3m 48s&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Cache&lt;/td&gt;
+      &lt;td&gt;1m 3s&lt;/td&gt;
+      &lt;td&gt;57s&lt;/td&gt;
+      &lt;td&gt;56s&lt;/td&gt;
+      &lt;td&gt;2m 54s&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Cache + Docker&lt;/td&gt;
+      &lt;td&gt;1m 9s&lt;/td&gt;
+      &lt;td&gt;1m 2s&lt;/td&gt;
+      &lt;td&gt;35s&lt;/td&gt;
+      &lt;td&gt;2m 46s&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;total&quot;&gt;Total&lt;/h3&gt;
+
+&lt;div style=&quot;height: 400px&quot;&gt;
+&lt;canvas id=&quot;total-results&quot;&gt;&lt;/canvas&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;jobs&quot;&gt;Jobs&lt;/h3&gt;
+
+&lt;div class=&quot;results-job&quot;&gt;
+    &lt;div style=&quot;height: 400px&quot;&gt;
+    &lt;canvas id=&quot;test-results&quot;&gt;&lt;/canvas&gt;
+    &lt;/div&gt;
+    &lt;div style=&quot;height: 400px&quot;&gt;
+    &lt;canvas id=&quot;build-results&quot;&gt;&lt;/canvas&gt;
+    &lt;/div&gt;
+    &lt;div style=&quot;height: 400px&quot;&gt;
+    &lt;canvas id=&quot;deploy-results&quot;&gt;&lt;/canvas&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In the charts separated by job, we can see that the time improvement for test and build comes from using caches. Regarding deploy job, the big improvement comes we have pre-installed aws client provided by the Docker image.&lt;/p&gt;
+
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;script&gt;
+new Chart( &quot;total-results&quot;, {
+    type: 'bar',
+    data: {
+        labels: [&quot;Simple&quot;, &quot;Cached&quot;, &quot;Cached + Docker&quot;],
+        datasets : [
+            {
+                label: &quot;Pipeline total elapsed time (s)&quot;,
+                data: [228,174,166],
+                &quot;fill&quot;: false,
+                &quot;backgroundColor&quot;: [
+                    &quot;rgba(255, 99, 132, 0.2)&quot;,
+                    &quot;rgba(75, 192, 192, 0.2)&quot;,
+                    &quot;rgba(153, 102, 255, 0.2)&quot;,
+                ],
+                &quot;borderColor&quot;: [
+                    &quot;rgb(255, 99, 132)&quot;,
+                    &quot;rgb(75, 192, 192)&quot;,
+                    &quot;rgb(153, 102, 255)&quot;,
+                ],
+                &quot;borderWidth&quot;: 1
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            yAxes : [{
+                &quot;ticks&quot; : {
+                    &quot;beginAtZero&quot; : true
+                }
+            }]
+        }
+    }
+});
+new Chart( &quot;test-results&quot;, {
+    type: 'bar',
+    data: {
+        labels: [&quot;Simple&quot;, &quot;Cached&quot;, &quot;Cached + Docker&quot;],
+        datasets : [
+            {
+                label: &quot;Test job elapsed time (s)&quot;,
+                data: [84,63,69],
+                &quot;fill&quot;: false,
+                &quot;backgroundColor&quot;: [
+                    &quot;rgba(255, 99, 132, 0.2)&quot;,
+                    &quot;rgba(75, 192, 192, 0.2)&quot;,
+                    &quot;rgba(153, 102, 255, 0.2)&quot;,
+                ],
+                &quot;borderColor&quot;: [
+                    &quot;rgb(255, 99, 132)&quot;,
+                    &quot;rgb(75, 192, 192)&quot;,
+                    &quot;rgb(153, 102, 255)&quot;,
+                ],
+                &quot;borderWidth&quot;: 1
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            yAxes : [{
+                &quot;ticks&quot; : {
+                    &quot;beginAtZero&quot; : true
+                }
+            }]
+        }
+    }
+});
+new Chart( &quot;build-results&quot;, {
+    type: 'bar',
+    data: {
+        labels: [&quot;Simple&quot;, &quot;Cached&quot;, &quot;Cached + Docker&quot;],
+        datasets : [
+            {
+                label: &quot;Build job elapsed time (s)&quot;,
+                data: [86,57,62],
+                &quot;fill&quot;: false,
+                &quot;backgroundColor&quot;: [
+                    &quot;rgba(255, 99, 132, 0.2)&quot;,
+                    &quot;rgba(75, 192, 192, 0.2)&quot;,
+                    &quot;rgba(153, 102, 255, 0.2)&quot;,
+                ],
+                &quot;borderColor&quot;: [
+                    &quot;rgb(255, 99, 132)&quot;,
+                    &quot;rgb(75, 192, 192)&quot;,
+                    &quot;rgb(153, 102, 255)&quot;,
+                ],
+                &quot;borderWidth&quot;: 1                
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            yAxes : [{
+                &quot;ticks&quot; : {
+                    &quot;beginAtZero&quot; : true
+                }
+            }]
+        }
+    }
+});
+new Chart( &quot;deploy-results&quot;, {
+    type: 'bar',
+    data: {
+        labels: [&quot;Simple&quot;, &quot;Cached&quot;, &quot;Cached + Docker&quot;],
+        datasets : [
+            {
+                label: &quot;Deploy job elapsed time (s)&quot;,
+                data: [57,56,35],
+                &quot;fill&quot;: false,
+                &quot;backgroundColor&quot;: [
+                    &quot;rgba(255, 99, 132, 0.2)&quot;,
+                    &quot;rgba(75, 192, 192, 0.2)&quot;,
+                    &quot;rgba(153, 102, 255, 0.2)&quot;,
+                ],
+                &quot;borderColor&quot;: [
+                    &quot;rgb(255, 99, 132)&quot;,
+                    &quot;rgb(75, 192, 192)&quot;,
+                    &quot;rgb(153, 102, 255)&quot;,
+                ],
+                &quot;borderWidth&quot;: 1                
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            yAxes : [{
+                &quot;ticks&quot; : {
+                    &quot;beginAtZero&quot; : true
+                }
+            }]
+        }
+    }
+});
+
+&lt;/script&gt;
+
+</description>
+            <pubDate>Fri, 22 May 2020 00:00:00 +0200</pubDate>
+        </item>
         
         <item>
             

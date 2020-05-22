@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/img/avatars/me-100x100.png" type="image/x-icon">
+
+    <!-- Canonical -->
+    <!--link rel="canonical" href="https://www.agalera.eu/gitlab-docker-image/" -->
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Adrian Galera blog" href="https://www.agalera.eu/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Google Analytics -->
+    
+    
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-126206451-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+    
+    
+    
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Gitlab improvements: caches and Docker | Adrian Galera blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Gitlab improvements: caches and Docker" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="This post describe how I can manage to reduce the time consumed by Gitlab pipelines by caching the dependencies and using Docker images" />
+<meta property="og:description" content="This post describe how I can manage to reduce the time consumed by Gitlab pipelines by caching the dependencies and using Docker images" />
+<link rel="canonical" href="https://www.agalera.eu/gitlab-docker-image/" />
+<meta property="og:url" content="https://www.agalera.eu/gitlab-docker-image/" />
+<meta property="og:site_name" content="Adrian Galera blog" />
+<meta property="og:image" content="https://www.agalera.eu/assets/img/posts/docker-gitlab/featured.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-05-22T00:00:00+02:00" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/gitlab-docker-image/"},"description":"This post describe how I can manage to reduce the time consumed by Gitlab pipelines by caching the dependencies and using Docker images","@type":"BlogPosting","headline":"Gitlab improvements: caches and Docker","dateModified":"2020-05-22T00:00:00+02:00","url":"https://www.agalera.eu/gitlab-docker-image/","datePublished":"2020-05-22T00:00:00+02:00","image":"https://www.agalera.eu/assets/img/posts/docker-gitlab/featured.jpg","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>Gitlab improvements: caches and Docker | Adrian Galera blog</title>
+    <meta name="description" content="Gitlab or any other CI/CD system works really great to have an automated build system. However, you can waste lots of time if you don’t think about carefully...">
+    -->
+</head>
+
+  <body>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Adrian Galera blog" href="/">
+        Adrian Galera blog
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article class="feature-image">
+  <header id="main" style="">
+    
+      <h2 id="Gitlab+improvements%3A+caches+and+Docker" class="title">Gitlab improvements: caches and Docker</h2>
+      
+
+<div class="post-info"><a href="https://www.agalera.eu" target="_blank">
+    <p class="meta">
+      Adrian Galera - May 22, 2020
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <p>Gitlab or any other CI/CD system works really great to have an automated build system. However, you can waste lots of time if you don’t think about carefully. Every job needs to download the build tools and dependencies, so that’s a lot of time that could be reduced.</p>
+
+<p>In this article I describe two techniques to avoid wasting that much time. First one is using a cache for the dependencies and the second is using a pre-built Docker image with the required build tools.</p>
+
+<p><!--more--></p>
+
+<h2 id="scenario">Scenario</h2>
+
+<p>We will be building a simple react application to be deployed into an S3 Bucket. This simple react application contains a bunch of npm dependencies to simulate a real application. You can find the code here: <a href="https://gitlab.com/adrian.galera/gitlab-docker-react">https://gitlab.com/adrian.galera/gitlab-docker-react</a>.</p>
+
+<p>To simulate a real work environment, let’s define a pipeline consisting in three steps:</p>
+
+<ul>
+  <li>test: runs the tests defined in the project</li>
+  <li>build: produce the artifact to be deployed</li>
+  <li>deploy: deploy the artifact to an AWS S3 Bucket</li>
+</ul>
+
+<h2 id="basic-pipeline">Basic pipeline</h2>
+
+<p>In this basic pipeline, no cache nor Docker is configured. Each job needs to download everything:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">test frontend</span><span class="pi">:</span>
+  <span class="na">image</span><span class="pi">:</span> <span class="s">node:12.13-alpine</span>
+  <span class="na">stage</span><span class="pi">:</span> <span class="s">test</span>
+  <span class="na">script</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">npm install</span>
+    <span class="pi">-</span> <span class="s">npm test</span>
+
+<span class="na">build frontend</span><span class="pi">:</span>
+  <span class="na">image</span><span class="pi">:</span> <span class="s">node:12.13-alpine</span>
+  <span class="na">stage</span><span class="pi">:</span> <span class="s">build</span>
+  <span class="na">script</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">npm install</span>
+    <span class="pi">-</span> <span class="s">npm build</span>
+  <span class="na">only</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">master</span>
+
+<span class="na">deploy frontend</span><span class="pi">:</span>
+  <span class="na">image</span><span class="pi">:</span> <span class="s">node:12.13-alpine</span>
+  <span class="na">stage</span><span class="pi">:</span> <span class="s">deploy</span>
+  <span class="na">script</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">apk add python curl build-base zip</span>
+    <span class="pi">-</span> <span class="s">curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"</span>
+    <span class="pi">-</span> <span class="s">unzip -o awscli-bundle.zip</span>
+    <span class="pi">-</span> <span class="s">./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws</span>
+    <span class="pi">-</span> <span class="s">aws --version</span>
+    <span class="pi">-</span> <span class="s">aws s3 sync build s3://random-bucket</span>
+  <span class="na">only</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">master</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">test</code> and <code class="highlighter-rouge">build</code> jobs use a nodejs Docker image and install all the dependencies and run the scripts. <code class="highlighter-rouge">deploy</code> job uses the same image and downloads and install the awsclient in order to upload the built artifact to a S3 bucket.</p>
+
+<p>Next step is to measure the time:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Test</td>
+      <td>Build</td>
+      <td>Deploy</td>
+      <td>Total</td>
+    </tr>
+    <tr>
+      <td>1m 24s</td>
+      <td>1m 26s</td>
+      <td>57 s</td>
+      <td>3m 48 s</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>That’s a lot of time wasted downloading dependencies or installing tools. In the next section we will reduce it by using caches</p>
+
+<h2 id="caching-node_modules">Caching node_modules</h2>
+
+<p>We can use Gitlab cache feature to keep the contents of the node_modules folder instead of downloading them every time. It’s really simple to set it up:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">stages</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">test</span>
+  <span class="pi">-</span> <span class="s">build</span>
+  <span class="pi">-</span> <span class="s">deploy</span>
+
+<span class="na">test frontend</span><span class="pi">:</span>
+  <span class="na">image</span><span class="pi">:</span> <span class="s">node:12.13-alpine</span>
+  <span class="na">stage</span><span class="pi">:</span> <span class="s">test</span>
+  <span class="na">script</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">npm ci --cache .npm --prefer-offline</span>
+    <span class="pi">-</span> <span class="s">npm test</span>
+  <span class="na">cache</span><span class="pi">:</span>
+    <span class="na">key</span><span class="pi">:</span> <span class="s2">"</span><span class="s">node-modules"</span>
+    <span class="na">paths</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">.npm/</span>
+
+<span class="na">build frontend</span><span class="pi">:</span>
+  <span class="na">image</span><span class="pi">:</span> <span class="s">node:12.13-alpine</span>
+  <span class="na">stage</span><span class="pi">:</span> <span class="s">build</span>
+  <span class="na">script</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">npm ci --cache .npm --prefer-offline</span>
+    <span class="pi">-</span> <span class="s">npm build</span>
+  <span class="na">only</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">master</span>
+  <span class="na">cache</span><span class="pi">:</span>
+    <span class="na">key</span><span class="pi">:</span> <span class="s2">"</span><span class="s">node-modules"</span>
+    <span class="na">paths</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">.npm/</span>
+
+<span class="na">deploy frontend</span><span class="pi">:</span>
+  <span class="na">image</span><span class="pi">:</span> <span class="s">node:12.13-alpine</span>
+  <span class="na">stage</span><span class="pi">:</span> <span class="s">deploy</span>
+  <span class="na">script</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">apk add python curl build-base zip</span>
+    <span class="pi">-</span> <span class="s">curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"</span>
+    <span class="pi">-</span> <span class="s">unzip -o awscli-bundle.zip</span>
+    <span class="pi">-</span> <span class="s">./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws</span>
+    <span class="pi">-</span> <span class="s">aws --version</span>
+    <span class="pi">-</span> <span class="s">aws s3 sync build s3://random-bucket</span>
+  <span class="na">only</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">master</span>
+  <span class="na">cache</span><span class="pi">:</span>
+    <span class="na">key</span><span class="pi">:</span> <span class="s2">"</span><span class="s">node-modules"</span>
+    <span class="na">paths</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">.npm/</span>
+</code></pre></div></div>
+
+<p>We only need to tell <code class="highlighter-rouge">npm</code> to work with the cache with this line:</p>
+
+<p><code class="highlighter-rouge">npm ci --cache .npm --prefer-offline</code> instead of the traditional <code class="highlighter-rouge">npm install</code></p>
+
+<p>and configure the cache in each job:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">cache</span><span class="pi">:</span>
+  <span class="na">key</span><span class="pi">:</span> <span class="s2">"</span><span class="s">node-modules"</span>
+  <span class="na">paths</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">.npm/</span>
+</code></pre></div></div>
+
+<p>We are telling gitlab to store the <code class="highlighter-rouge">.npm</code> folder in the cache named <code class="highlighter-rouge">node-modules</code></p>
+
+<p>The time improvement can observed in the following table:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Test</td>
+      <td>Build</td>
+      <td>Deploy</td>
+      <td>Total</td>
+    </tr>
+    <tr>
+      <td>1m 3s</td>
+      <td>57s</td>
+      <td>56s</td>
+      <td>2m 54s</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>We can observe a huge decrease in the <code class="highlighter-rouge">test</code> and <code class="highlighter-rouge">build</code> jobs. The time spent on deploy is pretty similar to the one before.</p>
+
+<h2 id="using-docker-image">Using Docker image</h2>
+
+<p>The <code class="highlighter-rouge">deploy</code> job is downloading and installing the awsclient to upload the built artifact to S3 bucket. We could improve that time by using a Docker image which already contains
+the awslcient. In order to do so, we can build our own image and store it in Gitlab Container Registry. The Container registry can be found in the side bar: <code class="highlighter-rouge">Packages &amp; Resgistries -&gt; Container Registry</code></p>
+
+<p>We will build an image with nodejs 12:13 and the aws client. In order to do so, we will use the following Dockerfile:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FROM node:12.13-alpine
+RUN apk add python curl build-base zip
+RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+RUN unzip -o awscli-bundle.zip
+RUN ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+RUN aws --version
+</code></pre></div></div>
+
+<p>Basically, the Dockerfile is running the same commands as the pipeline, but only once. Once is the image is built, we push it to the registry and we start using it. No need to install anything!</p>
+
+<p>To build and push the image, you only need to run the following commands:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker login registry.gitlab.com
+docker build <span class="nt">-t</span> registry.gitlab.com/&lt;user&gt;/&lt;project&gt;/node_python_aws <span class="nb">.</span>
+docker push registry.gitlab.com/&lt;user&gt;/&lt;project&gt;/node_python_aws
+</code></pre></div></div>
+
+<p>Once is pushed we can use it in the pipeline in combination with the cache:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">stages</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">test</span>
+  <span class="pi">-</span> <span class="s">build</span>
+  <span class="pi">-</span> <span class="s">deploy</span>
+
+<span class="na">test frontend</span><span class="pi">:</span>
+  <span class="na">image</span><span class="pi">:</span> <span class="s">registry.gitlab.com/&lt;user&gt;/&lt;project&gt;/node_python_aws</span>
+  <span class="na">stage</span><span class="pi">:</span> <span class="s">test</span>
+  <span class="na">script</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">npm ci --cache .npm --prefer-offline</span>
+    <span class="pi">-</span> <span class="s">npm test</span>
+  <span class="na">cache</span><span class="pi">:</span>
+    <span class="na">key</span><span class="pi">:</span> <span class="s2">"</span><span class="s">node-modules"</span>
+    <span class="na">paths</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">.npm/</span>
+
+<span class="na">build frontend</span><span class="pi">:</span>
+  <span class="na">image</span><span class="pi">:</span> <span class="s">registry.gitlab.com/&lt;user&gt;/&lt;project&gt;/node_python_aws</span>
+  <span class="na">stage</span><span class="pi">:</span> <span class="s">build</span>
+  <span class="na">script</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">npm ci --cache .npm --prefer-offline</span>
+    <span class="pi">-</span> <span class="s">npm build</span>
+  <span class="na">only</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">master</span>
+  <span class="na">cache</span><span class="pi">:</span>
+    <span class="na">key</span><span class="pi">:</span> <span class="s2">"</span><span class="s">node-modules"</span>
+    <span class="na">paths</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">.npm/</span>
+
+<span class="na">deploy frontend</span><span class="pi">:</span>
+  <span class="na">image</span><span class="pi">:</span> <span class="s">registry.gitlab.com/&lt;user&gt;/&lt;project&gt;/node_python_aws</span>
+  <span class="na">stage</span><span class="pi">:</span> <span class="s">deploy</span>
+  <span class="na">script</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">aws s3 sync build s3://random-bucket</span>
+  <span class="na">only</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">master</span>
+  <span class="na">cache</span><span class="pi">:</span>
+    <span class="na">key</span><span class="pi">:</span> <span class="s2">"</span><span class="s">node-modules"</span>
+    <span class="na">paths</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">.npm/</span>
+</code></pre></div></div>
+
+<p>Note that in the <code class="highlighter-rouge">deploy</code> job, we’re only using the aws command directly.</p>
+
+<p>We can notice and decrease in time on the deploy pipeline, as we were expecting:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Test</td>
+      <td>Build</td>
+      <td>Deploy</td>
+      <td>Total</td>
+    </tr>
+    <tr>
+      <td>1m 9s</td>
+      <td>1m 2s</td>
+      <td>35s</td>
+      <td>2m 46s</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The decrease of time, might not look like it’s very big, but that’s because that’s a very simple example.</p>
+
+<p>For bigger projects, the improvements can be huge, since there are lots of dependencies and build tools that could be cached or pre-installed</p>
+
+<h2 id="wrap-up">Wrap up</h2>
+
+<p>We have seen different techniques to speedup Gitlab pipeline: using caches for dependencies and Docker image to pre-install build tools.</p>
+
+<p>You can find the comparisson tables of the different approaches hereunder:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Improvement</td>
+      <td>Test</td>
+      <td>Build</td>
+      <td>Deploy</td>
+      <td>Total</td>
+    </tr>
+    <tr>
+      <td>None</td>
+      <td>1m 24s</td>
+      <td>1m 26s</td>
+      <td>57s</td>
+      <td>3m 48s</td>
+    </tr>
+    <tr>
+      <td>Cache</td>
+      <td>1m 3s</td>
+      <td>57s</td>
+      <td>56s</td>
+      <td>2m 54s</td>
+    </tr>
+    <tr>
+      <td>Cache + Docker</td>
+      <td>1m 9s</td>
+      <td>1m 2s</td>
+      <td>35s</td>
+      <td>2m 46s</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="total">Total</h3>
+
+<div style="height: 400px">
+<canvas id="total-results"></canvas>
+</div>
+
+<h3 id="jobs">Jobs</h3>
+
+<div class="results-job">
+    <div style="height: 400px">
+    <canvas id="test-results"></canvas>
+    </div>
+    <div style="height: 400px">
+    <canvas id="build-results"></canvas>
+    </div>
+    <div style="height: 400px">
+    <canvas id="deploy-results"></canvas>
+    </div>
+</div>
+
+<p>In the charts separated by job, we can see that the time improvement for test and build comes from using caches. Regarding deploy job, the big improvement comes we have pre-installed aws client provided by the Docker image.</p>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+
+<script>
+new Chart( "total-results", {
+    type: 'bar',
+    data: {
+        labels: ["Simple", "Cached", "Cached + Docker"],
+        datasets : [
+            {
+                label: "Pipeline total elapsed time (s)",
+                data: [228,174,166],
+                "fill": false,
+                "backgroundColor": [
+                    "rgba(255, 99, 132, 0.2)",
+                    "rgba(75, 192, 192, 0.2)",
+                    "rgba(153, 102, 255, 0.2)",
+                ],
+                "borderColor": [
+                    "rgb(255, 99, 132)",
+                    "rgb(75, 192, 192)",
+                    "rgb(153, 102, 255)",
+                ],
+                "borderWidth": 1
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            yAxes : [{
+                "ticks" : {
+                    "beginAtZero" : true
+                }
+            }]
+        }
+    }
+});
+new Chart( "test-results", {
+    type: 'bar',
+    data: {
+        labels: ["Simple", "Cached", "Cached + Docker"],
+        datasets : [
+            {
+                label: "Test job elapsed time (s)",
+                data: [84,63,69],
+                "fill": false,
+                "backgroundColor": [
+                    "rgba(255, 99, 132, 0.2)",
+                    "rgba(75, 192, 192, 0.2)",
+                    "rgba(153, 102, 255, 0.2)",
+                ],
+                "borderColor": [
+                    "rgb(255, 99, 132)",
+                    "rgb(75, 192, 192)",
+                    "rgb(153, 102, 255)",
+                ],
+                "borderWidth": 1
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            yAxes : [{
+                "ticks" : {
+                    "beginAtZero" : true
+                }
+            }]
+        }
+    }
+});
+new Chart( "build-results", {
+    type: 'bar',
+    data: {
+        labels: ["Simple", "Cached", "Cached + Docker"],
+        datasets : [
+            {
+                label: "Build job elapsed time (s)",
+                data: [86,57,62],
+                "fill": false,
+                "backgroundColor": [
+                    "rgba(255, 99, 132, 0.2)",
+                    "rgba(75, 192, 192, 0.2)",
+                    "rgba(153, 102, 255, 0.2)",
+                ],
+                "borderColor": [
+                    "rgb(255, 99, 132)",
+                    "rgb(75, 192, 192)",
+                    "rgb(153, 102, 255)",
+                ],
+                "borderWidth": 1                
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            yAxes : [{
+                "ticks" : {
+                    "beginAtZero" : true
+                }
+            }]
+        }
+    }
+});
+new Chart( "deploy-results", {
+    type: 'bar',
+    data: {
+        labels: ["Simple", "Cached", "Cached + Docker"],
+        datasets : [
+            {
+                label: "Deploy job elapsed time (s)",
+                data: [57,56,35],
+                "fill": false,
+                "backgroundColor": [
+                    "rgba(255, 99, 132, 0.2)",
+                    "rgba(75, 192, 192, 0.2)",
+                    "rgba(153, 102, 255, 0.2)",
+                ],
+                "borderColor": [
+                    "rgb(255, 99, 132)",
+                    "rgb(75, 192, 192)",
+                    "rgb(153, 102, 255)",
+                ],
+                "borderWidth": 1                
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            yAxes : [{
+                "ticks" : {
+                    "beginAtZero" : true
+                }
+            }]
+        }
+    }
+});
+
+</script>
+
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.agalera.eu/gitlab-docker-image/" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=https://www.agalera.eu/gitlab-docker-image/&text=Gitlab+improvements%3A+caches+and+Docker%20%7C%20Adrian+Galera+blog:%20https://www.agalera.eu/gitlab-docker-image/" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+                
+        <li>
+            <a href="mailto:?subject=Gitlab+improvements%3A+caches+and+Docker%20%7C%20Adrian+Galera+blog&body=:%20https://www.agalera.eu/gitlab-docker-image/" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/tags#ci%2Fcd">
+      <p><i class="fa fa-tag fa-fw"></i> ci/cd</p>
+    </a>
+    
+    <a class="button" href="/tags#devops">
+      <p><i class="fa fa-tag fa-fw"></i> devops</p>
+    </a>
+    
+    <a class="button" href="/tags#docker">
+      <p><i class="fa fa-tag fa-fw"></i> docker</p>
+    </a>
+    
+    <a class="button" href="/tags#frontend">
+      <p><i class="fa fa-tag fa-fw"></i> frontend</p>
+    </a>
+    
+    <a class="button" href="/tags#gitlab">
+      <p><i class="fa fa-tag fa-fw"></i> gitlab</p>
+    </a>
+    
+    <a class="button" href="/tags#react">
+      <p><i class="fa fa-tag fa-fw"></i> react</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="Latitude,longitude bounds" href="/bounds-lat-lng-array/">
+            Latitude,longitude bounds
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('/assets/img/posts/docker-gitlab/featured.jpg');
+  }
+</style>
+    </div>
+    
+
+
+
+  </body>
+</html>
