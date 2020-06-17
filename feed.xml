@@ -7,7 +7,7 @@
         <atom:link href="https://www.agalera.eu/feed.xml" rel="self" type="application/rss+xml"/>
         <link>https://www.agalera.eu/</link>
         <description>My personal developer blog page.</description>
-        <pubDate>Fri, 22 May 2020 14:52:34 +0200</pubDate>
+        <pubDate>Wed, 17 Jun 2020 14:38:45 +0200</pubDate>
         <webfeeds:icon>https://www.agalera.eu/assets/img/avatars/me-100x100.png</webfeeds:icon>
         
         <item>
@@ -835,6 +835,17 @@ default construct, exist): cannot deserialize from Object value
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;However, there might be security implications by using &lt;code class=&quot;highlighter-rouge&quot;&gt;eval&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2&gt;Check if there are git changes in script&lt;/h2&gt;
+
+&lt;p&gt;In a CI pipeline, you might want to check if there are changes to create an automatic commit, etc.&lt;/p&gt;
+
+&lt;p&gt;You can do that by running the following snippet:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git diff-index --quiet HEAD
+ANY_CHANGE=$?
+[ $ANY_CHANGE -ne 0 ] &amp;amp;&amp;amp; echo &quot;Do something with the change&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
             <pubDate>Sun, 17 Nov 2019 00:00:00 +0100</pubDate>
         </item>

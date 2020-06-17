@@ -229,6 +229,17 @@
 
 <p>However, there might be security implications by using <code class="highlighter-rouge">eval</code></p>
 
+<h2>Check if there are git changes in script</h2>
+
+<p>In a CI pipeline, you might want to check if there are changes to create an automatic commit, etc.</p>
+
+<p>You can do that by running the following snippet:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff-index --quiet HEAD
+ANY_CHANGE=$?
+[ $ANY_CHANGE -ne 0 ] &amp;&amp; echo "Do something with the change"
+</code></pre></div></div>
+
     
   </section>
 
