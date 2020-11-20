@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/img/avatars/me-100x100.png" type="image/x-icon">
+
+    <!-- Canonical -->
+    <!--link rel="canonical" href="https://www.agalera.eu/sns-firebase-android-ios/" -->
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Adrian Galera blog" href="https://www.agalera.eu/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Google Analytics -->
+    
+    
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-126206451-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+    
+    
+    
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Push notifications with SNS and Firebase | Adrian Galera blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Push notifications with SNS and Firebase" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="This post describe how I setup SNS to communicate with Firebase to send push notifications to Android and iOS devices" />
+<meta property="og:description" content="This post describe how I setup SNS to communicate with Firebase to send push notifications to Android and iOS devices" />
+<link rel="canonical" href="https://www.agalera.eu/sns-firebase-android-ios/" />
+<meta property="og:url" content="https://www.agalera.eu/sns-firebase-android-ios/" />
+<meta property="og:site_name" content="Adrian Galera blog" />
+<meta property="og:image" content="https://www.agalera.eu/assets/img/posts/sns-push/featured.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-11-20T00:00:00+01:00" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/sns-firebase-android-ios/"},"description":"This post describe how I setup SNS to communicate with Firebase to send push notifications to Android and iOS devices","@type":"BlogPosting","headline":"Push notifications with SNS and Firebase","dateModified":"2020-11-20T00:00:00+01:00","url":"https://www.agalera.eu/sns-firebase-android-ios/","datePublished":"2020-11-20T00:00:00+01:00","image":"https://www.agalera.eu/assets/img/posts/sns-push/featured.jpg","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>Push notifications with SNS and Firebase | Adrian Galera blog</title>
+    <meta name="description" content="Currently we’re investigating usage of SNS to send Push notifications. We have some friends working already with Firebase and recommend us to check it out. W...">
+    -->
+</head>
+
+  <body>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Adrian Galera blog" href="/">
+        Adrian Galera blog
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article class="feature-image">
+  <header id="main" style="">
+    
+      <h2 id="Push+notifications+with+SNS+and+Firebase" class="title">Push notifications with SNS and Firebase</h2>
+      
+
+<div class="post-info"><a href="https://www.agalera.eu" target="_blank">
+    <p class="meta">
+      Adrian Galera - November 20, 2020
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <p>Currently we’re investigating usage of SNS to send Push notifications. We have some friends working already with Firebase and recommend us to check it out. We discovered that SNS supports sending messages to Firebase. However, not everything is as easy as it looks like.</p>
+
+<p><!--more--></p>
+
+<h2 id="how-push-notifications-work">How push notifications work</h2>
+
+<p>There are quite a lot of moving parts in the scenario:</p>
+
+<ul>
+  <li>AWS SNS: Messaging system from AWS</li>
+  <li>Firebase Cloud Messaging (FCM): Message system to connect with the devices</li>
+  <li>Device: device that receives push notification</li>
+</ul>
+
+<p>The communication works this way:</p>
+
+<ol>
+  <li>The mobile device is registered within FCM.</li>
+  <li>FCM answers with a token that identifies the user. For the sake of testing
+this will be manually extracted, however when doing this in PRD,
+we need to automate this process.</li>
+  <li>In AWS SNS, a platform app has been created connecting AWS SNS with
+FCM with the provided API credentials (see section below)</li>
+  <li>WIth the token obtained in step 2). A new app endpoint is created.
+This endpoint identifies the app that registered the token</li>
+  <li>When the backend wants to send the push notification, it uses the
+registered app endpoint for that token.</li>
+  <li>SNS forwards the message to FCM</li>
+  <li>FCM sends the message to the mobile device</li>
+</ol>
+
+<p><img src="/assets/img/posts/sns-push/pn.png" alt="Push notifications communication" title="Push push notifications communication" /></p>
+
+<h2 id="testing-fcm-device-configuration">Testing FCM device configuration</h2>
+
+<p>The preliminary test are done using an android application because I’m more used to Android development. Once FCM is setup, we could obtain the token from the device and try to send a push notification from FCM console to the device. If we do that, we receive a message with an structure similar to:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">  
+    </span><span class="s2">"notification"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test notification"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test notification body"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>So far, so good. We can do the same test from FCM to IOS and we will receive the same payload and the notification will pop up.</p>
+
+<h2 id="testing-sns-fcm-connection">Testing SNS FCM connection</h2>
+
+<p>After following this <a href="https://aws.amazon.com/es/premiumsupport/knowledge-center/create-android-push-messaging-sns/">guide</a>, now we have connected SNS with FCM.</p>
+
+<p>We can try sending a message to the mobile device by specifying the app endpoint. We can access through AWS Console to SNS UI and search for app plattform and the app endpoint that belongs to our device.</p>
+
+<p>If we go the default way and send a message, our Android device will receive a message similar to:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">  
+    </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test message"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Comparing the received data with the previous one, we see a fundamental difference: the notification field is empty and the message is inserted in the data field inside a <code class="highlighter-rouge">default</code> field.</p>
+
+<p>If we repeat the same operation for an iOS device, we will not receive the push notification.</p>
+
+<p>To send in this default way from Java, we could use the following code:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">publishDefaultMessage</span><span class="o">(</span><span class="nc">String</span> <span class="n">endpoint</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">PublishRequest</span> <span class="n">publishRequest</span> <span class="o">=</span> <span class="nc">PublishRequest</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">message</span><span class="o">(</span><span class="n">getTextMessage</span><span class="o">())</span>
+            <span class="o">.</span><span class="na">targetArn</span><span class="o">(</span><span class="n">endpoint</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+
+    <span class="nc">PublishResponse</span> <span class="n">result</span> <span class="o">=</span> <span class="n">snsClient</span><span class="o">.</span><span class="na">publish</span><span class="o">(</span><span class="n">publishRequest</span><span class="o">);</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">messageId</span><span class="o">()</span> <span class="o">+</span> <span class="s">" Message sent. Status was "</span> <span class="o">+</span> <span class="n">result</span><span class="o">.</span><span class="na">sdkHttpResponse</span><span class="o">().</span><span class="na">statusCode</span><span class="o">());</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="sending-to-android-and-ios">Sending to Android and iOS</h2>
+
+<p>If we want to be able to send both to Android and iOS through FCM, we need to send a custom payload to SNS. If we send with default configuration, Android can receive the notification but not iOS.</p>
+
+<p>To do so, we need to provide a JSON message as the payload:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="s2">"GCM"</span><span class="p">:</span><span class="s2">"{</span><span class="se">\"</span><span class="s2">notification</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">title</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Title</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">body</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Notification body sent with custom payload</span><span class="se">\"</span><span class="s2">},
+</span><span class="se">\"</span><span class="s2">data</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">orderId</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">1234</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">customerId</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">1234</span><span class="se">\"</span><span class="s2">}}"</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>We can send that test message from AWS Console, specifying to send different payload per protocol. Or we can do it through code:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">publishCustomMessage</span><span class="o">(</span><span class="nc">String</span> <span class="n">endpoint</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">PublishRequest</span> <span class="n">publishRequest</span> <span class="o">=</span> <span class="nc">PublishRequest</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">message</span><span class="o">(</span><span class="n">customFirebaseMessage</span><span class="o">())</span>
+            <span class="o">.</span><span class="na">targetArn</span><span class="o">(</span><span class="n">endpoint</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">messageStructure</span><span class="o">(</span><span class="s">"json"</span><span class="o">)</span> <span class="c1">// Send custom payload per transport type</span>
+            <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+
+    <span class="nc">PublishResponse</span> <span class="n">result</span> <span class="o">=</span> <span class="n">snsClient</span><span class="o">.</span><span class="na">publish</span><span class="o">(</span><span class="n">publishRequest</span><span class="o">);</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">messageId</span><span class="o">()</span> <span class="o">+</span> <span class="s">" Message sent. Status was "</span> <span class="o">+</span> <span class="n">result</span><span class="o">.</span><span class="na">sdkHttpResponse</span><span class="o">().</span><span class="na">statusCode</span><span class="o">());</span>
+<span class="o">}</span>
+<span class="kd">private</span> <span class="nc">String</span> <span class="nf">customFirebaseMessage</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="n">customMessage</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashMap</span><span class="o">&lt;&gt;();</span>
+    <span class="kd">final</span> <span class="nc">String</span> <span class="no">FIREBASE_PROTOCOL</span> <span class="o">=</span> <span class="s">"GCM"</span><span class="o">;</span>
+    <span class="n">customMessage</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="no">FIREBASE_PROTOCOL</span><span class="o">,</span> <span class="n">getFirebaseMessage</span><span class="o">());</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">Gson</span><span class="o">().</span><span class="na">toJson</span><span class="o">(</span><span class="n">customMessage</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="kd">private</span> <span class="nc">String</span> <span class="nf">getFirebaseMessage</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nc">FirebaseMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FirebaseMessage</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">withTitle</span><span class="o">(</span><span class="s">"Title"</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">withBody</span><span class="o">(</span><span class="s">"Notification body sent with custom payload"</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">withDataEntry</span><span class="o">(</span><span class="s">"customerId"</span><span class="o">,</span> <span class="s">"1234"</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">withDataEntry</span><span class="o">(</span><span class="s">"orderId"</span><span class="o">,</span> <span class="s">"1234"</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">message</span><span class="o">.</span><span class="na">toJson</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Where <code class="highlighter-rouge">FirebaseMessage</code> is an object we have created:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FirebaseMessage</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="n">notification</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashMap</span><span class="o">&lt;&gt;();</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashMap</span><span class="o">&lt;&gt;();</span>
+
+    <span class="kd">public</span> <span class="nc">FirebaseMessage</span> <span class="nf">withTitle</span><span class="o">(</span><span class="nc">String</span> <span class="n">title</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">notification</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"title"</span><span class="o">,</span> <span class="n">title</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">FirebaseMessage</span> <span class="nf">withBody</span><span class="o">(</span><span class="nc">String</span> <span class="n">body</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">notification</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"body"</span><span class="o">,</span> <span class="n">body</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">FirebaseMessage</span> <span class="nf">withDataEntry</span><span class="o">(</span><span class="nc">String</span> <span class="n">key</span><span class="o">,</span> <span class="nc">String</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">toJson</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Gson</span><span class="o">().</span><span class="na">toJson</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>If we send the messages with this format, they will be received both in Android and iOS</p>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.agalera.eu/sns-firebase-android-ios/" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=https://www.agalera.eu/sns-firebase-android-ios/&text=Push+notifications+with+SNS+and+Firebase%20%7C%20Adrian+Galera+blog:%20https://www.agalera.eu/sns-firebase-android-ios/" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+                
+        <li>
+            <a href="mailto:?subject=Push+notifications+with+SNS+and+Firebase%20%7C%20Adrian+Galera+blog&body=:%20https://www.agalera.eu/sns-firebase-android-ios/" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/tags#aws">
+      <p><i class="fa fa-tag fa-fw"></i> aws</p>
+    </a>
+    
+    <a class="button" href="/tags#backend">
+      <p><i class="fa fa-tag fa-fw"></i> backend</p>
+    </a>
+    
+    <a class="button" href="/tags#firebase">
+      <p><i class="fa fa-tag fa-fw"></i> firebase</p>
+    </a>
+    
+    <a class="button" href="/tags#java">
+      <p><i class="fa fa-tag fa-fw"></i> java</p>
+    </a>
+    
+    <a class="button" href="/tags#mobile">
+      <p><i class="fa fa-tag fa-fw"></i> mobile</p>
+    </a>
+    
+    <a class="button" href="/tags#sns">
+      <p><i class="fa fa-tag fa-fw"></i> sns</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="Gitlab improvements: caches and Docker" href="/gitlab-docker-image/">
+            Gitlab improvements: caches and Docker
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('/assets/img/posts/sns-push/featured.jpg');
+  }
+</style>
+    </div>
+    
+
+
+
+  </body>
+</html>
