@@ -65,7 +65,7 @@
 <link rel="prev" href="https://www.agalera.eu/blog/page2" />
 <link rel="next" href="https://www.agalera.eu/blog/page4" />
 <script type="application/ld+json">
-{"description":"My personal developer blog page.","@type":"WebPage","headline":"Adrian Galera blog","url":"https://www.agalera.eu/blog/page3/","image":"https://www.agalera.eu/assets/img/avatars/me.png","@context":"https://schema.org"}</script>
+{"headline":"Adrian Galera blog","url":"https://www.agalera.eu/blog/page3/","image":"https://www.agalera.eu/assets/img/avatars/me.png","description":"My personal developer blog page.","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     <!-- Manual seo tags -->
@@ -200,6 +200,37 @@
     <div class="post-teaser">
         
         <div class="post-img">
+            <a aria-label="Java Unit Test to check UTF-8 chars" href="/java-test-utf8/">
+                <img alt="Java Unit Test to check UTF-8 chars" src="/assets/img/posts/java-utf8/featured.jpg">
+            </a>
+        </div>
+        
+        <span>
+          <header>
+            <h2>
+              <a aria-label="Java Unit Test to check UTF-8 chars" class="post-link" href="/java-test-utf8/">
+                Java Unit Test to check UTF-8 chars
+              </a>
+            </h2>
+            
+
+<div class="post-info"><a href="https://www.agalera.eu" target="_blank">
+    <p class="meta">
+      Adrian Galera - June 19, 2019
+    </p></a></div>
+
+          </header>
+          <div class="excerpt">
+              During a migration to a new plattform, we have detected an issue with the character encoding. Some of the messages contained the UTF-8 replacement character (�)
+
+
+          </div>
+      </span>
+    </div>
+    
+    <div class="post-teaser">
+        
+        <div class="post-img">
             <a aria-label="Grafana, nginx reverse-proxy and Docker" href="/grafana-nginx-reverse-proxy-docker/">
                 <img alt="Grafana, nginx reverse-proxy and Docker" src="/assets/img/posts/grafana/featured.jpg">
             </a>
@@ -324,39 +355,6 @@ Therefore I will persist the model in DynamoDB configured to use the minimum res
           <div class="excerpt">
               What happens when you are developing a component that heavily rely on an external API you do not control? Or even worst, that still does not exist. How could you test your component without connecting the external dependency? When we don&#39;t have control over the API that we need to integrate, we need a tool like a &quot;mock server&quot;.
 This article will discover and provide a bootstrap project for wiremock. More info: wiremock.org
-
-
-
-
-          </div>
-      </span>
-    </div>
-    
-    <div class="post-teaser">
-        
-        <div class="post-img">
-            <a aria-label="Timeseries database with DynamoDB" href="/timeseries-db-dynamodb/">
-                <img alt="Timeseries database with DynamoDB" src="/assets/img/posts/dynamodbts/featured.jpg">
-            </a>
-        </div>
-        
-        <span>
-          <header>
-            <h2>
-              <a aria-label="Timeseries database with DynamoDB" class="post-link" href="/timeseries-db-dynamodb/">
-                Timeseries database with DynamoDB
-              </a>
-            </h2>
-            
-
-<div class="post-info"><a href="https://www.agalera.eu" target="_blank">
-    <p class="meta">
-      Adrian Galera - September 21, 2018
-    </p></a></div>
-
-          </header>
-          <div class="excerpt">
-              Working with sensor data, we need to store timestamped data in a way that was easily checked and show it in graphs. This post explains the process we follow to end up implementing a timeseries database on DynamoDB.
 
 
 

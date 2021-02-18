@@ -7,8 +7,249 @@
         <atom:link href="https://www.agalera.eu/feed.xml" rel="self" type="application/rss+xml"/>
         <link>https://www.agalera.eu/</link>
         <description>My personal developer blog page.</description>
-        <pubDate>Fri, 20 Nov 2020 09:09:43 +0100</pubDate>
+        <pubDate>Thu, 18 Feb 2021 15:14:16 +0100</pubDate>
         <webfeeds:icon>https://www.agalera.eu/assets/img/avatars/me-100x100.png</webfeeds:icon>
+        
+        <item>
+            
+                <enclosure length="1" type="image" url="https://www.agalera.eu/assets/img/posts/standalone-raspberry/featured-image.jpg"/>
+            
+            <title>Standalone application for Raspberry Pi</title>
+            <link>https://www.agalera.eu/standalone-app-raspberry-pi/</link>
+            <guid isPermaLink="false">/standalone-app-raspberry-pi/</guid>
+            <description>&lt;p&gt;I'm building a small application to give treats to my dog in a remote manner. &lt;/p&gt;
+
+&lt;p&gt;I setup a Raspberry Pi with a very basic HTTP server connected to a servo motor that will open or close the deposit where the treats are stored. &lt;/p&gt;
+
+&lt;p&gt;In this article I'll explain all the challenges I found to make this application standalone.&lt;/p&gt;
+&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;h2&gt;Requirements&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Accessible via web&lt;/li&gt;
+  &lt;li&gt;To have a camera, a button to give treats and a button to play a sound&lt;/li&gt;
+  &lt;li&gt;Easily installable in a Raspberry Pi: no need to install trillions of libraries&lt;/li&gt;
+  &lt;li&gt;Production ready: even though this is a personal project, I want the app to be 100% test covered and to have a full CI/CD cycle&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Solutions&lt;/h2&gt;
+
+&lt;p&gt;First of all, I did some small investigations and tackle every requirement in a separate way. This way I manage to found scripts that:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://picamera.readthedocs.io/en/release-1.13/recipes2.html#web-streaming&quot;&gt;Create a MJPEG stream out of the Raspberry Pi camera&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://raspberrypi.stackexchange.com/questions/22708/is-there-some-trick-to-getting-aplay-audio-output-working&quot;&gt;Play a sound from the disk&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://peppe8o.com/how-to-remote-control-a-servo-motor-sg90-using-raspberry-pi-zero-w-with-python-and-arduino/&quot;&gt;Interact with a servo motor&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Backend&lt;/h3&gt;
+
+&lt;p&gt;Once the parts are working independently, I made a python project with a very basic HTTP server based on &lt;code class=&quot;highlighter-rouge&quot;&gt;BaseHTTPRequestHandler&lt;/code&gt; that receive request to the stream, to interact with the servo and to play a sound.&lt;/p&gt;
+
+&lt;p&gt;The interesting thing here was to be able to develop this project without using the Raspberry Pi. This is challenging because the required libraries are hardware specific to the Raspberry. But I manage to mock the camera and the servo libraries by using &lt;code class=&quot;highlighter-rouge&quot;&gt;unittest&lt;/code&gt; python package&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;unittest.mock&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MagicMock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;patch&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;mock_rpi_gpio&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;MockRPi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MagicMock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;modules&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;RPi&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MockRPi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;RPi.GPIO&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MockRPi&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;patcher&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;patch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sys.modules&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;modules&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;patcher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;mock_pi_camera&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;picamera&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MagicMock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;modules&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;picamera&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;picamera&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;picamera.PiCamera&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;picamera&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PiCamera&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;patcher&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;patch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sys.modules&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;modules&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;patcher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;mock_rpi_gpio&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;mock_pi_camera&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;unittest&lt;/code&gt; module allows you to define a &lt;code class=&quot;highlighter-rouge&quot;&gt;conftest.py&lt;/code&gt; file that will be executed as a configuration step for you unit tests. Having done that, we can have tests that covers all the required functionality, even without installing the required libraries:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;unittest.mock&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;call&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;RPi.GPIO&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mockGPIO&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;dogfeeder.servo&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Servo&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test_initialize_closed_servo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Servo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mockGPIO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setmode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assert_called_once_with&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mockGPIO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BCM&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mockGPIO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assert_called_once_with&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Servo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SERVO_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mockGPIO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;OUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mockGPIO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PWM&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assert_called_once_with&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Servo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SERVO_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mock_pwm&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mockGPIO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PWM&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mock_pwm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assert_called_once_with&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Servo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CLOSED&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3&gt;Frontend&lt;/h3&gt;
+
+&lt;p&gt;The implementation of the frontend is super simple. I used React to create 3 components:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;CallButton: the button that plays an audio file&lt;/li&gt;
+  &lt;li&gt;DispenseTreat: the button that interacts with the servo&lt;/li&gt;
+  &lt;li&gt;WebcamContainer: the img that prints the MJPEG stream out of the Pi Camera.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;When any button is pressed and API call to backend is done in the background.&lt;/p&gt;
+
+&lt;p&gt;Nothing really fancy to see here.&lt;/p&gt;
+
+&lt;h3&gt;CI/CD&lt;/h3&gt;
+
+&lt;p&gt;When all the logic is done and the tests are passing, I decided that I wanted to go full professional and create a CI/CD pipeline for the project. In order to do that, I used gitlab.com&lt;/p&gt;
+
+&lt;p&gt;This has been the most challenging piece of the project. I wanted to create a standalone application so the installation process is keep to the minimum bar. In order to do so, I created a docker image with all the required dependencies to be used by Gitlab pipeline.&lt;/p&gt;
+
+&lt;h4&gt;Docker image&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;FROM balenalib/raspberrypi3-python:3.7-buster
+RUN apt update &amp;amp;&amp;amp; apt upgrade
+RUN apt install build-essential binutils zlib1g-dev
+RUN apt install python3-picamera python3-rpi.gpio
+RUN pip3 install pyinstaller pytest pytest-cov flake8 requests
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;It’s based on &lt;a href=&quot;https://github.com/balena-io-library/base-images/tree/master/balena-base-images/device-base/raspberrypi3&quot;&gt;balenalib/raspberrypi3-python&lt;/a&gt; Docker image, that simulates even the hardware and processor architecture of the Raspberry Pi 3. The docker image also contains all the libraries required to work (picamera, gpio, …) and tools for the CI/CD (pytest, flake8).&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;pyinstaller&lt;/code&gt; is installed in order to generate the executable file of the backend&lt;/p&gt;
+
+&lt;h4&gt;Pipeline&lt;/h4&gt;
+
+&lt;p&gt;The pipeline contains four stages:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;test: unit tests of the backend and frontend&lt;/li&gt;
+  &lt;li&gt;release: to generate semantic versioned tags of the project&lt;/li&gt;
+  &lt;li&gt;build: to generate the standalone executable file of the backend and the web site for the frontend. Thanks to &lt;a href=&quot;https://threedots.tech/post/automatic-semantic-versioning-in-gitlab-ci/&quot;&gt;https://threedots.tech/post/automatic-semantic-versioning-in-gitlab-ci/&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;publish: I decided to store the generated artifacts within the Gitlab Package Registry&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;stages&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;test&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;release&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;build&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;publish&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;test-backend&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry.gitlab.com/adrian.galera/dogfeeder/python-ci&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;test&lt;/span&gt;      
+  &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;cd dogfeeder-backend&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;pytest --cov --cov-fail-under=100&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;only&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;master&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;branches&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;test-frontend&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;node:12.13-alpine&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;test&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;cd dogfeeder-web&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm ci --cache .npm --prefer-offline&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm test&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;node-modules&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.npm/&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;only&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;master&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;branches&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;release&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;python:3.7-stretch&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;release&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;before_script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# Allow gitlab runner push code to gitlab.com&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# see: https://threedots.tech/post/automatic-semantic-versioning-in-gitlab-ci/&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mkdir -p ~/.ssh &amp;amp;&amp;amp; chmod 700 ~/.ssh&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ssh-keyscan gitlab.com &amp;gt;&amp;gt; ~/.ssh/known_hosts &amp;amp;&amp;amp; chmod 644 ~/.ssh/known_hosts&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;eval $(ssh-agent -s)&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ssh-add &amp;lt;(echo &quot;$SSH_PRIVATE_KEY&quot;)&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;pip install semver&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;python3 gen-semver&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;only&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;master&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;when&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;manual&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;build-backend&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry.gitlab.com/adrian.galera/dogfeeder/python-ci&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;build&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;cd dogfeeder-backend&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;pyinstaller dogfeeder/main.py -F --name dogfeeder-server&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;only&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;tags&lt;/span&gt;        
+  &lt;span class=&quot;na&quot;&gt;artifacts&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+     &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;dogfeeder-backend/dist/dogfeeder-server&quot;&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;build-frontend&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;node:12.13-alpine&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;build&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;cd dogfeeder-web&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm ci --cache .npm --prefer-offline&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm run build&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm run zip&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;node-modules&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.npm/&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;artifacts&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+     &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;dogfeeder-web/dogfeeder-web_.zip&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;only&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;tags&lt;/span&gt;  
+
+&lt;span class=&quot;na&quot;&gt;publish&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;curlimages/curl:latest&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;publish&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+   &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;VERSION=${CI_COMMIT_REF_NAME}&lt;/span&gt;
+   &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;curl&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;--header&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;JOB-TOKEN:&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;$CI_JOB_TOKEN&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;--upload-file&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;dogfeeder-backend/dist/dogfeeder-server&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/dogfeeder/${VERSION}/dogfeeder-server&quot;'&lt;/span&gt;
+   &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;curl&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;--header&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;JOB-TOKEN:&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;$CI_JOB_TOKEN&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;--upload-file&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;dogfeeder-web/dogfeeder-web_.zip&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/dogfeeder/${VERSION}/dogfeeder-web.zip&quot;'&lt;/span&gt;  
+  &lt;span class=&quot;na&quot;&gt;only&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;tags&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2&gt;Installation&lt;/h2&gt;
+
+&lt;p&gt;Now that the packages are stored in Gitlab, the installation is super simple. I created a script that downloads the artifacts from Gitlab and unzip the web into a running nginx and replace the executable file that will be picked up from a &lt;code class=&quot;highlighter-rouge&quot;&gt;supervisorctl&lt;/code&gt; process:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;VERSION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;TOKEN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GITLAB_ACCESS_TOKEN&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-z&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+    &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;You need to provide PACKAGE_VERSION as argument: sudo ./install-dogfeeder.sh &amp;lt;PACKAGE_VERSION&amp;gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;1
+&lt;span class=&quot;k&quot;&gt;fi
+
+if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-z&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$TOKEN&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+    &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;You need to set GITLAB_ACCESS_TOKEN environment variable&quot;&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;1
+&lt;span class=&quot;k&quot;&gt;fi
+
+&lt;/span&gt;wget &lt;span class=&quot;nt&quot;&gt;--header&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;PRIVATE-TOKEN: &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;TOKEN&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;https://gitlab.com/api/v4/projects/24187261/packages/generic/dogfeeder/&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;VERSION&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/dogfeeder-server&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-O&lt;/span&gt; /tmp/dogfeeder-server-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;VERSION&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+wget &lt;span class=&quot;nt&quot;&gt;--header&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;PRIVATE-TOKEN: &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;TOKEN&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;https://gitlab.com/api/v4/projects/24187261/packages/generic/dogfeeder/&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;VERSION&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/dogfeeder-web.zip&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-O&lt;/span&gt; /tmp/dogfeeder-web-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;VERSION&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;.zip
+
+unzip &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; /tmp/dogfeeder-web-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;VERSION&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;.zip &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; /var/www/html/.
+&lt;span class=&quot;c&quot;&gt;# Kill the process and supervisorctl will start it again:&lt;/span&gt;
+ps &lt;span class=&quot;nt&quot;&gt;-eaf&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;dogfeeder-server&quot;&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;awk&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'{ print $2 }'&lt;/span&gt; | xargs &lt;span class=&quot;nb&quot;&gt;kill&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-9&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;cp&lt;/span&gt; /tmp/dogfeeder-server-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;VERSION&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; /home/pi/.local/bin/dogfeeder-server
+&lt;span class=&quot;nb&quot;&gt;chmod&lt;/span&gt; +x /home/pi/.local/bin/dogfeeder-server
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+            <pubDate>Thu, 18 Feb 2021 00:00:00 +0100</pubDate>
+        </item>
         
         <item>
             
@@ -1844,80 +2085,6 @@ curl http://localhost:7070/v1/resource/resource1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
             <pubDate>Tue, 27 Nov 2018 00:00:00 +0100</pubDate>
-        </item>
-        
-        <item>
-            
-                <enclosure length="1" type="image" url="https://www.agalera.eu/assets/img/posts/dynamodbts/featured.jpg"/>
-            
-            <title>Timeseries database with DynamoDB</title>
-            <link>https://www.agalera.eu/timeseries-db-dynamodb/</link>
-            <guid isPermaLink="false">/timeseries-db-dynamodb/</guid>
-            <description>&lt;p&gt;Working with sensor data, we need to store timestamped data in a way that was easily checked and show it in graphs. This post explains the process we follow to end up implementing a timeseries database on DynamoDB.&lt;/p&gt;
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
-&lt;h2&gt;Requirements&lt;/h2&gt;
-&lt;p&gt;The problem was pretty straightforward at the beginning: store temporal data that came from multiple sensors where one sensor could have more than one metric. For instance: one battery sensor might monitor the battery level as well as the battery voltage. The sensor data data flows continuously at an undetermined interval, it can be 1 minute, 5 minutes, ... Generally speaking the data can be represented as:&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;METRIC NAME - TIMESTAMP - VALUE&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;In order to support the defined usage scenarios we need to provide a tool able to:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Perform temporal queries: give me the metric between 2017/05/21 00:00:00 and 2017/08/21 00:30&lt;/li&gt;
-  &lt;li&gt;Support multiple granularity: second, minute, hour, …&lt;/li&gt;
-  &lt;li&gt;Support TTL for cold data: expire cold data&lt;/li&gt;
-  &lt;li&gt;Perform in a cost-efficient manner&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2&gt;Available technologies&lt;/h2&gt;
-&lt;p&gt;When one thinks about database at first the relational ones appear as the first option. The problem with relational databases such as MySQL, PostgreSQL, .. is that we the database becomes very unusable when the size of the tables grows. And in this case the data  will grow a lot with the usage.&lt;/p&gt;
-&lt;p&gt;Furthermore, when the data is so big the indexes start to generate headaches making the queries take a lot of time.&lt;/p&gt;
-&lt;p&gt;Finding these drawbacks in the traditional relational databases, we shift towards NoSQL databases.&lt;/p&gt;
-&lt;p&gt;The first one that came into our mind (because we had some previous experience with it) was whisper &lt;a href=&quot;https://github.com/graphite-project/whisper&quot;&gt;https://github.com/graphite-project/whisper&lt;/a&gt;. This database is a small component of the graphite project, basically is a wrapper to write the temporal data to a file performing multiple roll-up aggregations on the fly. This looked promising, however, when we heavy loaded it performed very poorly.&lt;/p&gt;
-&lt;p&gt;Since the platform we were building it was AWS based, we decided to analyse what Amazon can provide us and finally found &lt;strong&gt;DynamoDB&lt;/strong&gt;!&lt;/p&gt;
-&lt;h2&gt;DynamoDB at the rescue!&lt;/h2&gt;
-&lt;p&gt;DynamoDB is a key-value database that supports the configuration of item TTL and its costs are predictable because are in function of the required capacity.&lt;/p&gt;
-&lt;p&gt;One might ask: &lt;em&gt;how can I store the presented model in a key-value database?&lt;/em&gt; The magic comes with the composite key feature: &lt;a href=&quot;https://aws.amazon.com/es/blogs/database/choosing-the-right-dynamodb-partition-key/&quot;&gt;https://aws.amazon.com/es/blogs/database/choosing-the-right-dynamodb-partition-key/&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2&gt;Knowing DynamoDB&lt;/h2&gt;
-&lt;p&gt;Quoting AWS documentation:&lt;/p&gt;
-&lt;blockquote&gt;&lt;p&gt;This type of key is composed of two attributes. The first attribute is the &lt;em&gt;partition key&lt;/em&gt;, and the second attribute is the&lt;em&gt; sort key&lt;/em&gt;.&lt;/p&gt;&lt;/blockquote&gt;
-&lt;p&gt;Therefore, we can use the metric name as the partition key and the timestamp and the sort key and the sensor value as the DynamoDB object:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;/assets/img/posts/dynamodbts/dynamo-db-key.png&quot;&gt; &lt;img src=&quot;/assets/img/posts/dynamodbts/dynamo-db-key.png&quot; alt=&quot;DynamoDB Key Schema&quot; /&gt; &lt;/a&gt;
-&lt;em&gt;DynamoDB Key Schema&lt;/em&gt;&lt;/p&gt;
-
-&lt;h2&gt;Rollup aggregations?&lt;/h2&gt;
-&lt;p&gt;Now we can store the timestamped data in DynamoDB, however, what happens with the multiple granularity requirement? DynamoDB has a nice feature called DynamoDB Streams.&lt;/p&gt;
-&lt;p&gt;DynamoDB Streams sends the events generated in the database (new records, edit, delete, ...) to a an AWS Lambda. Hence, we can perform the aggregations for the multiple granularities as soon as a new data value arrives. In order to perform the storage of the multiple aggregations, we can define one table for each aggregation.&lt;/p&gt;
-&lt;h2&gt;The implementation: DynamoDB Timeseries Database&lt;/h2&gt;
-&lt;p&gt;Finally, in order to complete the setup we have used a serverless approach in order to allocate the cost of the project to the required capacity.&lt;/p&gt;
-&lt;p&gt;The final structure of the implemented solution looked like this:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;/assets/img/posts/dynamodbts/dynamo-db-database-2.png&quot;&gt;&lt;img src=&quot;/assets/img/posts/dynamodbts/dynamo-db-database-2.png&quot; alt=&quot;Components of DynamoDB TimeseriesDB&quot; /&gt;&lt;/a&gt;
-&lt;em&gt;Components of DynamoDB TimeseriesDB&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;1) The service that uses the DynamoDB Timeseries database is a serverless application with an API Gateway calling an Lambda function. One of the steps of the business logic is communicate with the DynamoDB Insert Lambda.&lt;/p&gt;
-&lt;p&gt;2) The insertion mechanism of the database is by invoking an AWS Lambda function. This function inserts the timestamped data into the lower granularity table.&lt;/p&gt;
-&lt;p&gt;3) When the Insert function inserts the data into the lower granularity table, DynamoDB Streams invokes the AWS Lambda involved in performing the roll-up aggregations.&lt;/p&gt;
-&lt;p&gt;4) The Aggregate function has the logic implemented on how to perform multiple aggregations (average, sum, count, ...).&lt;/p&gt;
-&lt;p&gt;5) Each time serie can be configured to have different aggregations, TTL, timezone to perform temporal aggregation, etc... There are an additional lambda in order to configure the timeserie parameters.&lt;/p&gt;
-&lt;p&gt;6) Once the aggregation is performed, the data is stored into the appropriate DynamoDB table according to the granularity: minute, hour, day, month, year, ...&lt;/p&gt;
-&lt;p&gt;With this solution we achieve a solution where we can fine tune the capacity of the database.&lt;/p&gt;
-&lt;h2&gt;Production time!&lt;/h2&gt;
-&lt;p&gt;When we put this system into production, some issues arises with the capacity of the DynamoDB. When the incoming data flows faster than the reserved capacity in DynamoDB, the lambda functions became very slow and resulting in a high number of timeout errors.&lt;/p&gt;
-&lt;p&gt;The reasons for this is that when DynamoDB is running at capacity, it throttle requests, making the client adjust its speed to the reserved capacity. This works good for a traditional client, however it breaks with the serverless approach, because the Lambda functions were taking too much time.&lt;/p&gt;
-&lt;p&gt;In order to fix situation, we add another component to the system: an AWS Kinesis Stream &lt;a href=&quot;https://aws.amazon.com/kinesis&quot;&gt;https://aws.amazon.com/kinesis&lt;/a&gt;. Instead of writing directly to the DynamoDB table, the service Lambda function now writes the data into a Kinesis stream.&lt;/p&gt;
-&lt;p&gt;In the other side of the stream, we place a Kinesis consumer that is able to consume items from the stream in batches of items. Additionally, we are able to control the insertion speed of items in DynamoDB by sleeping some time between batch consumption. Since this consumer needs to be 24/7, it runs on a traditional EC2 instance.&lt;/p&gt;
-&lt;p&gt;Now the scheme looks like this:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;/assets/img/posts/dynamodbts/dynamo-db-kinesis-database.png&quot;&gt;&lt;img src=&quot;/assets/img/posts/dynamodbts/dynamo-db-kinesis-database.png&quot; alt=&quot;Adding Kinesis into the TimeseriesDB&quot; /&gt;&lt;/a&gt;
-&lt;em&gt;Adding Kinesis into the TimeseriesDB&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;The additional point (7) shows the Kinesis stream where the items are being inserted by the Service Lambda function and consumed by the DynamoDB Timeseries DB Kinesis Consumer. The configured batch size (B) and sleep time (T) allows the consumer to buffer the insertion of data up to the reserved DynamoDB capacity.&lt;/p&gt;
-&lt;h2&gt;Show me the code&lt;/h2&gt;
-&lt;p&gt;An open sourced version of the production code can be found here:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/adriangalera/dynamodb-timeseries&quot;&gt;https://github.com/adriangalera/dynamodb-timeseries&lt;/a&gt;&lt;/p&gt;
-</description>
-            <pubDate>Fri, 21 Sep 2018 00:00:00 +0200</pubDate>
         </item>
         
     </channel>
