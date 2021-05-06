@@ -1,6 +1,16 @@
 [
    
       {
+        "title"    : "Java 11 negative symbol in Swedish",
+        "category" : "",
+        "tags"     : " java, java11",
+        "url"      : "/java11-negative-symbol-swedish/",
+        "date"     : "May 6, 2021",
+        "excerpt"  : "We performed a migration to Java 11 and a bug fix about negative symbol for negative numbers in Java ruined our implementation. This article describes the situation and the lessons learned.\n\n\n\nIn the middle of a migrati...",
+        "content"  : "We performed a migration to Java 11 and a bug fix about negative symbol for negative numbers in Java ruined our implementation. This article describes the situation and the lessons learned.\n\n\n\nIn the middle of a migration of a project to Java 11 a very curious scenario has appeared. We face a bug while dealing with negative numbers. We have a function to convert a positive number to negative. The implementation was working fine for Java 8 but not for Java 11:\n\npublic String negativeNumber(int number) {\n    return &quot;-&quot; + number;\n}\n\n\nThe error appeared while trying to parse the numbers generated with that function:\n\npublic Number parse(String number) throws ParseException {\n    return fmt.parse(number)\n}\n\n\nMore precisely, it was throwing the following exception:\n\nUnparseable number: &quot;-1&quot;\njava.text.ParseException: Unparseable number: &quot;-1&quot;\n\tat java.base/java.text.NumberFormat.parse(NumberFormat.java:431)\n\tat SwedishNegativeSymbol.shouldParseNegativeNumberButFailsOnJava11(SwedishNegativeSymbol.java:23)\n\n\nThe investigation and debug led us to compare our negative symbol with the one expected by the NumberFormat:\n\n@Test\npublic void shouldUseSameNegativeSymbol() {\n    String expectedNegativeSymbol = fmt.getNegativePrefix();\n    String negativeSymbol = negate(1).substring(0, 1);\n    assertEquals(&quot;Negative symbols do not match!&quot;, expectedNegativeSymbol, negativeSymbol);\n}\n\n\nAnd… surprise, the test pass on Java 8 but not in Java 11:\n\nNegative symbols do not match! expected:&amp;lt;[−]&amp;gt; but was:&amp;lt;[-]&amp;gt;\nExpected :−\nActual   :-\n\norg.junit.ComparisonFailure: Negative symbols do not match! expected:&amp;lt;[−]&amp;gt; but was:&amp;lt;[-]&amp;gt;\n\tat org.junit.Assert.assertEquals(Assert.java:115)\n\tat SwedishNegativeSymbol.shouldUseSameNegativeSymbol(SwedishNegativeSymbol.java:35)\n\n\nWTF!. Why on earth the negative symbol do not match? The response is here: JDK-8214926.\n\nIt looks like the negative symbol returned in Java 8 was wrong and Java authors decided to fix that in Java11. The two characters are visually very similar:\n\n\n  − Minus-sign\n  - Hyphen-minus\n\n\nThe solution was straightforward: use the negative symbol provided by NumberFormat\n\npublic String negativeNumberWorkingOnJava11(int number) {\n    DecimalFormat fmt = (DecimalFormat) NumberFormat.getInstance(Locale.forLanguageTag(&quot;se-sv&quot;));\n    return fmt.getNegativePrefix() + number;\n}\n\n\nNow the test passes both in Java 8 and Java 11.\n\nThe lesson learned was important: DO NOT HARDCODE NEGATIVE SYMBOL!\n\nYou can find the source code here: SwedishNegativeSymbol.java\n"
+      } ,
+   
+      {
         "title"    : "Testing python BaseHttpServer",
         "category" : "",
         "tags"     : " python, testing, mocking",
