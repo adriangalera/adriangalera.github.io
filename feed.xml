@@ -7,8 +7,344 @@
         <atom:link href="https://www.agalera.eu/feed.xml" rel="self" type="application/rss+xml"/>
         <link>https://www.agalera.eu/</link>
         <description>My personal developer blog page.</description>
-        <pubDate>Thu, 06 May 2021 16:50:14 +0200</pubDate>
+        <pubDate>Sun, 18 Jul 2021 15:13:09 +0200</pubDate>
         <webfeeds:icon>https://www.agalera.eu/assets/img/avatars/me-100x100.png</webfeeds:icon>
+        
+        <item>
+            
+                <enclosure length="1" type="image" url="https://www.agalera.eu/assets/img/posts/bark-detector/featured-image.jpg"/>
+            
+            <title>Implementing a dog bark detector</title>
+            <link>https://www.agalera.eu/bark-detector/</link>
+            <guid isPermaLink="false">/bark-detector/</guid>
+            <description>&lt;style type=&quot;text/css&quot;&gt;
+.image-table td{
+    border: 0px;
+}
+.image-table .center{
+    text-align: center;
+}
+&lt;/style&gt;
+
+&lt;p&gt;My dog has a little bit of separation anxiety so when we leave him alone, he barks some times.&lt;/p&gt;
+
+&lt;p&gt;We are training him to be home-alone and we want to know if he barks or not when we are not home.&lt;/p&gt;
+
+&lt;p&gt;Let's implement a bark detector!&lt;/p&gt;
+
+&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;basics&quot;&gt;Basics&lt;/h2&gt;
+
+&lt;h3 id=&quot;time-representation&quot;&gt;Time representation&lt;/h3&gt;
+
+&lt;p&gt;What is audio and how is its digital representation? It’s basically an array of float values containing a value from -1 to 1.&lt;/p&gt;
+
+&lt;table class=&quot;image-table&quot;&gt;
+&lt;tr&gt;
+&lt;td&gt;
+&lt;img src=&quot;/assets/img/posts/bark-detector/wave.png&quot; /&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class=&quot;center&quot;&gt;
+&lt;small&gt;Temporal representation of an audio signal&lt;/small&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;This representation shows the temporal evolution of the audio signal over time. This is very variable and it’s really difficult to extract any relevant feature from this representation.&lt;/p&gt;
+
+&lt;h3 id=&quot;frequency-representation&quot;&gt;Frequency representation&lt;/h3&gt;
+
+&lt;p&gt;So, instead of using the temporal representation, let’s observe the frequency representation:&lt;/p&gt;
+
+&lt;table class=&quot;image-table&quot;&gt;
+&lt;tr&gt;
+&lt;td&gt;
+&lt;img src=&quot;/assets/img/posts/bark-detector/stft.png&quot; /&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class=&quot;center&quot;&gt;
+&lt;small&gt;Frequency representation of an audio signal&lt;/small&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The x axis is the time of the audio signal and the y axis is the values of the frequencies. Each color in the vertical axis correspond to a different value of the power on that certain frequency.&lt;/p&gt;
+
+&lt;p&gt;Note that the time of the plot is doubled respect with the time representation, this is because the signal is combined with itself to generate the frequency representation.&lt;/p&gt;
+
+&lt;p&gt;This representation shows the evolution of the different frequency amplitudes over time.&lt;/p&gt;
+
+&lt;p&gt;Without even listening the sound, we can try to analise it checking the time/frequency characteristic. We see some peaks in the time representation that match with high energy in the low frequencies.&lt;/p&gt;
+
+&lt;p&gt;The good thing about frequency representation is that it cancel noise because usually its energy is spread over all frequencies. Besides that, each sound has a characteristic frequency footprint. So, it’s very convinient to extract the features of the sound in the frequency domain.&lt;/p&gt;
+
+&lt;h3 id=&quot;mel-frequency-cepstral-co-efficients-mfcc&quot;&gt;Mel Frequency Cepstral Co-efficients (MFCC)&lt;/h3&gt;
+
+&lt;p&gt;Quoting from &lt;a href=&quot;https://iq.opengenus.org/mfcc-audio/&quot;&gt;https://iq.opengenus.org/mfcc-audio/&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;MFC is a representation of the short-term power spectrum of a sound, based on a linear cosine transform of a log power spectrum on a nonlinear mel scale of frequency.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Ok, what does it mean? It’s an improved frequency representation but applying optimizations based on the characteristics of human hearing. Usually MFCC are obtained like this:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Take the Fourier transform of the audio signal to get the frequency representation.&lt;/li&gt;
+  &lt;li&gt;Map the powers of the spectrum to the &lt;a href=&quot;https://en.wikipedia.org/wiki/Mel_scale&quot;&gt;mel scale&lt;/a&gt;. This scale approximates the spectrum to be more like what humans hear.&lt;/li&gt;
+  &lt;li&gt;Take the logs of the powers at each of the mel frequencies.&lt;/li&gt;
+  &lt;li&gt;Take the discrete cosine transform (DCT) of the list of mel log powers. This will remove redudant information as in non-changing information.&lt;/li&gt;
+  &lt;li&gt;The MFCCs are the amplitudes of the resulting spectrum.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;table class=&quot;image-table&quot;&gt;
+&lt;tr&gt;
+&lt;td&gt;
+&lt;img src=&quot;/assets/img/posts/bark-detector/mfcc.png&quot; /&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class=&quot;center&quot;&gt;
+&lt;small&gt;MFCC representation of an audio signal&lt;/small&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;We can use &lt;a href=&quot;https://librosa.org/doc/latest/index.html&quot;&gt;librosa&lt;/a&gt; library to load the audio and extract the MFCC features.&lt;/p&gt;
+
+&lt;p&gt;The x axis is time, the y axis is the different MFCC coefficients computed (20 in this example). The color shows the value MFCC coefficient for certain time and coefficient.&lt;/p&gt;
+
+&lt;p&gt;It’s not obvious to see anything in this plot, but it represents the frequency information in a format the computer can use to understand the characteristics of this sound.&lt;/p&gt;
+
+&lt;h2 id=&quot;getting-the-dataset&quot;&gt;Getting the dataset&lt;/h2&gt;
+
+&lt;p&gt;In &lt;a href=&quot;https://www.agalera.eu/standalone-app-raspberry-pi&quot;&gt;this&lt;/a&gt; article I describe the little device I made to feed my dog while I’m away. So I’ll re-use the same device and plug it an old unused webcam that has a microphone.&lt;/p&gt;
+
+&lt;p&gt;I did not want to complicate my life much and I created a simple script that uses vlc to stream the audio obtained by the webcam mic and store it as mp3. In order to analyse the files easier I run the script every minute so I have recordings of 60 seconds duration:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;TIMEOUT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;60
+&lt;span class=&quot;nv&quot;&gt;FILE_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/home/pi/dogfeeder-audios/dogfeeder-audio-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt; +&lt;span class=&quot;s1&quot;&gt;'%Y_%m_%d_%H_%M_%S'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.mp3&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;timeout&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$TIMEOUT&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; cvlc &lt;span class=&quot;nt&quot;&gt;--no-video&lt;/span&gt; alsa://plughw:1 &lt;span class=&quot;nt&quot;&gt;--sout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#transcode{vcodec=none,acodec=mp3,ab=128,
+channels=2,samplerate=44100}:duplicate{dst=std{access=http,mux=mp3,dst=:8087},dst=std{access=file,mux=wav,
+dst=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$FILE_NAME&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;}}&quot;&lt;/span&gt; &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The syntax of vlc is really ugly :( . But if you read it carefully, you will see that we’re telling vlc to transcode the audio coming from &lt;code class=&quot;highlighter-rouge&quot;&gt;alsa://plughw:1&lt;/code&gt; device (webcam microphone) to mp3 at 128 kbps (decent compression rate). After that, stream the generated mp3 via HTTP on port 8087 and store the mp3 data on the given filename.&lt;/p&gt;
+
+&lt;p&gt;In order to don’t flood the SD card of the Raspberry Pi I run the following script each 15 minutes. It gets the files older than 15 minutes, copy them to a NAS and remove them from the Raspberry Pi disk.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;MINUTES_ALLOWED&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;15
+&lt;span class=&quot;nv&quot;&gt;FILES_TO_DELETE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;find /home/pi/dogfeeder-audios &lt;span class=&quot;nt&quot;&gt;-type&lt;/span&gt; f &lt;span class=&quot;nt&quot;&gt;-mmin&lt;/span&gt; +&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$MINUTES_ALLOWED&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-exec&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt; +&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;file &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$FILES_TO_DELETE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do
+    &lt;/span&gt;scp &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$file&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; admin@diskstation.local:/volume1/data/dogfeeder-audios/.
+    &lt;span class=&quot;nb&quot;&gt;rm&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$file&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;training-the-model&quot;&gt;Training the model&lt;/h2&gt;
+
+&lt;p&gt;I’ve been recording for 3 days and we made some exits to keep him alone. Up to this point we have enough data to train the model. However, we have &lt;code class=&quot;highlighter-rouge&quot;&gt;60 min * 24 h * 3 days = 4320 files&lt;/code&gt; and need to classify them manually. Will we do that manually? Absolutely not!&lt;/p&gt;
+
+&lt;p&gt;We can pre-process the dataset and check for files that have something different than noise.&lt;/p&gt;
+
+&lt;table class=&quot;image-table&quot;&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;img src=&quot;/assets/img/posts/bark-detector/noise.png&quot; /&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&quot;/assets/img/posts/bark-detector/wave.png&quot; /&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class=&quot;center&quot;&gt;&lt;small&gt;File with only noise&lt;/small&gt;&lt;/td&gt;
+&lt;td class=&quot;center&quot;&gt;&lt;small&gt;File with unclassified audio event&lt;/small&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Since my dog’s barks are quite loud we can safely discard all files whose maximum amplitude is lower than 0.25. This way, we could reduce a lot the amount of files that need to be manually classified as bark.&lt;/p&gt;
+
+&lt;h3 id=&quot;characterization-of-a-bark&quot;&gt;Characterization of a bark&lt;/h3&gt;
+
+&lt;p&gt;As mentioned before, we’ll discard files whose amplitude is lower than 0.25. Listening to multiple files with bark, we can observe that each bark more or less lasts for 1 second.&lt;/p&gt;
+
+&lt;table class=&quot;image-table&quot;&gt;
+&lt;tr&gt;
+&lt;td&gt;
+&lt;img src=&quot;/assets/img/posts/bark-detector/bark.png&quot; /&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class=&quot;center&quot;&gt;
+&lt;audio controls=&quot;&quot;&gt;
+    &lt;source src=&quot;/assets/sounds/posts/bark-detector/bark.wav&quot; type=&quot;audio/wav&quot; /&gt;
+&lt;/audio&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class=&quot;center&quot;&gt;
+&lt;small&gt;Time representation of an audio signal containing a bark&lt;/small&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;labelling-the-dataset&quot;&gt;Labelling the dataset&lt;/h3&gt;
+
+&lt;p&gt;So, the strategy for labelling the dataset will be:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Download the whole dataset.&lt;/li&gt;
+  &lt;li&gt;Discard the not interesting files (files without any sound event) by checking the maximum amplitude.&lt;/li&gt;
+  &lt;li&gt;Extract chunks of 1 seconds from them, run again the algorithm to check sound events on the one-second chunks.&lt;/li&gt;
+  &lt;li&gt;Manually listen to the chunks and classify them as bark or not. You can default the labelling to “Not Bark” and this way you only classify events that are barks.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The implementation of this is quite simple: write every chunk filename in a CSV and and a 0 or 1 signaling the presence of a bark or not:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;chunks/dogfeeder-audio-2021_07_16_18_49_01_23.wav,0
+chunks/dogfeeder-audio-2021_07_16_18_49_01_24.wav,1
+chunks/dogfeeder-audio-2021_07_16_18_49_01_25.wav,0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Once we have the dataset labelled, we can go file by file and extract the MFCC features of every one-second file:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;extract_mfcc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;librosa&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mono&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sample_rate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mfcc_2D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;librosa&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;feature&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mfcc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sample_rate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_mfcc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mfcc_1D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mfcc_2D&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flatten&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;scaler&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MinMaxScaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mfccs_sc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scaler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit_transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mfcc_1D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reshape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mfccs_sc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flatten&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;MFCC values can go from [-Inf, Inf], however when I was playing with different algorithms, some of them did not accept negative values, so I scaled the values of MFCC to [0, Inf] using &lt;code class=&quot;highlighter-rouge&quot;&gt;MinMaxScaler&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Once we have the MFCC features for all the dataset, we can split the dataset into training and test dataset using:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.model_selection&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_test_split&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_test&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_test_split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random_state&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.33&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After that, I’ve assesed the prediction performance of &lt;code class=&quot;highlighter-rouge&quot;&gt;Naive Bayes&lt;/code&gt; classifier and &lt;code class=&quot;highlighter-rouge&quot;&gt;Logistic Regression&lt;/code&gt; classifiers:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;c1&quot;&gt;# Naive bayes
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Training naive bayes ...&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mnb&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MultinomialNB&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;score on test: &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mnb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;score on train: &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mnb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;***************&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Logistic regression
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Training logistic regression ...&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;lr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LogisticRegression&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max_iter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;lr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;score on test: &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;score on train: &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Getting a very good score with the logistic regression, I don’t remember exactly the numbers but were more or less:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Score on test: 0.992&lt;/li&gt;
+  &lt;li&gt;Score on traing: 0.996&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;dataset-imbalance&quot;&gt;Dataset imbalance&lt;/h3&gt;
+
+&lt;p&gt;The number of events with barks will be very reduced compared with the events that does not contain a bark. This can present a huge problem depending on the machine learning algorithm returning a totally biased model.&lt;/p&gt;
+
+&lt;p&gt;In order to fix that, you can do two things:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Oversample: create positive samples by synthetically creating new positive samples&lt;/li&gt;
+  &lt;li&gt;Undersample: discard samples from the negative ones&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;More info: &lt;a href=&quot;https://towardsdatascience.com/having-an-imbalanced-dataset-here-is-how-you-can-solve-it-1640568947eb&quot;&gt;https://towardsdatascience.com/having-an-imbalanced-dataset-here-is-how-you-can-solve-it-1640568947eb&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I’ve used &lt;code class=&quot;highlighter-rouge&quot;&gt;SMOTE&lt;/code&gt; (Synthetic Minority Over-sampling Technique) technique to perform the oversampling with very satisfactory results. In simple terms, SMOTE looks at the feature space for the minority class data points and considers its k nearest neighbours.&lt;/p&gt;
+
+&lt;p&gt;To do that I’ve used &lt;a href=&quot;https://imbalanced-learn.readthedocs.io/en/stable/index.html&quot;&gt;imbalanced-learn&lt;/a&gt; python libary and it’s really simple:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fix_imbalance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;over&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SMOTE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sampling_strategy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;under&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RandomUnderSampler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sampling_strategy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;steps&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'o'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;over&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'u'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;under&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;pipeline&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pipeline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;X_fix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y_fix&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pipeline&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit_resample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X_fix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y_fix&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Note that the library also provides a module to perform majority under sampling. The two methods are combined in a pipeline to fix the dataset imbalance problem.&lt;/p&gt;
+
+&lt;h2 id=&quot;using-the-training-model&quot;&gt;Using the training model&lt;/h2&gt;
+
+&lt;p&gt;Now we have our logistic regression model trained and is working quite well. It’s time to put it on the Raspberry Pi.&lt;/p&gt;
+
+&lt;p&gt;First of all, we need a way to export the model outside of the training python code. In order to do that, I use the &lt;a href=&quot;https://joblib.readthedocs.io/en/latest/&quot;&gt;joblib&lt;/a&gt; library:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Write the model
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LogisticRegression&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max_iter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;lr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;joblib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dump&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'lr.pkl'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;compress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;joblib serialize the object into that file and then Raspberry Pi can load the model object:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;joblib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'lr.pkl'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we can retrieve the more recent fully recorded audio file:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;last_fully_written_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;audios_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;/&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sorted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;listdir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;audios_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;If the script query the last file, it might happen that is not fully written by that time.&lt;/p&gt;
+
+&lt;p&gt;Split it into chunks of one second and for each chunk run the prediction:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;has_bark_in_minute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;joblib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'lr.pkl'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;audio_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;load_audio_from_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;chunks&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;split_in_one_second_chunks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;audio_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sample_rate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;chunk_predictions&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chunk&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chunks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chunk&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sample_rate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;mfccs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;extract_mfcc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chunk&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;chunk_predictions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;predict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mfccs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chunk_predictions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chunk_predictions&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Since the model is probabilistic, it might happen to have false positive or negatives. In order to avoid that, the function &lt;code class=&quot;highlighter-rouge&quot;&gt;has_bark_in_minute&lt;/code&gt; will only return &lt;code class=&quot;highlighter-rouge&quot;&gt;True&lt;/code&gt; when more than two barks are detected for one minute.&lt;/p&gt;
+
+&lt;p&gt;Last but not least, when a bark is detected, the script will send me a message over telegram:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;send_to_telegram&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;predictions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;date&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;-&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.mp3&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;welcome_msg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Detected {predictions.count(1)} barks on {date}&quot;&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;requests&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://api.telegram.org/bot{get_token()}/sendMessage&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;chat_id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;telegram_group_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;text&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;welcome_msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;table class=&quot;image-table&quot;&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;img src=&quot;/assets/img/posts/bark-detector/telegram.png&quot; /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class=&quot;center&quot;&gt;&lt;small&gt;Example of messages in Telegram&lt;/small&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+</description>
+            <pubDate>Sun, 18 Jul 2021 00:00:00 +0200</pubDate>
+        </item>
         
         <item>
             
@@ -1976,54 +2312,6 @@ http {
 &lt;p&gt;You can check the code to provide Grafana,nginx and Docker here: &lt;a href=&quot;https://github.com/adriangalera/nginx-grafana-docker&quot;&gt;https://github.com/adriangalera/nginx-grafana-docker&lt;/a&gt;&lt;/p&gt;
 </description>
             <pubDate>Sat, 15 Jun 2019 00:00:00 +0200</pubDate>
-        </item>
-        
-        <item>
-            
-                <enclosure length="1" type="image" url="https://www.agalera.eu/assets/img/posts/oboe/featured.png"/>
-            
-            <title>Parse huge local json file</title>
-            <link>https://www.agalera.eu/parse-huge-local-json-file/</link>
-            <guid isPermaLink="false">/parse-huge-local-json-file/</guid>
-            <description>&lt;p&gt;I need to provide a UI to analyse the results of a long-running process that generates huge JSON file whose size is in GB order.&lt;/p&gt;
-&lt;p&gt;In the article I will talk about the solution implemented using the HTML5 FileReader API and the mighty &lt;a href=&quot;#using-oboe-js&quot;&gt;oboe.js&lt;/a&gt; library&lt;/p&gt;
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
-&lt;p&gt;TL;DR: &lt;a href=&quot;#code&quot;&gt;The code&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Thanks to &lt;a href=&quot;https://www.html5rocks.com/en/tutorials/file/dndfiles/&quot;&gt;HTML5 FileReader API&lt;/a&gt; , files can be read locally in the browser without any need for servers. Even better, files can be read in &lt;a href=&quot;https://gist.github.com/alediaferia/cfb3a7503039f9278381&quot;&gt;chunks&lt;/a&gt; in order to keep the memory footprint as low as desired.&lt;/p&gt;
-&lt;p&gt;If you search in Google about how to parse huge JSON files, eventually the streaming techniques will appear. In the XML world there are two different techniques for parsing files:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;SAX: Read the XML as events, keeping a little memory footprint&lt;/li&gt;
-&lt;li&gt;DOM: Read the whole XML in memory allowing easy manipulation&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Working with JSON the DOM technique is the most used. For instance &quot;JSON.parse&quot; loads the whole string in memory before parsing the JSON. What will happen if the string is really big? The browser will explode.&lt;/p&gt;
-&lt;p&gt;We need to apply the SAX loading technique to read the big JSON file. In order to achieve that we can use &lt;a href=&quot;http://oboejs.com/&quot;&gt;Oboejs&lt;/a&gt; library:&lt;/p&gt;
-&lt;blockquote&gt;&lt;p&gt;Oboe.js is an &lt;a href=&quot;http://oboejs.com/LICENCE&quot;&gt;open source&lt;/a&gt; Javascript library for loading JSON using streaming, combining the convenience of DOM with the speed and fluidity of SAX.&lt;/p&gt;&lt;/blockquote&gt;
-&lt;h5 id=&quot;using-oboe-js&quot;&gt;Using oboe.js&lt;/h5&gt;
-&lt;p&gt;Reading the documentation it is not clear if one can use the FileReader API with oboe-js. It clearly says you can pass an URL or a NodeJs stream to its initializer method:&lt;/p&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;oboe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;oboe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;cached&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Boolean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;withCredentials&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Boolean&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;oboe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Searching over the internet I have found this Github &lt;a href=&quot;https://github.com/jimhigson/oboe.js/issues/112&quot;&gt;issue&lt;/a&gt; where it's author is asking for some solution to not using an URL nor NodeJs stream.&lt;/p&gt;
-&lt;p&gt;So, finally there's a way to combine the power of the FileReader API and the streaming capabilities of oboejs&lt;/p&gt;
-&lt;h5 id=&quot;code&quot;&gt;The code&lt;/h5&gt;
-&lt;p&gt;Since the UI we are building is built in React, I have made this project as a plug-and-play React component:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/adriangalera/parse-huge-json&quot;&gt;https://github.com/adriangalera/parse-huge-json&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;P.S: The plug-and-play worked like a charm!&lt;/p&gt;
-&lt;p&gt;&amp;nbsp;&lt;/p&gt;
-</description>
-            <pubDate>Wed, 13 Mar 2019 00:00:00 +0100</pubDate>
         </item>
         
     </channel>
