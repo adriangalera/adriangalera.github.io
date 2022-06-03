@@ -1,6 +1,16 @@
 [
   
   {
+    "title"    : "Combine two Java Optionals",
+    "category" : "",
+    "tags"     : " java9, optional",
+    "url"      : "/java9/optional/2022/06/03/combine-two-optionals.html",
+    "date"     : "June 3, 2022",
+    "excerpt"  : "I was implementing a searching algorithm and I had to search for two things. In this article I describe how I implemented combining two Java optionals.\n\n\n\nThe algorithm had to do something similar to:\n\n\n  Search inside an array the first item star...",
+  "content"  : "I was implementing a searching algorithm and I had to search for two things. In this article I describe how I implemented combining two Java optionals.\n\n\n\nThe algorithm had to do something similar to:\n\n\n  Search inside an array the first item starting by A\n  If none is found, search the first item starting by B\n  If none is found, throw an Exception\n\n\nCommon code:\n\npublic abstract class ItemFinder {\n\n    protected abstract String findItem(List&amp;lt;String&amp;gt; items);\n\n    protected Optional&amp;lt;String&amp;gt; findFirstItemStartingWithA(List&amp;lt;String&amp;gt; items) {\n        return findFirstItemStartingWith(&quot;A&quot;, items);\n    }\n\n    protected Optional&amp;lt;String&amp;gt; findFirstItemStartingWithB(List&amp;lt;String&amp;gt; items) {\n        return findFirstItemStartingWith(&quot;B&quot;, items);\n    }\n\n    private Optional&amp;lt;String&amp;gt; findFirstItemStartingWith(String letter, List&amp;lt;String&amp;gt; items) {\n        return items.stream()\n            .filter(item -&amp;gt; item.startsWith(letter))\n            .findFirst();\n    }\n}\n\n\nJava 8\n\nThe only way to achieve this with Optionals before Java 9 was to cascade the Optional call:\n\n     public String findItem(List&amp;lt;String&amp;gt; items) {\n        return findFirstItemStartingWithA(items)\n            .orElseGet(() -&amp;gt; findFirstItemStartingWithB(items)\n                .orElseThrow(() -&amp;gt; new RuntimeException(&quot;no item found&quot;)));\n    }\n\n\nThe alternative flow is cascaded in the orElseGet, which is a little bit hard to read\n\nJava &amp;gt; 9\n\nIn Java 9, the Optional.or method is introduced, which enhaces a lot the code for these scenarios. The code above can be rewritten in a much more understandable fashion:\n\n    public String findItem(List&amp;lt;String&amp;gt; items) {\n        return findFirstItemStartingWithA(items)\n            .or(() -&amp;gt; findFirstItemStartingWithB(items))\n            .orElseThrow(() -&amp;gt; new RuntimeException(&quot;no item found&quot;));\n    }\n\n"
+} ,
+  
+  {
     "title"    : "Golang abstract class",
     "category" : "",
     "tags"     : " golang, design-patterns, architecture",
