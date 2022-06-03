@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.3
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/img/avatars/me-100x100.png" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-https://www.agalera.eu';
+      const isCookieConsent = 'false';
+      const analyticsName = 'UA-126206451-1';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+        <!-- Global site tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
+        <!-- Page analysis (analytics.js) -->
+        <script async src='https://www.google-analytics.com/analytics.js'></script>
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="https://www.agalera.eu/assets/img/posts/java-xms/featured-image.jpg">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Java big memory limit | Adrian Galera blog</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Java big memory limit" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Playing around with JVM options, we question ourselves; what would happen if we set the minimum memory to be greater than the available memory?" />
+<meta property="og:description" content="Playing around with JVM options, we question ourselves; what would happen if we set the minimum memory to be greater than the available memory?" />
+<link rel="canonical" href="https://www.agalera.eu/java-big-memory-limit" />
+<meta property="og:url" content="https://www.agalera.eu/java-big-memory-limit" />
+<meta property="og:site_name" content="Adrian Galera blog" />
+<meta property="og:image" content="https://www.agalera.eu/assets/img/posts/java-xms/featured-image.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-02-03T00:00:00+01:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/java-xms/featured-image.jpg" />
+<meta property="twitter:title" content="Java big memory limit" />
+<script type="application/ld+json">
+{"headline":"Java big memory limit","dateModified":"2020-02-03T00:00:00+01:00","datePublished":"2020-02-03T00:00:00+01:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/java-big-memory-limit"},"url":"https://www.agalera.eu/java-big-memory-limit","description":"Playing around with JVM options, we question ourselves; what would happen if we set the minimum memory to be greater than the available memory?","image":"https://www.agalera.eu/assets/img/posts/java-xms/featured-image.jpg","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Adrian Galera blog" href="https://www.agalera.eu/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="https://www.agalera.eu/feed.xml" title="Adrian Galera blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="Java big memory limit">
+    <meta name="twitter:description" content="While at work, we were fine tuning some java application, to do that, we were setting up jvm options, such as -Xmx, -Xms and so on. That lead me to asking me...">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.agalera.eu/assets/img/posts/java-xms/featured-image.jpg">
+    <meta name="twitter:image:alt" content="Java big memory limit">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" />
+		</a>
+        
+        <a class="site-title" aria-label="Adrian Galera blog" href="/">
+        Adrian Galera blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+        
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="Java big memory limit " aria-label="Java big memory limit" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article class="feature-image" >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="Java+big+memory+limit" class="title">Java big memory limit</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      February 03, 2020
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <p>While at work, we were fine tuning some java application, to do that, we were setting up jvm options, such as <code class="language-plaintext highlighter-rouge">-Xmx</code>, <code class="language-plaintext highlighter-rouge">-Xms</code> and so on. That lead me to asking me the following question:</p>
+
+<blockquote>
+  <p>What would happen if you start the jvm with the minimum memory to be higher than the computer memory?</p>
+</blockquote>
+
+<p><!--more--></p>
+
+<p>Our initial assumption is that <code class="language-plaintext highlighter-rouge">-Xms</code> will try to reserve the specified amount of memory. If that is bigger than computer memory, the JVM will stop with a <code class="language-plaintext highlighter-rouge">OutOfMemoryError</code> and/or the SO will start swapping and of course cause really poor performance.</p>
+
+<h2 id="setting-up">Setting up</h2>
+
+<p>To answer that question, I prepared a little experiment. A very silly gradle to project that prints something:</p>
+
+<p><a href="https://github.com/adriangalera/jvm-big-xms">https://github.com/adriangalera/jvm-big-xms</a></p>
+
+<p>Basically it runs this dummy code:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Boom</span> <span class="o">{</span>
+  
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">InterruptedException</span> <span class="o">{</span>
+        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"I'm here"</span><span class="o">);</span>
+            <span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">1000</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>And then, generate the jar file:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./gradlew build
+</code></pre></div></div>
+
+<h2 id="first-experiment">First experiment</h2>
+
+<p>First thing to do is run in a controlled environment, let’s say with 2 GB of initial memory:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>java -Xms2G -jar build/libs/boom-1.0-SNAPSHOT.jar
+</code></pre></div></div>
+
+<p>The program is responding, the memory profile seems fine; everything works as expected:</p>
+
+<p><a href="/assets/img/posts/java-xms/1.png"><img src="/assets/img/posts/java-xms/1.png" alt="Memory consumption 2 GB" /></a></p>
+
+<h2 id="lets-go-wild">Let’s go wild!</h2>
+
+<p>Now, I’ll try with more memory than the available for the computer:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>java -Xms100G -jar build/libs/boom-1.0-SNAPSHOT.jar
+</code></pre></div></div>
+
+<p>Program is responding, and checking the memory profile I got a surprise: <b>it is resporting 100GB!</b></p>
+
+<p><a href="/assets/img/posts/java-xms/2.png"><img src="/assets/img/posts/java-xms/2.png" alt="Memory consumption 100 GB" /></a></p>
+
+<p><a href="/assets/img/posts/java-xms/wat.png"><img src="/assets/img/posts/java-xms/wat.png" alt="" /></a></p>
+
+<p>After some discussion with some collegues, we agreed that this did not explode at the begining because the JVM is using virtual memory. In Linux setup this allocated in 64 bit for userland processes.</p>
+
+<p>The initial assumption also was wrong about swap, we check swap usage and was completely normal.</p>
+
+<p>Therefore, the JVM does not really reserve the initial memory as it seems initially.</p>
+
+<h2 id="lets-break-it">Let’s break it</h2>
+
+<p>If we want to actually pre reserve the memory, there’s a jvm option for that:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>java -XX:+AlwaysPreTouch -Xms100g -jar build/libs/boom-1.0-SNAPSHOT.jar 
+</code></pre></div></div>
+
+<p>Executing this, the computer will become unusuable because the JVM is taking the whole memory and the SO is taking the rest of the swap disk.</p>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.agalera.eu/java-big-memory-limit" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=Java+big+memory+limit%20https%3A%2F%2Fwww.agalera.eu%2Fjava-big-memory-limit"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=https://www.agalera.eu/java-big-memory-limit&quote=Java+big+memory+limit%20%7C%20Adrian+Galera+blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=https://www.agalera.eu/java-big-memory-limit&media=https://www.agalera.eu/assets/img/posts/java-xms/featured-image.jpg$description=While+at+work%2C+we+were+fine+tuning+some+java+application%2C+to+do+that%2C+we+were+setting+up+jvm+options%2C+such+as+-Xmx%2C+-Xms+and+so+on.+That+lead+me+to+asking+me+the+following+question%3A%0A%0A%0A++What+would+happen+if+you+start+the+jvm+with+the+minimum+memory+to+be+higher+than+the+computer+memory%3F%0A%0A%0A%0A%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=https://www.agalera.eu/java-big-memory-limit&title=Java+big+memory+limit%20%7C%20Adrian+Galera+blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.agalera.eu/java-big-memory-limit&title=Java+big+memory+limit%20%7C%20Adrian+Galera+blog&summary=&source=https://www.agalera.eu/java-big-memory-limit"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=Java big memory limit%20%7C%20Adrian Galera blog&body=https://www.agalera.eu/java-big-memory-limit"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#java">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> java</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#jvm">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> jvm</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#jvmOptions">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> jvmOptions</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#profiling">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> profiling</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="Latitude,longitude bounds" href="/bounds-lat-lng-array">
+            <p>Previous post</p>
+            Latitude,longitude bounds
+        </a>
+    </div>
+    
+
+    
+    <div id="next-post">
+        <a alt="Lombok tricks" href="/lombok-tricks">
+            <p>Next post</p>
+            Lombok tricks
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+  header#main { background-image: url('/assets/img/posts/java-xms/featured-image.jpg'); }
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        </p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/adriangalera"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://www.linkedin.com/in/adriangalera"
+               title="Follow on Linkedin"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="mailto:adrian.galera.87@gmail.com"
+               title="Follow on Mail"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>

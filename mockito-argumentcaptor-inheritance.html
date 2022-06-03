@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.3
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/img/avatars/me-100x100.png" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-https://www.agalera.eu';
+      const isCookieConsent = 'false';
+      const analyticsName = 'UA-126206451-1';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+        <!-- Global site tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
+        <!-- Page analysis (analytics.js) -->
+        <script async src='https://www.google-analytics.com/analytics.js'></script>
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="https://www.agalera.eu/assets/img/posts/mockito-argcaptor-inheritance/featured.jpg">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Mockito ArgumentCaptor with inheritance | Adrian Galera blog</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Mockito ArgumentCaptor with inheritance" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Working with Mockito’s ArgumentCaptor I discover it does not work as expected with child classes. This article describe a workaround to keep using it." />
+<meta property="og:description" content="Working with Mockito’s ArgumentCaptor I discover it does not work as expected with child classes. This article describe a workaround to keep using it." />
+<link rel="canonical" href="https://www.agalera.eu/mockito-argumentcaptor-inheritance" />
+<meta property="og:url" content="https://www.agalera.eu/mockito-argumentcaptor-inheritance" />
+<meta property="og:site_name" content="Adrian Galera blog" />
+<meta property="og:image" content="https://www.agalera.eu/assets/img/posts/mockito-argcaptor-inheritance/featured.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-08-08T00:00:00+02:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/mockito-argcaptor-inheritance/featured.jpg" />
+<meta property="twitter:title" content="Mockito ArgumentCaptor with inheritance" />
+<script type="application/ld+json">
+{"headline":"Mockito ArgumentCaptor with inheritance","dateModified":"2019-08-08T00:00:00+02:00","datePublished":"2019-08-08T00:00:00+02:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/mockito-argumentcaptor-inheritance"},"url":"https://www.agalera.eu/mockito-argumentcaptor-inheritance","description":"Working with Mockito’s ArgumentCaptor I discover it does not work as expected with child classes. This article describe a workaround to keep using it.","image":"https://www.agalera.eu/assets/img/posts/mockito-argcaptor-inheritance/featured.jpg","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Adrian Galera blog" href="https://www.agalera.eu/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="https://www.agalera.eu/feed.xml" title="Adrian Galera blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="Mockito ArgumentCaptor with inheritance">
+    <meta name="twitter:description" content="Working with Mockito’s ArgumentCaptor I discover it has a awful issue with inheritance.Let’s suppose we have a parent class named Animal and two child classe...">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.agalera.eu/assets/img/posts/mockito-argcaptor-inheritance/featured.jpg">
+    <meta name="twitter:image:alt" content="Mockito ArgumentCaptor with inheritance">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" />
+		</a>
+        
+        <a class="site-title" aria-label="Adrian Galera blog" href="/">
+        Adrian Galera blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+        
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="Mockito ArgumentCaptor with inheritance " aria-label="Mockito ArgumentCaptor with inheritance" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article class="feature-image" >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="Mockito+ArgumentCaptor+with+inheritance" class="title">Mockito ArgumentCaptor with inheritance</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      August 08, 2019
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <p>Working with Mockito’s ArgumentCaptor I discover it has a awful issue with inheritance.</p>
+<p><!--more--></p>
+<p>Let’s suppose we have a parent class named <code class="language-plaintext highlighter-rouge">Animal</code> and two child classes <code class="language-plaintext highlighter-rouge">Dog</code> and <code class="language-plaintext highlighter-rouge">Cat</code>:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Animal</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">species</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Animal</span><span class="o">(</span><span class="nc">String</span> <span class="n">species</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">species</span> <span class="o">=</span> <span class="n">species</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getSpecies</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">species</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Cat</span> <span class="kd">extends</span> <span class="nc">Animal</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">colorEyes</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Cat</span><span class="o">(</span><span class="nc">String</span> <span class="n">colorEyes</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="s">"Cat"</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">colorEyes</span> <span class="o">=</span> <span class="n">colorEyes</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Dog</span> <span class="kd">extends</span> <span class="nc">Animal</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Dog</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="s">"Dog"</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>And a class that accept an argument of type <code class="language-plaintext highlighter-rouge">Animal</code>:</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AnimalProcessor</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">processAnimal</span><span class="o">(</span><span class="nc">Animal</span> <span class="n">animal</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">animal</span><span class="o">.</span><span class="na">getSpecies</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>One might think on writing the unit test of <code class="language-plaintext highlighter-rouge">AnimalProcessor</code> similar to this snippet:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ArgumentCaptorInheritanceTest</span> <span class="o">{</span>
+
+    <span class="nd">@Mock</span>
+    <span class="kd">private</span> <span class="nc">AnimalProcessor</span> <span class="n">animalProcessor</span><span class="o">;</span>
+
+    <span class="nd">@Before</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">MockitoAnnotations</span><span class="o">.</span><span class="na">initMocks</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldProcessDog</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">Dog</span> <span class="n">dog</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Dog</span><span class="o">(</span><span class="s">"Rex"</span><span class="o">);</span>
+        <span class="nc">Cat</span> <span class="n">cat</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cat</span><span class="o">(</span><span class="s">"blue"</span><span class="o">);</span>
+
+        <span class="nc">ArgumentCaptor</span><span class="o">&lt;</span><span class="nc">Dog</span><span class="o">&gt;</span> <span class="n">dogArgumentCaptor</span> <span class="o">=</span> <span class="nc">ArgumentCaptor</span><span class="o">.</span><span class="na">forClass</span><span class="o">(</span><span class="nc">Dog</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+        <span class="n">animalProcessor</span><span class="o">.</span><span class="na">processAnimal</span><span class="o">(</span><span class="n">dog</span><span class="o">);</span>
+        <span class="n">animalProcessor</span><span class="o">.</span><span class="na">processAnimal</span><span class="o">(</span><span class="n">cat</span><span class="o">);</span>
+
+        <span class="nc">Mockito</span><span class="o">.</span><span class="na">verify</span><span class="o">(</span><span class="n">animalProcessor</span><span class="o">).</span><span class="na">processAnimal</span><span class="o">(</span><span class="n">dogArgumentCaptor</span><span class="o">.</span><span class="na">capture</span><span class="o">());</span>
+
+        <span class="nc">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="s">"Rex"</span><span class="o">,</span> <span class="n">dogArgumentCaptor</span><span class="o">.</span><span class="na">getValue</span><span class="o">().</span><span class="na">getName</span><span class="o">());</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<p>Well, this fails … <code class="language-plaintext highlighter-rouge">ArgumentCaptor</code> does not work well in this case. It makes the <code class="language-plaintext highlighter-rouge">verify</code> fail because the method has been called twice.</p>
+
+<p>The expected behaviour is that only <code class="language-plaintext highlighter-rouge">verify</code> analyses the calls when the <code class="language-plaintext highlighter-rouge">Dog</code> instance is passed.</p>
+
+<p>In order to execute the test in this way, some ugly workaround needs to be done:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldProcessDog</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">Dog</span> <span class="n">dog</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Dog</span><span class="o">(</span><span class="s">"Rex"</span><span class="o">);</span>
+        <span class="nc">Cat</span> <span class="n">cat</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cat</span><span class="o">(</span><span class="s">"blue"</span><span class="o">);</span>
+
+        <span class="nc">ArgumentCaptor</span><span class="o">&lt;</span><span class="nc">Animal</span><span class="o">&gt;</span> <span class="n">animalCaptor</span> <span class="o">=</span> <span class="nc">ArgumentCaptor</span><span class="o">.</span><span class="na">forClass</span><span class="o">(</span><span class="nc">Animal</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+        <span class="n">animalProcessor</span><span class="o">.</span><span class="na">processAnimal</span><span class="o">(</span><span class="n">dog</span><span class="o">);</span>
+        <span class="n">animalProcessor</span><span class="o">.</span><span class="na">processAnimal</span><span class="o">(</span><span class="n">cat</span><span class="o">);</span>
+
+        <span class="nc">Mockito</span><span class="o">.</span><span class="na">verify</span><span class="o">(</span><span class="n">animalProcessor</span><span class="o">,</span> <span class="nc">Mockito</span><span class="o">.</span><span class="na">times</span><span class="o">(</span><span class="mi">2</span><span class="o">)).</span><span class="na">processAnimal</span><span class="o">(</span><span class="n">animalCaptor</span><span class="o">.</span><span class="na">capture</span><span class="o">());</span>
+
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Animal</span><span class="o">&gt;</span> <span class="n">processedAnimals</span> <span class="o">=</span> <span class="n">animalCaptor</span><span class="o">.</span><span class="na">getAllValues</span><span class="o">();</span>
+        <span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">Animal</span><span class="o">&gt;</span> <span class="n">dogOptional</span> <span class="o">=</span> <span class="n">processedAnimals</span><span class="o">.</span><span class="na">stream</span><span class="o">()</span>
+                                        <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="k">instanceof</span> <span class="nc">Dog</span><span class="o">)</span>
+                                        <span class="o">.</span><span class="na">findFirst</span><span class="o">();</span>
+        <span class="nc">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">dogOptional</span><span class="o">.</span><span class="na">isPresent</span><span class="o">());</span>
+        <span class="nc">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="s">"Rex"</span><span class="o">,</span> <span class="o">((</span><span class="nc">Dog</span><span class="o">)</span> <span class="n">dogOptional</span><span class="o">.</span><span class="na">get</span><span class="o">()).</span><span class="na">getName</span><span class="o">());</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<p>Instead of capturing the arguments for <code class="language-plaintext highlighter-rouge">Dog</code>, you can do it for <code class="language-plaintext highlighter-rouge">Animal</code>.</p>
+
+<p>Then the <code class="language-plaintext highlighter-rouge">verify</code> will successfully capture the two calls and then all the captured values can be analysed. You can filter the captured values for the objects that are of the interested instance.</p>
+
+<p>This example comes from:</p>
+
+<p><a href="https://github.com/adriangalera/java-sandbox/tree/master/src/test/java/mockito/argcaptor">https://github.com/adriangalera/java-sandbox/tree/master/src/test/java/mockito/argcaptor</a></p>
+
+<p>This is a known issue (already reported as an issue in their repo):</p>
+
+<p><a href="https://github.com/mockito/mockito/issues/565">https://github.com/mockito/mockito/issues/565</a></p>
+
+<p>As of the day of writing the article, the issues is still there and it has been opened from 2016 …</p>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.agalera.eu/mockito-argumentcaptor-inheritance" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=Mockito+ArgumentCaptor+with+inheritance%20https%3A%2F%2Fwww.agalera.eu%2Fmockito-argumentcaptor-inheritance"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=https://www.agalera.eu/mockito-argumentcaptor-inheritance&quote=Mockito+ArgumentCaptor+with+inheritance%20%7C%20Adrian+Galera+blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=https://www.agalera.eu/mockito-argumentcaptor-inheritance&media=https://www.agalera.eu/assets/img/posts/mockito-argcaptor-inheritance/featured.jpg$description=Working+with+Mockito%E2%80%99s+ArgumentCaptor+I+discover+it+has+a+awful+issue+with+inheritance.%0A%0A%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=https://www.agalera.eu/mockito-argumentcaptor-inheritance&title=Mockito+ArgumentCaptor+with+inheritance%20%7C%20Adrian+Galera+blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.agalera.eu/mockito-argumentcaptor-inheritance&title=Mockito+ArgumentCaptor+with+inheritance%20%7C%20Adrian+Galera+blog&summary=&source=https://www.agalera.eu/mockito-argumentcaptor-inheritance"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=Mockito ArgumentCaptor with inheritance%20%7C%20Adrian Galera blog&body=https://www.agalera.eu/mockito-argumentcaptor-inheritance"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#java">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> java</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#mockito">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> mockito</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#testing">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> testing</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="Discovering terraform" href="/discovering-terraform">
+            <p>Previous post</p>
+            Discovering terraform
+        </a>
+    </div>
+    
+
+    
+    <div id="next-post">
+        <a alt="Publishing versions in Gradle BOM" href="/gradle-bom-publish-dependency-version">
+            <p>Next post</p>
+            Publishing versions in Gradle BOM
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+  header#main { background-image: url('/assets/img/posts/mockito-argcaptor-inheritance/featured.jpg'); }
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        </p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/adriangalera"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://www.linkedin.com/in/adriangalera"
+               title="Follow on Linkedin"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="mailto:adrian.galera.87@gmail.com"
+               title="Follow on Mail"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>
