@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.3
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/img/avatars/me-100x100.png" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-https://www.agalera.eu';
+      const isCookieConsent = 'false';
+      const analyticsName = 'UA-126206451-1';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+        <!-- Global site tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
+        <!-- Page analysis (analytics.js) -->
+        <script async src='https://www.google-analytics.com/analytics.js'></script>
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="https://www.agalera.eu/assets/img/posts/bark-detector/featured-image.jpg">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Implementing a dog bark detector | Adrian Galera blog</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Implementing a dog bark detector" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Using machine learning to detect when my dog barks" />
+<meta property="og:description" content="Using machine learning to detect when my dog barks" />
+<link rel="canonical" href="https://www.agalera.eu/python/ml/audio/raspberry-pi/bash/2021/07/18/bark-detector.html" />
+<meta property="og:url" content="https://www.agalera.eu/python/ml/audio/raspberry-pi/bash/2021/07/18/bark-detector.html" />
+<meta property="og:site_name" content="Adrian Galera blog" />
+<meta property="og:image" content="https://www.agalera.eu/assets/img/posts/bark-detector/featured-image.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-07-18T00:00:00+02:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/bark-detector/featured-image.jpg" />
+<meta property="twitter:title" content="Implementing a dog bark detector" />
+<script type="application/ld+json">
+{"headline":"Implementing a dog bark detector","dateModified":"2021-07-18T00:00:00+02:00","datePublished":"2021-07-18T00:00:00+02:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/python/ml/audio/raspberry-pi/bash/2021/07/18/bark-detector.html"},"url":"https://www.agalera.eu/python/ml/audio/raspberry-pi/bash/2021/07/18/bark-detector.html","description":"Using machine learning to detect when my dog barks","image":"https://www.agalera.eu/assets/img/posts/bark-detector/featured-image.jpg","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Adrian Galera blog" href="https://www.agalera.eu/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="https://www.agalera.eu/feed.xml" title="Adrian Galera blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="Implementing a dog bark detector">
+    <meta name="twitter:description" content="My dog has a little bit of separation anxiety so when we leave him alone, he barks some times.We are training him to be home-alone and we want to know if he ...">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.agalera.eu/assets/img/posts/bark-detector/featured-image.jpg">
+    <meta name="twitter:image:alt" content="Implementing a dog bark detector">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" />
+		</a>
+        
+        <a class="site-title" aria-label="Adrian Galera blog" href="/">
+        Adrian Galera blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+        
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="Implementing a dog bark detector " aria-label="Implementing a dog bark detector" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article class="feature-image" >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="Implementing+a+dog+bark+detector" class="title">Implementing a dog bark detector</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      July 18, 2021
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <style type="text/css">
+.image-table td{
+    border: 0px;
+}
+.image-table .center{
+    text-align: center;
+}
+</style>
+
+<p>My dog has a little bit of separation anxiety so when we leave him alone, he barks some times.</p>
+
+<p>We are training him to be home-alone and we want to know if he barks or not when we are not home.</p>
+
+<p>Let's implement a bark detector!</p>
+
+<p><!--more--></p>
+
+<h2 id="basics">Basics</h2>
+
+<h3 id="time-representation">Time representation</h3>
+
+<p>What is audio and how is its digital representation? It’s basically an array of float values containing a value from -1 to 1.</p>
+
+<table class="image-table">
+<tr>
+<td>
+<img src="/assets/img/posts/bark-detector/wave.png" alt="Sound wave" />
+</td>
+</tr>
+<tr>
+<td class="center">
+<small>Temporal representation of an audio signal</small>
+</td>
+</tr>
+</table>
+
+<p>This representation shows the temporal evolution of the audio signal over time. This is very variable and it’s really difficult to extract any relevant feature from this representation.</p>
+
+<h3 id="frequency-representation">Frequency representation</h3>
+
+<p>So, instead of using the temporal representation, let’s observe the frequency representation:</p>
+
+<table class="image-table">
+<tr>
+<td>
+<img src="/assets/img/posts/bark-detector/stft.png" alt="Frequency representation" />
+</td>
+</tr>
+<tr>
+<td class="center">
+<small>Frequency representation of an audio signal</small>
+</td>
+</tr>
+</table>
+
+<p>The x axis is the time of the audio signal and the y axis is the values of the frequencies. Each color in the vertical axis correspond to a different value of the power on that certain frequency.</p>
+
+<p>Note that the time of the plot is doubled respect with the time representation, this is because the signal is combined with itself to generate the frequency representation.</p>
+
+<p>This representation shows the evolution of the different frequency amplitudes over time.</p>
+
+<p>Without even listening the sound, we can try to analise it checking the time/frequency characteristic. We see some peaks in the time representation that match with high energy in the low frequencies.</p>
+
+<p>The good thing about frequency representation is that it cancel noise because usually its energy is spread over all frequencies. Besides that, each sound has a characteristic frequency footprint. So, it’s very convinient to extract the features of the sound in the frequency domain.</p>
+
+<h3 id="mel-frequency-cepstral-co-efficients-mfcc">Mel Frequency Cepstral Co-efficients (MFCC)</h3>
+
+<p>Quoting from <a href="https://iq.opengenus.org/mfcc-audio/">https://iq.opengenus.org/mfcc-audio/</a>:</p>
+
+<blockquote>
+  <p>MFC is a representation of the short-term power spectrum of a sound, based on a linear cosine transform of a log power spectrum on a nonlinear mel scale of frequency.</p>
+</blockquote>
+
+<p>Ok, what does it mean? It’s an improved frequency representation but applying optimizations based on the characteristics of human hearing. Usually MFCC are obtained like this:</p>
+
+<ol>
+  <li>Take the Fourier transform of the audio signal to get the frequency representation.</li>
+  <li>Map the powers of the spectrum to the <a href="https://en.wikipedia.org/wiki/Mel_scale">mel scale</a>. This scale approximates the spectrum to be more like what humans hear.</li>
+  <li>Take the logs of the powers at each of the mel frequencies.</li>
+  <li>Take the discrete cosine transform (DCT) of the list of mel log powers. This will remove redudant information as in non-changing information.</li>
+  <li>The MFCCs are the amplitudes of the resulting spectrum.</li>
+</ol>
+
+<table class="image-table">
+<tr>
+<td>
+<img src="/assets/img/posts/bark-detector/mfcc.png" alt="MFCC" />
+</td>
+</tr>
+<tr>
+<td class="center">
+<small>MFCC representation of an audio signal</small>
+</td>
+</tr>
+</table>
+
+<p>We can use <a href="https://librosa.org/doc/latest/index.html">librosa</a> library to load the audio and extract the MFCC features.</p>
+
+<p>The x axis is time, the y axis is the different MFCC coefficients computed (20 in this example). The color shows the value MFCC coefficient for certain time and coefficient.</p>
+
+<p>It’s not obvious to see anything in this plot, but it represents the frequency information in a format the computer can use to understand the characteristics of this sound.</p>
+
+<h2 id="getting-the-dataset">Getting the dataset</h2>
+
+<p>In <a href="https://www.agalera.eu/standalone-app-raspberry-pi">this</a> article I describe the little device I made to feed my dog while I’m away. So I’ll re-use the same device and plug it an old unused webcam that has a microphone.</p>
+
+<p>I did not want to complicate my life much and I created a simple script that uses vlc to stream the audio obtained by the webcam mic and store it as mp3. In order to analyse the files easier I run the script every minute so I have recordings of 60 seconds duration:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nv">TIMEOUT</span><span class="o">=</span>60
+<span class="nv">FILE_NAME</span><span class="o">=</span><span class="s2">"/home/pi/dogfeeder-audios/dogfeeder-audio-</span><span class="si">$(</span><span class="nb">date</span> +<span class="s1">'%Y_%m_%d_%H_%M_%S'</span><span class="si">)</span><span class="s2">.mp3"</span>
+<span class="nb">timeout</span> <span class="s2">"</span><span class="nv">$TIMEOUT</span><span class="s2">"</span> cvlc <span class="nt">--no-video</span> alsa://plughw:1 <span class="nt">--sout</span><span class="o">=</span><span class="s2">"#transcode{vcodec=none,acodec=mp3,ab=128,
+channels=2,samplerate=44100}:duplicate{dst=std{access=http,mux=mp3,dst=:8087},dst=std{access=file,mux=wav,
+dst=</span><span class="nv">$FILE_NAME</span><span class="s2">}}"</span> &amp;
+</code></pre></div></div>
+
+<p>The syntax of vlc is really ugly :( . But if you read it carefully, you will see that we’re telling vlc to transcode the audio coming from <code class="language-plaintext highlighter-rouge">alsa://plughw:1</code> device (webcam microphone) to mp3 at 128 kbps (decent compression rate). After that, stream the generated mp3 via HTTP on port 8087 and store the mp3 data on the given filename.</p>
+
+<p>In order to don’t flood the SD card of the Raspberry Pi I run the following script each 15 minutes. It gets the files older than 15 minutes, copy them to a NAS and remove them from the Raspberry Pi disk.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nv">MINUTES_ALLOWED</span><span class="o">=</span>15
+<span class="nv">FILES_TO_DELETE</span><span class="o">=</span><span class="si">$(</span>find /home/pi/dogfeeder-audios <span class="nt">-type</span> f <span class="nt">-mmin</span> +<span class="s2">"</span><span class="nv">$MINUTES_ALLOWED</span><span class="s2">"</span> <span class="nt">-exec</span> <span class="nb">ls</span> <span class="o">{}</span> +<span class="si">)</span>
+
+<span class="k">for </span>file <span class="k">in</span> <span class="nv">$FILES_TO_DELETE</span><span class="p">;</span> <span class="k">do
+    </span>scp <span class="s2">"</span><span class="nv">$file</span><span class="s2">"</span> admin@diskstation.local:/volume1/data/dogfeeder-audios/.
+    <span class="nb">rm</span> <span class="s2">"</span><span class="nv">$file</span><span class="s2">"</span>
+<span class="k">done</span>
+</code></pre></div></div>
+
+<h2 id="training-the-model">Training the model</h2>
+
+<p>I’ve been recording for 3 days and we made some exits to keep him alone. Up to this point we have enough data to train the model. However, we have <code class="language-plaintext highlighter-rouge">60 min * 24 h * 3 days = 4320 files</code> and need to classify them manually. Will we do that manually? Absolutely not!</p>
+
+<p>We can pre-process the dataset and check for files that have something different than noise.</p>
+
+<table class="image-table">
+<tr>
+<td><img src="/assets/img/posts/bark-detector/noise.png" alt="Signal wit noise" /></td>
+<td><img src="/assets/img/posts/bark-detector/wave.png" alt="Signal wit unclassified audio event" /></td></tr>
+<tr>
+<td class="center"><small>File with only noise</small></td>
+<td class="center"><small>File with unclassified audio event</small></td></tr>
+</table>
+
+<p>Since my dog’s barks are quite loud we can safely discard all files whose maximum amplitude is lower than 0.25. This way, we could reduce a lot the amount of files that need to be manually classified as bark.</p>
+
+<h3 id="characterization-of-a-bark">Characterization of a bark</h3>
+
+<p>As mentioned before, we’ll discard files whose amplitude is lower than 0.25. Listening to multiple files with bark, we can observe that each bark more or less lasts for 1 second.</p>
+
+<table class="image-table">
+<tr>
+<td>
+&lt;img src="/assets/img/posts/bark-detector/bark.png" alt="Bark signal/&gt;
+</td>
+</tr>
+<tr>
+<td class="center">
+<audio controls="">
+    <source src="/assets/sounds/posts/bark-detector/bark.wav" type="audio/wav" />
+</audio>
+</td>
+</tr>
+<tr>
+<td class="center">
+<small>Time representation of an audio signal containing a bark</small>
+</td>
+</tr>
+</table>
+
+<h3 id="labelling-the-dataset">Labelling the dataset</h3>
+
+<p>So, the strategy for labelling the dataset will be:</p>
+
+<ol>
+  <li>Download the whole dataset.</li>
+  <li>Discard the not interesting files (files without any sound event) by checking the maximum amplitude.</li>
+  <li>Extract chunks of 1 seconds from them, run again the algorithm to check sound events on the one-second chunks.</li>
+  <li>Manually listen to the chunks and classify them as bark or not. You can default the labelling to “Not Bark” and this way you only classify events that are barks.</li>
+</ol>
+
+<p>The implementation of this is quite simple: write every chunk filename in a CSV and and a 0 or 1 signaling the presence of a bark or not:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chunks/dogfeeder-audio-2021_07_16_18_49_01_23.wav,0
+chunks/dogfeeder-audio-2021_07_16_18_49_01_24.wav,1
+chunks/dogfeeder-audio-2021_07_16_18_49_01_25.wav,0
+</code></pre></div></div>
+
+<p>Once we have the dataset labelled, we can go file by file and extract the MFCC features of every one-second file:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">extract_mfcc</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">y</span><span class="p">,</span> <span class="n">__</span> <span class="o">=</span> <span class="n">librosa</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mono</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
+    <span class="n">mfcc_2D</span> <span class="o">=</span> <span class="n">librosa</span><span class="p">.</span><span class="n">feature</span><span class="p">.</span><span class="n">mfcc</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span> <span class="n">n_mfcc</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">mfcc_1D</span> <span class="o">=</span> <span class="n">mfcc_2D</span><span class="p">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+    <span class="n">mfccs_sc</span> <span class="o">=</span> <span class="n">scaler</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">mfcc_1D</span><span class="p">).</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">mfccs_sc</span><span class="p">.</span><span class="n">flatten</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>MFCC values can go from [-Inf, Inf], however when I was playing with different algorithms, some of them did not accept negative values, so I scaled the values of MFCC to [0, Inf] using <code class="language-plaintext highlighter-rouge">MinMaxScaler</code>.</p>
+
+<p>Once we have the MFCC features for all the dataset, we can split the dataset into training and test dataset using:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.33</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>After that, I’ve assesed the prediction performance of <code class="language-plaintext highlighter-rouge">Naive Bayes</code> classifier and <code class="language-plaintext highlighter-rouge">Logistic Regression</code> classifiers:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1"># Naive bayes
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">"Training naive bayes ..."</span><span class="p">)</span>
+    <span class="n">mnb</span> <span class="o">=</span> <span class="n">MultinomialNB</span><span class="p">().</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"score on test: "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mnb</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"score on train: "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mnb</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"***************"</span><span class="p">)</span>
+
+    <span class="c1"># Logistic regression
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">"Training logistic regression ..."</span><span class="p">)</span>
+    <span class="n">lr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">lr</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"score on test: "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">lr</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"score on train: "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">lr</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<p>Getting a very good score with the logistic regression, I don’t remember exactly the numbers but were more or less:</p>
+
+<ul>
+  <li>Score on test: 0.992</li>
+  <li>Score on traing: 0.996</li>
+</ul>
+
+<h3 id="dataset-imbalance">Dataset imbalance</h3>
+
+<p>The number of events with barks will be very reduced compared with the events that does not contain a bark. This can present a huge problem depending on the machine learning algorithm returning a totally biased model.</p>
+
+<p>In order to fix that, you can do two things:</p>
+
+<ol>
+  <li>Oversample: create positive samples by synthetically creating new positive samples</li>
+  <li>Undersample: discard samples from the negative ones</li>
+</ol>
+
+<p>More info: <a href="https://towardsdatascience.com/having-an-imbalanced-dataset-here-is-how-you-can-solve-it-1640568947eb">https://towardsdatascience.com/having-an-imbalanced-dataset-here-is-how-you-can-solve-it-1640568947eb</a></p>
+
+<p>I’ve used <code class="language-plaintext highlighter-rouge">SMOTE</code> (Synthetic Minority Over-sampling Technique) technique to perform the oversampling with very satisfactory results. In simple terms, SMOTE looks at the feature space for the minority class data points and considers its k nearest neighbours.</p>
+
+<p>To do that I’ve used <a href="https://imbalanced-learn.org/stable/">imbalanced-learn</a> python libary and it’s really simple:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">fix_imbalance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+    <span class="n">over</span> <span class="o">=</span> <span class="n">SMOTE</span><span class="p">(</span><span class="n">sampling_strategy</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">under</span> <span class="o">=</span> <span class="n">RandomUnderSampler</span><span class="p">(</span><span class="n">sampling_strategy</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">steps</span> <span class="o">=</span> <span class="p">[(</span><span class="s">'o'</span><span class="p">,</span> <span class="n">over</span><span class="p">),</span> <span class="p">(</span><span class="s">'u'</span><span class="p">,</span> <span class="n">under</span><span class="p">)]</span>
+    <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="n">steps</span><span class="p">)</span>
+    <span class="n">X_fix</span><span class="p">,</span> <span class="n">Y_fix</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">X_fix</span><span class="p">,</span> <span class="n">Y_fix</span>
+</code></pre></div></div>
+
+<p>Note that the library also provides a module to perform majority under sampling. The two methods are combined in a pipeline to fix the dataset imbalance problem.</p>
+
+<h2 id="using-the-training-model">Using the training model</h2>
+
+<p>Now we have our logistic regression model trained and is working quite well. It’s time to put it on the Raspberry Pi.</p>
+
+<p>First of all, we need a way to export the model outside of the training python code. In order to do that, I use the <a href="https://joblib.readthedocs.io/en/latest/">joblib</a> library:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Write the model
+</span><span class="n">lr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">lr</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">joblib</span><span class="p">.</span><span class="n">dump</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="s">'lr.pkl'</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>joblib serialize the object into that file and then Raspberry Pi can load the model object:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">joblib</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="s">'lr.pkl'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now we can retrieve the more recent fully recorded audio file:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">last_fully_written_file</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">audios_path</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">audios_path</span><span class="p">))[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+</code></pre></div></div>
+<p>If the script query the last file, it might happen that is not fully written by that time.</p>
+
+<p>Split it into chunks of one second and for each chunk run the prediction:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">has_bark_in_minute</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">joblib</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="s">'lr.pkl'</span><span class="p">)</span>
+
+    <span class="n">audio_data</span><span class="p">,</span> <span class="n">__</span> <span class="o">=</span> <span class="n">load_audio_from_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">chunks</span> <span class="o">=</span> <span class="n">split_in_one_second_chunks</span><span class="p">(</span><span class="n">audio_data</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+    <span class="n">chunk_predictions</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunks</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span> <span class="o">==</span> <span class="n">sample_rate</span><span class="p">:</span>
+            <span class="n">mfccs</span> <span class="o">=</span> <span class="n">extract_mfcc</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+            <span class="n">chunk_predictions</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">mfccs</span><span class="p">]))[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">chunk_predictions</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="n">chunk_predictions</span>
+</code></pre></div></div>
+
+<p>Since the model is probabilistic, it might happen to have false positive or negatives. In order to avoid that, the function <code class="language-plaintext highlighter-rouge">has_bark_in_minute</code> will only return <code class="language-plaintext highlighter-rouge">True</code> when more than two barks are detected for one minute.</p>
+
+<p>Last but not least, when a bark is detected, the script will send me a message over telegram:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">send_to_telegram</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">filename</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">"-"</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">split</span><span class="p">(</span><span class="s">".mp3"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">welcome_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"Detected </span><span class="si">{</span><span class="n">predictions</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s"> barks on </span><span class="si">{</span><span class="n">date</span><span class="si">}</span><span class="s">"</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s">"https://api.telegram.org/bot</span><span class="si">{</span><span class="n">get_token</span><span class="p">()</span><span class="si">}</span><span class="s">/sendMessage"</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s">"chat_id"</span><span class="p">:</span> <span class="n">telegram_group_id</span><span class="p">,</span> <span class="s">"text"</span><span class="p">:</span> <span class="n">welcome_msg</span><span class="p">},</span>
+    <span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div></div>
+
+<table class="image-table">
+<tr>
+<td><img src="/assets/img/posts/bark-detector/telegram.png" alt="Telegram message when a bark occurs" /></td>
+</tr>
+<tr>
+<td class="center"><small>Example of messages in Telegram</small></td>
+</tr>
+</table>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.agalera.eu/python/ml/audio/raspberry-pi/bash/2021/07/18/bark-detector.html" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=Implementing+a+dog+bark+detector%20https%3A%2F%2Fwww.agalera.eu%2Fpython%2Fml%2Faudio%2Fraspberry-pi%2Fbash%2F2021%2F07%2F18%2Fbark-detector.html"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=https://www.agalera.eu/python/ml/audio/raspberry-pi/bash/2021/07/18/bark-detector.html&quote=Implementing+a+dog+bark+detector%20%7C%20Adrian+Galera+blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=https://www.agalera.eu/python/ml/audio/raspberry-pi/bash/2021/07/18/bark-detector.html&media=https://www.agalera.eu/assets/img/posts/bark-detector/featured-image.jpg$description=%0A%0AMy+dog+has+a+little+bit+of+separation+anxiety+so+when+we+leave+him+alone%2C+he+barks+some+times.%0A%0AWe+are+training+him+to+be+home-alone+and+we+want+to+know+if+he+barks+or+not+when+we+are+not+home.%0A%0ALet%27s+implement+a+bark+detector%21%0A%0A%0A%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=https://www.agalera.eu/python/ml/audio/raspberry-pi/bash/2021/07/18/bark-detector.html&title=Implementing+a+dog+bark+detector%20%7C%20Adrian+Galera+blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.agalera.eu/python/ml/audio/raspberry-pi/bash/2021/07/18/bark-detector.html&title=Implementing+a+dog+bark+detector%20%7C%20Adrian+Galera+blog&summary=&source=https://www.agalera.eu/python/ml/audio/raspberry-pi/bash/2021/07/18/bark-detector.html"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=Implementing a dog bark detector%20%7C%20Adrian Galera blog&body=https://www.agalera.eu/python/ml/audio/raspberry-pi/bash/2021/07/18/bark-detector.html"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#audio">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> audio</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#bash">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> bash</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#librosa">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> librosa</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#ml">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> ml</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#python">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> python</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#raspberry-pi">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> raspberry-pi</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#scikit">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> scikit</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#vlc">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> vlc</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="Golang abstract class" href="/golang/design-patterns/architecture/2021/09/24/golang-abstract-class.html">
+            <p>Previous post</p>
+            Golang abstract class
+        </a>
+    </div>
+    
+
+    
+    <div id="next-post">
+        <a alt="Java 11 negative symbol in Swedish" href="/java/testing/2021/05/06/java11-negative-symbol-swedish.html">
+            <p>Next post</p>
+            Java 11 negative symbol in Swedish
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+  header#main { background-image: url('/assets/img/posts/bark-detector/featured-image.jpg'); }
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        </p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/adriangalera"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://www.linkedin.com/in/adriangalera"
+               title="Follow on Linkedin"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="mailto:adrian.galera.87@gmail.com"
+               title="Follow on Mail"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>

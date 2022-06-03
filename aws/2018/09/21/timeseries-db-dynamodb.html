@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.3
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/img/avatars/me-100x100.png" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-https://www.agalera.eu';
+      const isCookieConsent = 'false';
+      const analyticsName = 'UA-126206451-1';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+        <!-- Global site tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
+        <!-- Page analysis (analytics.js) -->
+        <script async src='https://www.google-analytics.com/analytics.js'></script>
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="https://www.agalera.eu/assets/img/posts/dynamodbts/featured.jpg">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Timeseries database with DynamoDB | Adrian Galera blog</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Timeseries database with DynamoDB" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Design, challenges and implementation of a DynamoDB timeseries database using AWS Lambda, Kinesis and DynamoDB Streams" />
+<meta property="og:description" content="Design, challenges and implementation of a DynamoDB timeseries database using AWS Lambda, Kinesis and DynamoDB Streams" />
+<link rel="canonical" href="https://www.agalera.eu/aws/2018/09/21/timeseries-db-dynamodb.html" />
+<meta property="og:url" content="https://www.agalera.eu/aws/2018/09/21/timeseries-db-dynamodb.html" />
+<meta property="og:site_name" content="Adrian Galera blog" />
+<meta property="og:image" content="https://www.agalera.eu/assets/img/posts/dynamodbts/featured.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-09-21T00:00:00+02:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/dynamodbts/featured.jpg" />
+<meta property="twitter:title" content="Timeseries database with DynamoDB" />
+<script type="application/ld+json">
+{"headline":"Timeseries database with DynamoDB","dateModified":"2018-09-21T00:00:00+02:00","datePublished":"2018-09-21T00:00:00+02:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/aws/2018/09/21/timeseries-db-dynamodb.html"},"url":"https://www.agalera.eu/aws/2018/09/21/timeseries-db-dynamodb.html","description":"Design, challenges and implementation of a DynamoDB timeseries database using AWS Lambda, Kinesis and DynamoDB Streams","image":"https://www.agalera.eu/assets/img/posts/dynamodbts/featured.jpg","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Adrian Galera blog" href="https://www.agalera.eu/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="https://www.agalera.eu/feed.xml" title="Adrian Galera blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="Timeseries database with DynamoDB">
+    <meta name="twitter:description" content="Working with sensor data, we need to store timestamped data in a way that was easily checked and show it in graphs. This post explains the process we follow ...">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.agalera.eu/assets/img/posts/dynamodbts/featured.jpg">
+    <meta name="twitter:image:alt" content="Timeseries database with DynamoDB">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" />
+		</a>
+        
+        <a class="site-title" aria-label="Adrian Galera blog" href="/">
+        Adrian Galera blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+        
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="Timeseries database with DynamoDB " aria-label="Timeseries database with DynamoDB" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article class="feature-image" >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="Timeseries+database+with+DynamoDB" class="title">Timeseries database with DynamoDB</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      September 21, 2018
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <p>Working with sensor data, we need to store timestamped data in a way that was easily checked and show it in graphs. This post explains the process we follow to end up implementing a timeseries database on DynamoDB.</p>
+<p><!--more--></p>
+<h2>Requirements</h2>
+<p>The problem was pretty straightforward at the beginning: store temporal data that came from multiple sensors where one sensor could have more than one metric. For instance: one battery sensor might monitor the battery level as well as the battery voltage. The sensor data data flows continuously at an undetermined interval, it can be 1 minute, 5 minutes, ... Generally speaking the data can be represented as:</p>
+<p><strong>METRIC NAME - TIMESTAMP - VALUE</strong></p>
+<p>In order to support the defined usage scenarios we need to provide a tool able to:</p>
+
+<ul>
+  <li>Perform temporal queries: give me the metric between 2017/05/21 00:00:00 and 2017/08/21 00:30</li>
+  <li>Support multiple granularity: second, minute, hour, …</li>
+  <li>Support TTL for cold data: expire cold data</li>
+  <li>Perform in a cost-efficient manner</li>
+</ul>
+
+<h2>Available technologies</h2>
+<p>When one thinks about database at first the relational ones appear as the first option. The problem with relational databases such as MySQL, PostgreSQL, .. is that we the database becomes very unusable when the size of the tables grows. And in this case the data  will grow a lot with the usage.</p>
+<p>Furthermore, when the data is so big the indexes start to generate headaches making the queries take a lot of time.</p>
+<p>Finding these drawbacks in the traditional relational databases, we shift towards NoSQL databases.</p>
+<p>The first one that came into our mind (because we had some previous experience with it) was whisper <a href="https://github.com/graphite-project/whisper">https://github.com/graphite-project/whisper</a>. This database is a small component of the graphite project, basically is a wrapper to write the temporal data to a file performing multiple roll-up aggregations on the fly. This looked promising, however, when we heavy loaded it performed very poorly.</p>
+<p>Since the platform we were building it was AWS based, we decided to analyse what Amazon can provide us and finally found <strong>DynamoDB</strong>!</p>
+<h2>DynamoDB at the rescue!</h2>
+<p>DynamoDB is a key-value database that supports the configuration of item TTL and its costs are predictable because are in function of the required capacity.</p>
+<p>One might ask: <em>how can I store the presented model in a key-value database?</em> The magic comes with the composite key feature: <a href="https://aws.amazon.com/es/blogs/database/choosing-the-right-dynamodb-partition-key/">https://aws.amazon.com/es/blogs/database/choosing-the-right-dynamodb-partition-key/</a></p>
+
+<h2>Knowing DynamoDB</h2>
+<p>Quoting AWS documentation:</p>
+<blockquote><p>This type of key is composed of two attributes. The first attribute is the <em>partition key</em>, and the second attribute is the<em> sort key</em>.</p></blockquote>
+<p>Therefore, we can use the metric name as the partition key and the timestamp and the sort key and the sensor value as the DynamoDB object:</p>
+
+<p><a href="/assets/img/posts/dynamodbts/dynamo-db-key.png"> <img src="/assets/img/posts/dynamodbts/dynamo-db-key.png" alt="DynamoDB Key Schema" /> </a>
+<em>DynamoDB Key Schema</em></p>
+
+<h2>Rollup aggregations?</h2>
+<p>Now we can store the timestamped data in DynamoDB, however, what happens with the multiple granularity requirement? DynamoDB has a nice feature called DynamoDB Streams.</p>
+<p>DynamoDB Streams sends the events generated in the database (new records, edit, delete, ...) to a an AWS Lambda. Hence, we can perform the aggregations for the multiple granularities as soon as a new data value arrives. In order to perform the storage of the multiple aggregations, we can define one table for each aggregation.</p>
+<h2>The implementation: DynamoDB Timeseries Database</h2>
+<p>Finally, in order to complete the setup we have used a serverless approach in order to allocate the cost of the project to the required capacity.</p>
+<p>The final structure of the implemented solution looked like this:</p>
+
+<p><a href="/assets/img/posts/dynamodbts/dynamo-db-database-2.png"><img src="/assets/img/posts/dynamodbts/dynamo-db-database-2.png" alt="Components of DynamoDB TimeseriesDB" /></a>
+<em>Components of DynamoDB TimeseriesDB</em></p>
+
+<p>1) The service that uses the DynamoDB Timeseries database is a serverless application with an API Gateway calling an Lambda function. One of the steps of the business logic is communicate with the DynamoDB Insert Lambda.</p>
+<p>2) The insertion mechanism of the database is by invoking an AWS Lambda function. This function inserts the timestamped data into the lower granularity table.</p>
+<p>3) When the Insert function inserts the data into the lower granularity table, DynamoDB Streams invokes the AWS Lambda involved in performing the roll-up aggregations.</p>
+<p>4) The Aggregate function has the logic implemented on how to perform multiple aggregations (average, sum, count, ...).</p>
+<p>5) Each time serie can be configured to have different aggregations, TTL, timezone to perform temporal aggregation, etc... There are an additional lambda in order to configure the timeserie parameters.</p>
+<p>6) Once the aggregation is performed, the data is stored into the appropriate DynamoDB table according to the granularity: minute, hour, day, month, year, ...</p>
+<p>With this solution we achieve a solution where we can fine tune the capacity of the database.</p>
+<h2>Production time!</h2>
+<p>When we put this system into production, some issues arises with the capacity of the DynamoDB. When the incoming data flows faster than the reserved capacity in DynamoDB, the lambda functions became very slow and resulting in a high number of timeout errors.</p>
+<p>The reasons for this is that when DynamoDB is running at capacity, it throttle requests, making the client adjust its speed to the reserved capacity. This works good for a traditional client, however it breaks with the serverless approach, because the Lambda functions were taking too much time.</p>
+<p>In order to fix situation, we add another component to the system: an AWS Kinesis Stream <a href="https://aws.amazon.com/kinesis">https://aws.amazon.com/kinesis</a>. Instead of writing directly to the DynamoDB table, the service Lambda function now writes the data into a Kinesis stream.</p>
+<p>In the other side of the stream, we place a Kinesis consumer that is able to consume items from the stream in batches of items. Additionally, we are able to control the insertion speed of items in DynamoDB by sleeping some time between batch consumption. Since this consumer needs to be 24/7, it runs on a traditional EC2 instance.</p>
+<p>Now the scheme looks like this:</p>
+
+<p><a href="/assets/img/posts/dynamodbts/dynamo-db-kinesis-database.png"><img src="/assets/img/posts/dynamodbts/dynamo-db-kinesis-database.png" alt="Adding Kinesis into the TimeseriesDB" /></a>
+<em>Adding Kinesis into the TimeseriesDB</em></p>
+
+<p>The additional point (7) shows the Kinesis stream where the items are being inserted by the Service Lambda function and consumed by the DynamoDB Timeseries DB Kinesis Consumer. The configured batch size (B) and sleep time (T) allows the consumer to buffer the insertion of data up to the reserved DynamoDB capacity.</p>
+<h2>Show me the code</h2>
+<p>An open sourced version of the production code can be found here:</p>
+<p><a href="https://github.com/adriangalera/dynamodb-timeseries">https://github.com/adriangalera/dynamodb-timeseries</a></p>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.agalera.eu/aws/2018/09/21/timeseries-db-dynamodb.html" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=Timeseries+database+with+DynamoDB%20https%3A%2F%2Fwww.agalera.eu%2Faws%2F2018%2F09%2F21%2Ftimeseries-db-dynamodb.html"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=https://www.agalera.eu/aws/2018/09/21/timeseries-db-dynamodb.html&quote=Timeseries+database+with+DynamoDB%20%7C%20Adrian+Galera+blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=https://www.agalera.eu/aws/2018/09/21/timeseries-db-dynamodb.html&media=https://www.agalera.eu/assets/img/posts/dynamodbts/featured.jpg$description=Working+with+sensor+data%2C+we+need+to+store+timestamped+data+in+a+way+that+was+easily+checked+and+show+it+in+graphs.+This+post+explains+the+process+we+follow+to+end+up+implementing+a+timeseries+database+on+DynamoDB.%0A%0A%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=https://www.agalera.eu/aws/2018/09/21/timeseries-db-dynamodb.html&title=Timeseries+database+with+DynamoDB%20%7C%20Adrian+Galera+blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.agalera.eu/aws/2018/09/21/timeseries-db-dynamodb.html&title=Timeseries+database+with+DynamoDB%20%7C%20Adrian+Galera+blog&summary=&source=https://www.agalera.eu/aws/2018/09/21/timeseries-db-dynamodb.html"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=Timeseries database with DynamoDB%20%7C%20Adrian Galera blog&body=https://www.agalera.eu/aws/2018/09/21/timeseries-db-dynamodb.html"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#aws">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> aws</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#cloud">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> cloud</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#dynamodb">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> dynamodb</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#kinesis">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> kinesis</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#python">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> python</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="Mocking external API with wiremock" href="/testing/2018/11/27/mocking-external-apis-wiremock.html">
+            <p>Previous post</p>
+            Mocking external API with wiremock
+        </a>
+    </div>
+    
+
+    
+    <div id="next-post">
+        <a alt="Raspberry Pi for QA" href="/raspberry-pi/2018/09/21/raspberry-pi-qa.html">
+            <p>Next post</p>
+            Raspberry Pi for QA
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+  header#main { background-image: url('/assets/img/posts/dynamodbts/featured.jpg'); }
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        </p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/adriangalera"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://www.linkedin.com/in/adriangalera"
+               title="Follow on Linkedin"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="mailto:adrian.galera.87@gmail.com"
+               title="Follow on Mail"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>

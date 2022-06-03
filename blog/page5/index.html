@@ -1,105 +1,127 @@
 <!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.3
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
 
     <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
-    <script defer=true src="/assets/js/main.min.js"></script>
-    
+    <script defer src="/assets/js/main.min.js"></script>
+
     <!-- CSS -->
     <link rel="stylesheet" href="/assets/css/main.css">
 
     <!--Favicon-->
     <link rel="shortcut icon" href="/assets/img/avatars/me-100x100.png" type="image/x-icon">
 
-    <!-- Canonical -->
-    <!--link rel="canonical" href="https://www.agalera.eu/blog/page5/" -->
-
-    <!-- RSS -->
-    <link rel="alternate" type="application/atom+xml" title="Adrian Galera blog" href="https://www.agalera.eu/feed.xml"/>
-    
     
 
-    <!-- KaTeX 0.8.3 -->
-    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    <!-- KaTeX 0.15.2 -->
     
-    <script src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
     
 
-    <!-- Google Analytics -->
+    <!-- Mermaid 9.1.1 -->
     
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
     
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
     <script>
-        (function(i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-        ga('create', 'UA-126206451-1', 'auto');
-        ga('send', 'pageview');
-
+      const cookieName = 'cookie-notice-dismissed-https://www.agalera.eu';
+      const isCookieConsent = 'false';
+      const analyticsName = 'UA-126206451-1';
+      const analyticsNameGA4 = '';
     </script>
+
     
     
+        <!-- Global site tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
+        <!-- Page analysis (analytics.js) -->
+        <script async src='https://www.google-analytics.com/analytics.js'></script>
     
+
     <!-- seo tags -->
-    <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Page 5 of 5 for Adrian Galera blog | My personal developer blog page.</title>
-<meta name="generator" content="Jekyll v3.8.5" />
+    <meta property="og:image" content="https://www.agalera.eu/assets/img/pexels/circuit.jpeg">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Page 5 of 5 for Adrian Galera blog | My personal developer blog page</title>
+<meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="Adrian Galera blog" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="My personal developer blog page." />
-<meta property="og:description" content="My personal developer blog page." />
+<meta name="description" content="My personal developer blog page" />
+<meta property="og:description" content="My personal developer blog page" />
 <link rel="canonical" href="https://www.agalera.eu/blog/page5/" />
 <meta property="og:url" content="https://www.agalera.eu/blog/page5/" />
 <meta property="og:site_name" content="Adrian Galera blog" />
-<meta property="og:image" content="https://www.agalera.eu/assets/img/avatars/me.png" />
 <link rel="prev" href="https://www.agalera.eu/blog/page4" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Adrian Galera blog" />
 <script type="application/ld+json">
-{"headline":"Adrian Galera blog","url":"https://www.agalera.eu/blog/page5/","image":"https://www.agalera.eu/assets/img/avatars/me.png","description":"My personal developer blog page.","@type":"WebPage","@context":"https://schema.org"}</script>
+{"headline":"Adrian Galera blog","@type":"WebPage","url":"https://www.agalera.eu/blog/page5/","description":"My personal developer blog page","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <!-- Manual seo tags -->
-    <!--
-    <title> Adrian Galera blog</title>
-    <meta name="description" content="">
-    -->
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Adrian Galera blog" href="https://www.agalera.eu/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="https://www.agalera.eu/feed.xml" title="Adrian Galera blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="Adrian Galera blog">
+    <meta name="twitter:description" content="">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="https://www.agalera.eu/assets/img/pexels/circuit.jpeg">
+    <meta name="twitter:image:alt" content="Adrian Galera blog">
 </head>
 
   <body>
     <header class="site-header">
-    
+
     <!-- Logo and title -->
 	<div class="branding">
+        
 		<a href="/">
 			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" />
 		</a>
-
-		<h1 class="site-title">
-			<a aria-label="Adrian Galera blog" href="/">
+        
+        <a class="site-title" aria-label="Adrian Galera blog" href="/">
         Adrian Galera blog
-      </a>
-		</h1>
+		</a>
 	</div>
-    
+
     <!-- Toggle menu -->
     <nav class="clear">
     <a aria-label="pull" id="pull" class="toggle" href="#">
-    <i class="fa fa-bars fa-lg"></i>
+    <i class="fas fa-bars fa-lg"></i>
     </a>
-    
+
     <!-- Menu -->
     <ul class="hide">
         
-        
+
         
             
             
@@ -126,13 +148,10 @@
             <li class="separator"> | </li>
             <li>
                 <a class="clear" aria-label="Search" title="Search" href="/search/">
-                     <i class="fa fa-search" aria-hidden="true"></i>
+                     <i class="fas fa-search" aria-hidden="true"></i>
                     
                 </a>
             </li>
-            
-            
-        
             
             
         
@@ -140,7 +159,7 @@
             <li class="separator"> | </li>
             <li>
                 <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
-                     <i class="fa fa-tags" aria-hidden="true"></i>
+                     <i class="fas fa-tags" aria-hidden="true"></i>
                     
                 </a>
             </li>
@@ -171,64 +190,79 @@
             
             
         
-            
-            
         
-            
-            
         
-            
-            
-        
-            
-            
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title=" " aria-label="" onclick="themeToggle()"></a></li>
         
     </ul>
-        
+
 	</nav>
 </header>
 
     <div class="content">
       <div class="home">
-  
-  <div id="main" class="call-out"
-  style="background-image: url('/assets/img/pexels/circuit.jpeg')">
-    <h2>  </h2>
-  </div>
-  
+    <style scoped>
+        
+        .call-out_img {
+            background-image: url('/assets/img/pexels/circuit.jpeg');
+        }
+        
+        @media screen and (max-width: 768px) {
+            .call-out_img {
+                background-image: url('/assets/img/pexels/circuit-medium.jpeg');
+            }
+        }
+        @media screen and (max-width: 576px) {
+            .call-out_img {
+                background-image: url('/assets/img/pexels/circuit-small.jpeg');
+            }
+        }
+        
+    </style>
+    <div id="main" class="call-out call-out_img">
+        <h1>  </h1>
+    </div>
 
-  <div class="posts">
+    <div class="posts">
+    
     
     <div class="post-teaser">
         
         <div class="post-img">
-            <a aria-label="Raspberry Pi for QA" href="/raspberry-pi-qa/">
+            <a aria-label="Raspberry Pi for QA" href="/raspberry-pi/2018/09/21/raspberry-pi-qa.html">
                 <img alt="Raspberry Pi for QA" src="/assets/img/posts/rpiqa/featured-image.jpg">
             </a>
         </div>
         
         <span>
           <header>
-            <h2>
-              <a aria-label="Raspberry Pi for QA" class="post-link" href="/raspberry-pi-qa/">
+            <h1>
+              <a aria-label="Raspberry Pi for QA" class="post-link" href="/raspberry-pi/2018/09/21/raspberry-pi-qa.html">
                 Raspberry Pi for QA
               </a>
-            </h2>
+            </h1>
             
 
-<div class="post-info"><a href="https://www.agalera.eu" target="_blank">
+
+<div class="post-info">
     <p class="meta">
-      Adrian Galera - September 21, 2018
-    </p></a></div>
+      
+      
+      September 21, 2018
+    </p></div>
 
           </header>
-          <div class="excerpt">
-              On a previous company the QA team needed to perform some scenarios that were difficult to reproduce, for instance force a buffering event. Their setup require deep technical understanding of Linux. In order to ease its world, I decided to create a neat service running on a Raspberry Pi.
+          
+              <div class="excerpt">
+                  
+                     On a previous company the QA team needed to perform some scenarios that were difficult to reproduce, for instance force a buffering event. Their setup require deep technical understanding of Linux. In order to ease its world, I decided to create a neat service running on a Raspberry Pi.
 
 
 
-
-          </div>
+                  
+              </div>
+          
       </span>
     </div>
     
@@ -241,14 +275,14 @@
         
         <!-- << -->
         <a aria-label="Prev" href="/" class="button">
-            <span><i class="fa fa-angle-double-left"></i></span>
+            <span><i class="fas fa-angle-double-left"></i></span>
         </a>
         
         
         <!-- < previous -->
         <a aria-label="Prev" href="/blog/page4"
             class="button">
-            <span><i class="fa fa-chevron-left"></i></span>
+            <span><i class="fas fa-chevron-left"></i></span>
             Prev
         </a>
     </div>
@@ -263,7 +297,7 @@
         <a aria-label="Next" href=""
            style="visibility:hidden" class="button">
             Next
-            <span><i class="fa fa-chevron-right"></i></span>
+            <span><i class="fas fa-chevron-right"></i></span>
         </a>
 
         
@@ -273,11 +307,152 @@
 
 
 
-    
+
 </div>
 
     </div>
+    <footer class="site-footer">
+    <p class="text">
+        </p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/adriangalera"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://www.linkedin.com/in/adriangalera"
+               title="Follow on Linkedin"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="mailto:adrian.galera.87@gmail.com"
+               title="Follow on Mail"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
 
 
 

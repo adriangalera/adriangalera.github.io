@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.3
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/img/avatars/me-100x100.png" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-https://www.agalera.eu';
+      const isCookieConsent = 'false';
+      const analyticsName = 'UA-126206451-1';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+        <!-- Global site tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
+        <!-- Page analysis (analytics.js) -->
+        <script async src='https://www.google-analytics.com/analytics.js'></script>
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="https://www.agalera.eu/assets/img/posts/terraform/terraformed.jpg">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Discovering terraform | Adrian Galera blog</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Discovering terraform" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Recently I have been playing with Terraform tool and I wrote some basic use cases for the sake of sharing the knowledge" />
+<meta property="og:description" content="Recently I have been playing with Terraform tool and I wrote some basic use cases for the sake of sharing the knowledge" />
+<link rel="canonical" href="https://www.agalera.eu/devops/cloud/2019/10/14/discovering-terraform.html" />
+<meta property="og:url" content="https://www.agalera.eu/devops/cloud/2019/10/14/discovering-terraform.html" />
+<meta property="og:site_name" content="Adrian Galera blog" />
+<meta property="og:image" content="https://www.agalera.eu/assets/img/posts/terraform/terraformed.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-10-14T00:00:00+02:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/terraform/terraformed.jpg" />
+<meta property="twitter:title" content="Discovering terraform" />
+<script type="application/ld+json">
+{"headline":"Discovering terraform","dateModified":"2019-10-14T00:00:00+02:00","datePublished":"2019-10-14T00:00:00+02:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/devops/cloud/2019/10/14/discovering-terraform.html"},"url":"https://www.agalera.eu/devops/cloud/2019/10/14/discovering-terraform.html","description":"Recently I have been playing with Terraform tool and I wrote some basic use cases for the sake of sharing the knowledge","image":"https://www.agalera.eu/assets/img/posts/terraform/terraformed.jpg","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Adrian Galera blog" href="https://www.agalera.eu/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="https://www.agalera.eu/feed.xml" title="Adrian Galera blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="Discovering terraform">
+    <meta name="twitter:description" content="Recently I have been playing with Terraform tool and I wrote some basic use cases for the sake of sharing the knowledgeWhat is terraform?Imagine you start a ...">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.agalera.eu/assets/img/posts/terraform/terraformed.jpg">
+    <meta name="twitter:image:alt" content="Discovering terraform">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" />
+		</a>
+        
+        <a class="site-title" aria-label="Adrian Galera blog" href="/">
+        Adrian Galera blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+        
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="Discovering terraform " aria-label="Discovering terraform" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article class="feature-image" >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="Discovering+terraform" class="title">Discovering terraform</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      October 14, 2019
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <p>Recently I have been playing with Terraform tool and I wrote some basic use cases for the sake of sharing the knowledge</p>
+<p><!--more--></p>
+
+<h2 id="what-is-terraform">What is terraform?</h2>
+
+<p>Imagine you start a new cloud project in AWS. At the very begining, you will write some scripts to generate your AWS resources:</p>
+
+<ul>
+  <li>DynamoDB tables</li>
+  <li>S3 buckets</li>
+  <li>RDS databases</li>
+  <li>…</li>
+</ul>
+
+<p>However, lots of configuration are required to make it work properly, i.e. IAM roles, ARN of resources, etc… So, managing this burden manually or with some scripts rapidly could become an issue.</p>
+
+<p>Even worst, imagine you have resources in both Google Cloud an AWS. The amount of scripts will be doubled as well as the issues.</p>
+
+<p>Terraform was created to help with those issues. It is a tool written in Go language that enables managing the state of cloud infrastructure from configuration files with its own Domain Specific Language (DSL).</p>
+
+<p>Furthermore, it is a handy tool to define the infrastructure as code. In this approach the changes to the infrastructure can be pushed to a git repository for instance; this way the changes can be reviewed, etc.</p>
+
+<p>Another fancy feature is that it keeps the state of the resources running in Cloud. This way terraform allows to make incremental changes (if possible).</p>
+
+<h2 id="basic-usage">Basic usage</h2>
+
+<p>There are three main commands to use:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">terraform plan</code>: process the configuration templates and present in stdout the actions that will be applied</li>
+  <li><code class="language-plaintext highlighter-rouge">terraform apply</code>: process the configuration templates and apply the required actions</li>
+  <li><code class="language-plaintext highlighter-rouge">terraform destroy</code>: process the configuration templates and delete the resources</li>
+</ul>
+
+<h2 id="scenarios">Scenarios</h2>
+
+<p>In this section, I prepared 4 scenarions to show some cool features that terraform can provide.</p>
+
+<h3 id="basic">Basic</h3>
+
+<p>This scenario create a DynamoDB table and an S3 bucket. There’s nothing fancy here, only basic usage of terraform:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>variable "app-prefix" {
+  type = string
+  default = "comms-ks-01"
+}
+resource "aws_dynamodb_table" "configuration" {
+  name           = "${var.app-prefix}_timeserie_configuration"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "timeserie1"
+
+  attribute {
+    name = "timeserie1"
+    type = "S"
+  }
+
+}
+resource "aws_s3_bucket" "s3-bucket-rnd-name" {
+    bucket = "${var.app-prefix}-timeserie-configuration"
+} 
+output "bucket-arn" {
+  value = "${aws_s3_bucket.s3-bucket-rnd-name.arn}"
+}
+</code></pre></div></div>
+<p>The template defines a variable (“app-prefix), a DynamoDB table (“configuration”) and a S3 bucket (“s3-bucket-rnd-name”). The last line defines to output to print the ARN of the created bucket</p>
+
+<h3 id="for-each">For each</h3>
+
+<p>In this scenario, the requirement is to create three tables with similar names. In order to reuse the code, we can use terraform’s <code class="language-plaintext highlighter-rouge">for-each</code> statement:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>resource "aws_dynamodb_table" "configuration" {
+
+  for_each = {
+    test1: "${var.app-prefix}_configuration_test_1",
+    test2: "${var.app-prefix}_configuration_test_2",
+    test3: "${var.app-prefix}_configuration_test_3",
+  }
+
+  name           = each.value
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "timeserie"
+
+  attribute {
+    name = "timeserie"
+    type = "S"
+  }
+}
+</code></pre></div></div>
+<p>This way with only one resource definition, we can create multiple resources.</p>
+
+<h3 id="linking-resources">Linking resources</h3>
+
+<p>Up to here, we haven’t done anything fancy, just creating resources. However, we can create more interesting environments, such as a serverless pipeline to process a file:</p>
+
+<p><a href="/assets/img/posts/terraform/s3-lambda.png"><img src="/assets/img/posts/terraform/s3-lambda.png" alt="S3-lambda pipeline" /></a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Lambda definition
+resource "aws_lambda_function" "download-s3-lambda" {
+  filename      = "download-s3-file-lambda.zip"
+  function_name = "${var.app-prefix}-download-files-lambda"
+  role          = "${aws_iam_role.iam_for_lambda.arn}"
+  handler       = "receive-file-s3.handler"
+  runtime       = "python3.7"
+  depends_on    = ["aws_iam_role_policy_attachment.lambda_logs", "aws_cloudwatch_log_group.example"]
+}
+
+# Notify lambda when a file is created in the S3 bucket
+resource "aws_s3_bucket_notification" "bucket_notification" {
+  bucket = "${aws_s3_bucket.s3-files-bucket.id}"
+
+  lambda_function {
+    lambda_function_arn = "${aws_lambda_function.download-s3-lambda.arn}"
+    events              = ["s3:ObjectCreated:*"]
+  }
+}
+# S3 bucket to place files
+resource "aws_s3_bucket" "s3-files-bucket" {
+    bucket = "${var.app-prefix}-files-bucket"
+    force_destroy = "true"
+}
+</code></pre></div></div>
+<p>The template in this environment is more complex, because there’s a lot of IAM permissions in place. For simplicity, not all the resources are included in this article. For more info: <a href="https://github.com/adriangalera/terraform-knowledge-sharing">https://github.com/adriangalera/terraform-knowledge-sharing</a>.</p>
+
+<p>In the upper code snippet can be observed how the AWS lambda and the AWS S3 bucket are created. Additionally, the notification from S3 to Lambda is created. When an object is created  in the S3 bucket, the AWS lambda will be invoked.</p>
+
+<h3 id="templates">Templates</h3>
+<p>Terraform also supports templates to enable code reuse. In this environment, we will create two docker container to be ran on ECS. Those two docker containers will execute the same image and echo the value of an environment variable.</p>
+
+<p>If we did not have templates, we would need to define the resources twice. Thanks to the templates, we don’t need to define the container definition twice, we only need to pass the variables.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data "template_file" "container_backend" {
+  template = "${file("container_definition.tpl")}"
+  vars = {
+    container_name = "${var.app-prefix}_backend_container"
+    log_group = "${var.app-prefix}_backend_container"
+    service_type = "backend"
+  }
+}
+  family = "${var.app-prefix}_backend_task_definition"
+  requires_compatibilities = [ "FARGATE" ]
+  network_mode =  "awsvpc"
+  execution_role_arn = "${aws_iam_role.ecs_container_iam_role.arn}"
+  cpu = 256
+  memory = 512
+  container_definitions = "${data.template_file.container_backend.rendered}"
+}
+</code></pre></div></div>
+<p>In order to get the rendered values of the template, we need to get the <code class="language-plaintext highlighter-rouge">rendered</code> field.</p>
+
+<p>In this case, the template contains lots of configuration and IAM definitions. For more info, check the whole repository: <a href="https://github.com/adriangalera/terraform-knowledge-sharing">https://github.com/adriangalera/terraform-knowledge-sharing</a></p>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.agalera.eu/devops/cloud/2019/10/14/discovering-terraform.html" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=Discovering+terraform%20https%3A%2F%2Fwww.agalera.eu%2Fdevops%2Fcloud%2F2019%2F10%2F14%2Fdiscovering-terraform.html"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=https://www.agalera.eu/devops/cloud/2019/10/14/discovering-terraform.html&quote=Discovering+terraform%20%7C%20Adrian+Galera+blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=https://www.agalera.eu/devops/cloud/2019/10/14/discovering-terraform.html&media=https://www.agalera.eu/assets/img/posts/terraform/terraformed.jpg$description=Recently+I+have+been+playing+with+Terraform+tool+and+I+wrote+some+basic+use+cases+for+the+sake+of+sharing+the+knowledge%0A%0A%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=https://www.agalera.eu/devops/cloud/2019/10/14/discovering-terraform.html&title=Discovering+terraform%20%7C%20Adrian+Galera+blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.agalera.eu/devops/cloud/2019/10/14/discovering-terraform.html&title=Discovering+terraform%20%7C%20Adrian+Galera+blog&summary=&source=https://www.agalera.eu/devops/cloud/2019/10/14/discovering-terraform.html"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=Discovering terraform%20%7C%20Adrian Galera blog&body=https://www.agalera.eu/devops/cloud/2019/10/14/discovering-terraform.html"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#aws">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> aws</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#cloud">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> cloud</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#devops">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> devops</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#terraform">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> terraform</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="Unix useful commands" href="/unix/scripting/2019/11/17/unix-useful-commands.html">
+            <p>Previous post</p>
+            Unix useful commands
+        </a>
+    </div>
+    
+
+    
+    <div id="next-post">
+        <a alt="Mockito ArgumentCaptor with inheritance" href="/testing/2019/08/08/mockito-argumentcaptor-inheritance.html">
+            <p>Next post</p>
+            Mockito ArgumentCaptor with inheritance
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+  header#main { background-image: url('/assets/img/posts/terraform/terraformed.jpg'); }
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        </p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/adriangalera"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://www.linkedin.com/in/adriangalera"
+               title="Follow on Linkedin"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="mailto:adrian.galera.87@gmail.com"
+               title="Follow on Mail"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>
