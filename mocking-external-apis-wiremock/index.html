@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.3
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/img/avatars/me-100x100.png" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-https://www.agalera.eu';
+      const isCookieConsent = 'false';
+      const analyticsName = 'UA-126206451-1';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+        <!-- Global site tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
+        <!-- Page analysis (analytics.js) -->
+        <script async src='https://www.google-analytics.com/analytics.js'></script>
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="https://www.agalera.eu/assets/img/posts/wiremock/featured.jpg">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Mocking external API with wiremock | Adrian Galera blog</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Mocking external API with wiremock" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Mocking external API with wiremock. Prepare a docker-compose bootstrap project for wiremock. https://github.com/adriangalera/docker-compose-wiremock" />
+<meta property="og:description" content="Mocking external API with wiremock. Prepare a docker-compose bootstrap project for wiremock. https://github.com/adriangalera/docker-compose-wiremock" />
+<link rel="canonical" href="https://www.agalera.eu/mocking-external-apis-wiremock/" />
+<meta property="og:url" content="https://www.agalera.eu/mocking-external-apis-wiremock/" />
+<meta property="og:site_name" content="Adrian Galera blog" />
+<meta property="og:image" content="https://www.agalera.eu/assets/img/posts/wiremock/featured.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-11-27T00:00:00+01:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/wiremock/featured.jpg" />
+<meta property="twitter:title" content="Mocking external API with wiremock" />
+<script type="application/ld+json">
+{"headline":"Mocking external API with wiremock","dateModified":"2018-11-27T00:00:00+01:00","datePublished":"2018-11-27T00:00:00+01:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/mocking-external-apis-wiremock/"},"url":"https://www.agalera.eu/mocking-external-apis-wiremock/","description":"Mocking external API with wiremock. Prepare a docker-compose bootstrap project for wiremock. https://github.com/adriangalera/docker-compose-wiremock","image":"https://www.agalera.eu/assets/img/posts/wiremock/featured.jpg","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Adrian Galera blog" href="https://www.agalera.eu/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="https://www.agalera.eu/feed.xml" title="Adrian Galera blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="Mocking external API with wiremock">
+    <meta name="twitter:description" content="What happens when you are developing a component that heavily rely on an external API you do not control? Or even worst, that still does not exist. How could...">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.agalera.eu/assets/img/posts/wiremock/featured.jpg">
+    <meta name="twitter:image:alt" content="Mocking external API with wiremock">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" />
+		</a>
+        
+        <a class="site-title" aria-label="Adrian Galera blog" href="/">
+        Adrian Galera blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+        
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="Mocking external API with wiremock " aria-label="Mocking external API with wiremock" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article class="feature-image" >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="Mocking+external+API+with+wiremock" class="title">Mocking external API with wiremock</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      November 27, 2018
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <p class="p1">What happens when you are developing a component that heavily rely on an external API you do not control? Or even worst, that still does not exist. How could you test your component without connecting the external dependency? When we don't have control over the API that we need to integrate, we need a tool like a "mock server".</p>
+<p class="p1">This article will discover and provide a bootstrap project for wiremock. More info: <a href="http://wiremock.org/">wiremock.org</a></p>
+<p><!--more--></p>
+<p>Quoting from their website:</p>
+<blockquote><p>WireMock is a simulator for HTTP-based APIs. Some might consider it a <strong>service virtualization</strong> tool or a <strong>mock server</strong>.</p></blockquote>
+<p>At its core is a Java software that receives HTTP requests with some mapped requests to responses</p>
+<p>TL;DR: <a href="https://github.com/adriangalera/docker-compose-wiremock/" target="_blank" rel="noopener">https://github.com/adriangalera/docker-compose-wiremock/</a></p>
+<h3>Configuring wiremock</h3>
+<p>Configuring wiremock only consists on defining the requests to be mocked and the response that should be answered on the presence of the mocked request.</p>
+<h3>Docker</h3>
+<p>One nice way of integrate wiremock with your current testing environment is using it inside docker. There's this project <a href="https://github.com/rodolpheche/wiremock-docker">https://github.com/rodolpheche/wiremock-docker</a> that provides the wiremock service to docker.</p>
+<p>In order to configure it, you must create the following folder structure:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
+├── Dockerfile
+└── stubs
+    ├── __files
+    │   └── response.json
+    └── mappings
+        └── request.json
+</code></pre></div></div>
+
+<p>The mappings folder contains all the mocked requests definitions and __files contains the response JSON for the mocked requests as shown before.</p>
+<h3>Example</h3>
+<p>Let's say we have an external API developed by another team in the company under the host externalapi.com and is not yet finished. The call that our service needs to perform is externalapi.com/v1/resource/resource1 and will respond:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "hello":"world"
+}
+</code></pre></div></div>
+<p>Let's configure wiremock, so we can start working on our service in parallel with the other team.</p>
+
+<ul>
+  <li>Configure the request mapping</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "request":{
+        "method":"GET",
+        "urlPathPattern":"/v1/resource/([a-zA-Z0-9-\\_]*)"
+    },
+    "response":{
+        "status":200,
+        "bodyFileName":"response.json",
+        "headers":{
+            "Content-Type":"application/json"
+        }
+    }
+}
+</code></pre></div></div>
+<ul>
+  <li>Configure the response</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "hello":"world"
+}
+</code></pre></div></div>
+
+<ul>
+  <li>Test it</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up --build -d
+curl http://localhost:7070/v1/resource/resource1
+{
+"hello" : "world"
+}
+</code></pre></div></div>
+
+<p>Yay! It worked!</p>
+
+<p>The only missing point is configure the actual component to point to the mocked server. For example with <a href="https://github.com/Netflix/ribbon">ribbon</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>externalservice.ribbon.listOfServers=http://localhost:7070
+</code></pre></div></div>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.agalera.eu/mocking-external-apis-wiremock/" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=Mocking+external+API+with+wiremock%20https%3A%2F%2Fwww.agalera.eu%2Fmocking-external-apis-wiremock%2F"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=https://www.agalera.eu/mocking-external-apis-wiremock/&quote=Mocking+external+API+with+wiremock%20%7C%20Adrian+Galera+blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=https://www.agalera.eu/mocking-external-apis-wiremock/&media=https://www.agalera.eu/assets/img/posts/wiremock/featured.jpg$description=What+happens+when+you+are+developing+a+component+that+heavily+rely+on+an+external+API+you+do+not+control%3F+Or+even+worst%2C+that+still+does+not+exist.+How+could+you+test+your+component+without+connecting+the+external+dependency%3F+When+we+don%27t+have+control+over+the+API+that+we+need+to+integrate%2C+we+need+a+tool+like+a+%22mock+server%22.%0AThis+article+will+discover+and+provide+a+bootstrap+project+for+wiremock.+More+info%3A%C2%A0wiremock.org%0A%0A%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=https://www.agalera.eu/mocking-external-apis-wiremock/&title=Mocking+external+API+with+wiremock%20%7C%20Adrian+Galera+blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.agalera.eu/mocking-external-apis-wiremock/&title=Mocking+external+API+with+wiremock%20%7C%20Adrian+Galera+blog&summary=&source=https://www.agalera.eu/mocking-external-apis-wiremock/"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=Mocking external API with wiremock%20%7C%20Adrian Galera blog&body=https://www.agalera.eu/mocking-external-apis-wiremock/"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#docker">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> docker</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#e2e">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> e2e</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#java">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> java</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#testing">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> testing</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#wiremock">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> wiremock</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="Relational model in DynamoDB" href="/relational-model-dynamodb/">
+            <p>Previous post</p>
+            Relational model in DynamoDB
+        </a>
+    </div>
+    
+
+    
+    <div id="next-post">
+        <a alt="Timeseries database with DynamoDB" href="/timeseries-db-dynamodb/">
+            <p>Next post</p>
+            Timeseries database with DynamoDB
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+  header#main { background-image: url('/assets/img/posts/wiremock/featured.jpg'); }
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        </p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/adriangalera"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://www.linkedin.com/in/adriangalera"
+               title="Follow on Linkedin"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="mailto:adrian.galera.87@gmail.com"
+               title="Follow on Mail"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>
