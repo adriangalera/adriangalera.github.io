@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.3
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/img/avatars/me-100x100.png" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-https://www.agalera.eu';
+      const isCookieConsent = 'false';
+      const analyticsName = 'UA-126206451-1';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+        <!-- Global site tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
+        <!-- Page analysis (analytics.js) -->
+        <script async src='https://www.google-analytics.com/analytics.js'></script>
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="https://www.agalera.eu/assets/img/posts/leaflet-fog-of-war/featured-image.jpg">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Leaflet fog of war | Adrian Galera blog</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Leaflet fog of war" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="When I was playing age of empires the map was all in black color at the beginning. As long as you explore the map, the black color is removed discovering what it was hidden behind. I wanted to implement something similar in a leaflet map. I’ll describe the callenges I have found in a series of articles." />
+<meta property="og:description" content="When I was playing age of empires the map was all in black color at the beginning. As long as you explore the map, the black color is removed discovering what it was hidden behind. I wanted to implement something similar in a leaflet map. I’ll describe the callenges I have found in a series of articles." />
+<link rel="canonical" href="https://www.agalera.eu/leaflet-fog-of-war/" />
+<meta property="og:url" content="https://www.agalera.eu/leaflet-fog-of-war/" />
+<meta property="og:site_name" content="Adrian Galera blog" />
+<meta property="og:image" content="https://www.agalera.eu/assets/img/posts/leaflet-fog-of-war/featured-image.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-07-20T00:00:00+02:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/leaflet-fog-of-war/featured-image.jpg" />
+<meta property="twitter:title" content="Leaflet fog of war" />
+<script type="application/ld+json">
+{"headline":"Leaflet fog of war","dateModified":"2022-07-20T00:00:00+02:00","datePublished":"2022-07-20T00:00:00+02:00","image":"https://www.agalera.eu/assets/img/posts/leaflet-fog-of-war/featured-image.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/leaflet-fog-of-war/"},"url":"https://www.agalera.eu/leaflet-fog-of-war/","description":"When I was playing age of empires the map was all in black color at the beginning. As long as you explore the map, the black color is removed discovering what it was hidden behind. I wanted to implement something similar in a leaflet map. I’ll describe the callenges I have found in a series of articles.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Adrian Galera blog" href="https://www.agalera.eu/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="https://www.agalera.eu/feed.xml" title="Adrian Galera blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="Leaflet fog of war">
+    <meta name="twitter:description" content="When I was playing age of empires the map was all in black color at the beginning. As long as you explore the map, the black color is removed discovering wha...">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.agalera.eu/assets/img/posts/leaflet-fog-of-war/featured-image.jpg">
+    <meta name="twitter:image:alt" content="Leaflet fog of war">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" />
+		</a>
+        
+        <a class="site-title" aria-label="Adrian Galera blog" href="/">
+        Adrian Galera blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+        
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="Leaflet fog of war " aria-label="Leaflet fog of war" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article class="feature-image" >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="Leaflet+fog+of+war" class="title">Leaflet fog of war</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      July 20, 2022
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <style>
+iframe {
+    padding: 0;
+    border-width: 0;
+    width: 60%;
+    height: 400px
+}
+
+.iframe-holder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 5px;
+}
+</style>
+
+<p>When I was playing age of empires the map was all in black color at the beginning. As long as you explore the map, the black color is removed discovering what it was hidden behind.</p>
+
+<p>I wanted to implement something similar to show all the trails, routes, paths, roads, streets, etc that I have discovered. I’ll describe the callenges I have found in a series of articles.</p>
+
+<p><!--more--></p>
+
+<p>This is part of my series of articles about leaflet:</p>
+
+<ul>
+  <li><a href="/leaflet-fog-of-war">Leaflet fog of war</a></li>
+  <li><a href="/leaflet-draw-polygon-markers">Draw a polygon from markers in leaflet</a></li>
+  <li><a href="/leaflet-load-gpx">Load and display GPX in leaflet</a></li>
+  <li><a href="/browser-storage">Browser storage</a></li>
+</ul>
+
+<p>Age of empires… what a great game</p>
+
+<p><img src="/assets/img/posts/leaflet-fog-of-war/age-of-empires.jpeg" alt="Age of Empires map" /></p>
+
+<p>I want to create something similar to the map in Age of Empires. A map where everything is hidden until you discovered. This way you could check how much of your city you know, or where to search for new places to visit.</p>
+
+<p>I have worked many times before with <a href="https://leafletjs.com/">leaflet js</a>, a nice library to display maps and geographic information. It has a nice ecosystem of plugins, so I’ve checked if someone has something similar implemented and YES!</p>
+
+<p><a href="https://github.com/ptma/Leaflet.Mask">Leaflet.Mask</a> already implemented a plugin that mask all the map and displays the area specified in the begining.</p>
+
+<div class="iframe-holder">
+<iframe src="https://ptma.github.io/Leaflet.Mask/examples/mask.html"></iframe>
+</div>
+
+<p>However, it does not fit my requirements as I want to add places dynamically. So, let’s implement our own thing …</p>
+
+<h2 id="implementing-my-own-leaflet-mask">Implementing my own Leaflet Mask</h2>
+
+<p>Taking <a href="https://github.com/ptma/Leaflet.Mask">Leaflet.Mask</a> as a base, I will modify it a bit in order to be able to add the visited area dynamically.</p>
+
+<p>The key for this to succeed was to understand how the polygon has to be created in leaflet:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">scotland</span> <span class="o">=</span> <span class="nx">L</span><span class="p">.</span><span class="nx">polygon</span><span class="p">([</span>
+  <span class="p">[</span>
+    <span class="p">[</span><span class="mi">60</span><span class="p">,</span> <span class="o">-</span><span class="mi">13</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">60</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="o">-</span><span class="mi">13</span><span class="p">],</span>
+  <span class="p">],</span>
+  <span class="p">[</span>
+    <span class="p">[</span><span class="mf">55.7</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.5</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">56</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.5</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">56</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">55.7</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">],</span>
+  <span class="p">],</span>
+<span class="p">]);</span>
+<span class="nx">scotland</span><span class="p">.</span><span class="nx">addTo</span><span class="p">(</span><span class="nx">map</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="/assets/img/posts/leaflet-fog-of-war/holes.png" alt="Polygon with holes" /></p>
+
+<p>In order to draw the polygon, the user might pass the list of latitude longitudes and a second optional argument that defines the holes of that polygon.</p>
+
+<p>Finally the code looked something similar to:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">_setMaskLayer</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">masklayer</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">removeLayer</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">masklayer</span><span class="p">)</span>
+            <span class="p">}</span>
+
+            <span class="kd">var</span> <span class="nx">allWorld</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_coordsToLatLngs</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_allWorldCoordinates</span><span class="p">)</span>
+            <span class="kd">var</span> <span class="nx">latlngs</span> <span class="o">=</span> <span class="p">[</span><span class="nx">allWorld</span><span class="p">]</span>
+
+            <span class="k">this</span><span class="p">.</span><span class="nx">_holes</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">hole</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">latlngs</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_coordsToLatLngs</span><span class="p">(</span><span class="nx">hole</span><span class="p">)))</span>
+
+            <span class="kd">var</span> <span class="nx">layer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">L</span><span class="p">.</span><span class="nx">Polygon</span><span class="p">(</span><span class="nx">latlngs</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">masklayer</span> <span class="o">=</span> <span class="nx">layer</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">addLayer</span><span class="p">(</span><span class="nx">layer</span><span class="p">);</span>
+        <span class="p">},</span>
+</code></pre></div></div>
+
+<p>The plugin reads the input data as <a href="https://en.wikipedia.org/wiki/GeoJSON">GeoJSON</a> and store the visited places latitude and longitude in the <code class="language-plaintext highlighter-rouge">this._holes</code> variable. Later on, this array is iterated in order to build the holes that leaflet will draw into the polygon. Finally the created polygon is added to the map. When the method is called, the polygon is removed to be able to redraw it.</p>
+
+<p>Here you can see it in action: <a href="https://www.agalera.eu/leaflet-fogofwar/" target="_blank" rel="noopener">https://www.agalera.eu/leaflet-fogofwar/</a></p>
+
+<p>But wait … that’s not all, I want the fulfill the following requirements:</p>
+<ul>
+  <li>I need a way to draw the areas I visisted, covered in the article: <a href="/leaflet-draw-polygon-markers/">Draw a polygon from markers in leaflet</a></li>
+  <li>Load a GPX and display it in the map, covered in the article: <a href="/leaflet-draw-polygon-markers/">Load and display GPX in leaflet</a></li>
+  <li>I don’t want to spent any money in this, so the storage will be browser based. This is covered in the article: <a href="/browser-storage">Browser storage</a></li>
+</ul>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.agalera.eu/leaflet-fog-of-war/" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=Leaflet+fog+of+war%20https%3A%2F%2Fwww.agalera.eu%2Fleaflet-fog-of-war%2F"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=https://www.agalera.eu/leaflet-fog-of-war/&quote=Leaflet+fog+of+war%20%7C%20Adrian+Galera+blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=https://www.agalera.eu/leaflet-fog-of-war/&media=https://www.agalera.eu/assets/img/posts/leaflet-fog-of-war/featured-image.jpg$description=%0A%0AWhen+I+was+playing+age+of+empires+the+map+was+all+in+black+color+at+the+beginning.+As+long+as+you+explore+the+map%2C+the+black+color+is+removed+discovering+what+it+was+hidden+behind.%0A%0AI+wanted+to+implement+something+similar+to+show+all+the+trails%2C+routes%2C+paths%2C+roads%2C+streets%2C+etc+that+I+have+discovered.+I%E2%80%99ll+describe+the+callenges+I+have+found+in+a+series+of+articles.%0A%0A%0A%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=https://www.agalera.eu/leaflet-fog-of-war/&title=Leaflet+fog+of+war%20%7C%20Adrian+Galera+blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.agalera.eu/leaflet-fog-of-war/&title=Leaflet+fog+of+war%20%7C%20Adrian+Galera+blog&summary=&source=https://www.agalera.eu/leaflet-fog-of-war/"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=Leaflet fog of war%20%7C%20Adrian Galera blog&body=https://www.agalera.eu/leaflet-fog-of-war/"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#browser">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> browser</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#gis">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> gis</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#javascript">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> javascript</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#leaflet">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> leaflet</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="Draw a polygon from markers in leaflet" href="/leaflet-draw-polygon-markers/">
+            <p>Previous post</p>
+            Draw a polygon from markers in leaflet
+        </a>
+    </div>
+    
+
+    
+    <div id="next-post">
+        <a alt="Combine two Java Optionals" href="/combine-two-optionals/">
+            <p>Next post</p>
+            Combine two Java Optionals
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+  header#main { background-image: url('/assets/img/posts/leaflet-fog-of-war/featured-image.jpg'); }
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        </p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/adriangalera"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://www.linkedin.com/in/adriangalera"
+               title="Follow on Linkedin"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="mailto:adrian.galera.87@gmail.com"
+               title="Follow on Mail"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>

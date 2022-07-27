@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.3
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/img/avatars/me-100x100.png" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-https://www.agalera.eu';
+      const isCookieConsent = 'false';
+      const analyticsName = 'UA-126206451-1';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+        <!-- Global site tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
+        <!-- Page analysis (analytics.js) -->
+        <script async src='https://www.google-analytics.com/analytics.js'></script>
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="https://www.agalera.eu/assets/img/posts/leaflet-load-gpx/featured-image.jpg">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Load GPX in leaflet | Adrian Galera blog</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Load GPX in leaflet" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Following up from the previous article about implementing the fog of war in leaflet, I want to be able to load a GPX file and display it in the map" />
+<meta property="og:description" content="Following up from the previous article about implementing the fog of war in leaflet, I want to be able to load a GPX file and display it in the map" />
+<link rel="canonical" href="https://www.agalera.eu/leaflet-load-gpx/" />
+<meta property="og:url" content="https://www.agalera.eu/leaflet-load-gpx/" />
+<meta property="og:site_name" content="Adrian Galera blog" />
+<meta property="og:image" content="https://www.agalera.eu/assets/img/posts/leaflet-load-gpx/featured-image.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-07-22T00:00:00+02:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/leaflet-load-gpx/featured-image.jpg" />
+<meta property="twitter:title" content="Load GPX in leaflet" />
+<script type="application/ld+json">
+{"headline":"Load GPX in leaflet","dateModified":"2022-07-22T00:00:00+02:00","datePublished":"2022-07-22T00:00:00+02:00","image":"https://www.agalera.eu/assets/img/posts/leaflet-load-gpx/featured-image.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/leaflet-load-gpx/"},"url":"https://www.agalera.eu/leaflet-load-gpx/","description":"Following up from the previous article about implementing the fog of war in leaflet, I want to be able to load a GPX file and display it in the map","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Adrian Galera blog" href="https://www.agalera.eu/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="https://www.agalera.eu/feed.xml" title="Adrian Galera blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="Load GPX in leaflet">
+    <meta name="twitter:description" content="Following up from the previous article about implementing the fog of war in leaflet, I want to be able to load a GPX file and display it in the map.This is p...">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.agalera.eu/assets/img/posts/leaflet-load-gpx/featured-image.jpg">
+    <meta name="twitter:image:alt" content="Load GPX in leaflet">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" />
+		</a>
+        
+        <a class="site-title" aria-label="Adrian Galera blog" href="/">
+        Adrian Galera blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+        
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="Load GPX in leaflet " aria-label="Load GPX in leaflet" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article class="feature-image" >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="Load+GPX+in+leaflet" class="title">Load GPX in leaflet</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      July 22, 2022
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <style type="text/css">
+.image-table td{
+    border: 0px;
+}
+.image-table .center{
+    text-align: center;
+}
+</style>
+
+<p>Following up from the previous article about implementing the fog of war in leaflet, I want to be able to load a GPX file and display it in the map.</p>
+
+<p><!--more--></p>
+
+<p>This is part of my series of articles about leaflet:</p>
+
+<ul>
+  <li><a href="/leaflet-fog-of-war">Leaflet fog of war</a></li>
+  <li><a href="/leaflet-draw-polygon-markers">Draw a polygon from markers in leaflet</a></li>
+  <li><a href="/leaflet-load-gpx">Load and display GPX in leaflet</a></li>
+  <li><a href="/browser-storage">Browser storage</a></li>
+</ul>
+
+<p>Now, that I can draw paths with some distance in the map, I want to be able to load <a href="https://en.wikipedia.org/wiki/GPS_Exchange_Format">GPX files</a>. Those files store geographical information in the way of latitude,longitude and optionally elevation, time and other information. Those documents are XML based, so it should be easy to parse.</p>
+
+<h2 id="load-file">Load file</h2>
+
+<p>How to load any file from the computer from the browser? <code class="language-plaintext highlighter-rouge">window.showOpenFilePicker</code> allows the browser to opens a file picker. That file picker can be customised to load files of only one type, to allow multiple files, etc. Take into account that is an async operation, so you’ll have to deal with promises:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">gpxPickerOpts</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">types</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="na">description</span><span class="p">:</span> <span class="dl">'</span><span class="s1">GPX Files</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">accept</span><span class="p">:</span> <span class="p">{</span>
+                <span class="dl">'</span><span class="s1">application/gpx+xml</span><span class="dl">'</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">.gpx</span><span class="dl">'</span><span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="na">multiple</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">};</span>
+<span class="kd">const</span> <span class="nx">fileHandlers</span> <span class="o">=</span> <span class="k">await</span> <span class="nb">window</span><span class="p">.</span><span class="nx">showOpenFilePicker</span><span class="p">(</span><span class="nx">gpxPickerOpts</span><span class="p">);</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">fh</span> <span class="k">of</span> <span class="nx">fileHandlers</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">file</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fh</span><span class="p">.</span><span class="nx">getFile</span><span class="p">();</span>
+    <span class="kd">const</span> <span class="nx">content</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">file</span><span class="p">.</span><span class="nx">text</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>In this case, we want to load multiple GPX files. The <code class="language-plaintext highlighter-rouge">window.showOpenFilePicker</code> methods returns an array of file handlers which later we need to open and consume. <code class="language-plaintext highlighter-rouge">file.text()</code> operation returns the full contents of the file in text.</p>
+
+<h2 id="parse-the-gpx">Parse the GPX</h2>
+
+<p>Now that we have the text contents of the file, we must extract the relevant information, i.e. latitude and longitude of the points stored. Since GPX is XML-based, we can use two approaches to parse the file:</p>
+
+<ul>
+  <li>SAX: Simple API for XML. Event based, when a new node is detected, an event is generated and passed to the event handler. Extremely efficient but complicated to implement.</li>
+  <li>DOM: Document Object Mapper. It parses the file in one go. If the documents are big can lead to performance decrease, but it’s extremely easy to implement.</li>
+</ul>
+
+<p>Since this is a toy project, let’s use DOM because of its simplicity:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">_xmlTrackPointToLatLng</span> <span class="o">=</span> <span class="p">(</span><span class="nx">trkpoint</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">[</span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">trkpoint</span><span class="p">.</span><span class="nx">attributes</span><span class="p">.</span><span class="nx">lat</span><span class="p">.</span><span class="nx">nodeValue</span><span class="p">),</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="nx">trkpoint</span><span class="p">.</span><span class="nx">attributes</span><span class="p">.</span><span class="nx">lon</span><span class="p">.</span><span class="nx">nodeValue</span><span class="p">)]</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">gpxDom</span> <span class="o">=</span> <span class="p">(</span><span class="k">new</span> <span class="nx">DOMParser</span><span class="p">()).</span><span class="nx">parseFromString</span><span class="p">(</span><span class="nx">content</span><span class="p">,</span> <span class="dl">'</span><span class="s1">text/xml</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">trackPoints</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="k">from</span><span class="p">(</span><span class="nx">gpxDoc</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="dl">"</span><span class="s2">trkpt</span><span class="dl">"</span><span class="p">));</span>
+<span class="kd">const</span> <span class="nx">latlngs</span> <span class="o">=</span> <span class="nx">trackPoints</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">trkpnt</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">container</span><span class="p">.</span><span class="nx">_xmlTrackPointToLatLng</span><span class="p">(</span><span class="nx">trkpnt</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>This snippet generated the DOM from the contents of the GPX file. Later extract the elements in the DOM tree that belongs to points in the track: <code class="language-plaintext highlighter-rouge">&lt;trkpt&gt;</code>. Then, every tag is processed to extract latitude and longitude.</p>
+
+<p>In this point, we have an array of points with latitude/longitude pairs.</p>
+
+<h2 id="display-the-gpx">Display the GPX</h2>
+
+<p>GPX can have a massive amounts of points, I have some of them with 20k points. In order to display it smoothly, I’m grouping the points in groups of 200 to draw the polygon like in the previous article (<a href="/leaflet-draw-polygon-markers">Draw a polygon from markers in leaflet</a>):</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span>  <span class="nx">_group</span> <span class="o">=</span> <span class="p">(</span><span class="nx">arr</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="kd">let</span> <span class="nx">limit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nx">limit</span> <span class="o">+</span> <span class="nx">n</span> <span class="o">&lt;=</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">limit</span><span class="p">,</span> <span class="nx">n</span> <span class="o">+</span> <span class="nx">limit</span><span class="p">));</span>
+        <span class="nx">limit</span> <span class="o">+=</span> <span class="nx">n</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">res</span>
+<span class="p">}</span>
+<span class="kd">const</span> <span class="nx">groups</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">_group</span><span class="p">(</span><span class="nx">latlngs</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nx">polygonGeoJSON</span> <span class="o">=</span> <span class="kc">undefined</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">group</span> <span class="k">of</span> <span class="nx">groups</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">polLatLng</span> <span class="o">=</span> <span class="nx">_joinLinesInPolygon</span><span class="p">(</span><span class="nx">group</span><span class="p">)</span> <span class="c1">//from previous article</span>
+    <span class="kd">const</span> <span class="nx">pol</span> <span class="o">=</span> <span class="nx">L</span><span class="p">.</span><span class="nx">polygon</span><span class="p">(</span><span class="nx">polLatLng</span><span class="p">).</span><span class="nx">toGeoJSON</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">polygonGeoJSON</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">polygonGeoJSON</span> <span class="o">=</span> <span class="nx">pol</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">polygonGeoJSON</span> <span class="o">=</span> <span class="nx">turf</span><span class="p">.</span><span class="nx">union</span><span class="p">(</span><span class="nx">pol</span><span class="p">,</span> <span class="nx">polygonGeoJSON</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This <code class="language-plaintext highlighter-rouge">_group</code> function creates batches of 200 points in order to perform the joinin of those points into a polygon. Once a polygon is created, I’m merging them with the <a href="https://turfjs.org/docs/#union">turf library</a> by performing a union.</p>
+
+<p>This way of displaying GPX files produces very appealing representation such as:</p>
+
+<p><img src="/assets/img/posts/leaflet-load-gpx/gpx.png" alt="GPX representation in leaflet map" /></p>
+
+<p>Here you can see it in action: <a href="https://www.agalera.eu/leaflet-fogofwar/" target="_blank" rel="noopener">https://www.agalera.eu/leaflet-fogofwar/</a></p>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.agalera.eu/leaflet-load-gpx/" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=Load+GPX+in+leaflet%20https%3A%2F%2Fwww.agalera.eu%2Fleaflet-load-gpx%2F"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=https://www.agalera.eu/leaflet-load-gpx/&quote=Load+GPX+in+leaflet%20%7C%20Adrian+Galera+blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=https://www.agalera.eu/leaflet-load-gpx/&media=https://www.agalera.eu/assets/img/posts/leaflet-load-gpx/featured-image.jpg$description=%0A%0AFollowing+up+from+the+previous+article+about+implementing+the+fog+of+war+in+leaflet%2C+I+want+to+be+able+to+load+a+GPX+file+and+display+it+in+the+map.%0A%0A%0A%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=https://www.agalera.eu/leaflet-load-gpx/&title=Load+GPX+in+leaflet%20%7C%20Adrian+Galera+blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.agalera.eu/leaflet-load-gpx/&title=Load+GPX+in+leaflet%20%7C%20Adrian+Galera+blog&summary=&source=https://www.agalera.eu/leaflet-load-gpx/"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=Load GPX in leaflet%20%7C%20Adrian Galera blog&body=https://www.agalera.eu/leaflet-load-gpx/"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#browser">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> browser</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#gis">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> gis</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#gpx">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> gpx</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#javascript">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> javascript</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#leaflet">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> leaflet</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="Browser storage" href="/browser-storage/">
+            <p>Previous post</p>
+            Browser storage
+        </a>
+    </div>
+    
+
+    
+    <div id="next-post">
+        <a alt="Draw a polygon from markers in leaflet" href="/leaflet-draw-polygon-markers/">
+            <p>Next post</p>
+            Draw a polygon from markers in leaflet
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+  header#main { background-image: url('/assets/img/posts/leaflet-load-gpx/featured-image.jpg'); }
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        </p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/adriangalera"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://www.linkedin.com/in/adriangalera"
+               title="Follow on Linkedin"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="mailto:adrian.galera.87@gmail.com"
+               title="Follow on Mail"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>
