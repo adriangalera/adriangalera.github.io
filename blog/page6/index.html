@@ -59,6 +59,14 @@
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
         <!-- Page analysis (analytics.js) -->
         <script async src='https://www.google-analytics.com/analytics.js'></script>
+        <script>
+        // disable GA for localhost
+        const isProduction = window.location.host.includes("agalera.eu")
+        if (!isProduction) { 
+          console.log(`Disabling google analytics for UA-126206451-1`)
+          window['ga-disable-UA-126206451-1'] = true;
+        }
+        </script>
     
 
     <!-- seo tags -->
@@ -80,7 +88,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Adrian Galera blog" />
 <script type="application/ld+json">
-{"headline":"Adrian Galera blog","@type":"WebPage","url":"https://www.agalera.eu/blog/page6/","description":"My personal developer blog page","@context":"https://schema.org"}</script>
+{"@type":"WebPage","description":"My personal developer blog page","headline":"Adrian Galera blog","url":"https://www.agalera.eu/blog/page6/","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -229,6 +237,45 @@
 
     <div class="posts">
     
+    
+    <div class="post-teaser">
+        
+        <div class="post-img">
+            <a aria-label="Timeseries database with DynamoDB" href="/timeseries-db-dynamodb/">
+                <img alt="Timeseries database with DynamoDB" src="/assets/img/posts/dynamodbts/featured.jpg">
+            </a>
+        </div>
+        
+        <span>
+          <header>
+            <h1>
+              <a aria-label="Timeseries database with DynamoDB" class="post-link" href="/timeseries-db-dynamodb/">
+                Timeseries database with DynamoDB
+              </a>
+            </h1>
+            
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      September 21, 2018
+    </p></div>
+
+          </header>
+          
+              <div class="excerpt">
+                  
+                     Working with sensor data, we need to store timestamped data in a way that was easily checked and show it in graphs. This post explains the process we follow to end up implementing a timeseries database on DynamoDB.
+
+
+
+                  
+              </div>
+          
+      </span>
+    </div>
     
     <div class="post-teaser">
         

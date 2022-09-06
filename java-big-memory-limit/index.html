@@ -59,6 +59,14 @@
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
         <!-- Page analysis (analytics.js) -->
         <script async src='https://www.google-analytics.com/analytics.js'></script>
+        <script>
+        // disable GA for localhost
+        const isProduction = window.location.host.includes("agalera.eu")
+        if (!isProduction) { 
+          console.log(`Disabling google analytics for UA-126206451-1`)
+          window['ga-disable-UA-126206451-1'] = true;
+        }
+        </script>
     
 
     <!-- seo tags -->
@@ -83,7 +91,7 @@
 <meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/java-xms/featured-image.jpg" />
 <meta property="twitter:title" content="Java big memory limit" />
 <script type="application/ld+json">
-{"headline":"Java big memory limit","dateModified":"2020-02-03T00:00:00+01:00","datePublished":"2020-02-03T00:00:00+01:00","image":"https://www.agalera.eu/assets/img/posts/java-xms/featured-image.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/java-big-memory-limit/"},"url":"https://www.agalera.eu/java-big-memory-limit/","description":"Playing around with JVM options, we question ourselves; what would happen if we set the minimum memory to be greater than the available memory?","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","description":"Playing around with JVM options, we question ourselves; what would happen if we set the minimum memory to be greater than the available memory?","image":"https://www.agalera.eu/assets/img/posts/java-xms/featured-image.jpg","headline":"Java big memory limit","dateModified":"2020-02-03T00:00:00+01:00","datePublished":"2020-02-03T00:00:00+01:00","url":"https://www.agalera.eu/java-big-memory-limit/","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/java-big-memory-limit/"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 

@@ -59,6 +59,14 @@
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
         <!-- Page analysis (analytics.js) -->
         <script async src='https://www.google-analytics.com/analytics.js'></script>
+        <script>
+        // disable GA for localhost
+        const isProduction = window.location.host.includes("agalera.eu")
+        if (!isProduction) { 
+          console.log(`Disabling google analytics for UA-126206451-1`)
+          window['ga-disable-UA-126206451-1'] = true;
+        }
+        </script>
     
 
     <!-- seo tags -->
@@ -83,7 +91,7 @@
 <meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/sns-push/featured.jpg" />
 <meta property="twitter:title" content="Push notifications SNS and Firebase" />
 <script type="application/ld+json">
-{"headline":"Push notifications SNS and Firebase","dateModified":"2020-11-20T00:00:00+01:00","datePublished":"2020-11-20T00:00:00+01:00","image":"https://www.agalera.eu/assets/img/posts/sns-push/featured.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/sns-firebase-android-ios/"},"url":"https://www.agalera.eu/sns-firebase-android-ios/","description":"This post describe how I setup SNS to communicate with Firebase to send push notifications to Android and iOS devices","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","description":"This post describe how I setup SNS to communicate with Firebase to send push notifications to Android and iOS devices","image":"https://www.agalera.eu/assets/img/posts/sns-push/featured.jpg","headline":"Push notifications SNS and Firebase","dateModified":"2020-11-20T00:00:00+01:00","datePublished":"2020-11-20T00:00:00+01:00","url":"https://www.agalera.eu/sns-firebase-android-ios/","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/sns-firebase-android-ios/"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 

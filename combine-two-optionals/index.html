@@ -59,6 +59,14 @@
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
         <!-- Page analysis (analytics.js) -->
         <script async src='https://www.google-analytics.com/analytics.js'></script>
+        <script>
+        // disable GA for localhost
+        const isProduction = window.location.host.includes("agalera.eu")
+        if (!isProduction) { 
+          console.log(`Disabling google analytics for UA-126206451-1`)
+          window['ga-disable-UA-126206451-1'] = true;
+        }
+        </script>
     
 
     <!-- seo tags -->
@@ -83,7 +91,7 @@
 <meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/combine-optional/featured-image.jpeg" />
 <meta property="twitter:title" content="Combine two Java Optionals" />
 <script type="application/ld+json">
-{"headline":"Combine two Java Optionals","dateModified":"2022-06-03T00:00:00+02:00","datePublished":"2022-06-03T00:00:00+02:00","image":"https://www.agalera.eu/assets/img/posts/combine-optional/featured-image.jpeg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/combine-two-optionals/"},"url":"https://www.agalera.eu/combine-two-optionals/","description":"I was implementing a searching algorithm and I had to search for two things. In this article I describe how I implemented combining two Java optionals in Java 9 using Optional.or compared with Java 8","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","description":"I was implementing a searching algorithm and I had to search for two things. In this article I describe how I implemented combining two Java optionals in Java 9 using Optional.or compared with Java 8","image":"https://www.agalera.eu/assets/img/posts/combine-optional/featured-image.jpeg","headline":"Combine two Java Optionals","dateModified":"2022-06-03T00:00:00+02:00","datePublished":"2022-06-03T00:00:00+02:00","url":"https://www.agalera.eu/combine-two-optionals/","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/combine-two-optionals/"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 

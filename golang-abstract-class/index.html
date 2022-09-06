@@ -59,6 +59,14 @@
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
         <!-- Page analysis (analytics.js) -->
         <script async src='https://www.google-analytics.com/analytics.js'></script>
+        <script>
+        // disable GA for localhost
+        const isProduction = window.location.host.includes("agalera.eu")
+        if (!isProduction) { 
+          console.log(`Disabling google analytics for UA-126206451-1`)
+          window['ga-disable-UA-126206451-1'] = true;
+        }
+        </script>
     
 
     <!-- seo tags -->
@@ -83,7 +91,7 @@
 <meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/golang-abstract/featured-image.jpg" />
 <meta property="twitter:title" content="Golang abstract class" />
 <script type="application/ld+json">
-{"headline":"Golang abstract class","dateModified":"2021-09-24T00:00:00+02:00","datePublished":"2021-09-24T00:00:00+02:00","image":"https://www.agalera.eu/assets/img/posts/golang-abstract/featured-image.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/golang-abstract-class/"},"url":"https://www.agalera.eu/golang-abstract-class/","description":"I’m doing a side project using golang, and I have a use case where I’d use an abstract class in Java. Unfortunately, in golang the concept of classes does not exist. In this article I describe how can I implement the behaviour I want without abstract class.","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","description":"I’m doing a side project using golang, and I have a use case where I’d use an abstract class in Java. Unfortunately, in golang the concept of classes does not exist. In this article I describe how can I implement the behaviour I want without abstract class.","image":"https://www.agalera.eu/assets/img/posts/golang-abstract/featured-image.jpg","headline":"Golang abstract class","dateModified":"2021-09-24T00:00:00+02:00","datePublished":"2021-09-24T00:00:00+02:00","url":"https://www.agalera.eu/golang-abstract-class/","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/golang-abstract-class/"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 

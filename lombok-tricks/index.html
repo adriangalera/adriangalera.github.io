@@ -59,6 +59,14 @@
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
         <!-- Page analysis (analytics.js) -->
         <script async src='https://www.google-analytics.com/analytics.js'></script>
+        <script>
+        // disable GA for localhost
+        const isProduction = window.location.host.includes("agalera.eu")
+        if (!isProduction) { 
+          console.log(`Disabling google analytics for UA-126206451-1`)
+          window['ga-disable-UA-126206451-1'] = true;
+        }
+        </script>
     
 
     <!-- seo tags -->
@@ -83,7 +91,7 @@
 <meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/lombok/featured-image.jpg" />
 <meta property="twitter:title" content="Lombok tricks" />
 <script type="application/ld+json">
-{"headline":"Lombok tricks","dateModified":"2019-12-31T00:00:00+01:00","datePublished":"2019-12-31T00:00:00+01:00","image":"https://www.agalera.eu/assets/img/posts/lombok/featured-image.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/lombok-tricks/"},"url":"https://www.agalera.eu/lombok-tricks/","description":"This article is intented to serve as a compilation of lombok tricks and useful techniques I have found using lombok","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","description":"This article is intented to serve as a compilation of lombok tricks and useful techniques I have found using lombok","image":"https://www.agalera.eu/assets/img/posts/lombok/featured-image.jpg","headline":"Lombok tricks","dateModified":"2019-12-31T00:00:00+01:00","datePublished":"2019-12-31T00:00:00+01:00","url":"https://www.agalera.eu/lombok-tricks/","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/lombok-tricks/"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 

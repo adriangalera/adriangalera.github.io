@@ -59,6 +59,14 @@
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
         <!-- Page analysis (analytics.js) -->
         <script async src='https://www.google-analytics.com/analytics.js'></script>
+        <script>
+        // disable GA for localhost
+        const isProduction = window.location.host.includes("agalera.eu")
+        if (!isProduction) { 
+          console.log(`Disabling google analytics for UA-126206451-1`)
+          window['ga-disable-UA-126206451-1'] = true;
+        }
+        </script>
     
 
     <!-- seo tags -->
@@ -83,7 +91,7 @@
 <meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/mockito-argcaptor-inheritance/featured.jpg" />
 <meta property="twitter:title" content="Mockito ArgumentCaptor with inheritance" />
 <script type="application/ld+json">
-{"headline":"Mockito ArgumentCaptor with inheritance","dateModified":"2019-08-08T00:00:00+02:00","datePublished":"2019-08-08T00:00:00+02:00","image":"https://www.agalera.eu/assets/img/posts/mockito-argcaptor-inheritance/featured.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/mockito-argumentcaptor-inheritance/"},"url":"https://www.agalera.eu/mockito-argumentcaptor-inheritance/","description":"Working with Mockito’s ArgumentCaptor I discover it does not work as expected with child classes. This article describe a workaround to keep using it.","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","description":"Working with Mockito’s ArgumentCaptor I discover it does not work as expected with child classes. This article describe a workaround to keep using it.","image":"https://www.agalera.eu/assets/img/posts/mockito-argcaptor-inheritance/featured.jpg","headline":"Mockito ArgumentCaptor with inheritance","dateModified":"2019-08-08T00:00:00+02:00","datePublished":"2019-08-08T00:00:00+02:00","url":"https://www.agalera.eu/mockito-argumentcaptor-inheritance/","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/mockito-argumentcaptor-inheritance/"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 

@@ -59,6 +59,14 @@
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
         <!-- Page analysis (analytics.js) -->
         <script async src='https://www.google-analytics.com/analytics.js'></script>
+        <script>
+        // disable GA for localhost
+        const isProduction = window.location.host.includes("agalera.eu")
+        if (!isProduction) { 
+          console.log(`Disabling google analytics for UA-126206451-1`)
+          window['ga-disable-UA-126206451-1'] = true;
+        }
+        </script>
     
 
     <!-- seo tags -->
@@ -83,7 +91,7 @@
 <meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/bark-detector/featured-image.jpg" />
 <meta property="twitter:title" content="Implementing a dog bark detector" />
 <script type="application/ld+json">
-{"headline":"Implementing a dog bark detector","dateModified":"2021-07-18T00:00:00+02:00","datePublished":"2021-07-18T00:00:00+02:00","image":"https://www.agalera.eu/assets/img/posts/bark-detector/featured-image.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/bark-detector/"},"url":"https://www.agalera.eu/bark-detector/","description":"Using machine learning with python to detect when my dog barks and send a telegram message when it happens","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","description":"Using machine learning with python to detect when my dog barks and send a telegram message when it happens","image":"https://www.agalera.eu/assets/img/posts/bark-detector/featured-image.jpg","headline":"Implementing a dog bark detector","dateModified":"2021-07-18T00:00:00+02:00","datePublished":"2021-07-18T00:00:00+02:00","url":"https://www.agalera.eu/bark-detector/","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/bark-detector/"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 

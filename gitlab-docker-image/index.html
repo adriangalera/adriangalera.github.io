@@ -59,6 +59,14 @@
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
         <!-- Page analysis (analytics.js) -->
         <script async src='https://www.google-analytics.com/analytics.js'></script>
+        <script>
+        // disable GA for localhost
+        const isProduction = window.location.host.includes("agalera.eu")
+        if (!isProduction) { 
+          console.log(`Disabling google analytics for UA-126206451-1`)
+          window['ga-disable-UA-126206451-1'] = true;
+        }
+        </script>
     
 
     <!-- seo tags -->
@@ -83,7 +91,7 @@
 <meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/docker-gitlab/featured.jpg" />
 <meta property="twitter:title" content="Gitlab improvements: caches and Docker" />
 <script type="application/ld+json">
-{"headline":"Gitlab improvements: caches and Docker","dateModified":"2020-05-22T00:00:00+02:00","datePublished":"2020-05-22T00:00:00+02:00","image":"https://www.agalera.eu/assets/img/posts/docker-gitlab/featured.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/gitlab-docker-image/"},"url":"https://www.agalera.eu/gitlab-docker-image/","description":"This post describe how I can manage to reduce the time consumed by Gitlab pipelines by caching the dependencies and using Docker images","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","description":"This post describe how I can manage to reduce the time consumed by Gitlab pipelines by caching the dependencies and using Docker images","image":"https://www.agalera.eu/assets/img/posts/docker-gitlab/featured.jpg","headline":"Gitlab improvements: caches and Docker","dateModified":"2020-05-22T00:00:00+02:00","datePublished":"2020-05-22T00:00:00+02:00","url":"https://www.agalera.eu/gitlab-docker-image/","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/gitlab-docker-image/"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 

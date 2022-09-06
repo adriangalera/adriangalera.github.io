@@ -59,6 +59,14 @@
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
         <!-- Page analysis (analytics.js) -->
         <script async src='https://www.google-analytics.com/analytics.js'></script>
+        <script>
+        // disable GA for localhost
+        const isProduction = window.location.host.includes("agalera.eu")
+        if (!isProduction) { 
+          console.log(`Disabling google analytics for UA-126206451-1`)
+          window['ga-disable-UA-126206451-1'] = true;
+        }
+        </script>
     
 
     <!-- seo tags -->
@@ -79,7 +87,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Tags" />
 <script type="application/ld+json">
-{"headline":"Tags","@type":"WebPage","url":"https://www.agalera.eu/tags/","description":"My personal developer blog page","@context":"https://schema.org"}</script>
+{"@type":"WebPage","description":"My personal developer blog page","headline":"Tags","url":"https://www.agalera.eu/tags/","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -312,6 +320,10 @@
           <p><i class="fas fa-tag fa-fw fa-sm"></i> gis</p>
         </a></li>
       
+        <li><a class="button" href="#github-pages">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> github-pages</p>
+        </a></li>
+      
         <li><a class="button" href="#gitlab">
           <p><i class="fas fa-tag fa-fw fa-sm"></i> gitlab</p>
         </a></li>
@@ -468,6 +480,10 @@
           <p><i class="fas fa-tag fa-fw fa-sm"></i> scripting</p>
         </a></li>
       
+        <li><a class="button" href="#security">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> security</p>
+        </a></li>
+      
         <li><a class="button" href="#sns">
           <p><i class="fas fa-tag fa-fw fa-sm"></i> sns</p>
         </a></li>
@@ -561,6 +577,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -687,6 +705,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -827,6 +847,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/bark-detector/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -939,6 +961,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -1141,6 +1165,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/sns-firebase-android-ios/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -1245,6 +1271,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -1371,6 +1399,26 @@
             
 
             <!-- Posts -->
+            
+            
+            <h5 class="tag-title">
+                <a href="/github-pages-password/">
+                    <i class="far fa-file-alt" aria-hidden="true"></i>
+                    Password protection for Github Pages
+                </a>
+
+                
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      September 06, 2022
+    </p></div>
+
+            </h5>
+            
             
             
             <h5 class="tag-title">
@@ -1575,6 +1623,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/gitlab-docker-image/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -1677,6 +1727,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -1851,6 +1903,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/golang-abstract-class/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -1965,6 +2019,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -2145,6 +2201,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -2371,6 +2429,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/relational-model-dynamodb/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -2469,6 +2529,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -2641,6 +2703,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/relational-model-dynamodb/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -2721,6 +2785,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -2871,6 +2937,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/gitlab-docker-image/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -2995,6 +3063,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/leaflet-load-gpx/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -3104,6 +3174,134 @@
 
         </div>
         
+        <h3 id="github-pages" class="tag-anchor">
+            <a href="#github-pages"><i class="fas fa-tag fa-fw fa-sm"></i> github-pages</a>
+            <a href="#Tags" style="float: right"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"> </i> </a>
+
+        </h3>
+
+        <!-- Posts and collection for each tags -->
+        <div class="tag-posts">
+
+            <!-- Pages -->
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <!-- Posts -->
+            
+            
+            <h5 class="tag-title">
+                <a href="/github-pages-password/">
+                    <i class="far fa-file-alt" aria-hidden="true"></i>
+                    Password protection for Github Pages
+                </a>
+
+                
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      September 06, 2022
+    </p></div>
+
+            </h5>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <!-- Portfolio -->
+            
+
+        </div>
+        
         <h3 id="gitlab" class="tag-anchor">
             <a href="#gitlab"><i class="fas fa-tag fa-fw fa-sm"></i> gitlab</a>
             <a href="#Tags" style="float: right"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"> </i> </a>
@@ -3153,6 +3351,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -3291,6 +3491,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/golang-abstract-class/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -3405,6 +3607,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -3531,6 +3735,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -3699,6 +3905,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/grafana-nginx-reverse-proxy-docker/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -3783,6 +3991,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -3949,6 +4159,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/java-test-utf8/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -4035,6 +4247,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -4285,6 +4499,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/java11-negative-symbol-swedish/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -4395,6 +4611,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -4521,6 +4739,26 @@
             
 
             <!-- Posts -->
+            
+            
+            <h5 class="tag-title">
+                <a href="/github-pages-password/">
+                    <i class="far fa-file-alt" aria-hidden="true"></i>
+                    Password protection for Github Pages
+                </a>
+
+                
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      September 06, 2022
+    </p></div>
+
+            </h5>
+            
             
             
             <h5 class="tag-title">
@@ -4745,6 +4983,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/parse-huge-local-json-file/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -4827,6 +5067,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -4953,6 +5195,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -5129,6 +5373,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/timeseries-db-dynamodb/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -5205,6 +5451,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -5331,6 +5579,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -5507,6 +5757,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/bark-detector/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -5619,6 +5871,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -5811,6 +6065,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/lombok-tricks/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -5907,6 +6163,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -6059,6 +6317,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/bounds-lat-lng-array/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -6159,6 +6419,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -6307,6 +6569,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/sns-firebase-android-ios/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -6411,6 +6675,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -6537,6 +6803,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -6705,6 +6973,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/grafana-nginx-reverse-proxy-docker/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -6789,6 +7059,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -6977,6 +7249,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/parse-huge-local-json-file/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -7059,6 +7333,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -7185,6 +7461,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             <h5 class="tag-title">
@@ -7357,6 +7635,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/java-big-memory-limit/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -7455,6 +7735,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -7687,6 +7969,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/raspberry-pi-qa/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -7761,6 +8045,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -7923,6 +8209,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -8113,6 +8401,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/relational-model-dynamodb/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -8193,6 +8483,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -8351,6 +8643,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/unix-useful-commands/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -8368,6 +8662,134 @@
     </p></div>
 
             </h5>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <!-- Portfolio -->
+            
+
+        </div>
+        
+        <h3 id="security" class="tag-anchor">
+            <a href="#security"><i class="fas fa-tag fa-fw fa-sm"></i> security</a>
+            <a href="#Tags" style="float: right"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"> </i> </a>
+
+        </h3>
+
+        <!-- Posts and collection for each tags -->
+        <div class="tag-posts">
+
+            <!-- Pages -->
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <!-- Posts -->
+            
+            
+            <h5 class="tag-title">
+                <a href="/github-pages-password/">
+                    <i class="far fa-file-alt" aria-hidden="true"></i>
+                    Password protection for Github Pages
+                </a>
+
+                
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      September 06, 2022
+    </p></div>
+
+            </h5>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             
             
             
@@ -8445,6 +8867,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -8605,6 +9029,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/discovering-terraform/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -8697,6 +9123,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -8903,6 +9331,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/bounds-lat-lng-array/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -9043,6 +9473,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/java-test-utf8/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -9129,6 +9561,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -9295,6 +9729,8 @@
             
             
             
+            
+            
             <h5 class="tag-title">
                 <a href="/java-test-utf8/">
                     <i class="far fa-file-alt" aria-hidden="true"></i>
@@ -9381,6 +9817,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             
@@ -9507,6 +9945,8 @@
             
 
             <!-- Posts -->
+            
+            
             
             
             

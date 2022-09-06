@@ -59,6 +59,14 @@
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
         <!-- Page analysis (analytics.js) -->
         <script async src='https://www.google-analytics.com/analytics.js'></script>
+        <script>
+        // disable GA for localhost
+        const isProduction = window.location.host.includes("agalera.eu")
+        if (!isProduction) { 
+          console.log(`Disabling google analytics for UA-126206451-1`)
+          window['ga-disable-UA-126206451-1'] = true;
+        }
+        </script>
     
 
     <!-- seo tags -->
@@ -83,7 +91,7 @@
 <meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/browser-storage/featured-image.jpg" />
 <meta property="twitter:title" content="Browser storage" />
 <script type="application/ld+json">
-{"headline":"Browser storage","dateModified":"2022-07-23T00:00:00+02:00","datePublished":"2022-07-23T00:00:00+02:00","image":"https://www.agalera.eu/assets/img/posts/browser-storage/featured-image.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/browser-storage/"},"url":"https://www.agalera.eu/browser-storage/","description":"How to store data in browser in order to make standalone apps without backend. This articles explores using browser localstorage and caches.","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","description":"How to store data in browser in order to make standalone apps without backend. This articles explores using browser localstorage and caches.","image":"https://www.agalera.eu/assets/img/posts/browser-storage/featured-image.jpg","headline":"Browser storage","dateModified":"2022-07-23T00:00:00+02:00","datePublished":"2022-07-23T00:00:00+02:00","url":"https://www.agalera.eu/browser-storage/","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/browser-storage/"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -400,6 +408,13 @@
 <!-- Post navigation -->
 
 <div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="Password protection for Github Pages" href="/github-pages-password/">
+            <p>Previous post</p>
+            Password protection for Github Pages
+        </a>
+    </div>
     
 
     

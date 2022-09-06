@@ -59,6 +59,14 @@
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
         <!-- Page analysis (analytics.js) -->
         <script async src='https://www.google-analytics.com/analytics.js'></script>
+        <script>
+        // disable GA for localhost
+        const isProduction = window.location.host.includes("agalera.eu")
+        if (!isProduction) { 
+          console.log(`Disabling google analytics for UA-126206451-1`)
+          window['ga-disable-UA-126206451-1'] = true;
+        }
+        </script>
     
 
     <!-- seo tags -->
@@ -79,7 +87,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="About" />
 <script type="application/ld+json">
-{"name":"Adrian Galera blog","headline":"About","@type":"WebSite","url":"https://www.agalera.eu/about/","description":"My personal developer blog page","@context":"https://schema.org"}</script>
+{"name":"Adrian Galera blog","@type":"WebSite","description":"My personal developer blog page","headline":"About","url":"https://www.agalera.eu/about/","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 

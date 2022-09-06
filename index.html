@@ -59,6 +59,14 @@
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
         <!-- Page analysis (analytics.js) -->
         <script async src='https://www.google-analytics.com/analytics.js'></script>
+        <script>
+        // disable GA for localhost
+        const isProduction = window.location.host.includes("agalera.eu")
+        if (!isProduction) { 
+          console.log(`Disabling google analytics for UA-126206451-1`)
+          window['ga-disable-UA-126206451-1'] = true;
+        }
+        </script>
     
 
     <!-- seo tags -->
@@ -80,7 +88,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Adrian Galera blog" />
 <script type="application/ld+json">
-{"name":"Adrian Galera blog","headline":"Adrian Galera blog","@type":"WebSite","url":"https://www.agalera.eu/","description":"My personal developer blog page","@context":"https://schema.org"}</script>
+{"name":"Adrian Galera blog","@type":"WebSite","description":"My personal developer blog page","headline":"Adrian Galera blog","url":"https://www.agalera.eu/","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -226,6 +234,46 @@
 
     <div class="posts">
     
+    
+    <div class="post-teaser">
+        
+        <div class="post-img">
+            <a aria-label="Password protection for Github Pages" href="/github-pages-password/">
+                <img alt="Password protection for Github Pages" src="/assets/img/posts/github-password/featured.jpg">
+            </a>
+        </div>
+        
+        <span>
+          <header>
+            <h1>
+              <a aria-label="Password protection for Github Pages" class="post-link" href="/github-pages-password/">
+                Password protection for Github Pages
+              </a>
+            </h1>
+            
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      September 06, 2022
+    </p></div>
+
+          </header>
+          
+              <div class="excerpt">
+                  
+                     In this article I implement a workaround to protect with password a static page stored in Github pages.
+
+
+
+
+                  
+              </div>
+          
+      </span>
+    </div>
     
     <div class="post-teaser">
         
@@ -387,46 +435,6 @@ Let’s see how I manage to do that.
 When I was playing age of empires the map was all in black color at the beginning. As long as you explore the map, the black color is removed discovering what it was hidden behind.
 
 I wanted to implement something similar to show all the trails, routes, paths, roads, streets, etc that I have discovered. I’ll describe the callenges I have found in a series of articles.
-
-
-
-
-                  
-              </div>
-          
-      </span>
-    </div>
-    
-    <div class="post-teaser">
-        
-        <div class="post-img">
-            <a aria-label="Combine two Java Optionals" href="/combine-two-optionals/">
-                <img alt="Combine two Java Optionals" src="/assets/img/posts/combine-optional/featured-image.jpeg">
-            </a>
-        </div>
-        
-        <span>
-          <header>
-            <h1>
-              <a aria-label="Combine two Java Optionals" class="post-link" href="/combine-two-optionals/">
-                Combine two Java Optionals
-              </a>
-            </h1>
-            
-
-
-<div class="post-info">
-    <p class="meta">
-      
-      
-      June 03, 2022
-    </p></div>
-
-          </header>
-          
-              <div class="excerpt">
-                  
-                     I was implementing a searching algorithm and I had to search for two things. In this article I describe how I implemented combining two Java optionals.
 
 
 

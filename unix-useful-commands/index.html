@@ -59,6 +59,14 @@
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
         <!-- Page analysis (analytics.js) -->
         <script async src='https://www.google-analytics.com/analytics.js'></script>
+        <script>
+        // disable GA for localhost
+        const isProduction = window.location.host.includes("agalera.eu")
+        if (!isProduction) { 
+          console.log(`Disabling google analytics for UA-126206451-1`)
+          window['ga-disable-UA-126206451-1'] = true;
+        }
+        </script>
     
 
     <!-- seo tags -->
@@ -83,7 +91,7 @@
 <meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/unix/featured-image.jpg" />
 <meta property="twitter:title" content="Unix useful commands" />
 <script type="application/ld+json">
-{"headline":"Unix useful commands","dateModified":"2019-11-17T00:00:00+01:00","datePublished":"2019-11-17T00:00:00+01:00","image":"https://www.agalera.eu/assets/img/posts/unix/featured-image.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/unix-useful-commands/"},"url":"https://www.agalera.eu/unix-useful-commands/","description":"Compilation of unix (Linux/Mac OS X) useful commands, for instance, getting env variables by variables","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","description":"Compilation of unix (Linux/Mac OS X) useful commands, for instance, getting env variables by variables","image":"https://www.agalera.eu/assets/img/posts/unix/featured-image.jpg","headline":"Unix useful commands","dateModified":"2019-11-17T00:00:00+01:00","datePublished":"2019-11-17T00:00:00+01:00","url":"https://www.agalera.eu/unix-useful-commands/","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/unix-useful-commands/"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 

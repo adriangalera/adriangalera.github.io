@@ -59,6 +59,14 @@
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
         <!-- Page analysis (analytics.js) -->
         <script async src='https://www.google-analytics.com/analytics.js'></script>
+        <script>
+        // disable GA for localhost
+        const isProduction = window.location.host.includes("agalera.eu")
+        if (!isProduction) { 
+          console.log(`Disabling google analytics for UA-126206451-1`)
+          window['ga-disable-UA-126206451-1'] = true;
+        }
+        </script>
     
 
     <!-- seo tags -->
@@ -83,7 +91,7 @@
 <meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/bounds-lat-lng/featured-image.jpg" />
 <meta property="twitter:title" content="Latitude,longitude bounds" />
 <script type="application/ld+json">
-{"headline":"Latitude,longitude bounds","dateModified":"2020-04-25T00:00:00+02:00","datePublished":"2020-04-25T00:00:00+02:00","image":"https://www.agalera.eu/assets/img/posts/bounds-lat-lng/featured-image.jpg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/bounds-lat-lng-array/"},"url":"https://www.agalera.eu/bounds-lat-lng-array/","description":"This post describe the basic algorithm to calculate the bounds of a set of points coordinates with latitude and longitude.","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","description":"This post describe the basic algorithm to calculate the bounds of a set of points coordinates with latitude and longitude.","image":"https://www.agalera.eu/assets/img/posts/bounds-lat-lng/featured-image.jpg","headline":"Latitude,longitude bounds","dateModified":"2020-04-25T00:00:00+02:00","datePublished":"2020-04-25T00:00:00+02:00","url":"https://www.agalera.eu/bounds-lat-lng-array/","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/bounds-lat-lng-array/"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
