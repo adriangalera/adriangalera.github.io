@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.3
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/img/avatars/me-100x100.png" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-https://www.agalera.eu';
+      const isCookieConsent = 'false';
+      const analyticsName = 'UA-126206451-1';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+        <!-- old google analytics -->
+        <!--
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
+        <script async src='https://www.google-analytics.com/analytics.js'></script>
+        <script>
+        // disable GA for localhost
+        const isProduction = window.location.host.includes("agalera.eu")
+        if (!isProduction) { 
+          console.log(`Disabling google analytics for UA-126206451-1`)
+          window['ga-disable-UA-126206451-1'] = true;
+        }
+        </script>
+        -->
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-S8VGYBN25C"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-S8VGYBN25C');
+        </script>        
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="https://www.agalera.eu/assets/img/posts/python-app-structure/featured.jpg">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Python app structure | Adrian Galera blog</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Python app structure" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Description of how you should organise a Python executable application to publish and generate an executable" />
+<meta property="og:description" content="Description of how you should organise a Python executable application to publish and generate an executable" />
+<link rel="canonical" href="https://www.agalera.eu/python-app-structure/" />
+<meta property="og:url" content="https://www.agalera.eu/python-app-structure/" />
+<meta property="og:site_name" content="Adrian Galera blog" />
+<meta property="og:image" content="https://www.agalera.eu/assets/img/posts/python-app-structure/featured.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-12-13T00:00:00+01:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/python-app-structure/featured.jpg" />
+<meta property="twitter:title" content="Python app structure" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","headline":"Python app structure","dateModified":"2022-12-13T00:00:00+01:00","datePublished":"2022-12-13T00:00:00+01:00","description":"Description of how you should organise a Python executable application to publish and generate an executable","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/python-app-structure/"},"url":"https://www.agalera.eu/python-app-structure/","image":"https://www.agalera.eu/assets/img/posts/python-app-structure/featured.jpg","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Adrian Galera blog" href="https://www.agalera.eu/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="https://www.agalera.eu/feed.xml" title="Adrian Galera blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="Python app structure">
+    <meta name="twitter:description" content="Recently I was starting a Python application project from scratch and I had some issues understanding the correct project structure. Here’s what I have learn...">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.agalera.eu/assets/img/posts/python-app-structure/featured.jpg">
+    <meta name="twitter:image:alt" content="Python app structure">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" />
+		</a>
+        
+        <a class="site-title" aria-label="Adrian Galera blog" href="/">
+        Adrian Galera blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+        
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="Python app structure " aria-label="Python app structure" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article class="feature-image" >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="Python+app+structure" class="title">Python app structure</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      December 13, 2022
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <p>Recently I was starting a Python application project from scratch and I had some issues understanding the correct project structure. Here’s what I have learnt.</p>
+
+<p><!--more--></p>
+
+<h2 id="project-structure">Project structure</h2>
+
+<p>Here you can find the project structure of a python application implementing a cli tool named <code class="language-plaintext highlighter-rouge">examplecli</code>. You can find that app here: <a href="https://github.com/adriangalera/examplecli">https://github.com/adriangalera/examplecli</a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>├── Makefile
+├── README.md
+├── examplecli
+│   ├── __init__.py
+│   ├── commands
+│   │   ├── __init__.py
+│   │   ├── bye.py
+│   │   ├── hello.py
+│   │   └── options.py
+│   ├── common
+│   │   ├── __init__.py
+│   │   └── logging.py
+│   └── entrypoint.py
+├── requirements.txt
+├── requirements_test.txt
+├── scripts
+│   ├── local-build.sh
+│   └── set-module-in-path.sh
+├── setup.py
+└── tests
+    ├── __init__.py
+    └── commands
+        ├── __init__.py
+        ├── test_bye.py
+        ├── test_hello.py
+        └── test_options.py
+</code></pre></div></div>
+
+<p>Let’s list the most important stuff:</p>
+
+<ul>
+  <li>Makefile: contains a series of instructions on how to perform common tasks: clean, test, lint, coverage and building locally</li>
+  <li>examplecli: main module of the application. Contains all the application code organized as well in sub-modules.</li>
+  <li>README.md: Readme file that contains some documentation and help materials</li>
+  <li>requirements.txt: the pip libraries the app needs to be able to execute</li>
+  <li>requirements_test.txt: the pip libraries to run the app tests</li>
+  <li>scripts: useful tools for local development</li>
+  <li>setup.py: we’ll discuss in a following section about this file</li>
+  <li>tests: folder that contains the tests for the app</li>
+</ul>
+
+<h2 id="virtual-environment-and-dependencies">Virtual environment and dependencies</h2>
+
+<p>In order to have a clean environment, it is very recommended to use virtual environments. This fancy feature will isolate the dependencies needed for every application.</p>
+
+<p>In order to boostrap the virtual environment, you should create it (if not created) and activate it:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python -m venv .venv
+source .venv/bin/activate
+</code></pre></div></div>
+
+<p>Once the virtual environemnt is setup, you can install the dependencies in:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install -r requirements.txt
+pip install -r requirements_test.txt
+</code></pre></div></div>
+
+<p>This will store the dependencies under the <code class="language-plaintext highlighter-rouge">.venv</code> folder</p>
+
+<h2 id="python-modules">Python modules</h2>
+
+<p>You should organise the python source code around the idea of modules. Modules are basically a folder with an empty file named <code class="language-plaintext highlighter-rouge">__init__.py</code> and the source code.</p>
+
+<p><em>it is very important to add the .py extension, otherwise it’s not recognized as a module</em></p>
+
+<p>Different parts of the application can import the modules, e.g.:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">click</span>
+
+<span class="kn">from</span> <span class="nn">examplecli.common.logging</span> <span class="kn">import</span> <span class="n">debug</span><span class="p">,</span> <span class="n">info</span>
+<span class="kn">from</span> <span class="nn">examplecli.commands.options</span> <span class="kn">import</span> <span class="n">verbose_option</span><span class="p">,</span> <span class="n">user_option_required</span>
+
+
+<span class="o">@</span><span class="n">click</span><span class="p">.</span><span class="n">group</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">hello_source</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+
+<span class="o">@</span><span class="n">hello_source</span><span class="p">.</span><span class="n">command</span><span class="p">()</span>
+<span class="o">@</span><span class="n">verbose_option</span>
+<span class="o">@</span><span class="n">user_option_required</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="o">**</span><span class="n">opts</span><span class="p">):</span>
+    <span class="n">user_name</span> <span class="o">=</span> <span class="n">opts</span><span class="p">[</span><span class="s">"user"</span><span class="p">]</span>
+    <span class="n">say_hello</span><span class="p">(</span><span class="n">user_name</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">say_hello</span><span class="p">(</span><span class="n">user_name</span><span class="p">):</span>
+    <span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s">"Saying hello to </span><span class="si">{</span><span class="n">user_name</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"Hello </span><span class="si">{</span><span class="n">user_name</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+<p>This file is importing the methods <code class="language-plaintext highlighter-rouge">debug</code> and <code class="language-plaintext highlighter-rouge">info</code> from <code class="language-plaintext highlighter-rouge">logging</code> file in module <code class="language-plaintext highlighter-rouge">examplecli.common</code></p>
+
+<h2 id="setuppy">setup.py</h2>
+
+<p>This file is only needed if we want to package the application. Without it, we are still able to run the application by calling the entrypoint:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 examplecli/entrypoint.py      
+Usage: entrypoint.py <span class="o">[</span>OPTIONS] COMMAND <span class="o">[</span>ARGS]...
+
+  Welcome to Example CLI!
+
+Options:
+  <span class="nt">--help</span>  Show this message and exit.
+
+Commands:
+  bye
+  hello
+</code></pre></div></div>
+
+<p>However, for this application, we want to package it into a wheel file and install it with <code class="language-plaintext highlighter-rouge">pipx</code>. In order to do that, we need the setup.py file. Let’s see what’s inside of this file:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
+</span>
+<span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">find_packages</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">environ</span>
+
+<span class="c1"># reads the requirements and stores them into a variable
+</span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'requirements.txt'</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+    <span class="n">install_requires</span> <span class="o">=</span> <span class="n">fp</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="c1"># reads the test requirements and stores them into a variable
+</span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'requirements_test.txt'</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+    <span class="n">tests_require</span> <span class="o">=</span> <span class="n">fp</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="n">setup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'example-cli'</span><span class="p">,</span> <span class="c1"># name of the package
+</span>      <span class="n">version</span><span class="o">=</span><span class="n">environ</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'EXAMPLE_CLI_VERSION'</span><span class="p">,</span> <span class="s">'0.0.1'</span><span class="p">),</span> <span class="c1"># reads the variable from a environment variable
+</span>      <span class="n">description</span><span class="o">=</span><span class="s">'Example CLI'</span><span class="p">,</span> <span class="c1"># provides a description of the package
+</span>      <span class="n">author</span><span class="o">=</span><span class="s">'Adrian Galera'</span><span class="p">,</span> <span class="c1"># provides the author of the package
+</span>      <span class="n">author_email</span><span class="o">=</span><span class="s">''</span><span class="p">,</span>
+      <span class="n">python_requires</span><span class="o">=</span><span class="s">'&gt;=3.6.*'</span><span class="p">,</span> <span class="c1"># details the version compatibility.
+</span>      <span class="n">packages</span><span class="o">=</span><span class="n">find_packages</span><span class="p">(),</span> <span class="c1"># the find_packages method scans the folder for modules and sub-modules
+</span>      <span class="n">install_requires</span><span class="o">=</span><span class="n">install_requires</span><span class="p">,</span>
+      <span class="n">tests_require</span><span class="o">=</span><span class="n">tests_require</span><span class="p">,</span>
+      <span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+          <span class="s">'console_scripts'</span><span class="p">:</span> <span class="p">[</span>
+              <span class="s">'example-cli = examplecli.entrypoint:start'</span><span class="p">,</span> <span class="c1"># required for click framework to find the starting point
+</span>          <span class="p">]</span>
+      <span class="p">}</span>
+      <span class="p">)</span>
+</code></pre></div></div>
+
+<p>In order to generate the wheel file, the user should run the following command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">EXAMPLE_CLI_VERSION</span><span class="o">=</span><span class="nv">$VERSION</span> python3 setup.py sdist bdist_wheel
+</code></pre></div></div>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.agalera.eu/python-app-structure/" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=Python+app+structure%20https%3A%2F%2Fwww.agalera.eu%2Fpython-app-structure%2F"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=https://www.agalera.eu/python-app-structure/&quote=Python+app+structure%20%7C%20Adrian+Galera+blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=https://www.agalera.eu/python-app-structure/&media=https://www.agalera.eu/assets/img/posts/python-app-structure/featured.jpg$description=Recently+I+was+starting+a+Python+application+project+from+scratch+and+I+had+some+issues+understanding+the+correct+project+structure.+Here%E2%80%99s+what+I+have+learnt.%0A%0A%0A%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=https://www.agalera.eu/python-app-structure/&title=Python+app+structure%20%7C%20Adrian+Galera+blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.agalera.eu/python-app-structure/&title=Python+app+structure%20%7C%20Adrian+Galera+blog&summary=&source=https://www.agalera.eu/python-app-structure/"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=Python app structure%20%7C%20Adrian Galera blog&body=https://www.agalera.eu/python-app-structure/"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#architecture">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> architecture</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#cli">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> cli</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#python">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> python</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="Python cli application" href="/python-cli-application/">
+            <p>Previous post</p>
+            Python cli application
+        </a>
+    </div>
+    
+
+    
+    <div id="next-post">
+        <a alt="Password protection for Github Pages" href="/github-pages-password/">
+            <p>Next post</p>
+            Password protection for Github Pages
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+  header#main { background-image: url('/assets/img/posts/python-app-structure/featured.jpg'); }
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        </p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/adriangalera"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://www.linkedin.com/in/adriangalera"
+               title="Follow on Linkedin"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="mailto:adrian.galera.87@gmail.com"
+               title="Follow on Mail"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>

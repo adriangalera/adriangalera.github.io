@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.3
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/img/avatars/me-100x100.png" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-https://www.agalera.eu';
+      const isCookieConsent = 'false';
+      const analyticsName = 'UA-126206451-1';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+        <!-- old google analytics -->
+        <!--
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126206451-1"></script>
+        <script async src='https://www.google-analytics.com/analytics.js'></script>
+        <script>
+        // disable GA for localhost
+        const isProduction = window.location.host.includes("agalera.eu")
+        if (!isProduction) { 
+          console.log(`Disabling google analytics for UA-126206451-1`)
+          window['ga-disable-UA-126206451-1'] = true;
+        }
+        </script>
+        -->
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-S8VGYBN25C"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-S8VGYBN25C');
+        </script>        
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Python cli application | Adrian Galera blog</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Python cli application" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="In this article I describe how to create a python cli application using the click library and install it using pipx" />
+<meta property="og:description" content="In this article I describe how to create a python cli application using the click library and install it using pipx" />
+<link rel="canonical" href="https://www.agalera.eu/python-cli-application/" />
+<meta property="og:url" content="https://www.agalera.eu/python-cli-application/" />
+<meta property="og:site_name" content="Adrian Galera blog" />
+<meta property="og:image" content="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-12-13T00:00:00+01:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg" />
+<meta property="twitter:title" content="Python cli application" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","headline":"Python cli application","dateModified":"2022-12-13T00:00:00+01:00","datePublished":"2022-12-13T00:00:00+01:00","description":"In this article I describe how to create a python cli application using the click library and install it using pipx","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/python-cli-application/"},"url":"https://www.agalera.eu/python-cli-application/","image":"https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Adrian Galera blog" href="https://www.agalera.eu/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="https://www.agalera.eu/feed.xml" title="Adrian Galera blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="Python cli application">
+    <meta name="twitter:description" content="I have been developing an Python application to be able to be run as a CLI tool. In this article I speak about how I implement that using click library.Since...">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg">
+    <meta name="twitter:image:alt" content="Python cli application">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" />
+		</a>
+        
+        <a class="site-title" aria-label="Adrian Galera blog" href="/">
+        Adrian Galera blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+        
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="Python cli application " aria-label="Python cli application" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article class="feature-image" >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="Python+cli+application" class="title">Python cli application</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      December 13, 2022
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <p>I have been developing an Python application to be able to be run as a CLI tool. In this article I speak about how I implement that using click library.</p>
+
+<p><!--more--></p>
+
+<p>Since I want to create a nice CLI tool, I search some libraries and found the click library: <a href="https://pypi.org/project/click/">https://pypi.org/project/click/</a>.</p>
+
+<p>This tool allows the developer to create a beatiful CLI interaction with minimal code.</p>
+
+<p>Each operation you can perform with the application is called Command. In thise case we want to perform two operations: <code class="language-plaintext highlighter-rouge">hello</code> and <code class="language-plaintext highlighter-rouge">bye</code>, so we’ll create two commands for that.</p>
+
+<p>To define a command, we need to do two things:</p>
+<ul>
+  <li>Create the source and annotate it with <code class="language-plaintext highlighter-rouge">@click.group()</code>:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">click</span><span class="p">.</span><span class="n">group</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">bye_source</span><span class="p">():</span>
+    <span class="k">pass</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Create the command method and annotate it with the source created before</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">bye_source</span><span class="p">.</span><span class="n">command</span><span class="p">()</span>
+<span class="o">@</span><span class="n">user_option_required</span>
+<span class="o">@</span><span class="n">verbose_option</span>
+<span class="k">def</span> <span class="nf">bye</span><span class="p">(</span><span class="o">**</span><span class="n">opts</span><span class="p">):</span>
+    <span class="n">user_name</span> <span class="o">=</span> <span class="n">opts</span><span class="p">[</span><span class="s">"user"</span><span class="p">]</span>
+    <span class="n">say_bye</span><span class="p">(</span><span class="n">user_name</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">say_bye</span><span class="p">(</span><span class="n">user_name</span><span class="p">):</span>
+    <span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s">"Saying bye to </span><span class="si">{</span><span class="n">user_name</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"Bye </span><span class="si">{</span><span class="n">user_name</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>I decide to separate the <code class="language-plaintext highlighter-rouge">bye</code> in two methods because this way testing the actual logic is way easier. If we have it only in the <code class="language-plaintext highlighter-rouge">bye</code>, we need to use the <code class="language-plaintext highlighter-rouge">click</code> library in testing as well.</p>
+
+<p>Once we have created the commands, we must define an entrypoint which imports them and setup click library:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">click</span>
+<span class="kn">from</span> <span class="nn">examplecli.commands.hello</span> <span class="kn">import</span> <span class="n">hello_source</span>
+<span class="kn">from</span> <span class="nn">examplecli.commands.bye</span> <span class="kn">import</span> <span class="n">bye_source</span>
+
+<span class="n">WELCOME_MESSAGE</span> <span class="o">=</span> <span class="s">"""
+Welcome to Example CLI!
+"""</span>
+
+<span class="k">def</span> <span class="nf">start</span><span class="p">():</span>
+    <span class="n">cli</span> <span class="o">=</span> <span class="n">click</span><span class="p">.</span><span class="n">CommandCollection</span><span class="p">(</span>
+        <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="n">hello_source</span><span class="p">,</span> <span class="n">bye_source</span><span class="p">],</span> <span class="n">help</span><span class="o">=</span><span class="n">WELCOME_MESSAGE</span><span class="p">)</span>
+    <span class="n">cli</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">start</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Now we can run the program directly from the console:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 examplecli/entrypoint.py      
+Usage: entrypoint.py <span class="o">[</span>OPTIONS] COMMAND <span class="o">[</span>ARGS]...
+
+  Welcome to Example CLI!
+
+Options:
+  <span class="nt">--help</span>  Show this message and exit.
+
+Commands:
+  bye
+  hello
+</code></pre></div></div>
+
+<p>If we want to package the application, we need to do one more thing. In the <code class="language-plaintext highlighter-rouge">setup.py</code> file we must specify the console entrypoiny:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
+</span>
+<span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">find_packages</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">environ</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'requirements.txt'</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+    <span class="n">install_requires</span> <span class="o">=</span> <span class="n">fp</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'requirements_test.txt'</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+    <span class="n">tests_require</span> <span class="o">=</span> <span class="n">fp</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="n">setup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'example-cli'</span><span class="p">,</span>
+      <span class="n">version</span><span class="o">=</span><span class="n">environ</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'EXAMPLE_CLI_VERSION'</span><span class="p">,</span> <span class="s">'0.0.1'</span><span class="p">),</span>
+      <span class="n">description</span><span class="o">=</span><span class="s">'Example CLI'</span><span class="p">,</span>
+      <span class="n">author</span><span class="o">=</span><span class="s">'Adrian Galera'</span><span class="p">,</span>
+      <span class="n">author_email</span><span class="o">=</span><span class="s">''</span><span class="p">,</span>
+      <span class="n">python_requires</span><span class="o">=</span><span class="s">'&gt;=3.6.*'</span><span class="p">,</span>
+      <span class="n">packages</span><span class="o">=</span><span class="n">find_packages</span><span class="p">(),</span>
+      <span class="n">install_requires</span><span class="o">=</span><span class="n">install_requires</span><span class="p">,</span>
+      <span class="n">tests_require</span><span class="o">=</span><span class="n">tests_require</span><span class="p">,</span>
+      <span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+          <span class="s">'console_scripts'</span><span class="p">:</span> <span class="p">[</span>
+              <span class="s">'example-cli = examplecli.entrypoint:start'</span><span class="p">,</span>
+          <span class="p">]</span>
+      <span class="p">}</span>
+      <span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now we can build the app and install it using pipx:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">EXAMPLE_CLI_VERSION</span><span class="o">=</span><span class="nv">$VERSION</span> python3 setup.py sdist bdist_wheel
+pipx <span class="nb">install </span>dist/example_cli-0.0.1+local<span class="k">*</span><span class="nt">-py3-none-any</span>.whl <span class="nt">--force</span>
+</code></pre></div></div>
+
+<p>pipx will create the binary cli tool. Now we can run it as a standalone application:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>example-cli hello <span class="nt">--user</span> <span class="nb">test
+</span>2022-12-13T15:40:23.029Z | Hello <span class="nb">test</span>
+</code></pre></div></div>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.agalera.eu/python-cli-application/" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=Python+cli+application%20https%3A%2F%2Fwww.agalera.eu%2Fpython-cli-application%2F"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=https://www.agalera.eu/python-cli-application/&quote=Python+cli+application%20%7C%20Adrian+Galera+blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=https://www.agalera.eu/python-cli-application/&media=https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg$description=I+have+been+developing+an+Python+application+to+be+able+to+be+run+as+a+CLI+tool.+In+this+article+I+speak+about+how+I+implement+that+using+click+library.%0A%0A%0A%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=https://www.agalera.eu/python-cli-application/&title=Python+cli+application%20%7C%20Adrian+Galera+blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.agalera.eu/python-cli-application/&title=Python+cli+application%20%7C%20Adrian+Galera+blog&summary=&source=https://www.agalera.eu/python-cli-application/"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=Python cli application%20%7C%20Adrian Galera blog&body=https://www.agalera.eu/python-cli-application/"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#cli">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> cli</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#click">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> click</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#python">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> python</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+
+    
+    <div id="next-post">
+        <a alt="Python app structure" href="/python-app-structure/">
+            <p>Next post</p>
+            Python app structure
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+  header#main { background-image: url('/assets/img/posts/python-cli-app/featured.jpg'); }
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        </p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/adriangalera"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://www.linkedin.com/in/adriangalera"
+               title="Follow on Linkedin"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="mailto:adrian.galera.87@gmail.com"
+               title="Follow on Mail"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>

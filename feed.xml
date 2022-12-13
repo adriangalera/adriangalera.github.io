@@ -1,90 +1,352 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://www.agalera.eu/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.agalera.eu/" rel="alternate" type="text/html" /><updated>2022-11-24T14:14:44+01:00</updated><id>https://www.agalera.eu/feed.xml</id><title type="html">Adrian Galera blog</title><subtitle>My personal developer blog page</subtitle><entry><title type="html">Password protection for Github Pages</title><link href="https://www.agalera.eu/github-pages-password/" rel="alternate" type="text/html" title="Password protection for Github Pages" /><published>2022-09-06T00:00:00+02:00</published><updated>2022-09-06T00:00:00+02:00</updated><id>https://www.agalera.eu/github-pages-password</id><content type="html" xml:base="https://www.agalera.eu/github-pages-password/">In this article I implement a workaround to protect with password a static page stored in Github pages.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://www.agalera.eu/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.agalera.eu/" rel="alternate" type="text/html" /><updated>2022-12-13T16:48:08+01:00</updated><id>https://www.agalera.eu/feed.xml</id><title type="html">Adrian Galera blog</title><subtitle>My personal developer blog page</subtitle><entry><title type="html">Python cli application</title><link href="https://www.agalera.eu/python-cli-application/" rel="alternate" type="text/html" title="Python cli application" /><published>2022-12-13T00:00:00+01:00</published><updated>2022-12-13T00:00:00+01:00</updated><id>https://www.agalera.eu/python-cli-application</id><content type="html" xml:base="https://www.agalera.eu/python-cli-application/">&lt;p&gt;I have been developing an Python application to be able to be run as a CLI tool. In this article I speak about how I implement that using click library.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
-I am using Github Pages to store static pages without any backend. That&apos;s super nice, but now I need to serve a password protected page. What kind I do?
+&lt;p&gt;Since I want to create a nice CLI tool, I search some libraries and found the click library: &lt;a href=&quot;https://pypi.org/project/click/&quot;&gt;https://pypi.org/project/click/&lt;/a&gt;.&lt;/p&gt;
 
-I have found a guy that asked the same question and have a nice proposal: &lt;b&gt;use hashes&lt;/b&gt;. You can find his code here: &lt;a href=&quot;https://github.com/chrissy-dev/protected-github-pages&quot;&gt;https://github.com/chrissy-dev/protected-github-pages&lt;/a&gt;. His solution is older than walking.
+&lt;p&gt;This tool allows the developer to create a beatiful CLI interaction with minimal code.&lt;/p&gt;
 
-## Hash to the rescue
+&lt;p&gt;Each operation you can perform with the application is called Command. In thise case we want to perform two operations: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hello&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bye&lt;/code&gt;, so we’ll create two commands for that.&lt;/p&gt;
 
-The workaround is really simple, you choose a password that can be hard to guess. Hint: use some page that computes the password strength like: &lt;a href=&quot;https://www.idstrong.com/tools/password-strength-checker/&quot;&gt;https://www.idstrong.com/tools/password-strength-checker/&lt;/a&gt;.
+&lt;p&gt;To define a command, we need to do two things:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Create the source and annotate it with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@click.group()&lt;/code&gt;:&lt;/li&gt;
+&lt;/ul&gt;
 
-With that word, you generate the sha1 hash:
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bye_source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-```
-echo -n &quot;&lt;your-word&gt;&quot; | openssl sha1
+&lt;ul&gt;
+  &lt;li&gt;Create the command method and annotate it with the source created before&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bye_source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_option_required&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;verbose_option&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bye&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;opts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;opts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;user&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;say_bye&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;say_bye&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Saying bye to &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Bye &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;I decide to separate the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bye&lt;/code&gt; in two methods because this way testing the actual logic is way easier. If we have it only in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bye&lt;/code&gt;, we need to use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;click&lt;/code&gt; library in testing as well.&lt;/p&gt;
+
+&lt;p&gt;Once we have created the commands, we must define an entrypoint which imports them and setup click library:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;click&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;examplecli.commands.hello&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hello_source&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;examplecli.commands.bye&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bye_source&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;WELCOME_MESSAGE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
+Welcome to Example CLI!
+&quot;&quot;&quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cli&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CommandCollection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;sources&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hello_source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bye_source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;help&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WELCOME_MESSAGE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cli&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;__main__&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we can run the program directly from the console:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python3 examplecli/entrypoint.py      
+Usage: entrypoint.py &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;OPTIONS] COMMAND &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;ARGS]...
+
+  Welcome to Example CLI!
+
+Options:
+  &lt;span class=&quot;nt&quot;&gt;--help&lt;/span&gt;  Show this message and exit.
+
+Commands:
+  bye
+  hello
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If we want to package the application, we need to do one more thing. In the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;setup.py&lt;/code&gt; file we must specify the console entrypoiny:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#!/usr/bin/env python
+&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;setuptools&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;find_packages&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;requirements.txt&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;install_requires&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;requirements_test.txt&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;tests_require&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;example-cli&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;EXAMPLE_CLI_VERSION&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;0.0.1&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Example CLI&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;author&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Adrian Galera&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;author_email&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;python_requires&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&amp;gt;=3.6.*&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_packages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;install_requires&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;install_requires&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;tests_require&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tests_require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;entry_points&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;&apos;console_scripts&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+              &lt;span class=&quot;s&quot;&gt;&apos;example-cli = examplecli.entrypoint:start&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we can build the app and install it using pipx:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;EXAMPLE_CLI_VERSION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$VERSION&lt;/span&gt; python3 setup.py sdist bdist_wheel
+pipx &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;dist/example_cli-0.0.1+local&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;-py3-none-any&lt;/span&gt;.whl &lt;span class=&quot;nt&quot;&gt;--force&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;pipx will create the binary cli tool. Now we can run it as a standalone application:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;example-cli hello &lt;span class=&quot;nt&quot;&gt;--user&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;test
+&lt;/span&gt;2022-12-13T15:40:23.029Z | Hello &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="python" /><category term="cli" /><category term="click" /><category term="python" /><category term="cli" /><category term="click" /><summary type="html">I have been developing an Python application to be able to be run as a CLI tool. In this article I speak about how I implement that using click library.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Python app structure</title><link href="https://www.agalera.eu/python-app-structure/" rel="alternate" type="text/html" title="Python app structure" /><published>2022-12-13T00:00:00+01:00</published><updated>2022-12-13T00:00:00+01:00</updated><id>https://www.agalera.eu/python-app-structure</id><content type="html" xml:base="https://www.agalera.eu/python-app-structure/">&lt;p&gt;Recently I was starting a Python application project from scratch and I had some issues understanding the correct project structure. Here’s what I have learnt.&lt;/p&gt;
+
+&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;project-structure&quot;&gt;Project structure&lt;/h2&gt;
+
+&lt;p&gt;Here you can find the project structure of a python application implementing a cli tool named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;examplecli&lt;/code&gt;. You can find that app here: &lt;a href=&quot;https://github.com/adriangalera/examplecli&quot;&gt;https://github.com/adriangalera/examplecli&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;├── Makefile
+├── README.md
+├── examplecli
+│   ├── __init__.py
+│   ├── commands
+│   │   ├── __init__.py
+│   │   ├── bye.py
+│   │   ├── hello.py
+│   │   └── options.py
+│   ├── common
+│   │   ├── __init__.py
+│   │   └── logging.py
+│   └── entrypoint.py
+├── requirements.txt
+├── requirements_test.txt
+├── scripts
+│   ├── local-build.sh
+│   └── set-module-in-path.sh
+├── setup.py
+└── tests
+    ├── __init__.py
+    └── commands
+        ├── __init__.py
+        ├── test_bye.py
+        ├── test_hello.py
+        └── test_options.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Let’s list the most important stuff:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Makefile: contains a series of instructions on how to perform common tasks: clean, test, lint, coverage and building locally&lt;/li&gt;
+  &lt;li&gt;examplecli: main module of the application. Contains all the application code organized as well in sub-modules.&lt;/li&gt;
+  &lt;li&gt;README.md: Readme file that contains some documentation and help materials&lt;/li&gt;
+  &lt;li&gt;requirements.txt: the pip libraries the app needs to be able to execute&lt;/li&gt;
+  &lt;li&gt;requirements_test.txt: the pip libraries to run the app tests&lt;/li&gt;
+  &lt;li&gt;scripts: useful tools for local development&lt;/li&gt;
+  &lt;li&gt;setup.py: we’ll discuss in a following section about this file&lt;/li&gt;
+  &lt;li&gt;tests: folder that contains the tests for the app&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;virtual-environment-and-dependencies&quot;&gt;Virtual environment and dependencies&lt;/h2&gt;
+
+&lt;p&gt;In order to have a clean environment, it is very recommended to use virtual environments. This fancy feature will isolate the dependencies needed for every application.&lt;/p&gt;
+
+&lt;p&gt;In order to boostrap the virtual environment, you should create it (if not created) and activate it:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python -m venv .venv
+source .venv/bin/activate
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Once the virtual environemnt is setup, you can install the dependencies in:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip install -r requirements.txt
+pip install -r requirements_test.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This will store the dependencies under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.venv&lt;/code&gt; folder&lt;/p&gt;
+
+&lt;h2 id=&quot;python-modules&quot;&gt;Python modules&lt;/h2&gt;
+
+&lt;p&gt;You should organise the python source code around the idea of modules. Modules are basically a folder with an empty file named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt; and the source code.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;it is very important to add the .py extension, otherwise it’s not recognized as a module&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Different parts of the application can import the modules, e.g.:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;click&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;examplecli.common.logging&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;examplecli.commands.options&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;verbose_option&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user_option_required&lt;/span&gt;
+
+
+&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;hello_source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;
+
+
+&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hello_source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;verbose_option&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_option_required&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;hello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;opts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;opts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;user&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;say_hello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;say_hello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Saying hello to &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Hello &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;This file is importing the methods &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;debug&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;info&lt;/code&gt; from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;logging&lt;/code&gt; file in module &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;examplecli.common&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;setuppy&quot;&gt;setup.py&lt;/h2&gt;
+
+&lt;p&gt;This file is only needed if we want to package the application. Without it, we are still able to run the application by calling the entrypoint:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python3 examplecli/entrypoint.py      
+Usage: entrypoint.py &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;OPTIONS] COMMAND &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;ARGS]...
+
+  Welcome to Example CLI!
+
+Options:
+  &lt;span class=&quot;nt&quot;&gt;--help&lt;/span&gt;  Show this message and exit.
+
+Commands:
+  bye
+  hello
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;However, for this application, we want to package it into a wheel file and install it with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pipx&lt;/code&gt;. In order to do that, we need the setup.py file. Let’s see what’s inside of this file:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#!/usr/bin/env python
+&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;setuptools&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;find_packages&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# reads the requirements and stores them into a variable
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;requirements.txt&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;install_requires&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# reads the test requirements and stores them into a variable
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;requirements_test.txt&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;tests_require&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;example-cli&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# name of the package
+&lt;/span&gt;      &lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;EXAMPLE_CLI_VERSION&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;0.0.1&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# reads the variable from a environment variable
+&lt;/span&gt;      &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Example CLI&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# provides a description of the package
+&lt;/span&gt;      &lt;span class=&quot;n&quot;&gt;author&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Adrian Galera&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# provides the author of the package
+&lt;/span&gt;      &lt;span class=&quot;n&quot;&gt;author_email&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;python_requires&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&amp;gt;=3.6.*&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# details the version compatibility.
+&lt;/span&gt;      &lt;span class=&quot;n&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_packages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# the find_packages method scans the folder for modules and sub-modules
+&lt;/span&gt;      &lt;span class=&quot;n&quot;&gt;install_requires&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;install_requires&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;tests_require&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tests_require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;entry_points&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;&apos;console_scripts&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+              &lt;span class=&quot;s&quot;&gt;&apos;example-cli = examplecli.entrypoint:start&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# required for click framework to find the starting point
+&lt;/span&gt;          &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In order to generate the wheel file, the user should run the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;EXAMPLE_CLI_VERSION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$VERSION&lt;/span&gt; python3 setup.py sdist bdist_wheel
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="python" /><category term="architecture" /><category term="cli" /><category term="python" /><category term="architecture" /><category term="cli" /><summary type="html">Recently I was starting a Python application project from scratch and I had some issues understanding the correct project structure. Here’s what I have learnt.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/python-app-structure/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/python-app-structure/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Password protection for Github Pages</title><link href="https://www.agalera.eu/github-pages-password/" rel="alternate" type="text/html" title="Password protection for Github Pages" /><published>2022-09-06T00:00:00+02:00</published><updated>2022-09-06T00:00:00+02:00</updated><id>https://www.agalera.eu/github-pages-password</id><content type="html" xml:base="https://www.agalera.eu/github-pages-password/">&lt;p&gt;In this article I implement a workaround to protect with password a static page stored in Github pages.&lt;/p&gt;
+
+&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;p&gt;I am using Github Pages to store static pages without any backend. That’s super nice, but now I need to serve a password protected page. What kind I do?&lt;/p&gt;
+
+&lt;p&gt;I have found a guy that asked the same question and have a nice proposal: &lt;b&gt;use hashes&lt;/b&gt;. You can find his code here: &lt;a href=&quot;https://github.com/chrissy-dev/protected-github-pages&quot;&gt;https://github.com/chrissy-dev/protected-github-pages&lt;/a&gt;. His solution is older than walking.&lt;/p&gt;
+
+&lt;h2 id=&quot;hash-to-the-rescue&quot;&gt;Hash to the rescue&lt;/h2&gt;
+
+&lt;p&gt;The workaround is really simple, you choose a password that can be hard to guess. Hint: use some page that computes the password strength like: &lt;a href=&quot;https://www.idstrong.com/tools/password-strength-checker/&quot;&gt;https://www.idstrong.com/tools/password-strength-checker/&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;With that word, you generate the sha1 hash:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo -n &quot;&amp;lt;your-word&amp;gt;&quot; | openssl sha1
 cb1dc474e185777dad218b7d60f2781723d8190b
-```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-Now generate a folder with that text in the root of the repo and place all the password protected content there.
+&lt;p&gt;Now generate a folder with that text in the root of the repo and place all the password protected content there.&lt;/p&gt;
 
-Then in the root of the repository place an index.html that will have a password form. 
+&lt;p&gt;Then in the root of the repository place an index.html that will have a password form.&lt;/p&gt;
 
-When the user enters the password, compute the sha1 hash of the field they just enter. Then, perform a redirection to the URL, if the answer is different than 200, the folder has not been found, so the password is invalid.
+&lt;p&gt;When the user enters the password, compute the sha1 hash of the field they just enter. Then, perform a redirection to the URL, if the answer is different than 200, the folder has not been found, so the password is invalid.&lt;/p&gt;
 
-That&apos;s the code that does the magic:
+&lt;p&gt;That’s the code that does the magic:&lt;/p&gt;
 
-```javascript
-function login(secret) {
-            var hash = sha1(secret)
-            var url = hash + &quot;/index.html&quot;
-            var alert = document.querySelectorAll(&apos;[data-id=&quot;alert&quot;]&apos;)
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;login&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;secret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;hash&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sha1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;secret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;hash&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/index.html&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;querySelectorAll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;[data-id=&quot;alert&quot;]&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-            var request = new XMLHttpRequest()
-            request.open(&apos;GET&apos;, url, true)
+            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;XMLHttpRequest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;GET&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-            request.onload = function () {
-                if (request.status &gt;= 200 &amp;&amp; request.status &lt; 400) {
-                    window.location = url
-                } else {
-                    parent.location.hash = hash
-                    alert[0].style.display = &apos;block&apos;
-                    password[0].setAttribute(&apos;placeholder&apos;, &apos;Incorrect password&apos;)
-                    password[0].value = &apos;&apos;
-                }
-            }
-            request.onerror = function () {
-                parent.location.hash = hash
-                alert[0].style.display = &apos;block&apos;
-                password[0].setAttribute(&apos;placeholder&apos;, &apos;Incorrect password&apos;)
-                password[0].value = &apos;&apos;
-            }
-            request.send()
-        }
+            &lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;onload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;400&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;nx&quot;&gt;parent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hash&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;hash&lt;/span&gt;
+                    &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;style&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;display&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;
+                    &lt;span class=&quot;nx&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;placeholder&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Incorrect password&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                    &lt;span class=&quot;nx&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&apos;&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;onerror&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;nx&quot;&gt;parent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hash&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;hash&lt;/span&gt;
+                &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;style&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;display&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;
+                &lt;span class=&quot;nx&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;placeholder&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Incorrect password&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;nx&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&apos;&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-button[0].addEventListener(&quot;click&quot;, function () {
-    login(password[0].value)
-})
-```
-That works really nice, however, once the authentication is passed, a user can share the link and the authentication will be bypassed. We need an extra layer of security
+&lt;span class=&quot;nx&quot;&gt;button&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;addEventListener&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;login&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;That works really nice, however, once the authentication is passed, a user can share the link and the authentication will be bypassed. We need an extra layer of security&lt;/p&gt;
 
-## Avoid sharing the link
+&lt;h2 id=&quot;avoid-sharing-the-link&quot;&gt;Avoid sharing the link&lt;/h2&gt;
 
-You can make a very easy implementation to make short-lived links. The page that provides the autentication can add a `not-valid-after` parameter to the URL. For example:
+&lt;p&gt;You can make a very easy implementation to make short-lived links. The page that provides the autentication can add a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;not-valid-after&lt;/code&gt; parameter to the URL. For example:&lt;/p&gt;
 
-```javascript
-request.onload = function () {
-        if (request.status &gt;= 200 &amp;&amp; request.status &lt; 400) {
-            let nva = new Date().getTime() + 1_000
-            window.location = url + &quot;?nva=&quot;+nva
-...
-```
-With this piece of code, the links are only valid for 1 second.
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;onload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;400&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nva&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_000&lt;/span&gt;
+            &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;?nva=&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;nva&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;With this piece of code, the links are only valid for 1 second.&lt;/p&gt;
 
-In the index.html of the protected content, we only need to check for the `not-valid-after` parameter:
+&lt;p&gt;In the index.html of the protected content, we only need to check for the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;not-valid-after&lt;/code&gt; parameter:&lt;/p&gt;
 
-```javascript
-let paramString = window.location.search.split(&apos;?&apos;)[1];
-let queryString = new URLSearchParams(paramString);
-let nva = parseInt(queryString.get(&quot;nva&quot;))
-let now = new Date().getTime()
-if (Number.isNaN(nva) || now &gt; nva) {
-    console.log(&quot;not-valid-after invalid, going to redirect to /&quot;)
-    window.location = &quot;/&quot;
-}
-```
-This piece of the code reads the `nva` parameter from the URL and checks if it&apos;s not present or if it&apos;s too late. In any of those cases, it redirects to the root; where the password form appears.</content><author><name></name></author><category term="javascript" /><category term="browser" /><category term="github-pages" /><category term="security" /><category term="javascript" /><category term="browser" /><category term="github-pages" /><category term="security" /><summary type="html">In this article I implement a workaround to protect with password a static page stored in Github pages.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/github-password/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/github-password/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Browser storage</title><link href="https://www.agalera.eu/browser-storage/" rel="alternate" type="text/html" title="Browser storage" /><published>2022-07-23T00:00:00+02:00</published><updated>2022-07-23T00:00:00+02:00</updated><id>https://www.agalera.eu/browser-storage</id><content type="html" xml:base="https://www.agalera.eu/browser-storage/">In this article I discuss some techniques to store data in the browser. This way the web applications do not require a expensive backend, every customer stores its information in the browser.
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;paramString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;search&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;queryString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;URLSearchParams&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;paramString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nva&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;parseInt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;queryString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;nva&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;now&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;isNaN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;nva&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;now&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nva&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;not-valid-after invalid, going to redirect to /&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;This piece of the code reads the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nva&lt;/code&gt; parameter from the URL and checks if it’s not present or if it’s too late. In any of those cases, it redirects to the root; where the password form appears.&lt;/p&gt;</content><author><name></name></author><category term="javascript" /><category term="browser" /><category term="github-pages" /><category term="security" /><category term="javascript" /><category term="browser" /><category term="github-pages" /><category term="security" /><summary type="html">In this article I implement a workaround to protect with password a static page stored in Github pages.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/github-password/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/github-password/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Browser storage</title><link href="https://www.agalera.eu/browser-storage/" rel="alternate" type="text/html" title="Browser storage" /><published>2022-07-23T00:00:00+02:00</published><updated>2022-07-23T00:00:00+02:00</updated><id>https://www.agalera.eu/browser-storage</id><content type="html" xml:base="https://www.agalera.eu/browser-storage/">In this article I discuss some techniques to store data in the browser. This way the web applications do not require a expensive backend, every customer stores its information in the browser.
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
@@ -946,212 +1208,4 @@ def send_to_telegram(predictions, filename):
 &lt;tr&gt;
 &lt;td class=&quot;center&quot;&gt;&lt;small&gt;Example of messages in Telegram&lt;/small&gt;&lt;/td&gt;
 &lt;/tr&gt;
-&lt;/table&gt;</content><author><name></name></author><category term="python" /><category term="ml" /><category term="audio" /><category term="raspberry-pi" /><category term="bash" /><category term="python" /><category term="ml" /><category term="audio" /><category term="scikit" /><category term="librosa" /><category term="raspberry-pi" /><category term="vlc" /><category term="bash" /><summary type="html">My dog has a little bit of separation anxiety so when we leave him alone, he barks some times. We are training him to be home-alone and we want to know if he barks or not when we are not home. Let&apos;s implement a bark detector!</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/bark-detector/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/bark-detector/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Java 11 negative symbol in Swedish</title><link href="https://www.agalera.eu/java11-negative-symbol-swedish/" rel="alternate" type="text/html" title="Java 11 negative symbol in Swedish" /><published>2021-05-06T00:00:00+02:00</published><updated>2021-05-06T00:00:00+02:00</updated><id>https://www.agalera.eu/java11-negative-symbol-swedish</id><content type="html" xml:base="https://www.agalera.eu/java11-negative-symbol-swedish/">We performed a migration to Java 11 and a bug fix about negative symbol for negative numbers in Java ruined our implementation. This article describes the situation and the lessons learned.
-
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
-
-In the middle of a migration of a project to Java 11 a very curious scenario has appeared. We face a bug while dealing with negative numbers. We have a function to convert a positive number to negative. The implementation was working fine for Java 8 but not for Java 11:
-
-```java
-public String negativeNumber(int number) {
-    return &quot;-&quot; + number;
-}
-```
-
-The error appeared while trying to parse the numbers generated with that function:
-
-```java
-public Number parse(String number) throws ParseException {
-    return fmt.parse(number)
-}
-```
-
-More precisely, it was throwing the following exception:
-
-```
-Unparseable number: &quot;-1&quot;
-java.text.ParseException: Unparseable number: &quot;-1&quot;
-	at java.base/java.text.NumberFormat.parse(NumberFormat.java:431)
-	at SwedishNegativeSymbol.shouldParseNegativeNumberButFailsOnJava11(SwedishNegativeSymbol.java:23)
-```
-
-The investigation and debug led us to compare our negative symbol with the one expected by the `NumberFormat`:
-
-```java
-@Test
-public void shouldUseSameNegativeSymbol() {
-    String expectedNegativeSymbol = fmt.getNegativePrefix();
-    String negativeSymbol = negate(1).substring(0, 1);
-    assertEquals(&quot;Negative symbols do not match!&quot;, expectedNegativeSymbol, negativeSymbol);
-}
-```
-
-And... surprise, the test pass on Java 8 but not in Java 11:
-
-```
-Negative symbols do not match! expected:&lt;[−]&gt; but was:&lt;[-]&gt;
-Expected :−
-Actual   :-
-
-org.junit.ComparisonFailure: Negative symbols do not match! expected:&lt;[−]&gt; but was:&lt;[-]&gt;
-	at org.junit.Assert.assertEquals(Assert.java:115)
-	at SwedishNegativeSymbol.shouldUseSameNegativeSymbol(SwedishNegativeSymbol.java:35)
-```
-
-&lt;b&gt;WTF!&lt;/b&gt;. Why on earth the negative symbol do not match? The response is here: &lt;a href=&quot;https://bugs.openjdk.java.net/browse/JDK-8214926&quot;&gt;JDK-8214926&lt;/a&gt;. 
-
-It looks like the negative symbol returned in Java 8 was wrong and Java authors decided to fix that in Java11. The two characters are visually very similar:
-
-- &amp;#8722; &lt;a href=&quot;https://unicode-table.com/en/2212/&quot;&gt;Minus-sign&lt;/a&gt;
-- &amp;#45; &lt;a href=&quot;https://unicode-table.com/en/002D/&quot;&gt;Hyphen-minus&lt;/a&gt;
-
-The solution was straightforward: use the negative symbol provided by NumberFormat
-
-```java
-public String negativeNumberWorkingOnJava11(int number) {
-    DecimalFormat fmt = (DecimalFormat) NumberFormat.getInstance(Locale.forLanguageTag(&quot;se-sv&quot;));
-    return fmt.getNegativePrefix() + number;
-}
-```
-
-Now the test passes both in Java 8 and Java 11. 
-
-The lesson learned was important: &lt;b&gt;DO NOT HARDCODE NEGATIVE SYMBOL!&lt;/b&gt;
-
-You can find the source code here: &lt;a href=&quot;https://github.com/adriangalera/java-sandbox/blob/master/src/test/java/SwedishNegativeSymbol.java&quot;&gt;SwedishNegativeSymbol.java&lt;/a&gt;</content><author><name></name></author><category term="java" /><category term="testing" /><category term="java" /><category term="java11" /><summary type="html">We performed a migration to Java 11 and a bug fix about negative symbol for negative numbers in Java ruined our implementation. This article describes the situation and the lessons learned.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/java11-negative-sv/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/java11-negative-sv/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Testing python BaseHttpServer</title><link href="https://www.agalera.eu/testing-python-base-http-server/" rel="alternate" type="text/html" title="Testing python BaseHttpServer" /><published>2021-02-18T00:00:00+01:00</published><updated>2021-02-18T00:00:00+01:00</updated><id>https://www.agalera.eu/testing-python-base-http-server</id><content type="html" xml:base="https://www.agalera.eu/testing-python-base-http-server/">&lt;p&gt;While the development of &lt;a href=&quot;https://www.agalera.eu/standalone-app-raspberry-pi&quot;&gt;https://www.agalera.eu/standalone-app-raspberry-pi/&lt;/a&gt; I needed to use python&apos;s BaseHttpServer and inject some dependencies into it.&lt;/p&gt;
-
-&lt;p&gt;It turns out, there&apos;s no easy way of doing that. Moreover, I wanted to achieve 100% code coverage testing, so I should found a way of testing that code.&lt;/p&gt;
-
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
-
-Here&apos;s the code I need to test:
-
-```python
-import socketserver
-from http import server
-
-
-class DogFeederServer(server.BaseHTTPRequestHandler):
-    def __init__(self, camera_output, call_dog, servo, *args, **kwargs):
-        self.camera_output = camera_output
-        self.call_dog = call_dog
-        self.servo = servo
-        # BaseHTTPRequestHandler calls do_GET **inside** __init__ !!!
-        # So we have to call super().__init__ after setting attributes.
-        super().__init__(*args, **kwargs)
-
-    def do_GET(self):
-        if self.path == &quot;/stream.mjpg&quot;:
-            self.send_response(200)
-            # do some magic with HTTP Streaming
-        else:
-            self.send_error(404)
-        self.end_headers()
-
-    def do_POST(self):
-        if self.path == &quot;/api/call&quot;:
-            if self.call_dog():
-                self.send_response(200)
-            else:
-                self.send_response(500)
-        elif self.path == &quot;/api/treat&quot;:
-            self.servo.open_and_close()
-            self.send_response(200)
-        else:
-            self.send_error(404)
-        self.end_headers()
-
-
-class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
-    allow_reuse_address = True
-    daemon_threads = True
-
-```
-As you can see, the code is really simple.
-
-The problem comes when you realise there are no easy way of calling the constructor of the server and pass the dependencies
-
-## Passing dependencies on the constructor
-
-Hopefully I discovered this StackOverflow post where someone has experience the same issue: &lt;a href=&quot;https://stackoverflow.com/questions/21631799/how-can-i-pass-parameters-to-a-requesthandler&quot;&gt;https://stackoverflow.com/questions/21631799/how-can-i-pass-parameters-to-a-requesthandler&lt;/a&gt;
-
-I really like the approach of the &quot;partial&quot; application: we pass the arguments before and once the app is created with the arguments, is passed to the server:
-
-```python
-address = (&quot;&quot;, 8000)
-handler = partial(
-    DogFeederServer,
-    camera_output,
-    call_dog,
-    servo,
-)
-server = StreamingServer(address, handler)
-server.serve_forever()
-```
-
-Once we have the &quot;partial&quot; approach, we could easily provide mocks for the dependencies in the tests
-
-## Test the server
-
-The only way of testing the base HTTP server I found is to create some sort of &quot;integration testing&quot;: provide mocks to the server but actually start the HTTP server. To test the whole logic, we could use `requests` library to do the HTTP calls:
-
-```python
-import socket
-from functools import partial
-from threading import Thread
-from unittest import TestCase
-from unittest.mock import MagicMock
-
-import requests
-
-from dogfeeder.server import DogFeederServer, StreamingServer
-
-
-class ServerTest(TestCase):
-    def setUp(self):
-        super(ServerTest, self).setUp()
-        self.get_free_port()
-        self.camera_output_mock = MagicMock()
-        self.call_dog_mock = MagicMock()
-        self.servo_mock = MagicMock()
-        address = (&quot;&quot;, self.mock_server_port)
-        handler = partial(
-            DogFeederServer,
-            self.camera_output_mock,
-            self.call_dog_mock,
-            self.servo_mock,
-        )
-        self.mock_server = StreamingServer(address, handler)
-
-        # Start running mock server in a separate thread.
-        # Daemon threads automatically shut down when the main process exits.
-        self.mock_server_thread = Thread(target=self.mock_server.serve_forever)
-        self.mock_server_thread.setDaemon(True)
-        self.mock_server_thread.start()
-
-    def test_servo_open_close(self):
-        url = f&quot;http://localhost:{self.mock_server_port}/api/treat&quot;
-        response = requests.post(url)
-        self.servo_mock.open_and_close.assert_called_once()
-        assert response.status_code == 200
-
-
-    def test_invalid_path(self):
-        url = f&quot;http://localhost:{self.mock_server_port}/unknown&quot;
-        response = requests.post(url)
-        assert response.status_code == 404
-        response = requests.get(url)
-        assert response.status_code == 404
-
-    def tearDown(self):
-        super(ServerTest, self).tearDown()
-
-    def get_free_port(self):
-        s = socket.socket(socket.AF_INET, type=socket.SOCK_STREAM)
-        s.bind((&quot;localhost&quot;, 0))
-        __, port = s.getsockname()
-        s.close()
-        self.mock_server_port = port
-```
-
-The key here is to start a daemon thread (that will die when the test ends) to start the HTTP server</content><author><name></name></author><category term="python" /><category term="testing" /><category term="python" /><category term="testing" /><category term="mocking" /><summary type="html">While the development of https://www.agalera.eu/standalone-app-raspberry-pi/ I needed to use python&apos;s BaseHttpServer and inject some dependencies into it. It turns out, there&apos;s no easy way of doing that. Moreover, I wanted to achieve 100% code coverage testing, so I should found a way of testing that code.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/test-python-basehttpserver/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/test-python-basehttpserver/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;/table&gt;</content><author><name></name></author><category term="python" /><category term="ml" /><category term="audio" /><category term="raspberry-pi" /><category term="bash" /><category term="python" /><category term="ml" /><category term="audio" /><category term="scikit" /><category term="librosa" /><category term="raspberry-pi" /><category term="vlc" /><category term="bash" /><summary type="html">My dog has a little bit of separation anxiety so when we leave him alone, he barks some times. We are training him to be home-alone and we want to know if he barks or not when we are not home. Let&apos;s implement a bark detector!</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/bark-detector/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/bark-detector/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
