@@ -1,118 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://www.agalera.eu/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.agalera.eu/" rel="alternate" type="text/html" /><updated>2022-12-13T16:48:08+01:00</updated><id>https://www.agalera.eu/feed.xml</id><title type="html">Adrian Galera blog</title><subtitle>My personal developer blog page</subtitle><entry><title type="html">Python cli application</title><link href="https://www.agalera.eu/python-cli-application/" rel="alternate" type="text/html" title="Python cli application" /><published>2022-12-13T00:00:00+01:00</published><updated>2022-12-13T00:00:00+01:00</updated><id>https://www.agalera.eu/python-cli-application</id><content type="html" xml:base="https://www.agalera.eu/python-cli-application/">&lt;p&gt;I have been developing an Python application to be able to be run as a CLI tool. In this article I speak about how I implement that using click library.&lt;/p&gt;
-
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
-
-&lt;p&gt;Since I want to create a nice CLI tool, I search some libraries and found the click library: &lt;a href=&quot;https://pypi.org/project/click/&quot;&gt;https://pypi.org/project/click/&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;This tool allows the developer to create a beatiful CLI interaction with minimal code.&lt;/p&gt;
-
-&lt;p&gt;Each operation you can perform with the application is called Command. In thise case we want to perform two operations: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hello&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bye&lt;/code&gt;, so we’ll create two commands for that.&lt;/p&gt;
-
-&lt;p&gt;To define a command, we need to do two things:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Create the source and annotate it with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@click.group()&lt;/code&gt;:&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bye_source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Create the command method and annotate it with the source created before&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bye_source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_option_required&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;verbose_option&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bye&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;opts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;opts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;user&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;say_bye&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;say_bye&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Saying bye to &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Bye &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;I decide to separate the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bye&lt;/code&gt; in two methods because this way testing the actual logic is way easier. If we have it only in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bye&lt;/code&gt;, we need to use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;click&lt;/code&gt; library in testing as well.&lt;/p&gt;
-
-&lt;p&gt;Once we have created the commands, we must define an entrypoint which imports them and setup click library:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;click&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;examplecli.commands.hello&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hello_source&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;examplecli.commands.bye&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bye_source&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;WELCOME_MESSAGE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
-Welcome to Example CLI!
-&quot;&quot;&quot;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;cli&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CommandCollection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;sources&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hello_source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bye_source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;help&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WELCOME_MESSAGE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;cli&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;__main__&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Now we can run the program directly from the console:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python3 examplecli/entrypoint.py      
-Usage: entrypoint.py &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;OPTIONS] COMMAND &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;ARGS]...
-
-  Welcome to Example CLI!
-
-Options:
-  &lt;span class=&quot;nt&quot;&gt;--help&lt;/span&gt;  Show this message and exit.
-
-Commands:
-  bye
-  hello
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If we want to package the application, we need to do one more thing. In the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;setup.py&lt;/code&gt; file we must specify the console entrypoiny:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#!/usr/bin/env python
-&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;setuptools&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;find_packages&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;requirements.txt&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;install_requires&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;requirements_test.txt&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;tests_require&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;example-cli&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;EXAMPLE_CLI_VERSION&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;0.0.1&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Example CLI&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;author&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Adrian Galera&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;author_email&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;python_requires&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&amp;gt;=3.6.*&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_packages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;install_requires&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;install_requires&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;tests_require&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tests_require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;entry_points&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-          &lt;span class=&quot;s&quot;&gt;&apos;console_scripts&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-              &lt;span class=&quot;s&quot;&gt;&apos;example-cli = examplecli.entrypoint:start&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-          &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Now we can build the app and install it using pipx:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;EXAMPLE_CLI_VERSION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$VERSION&lt;/span&gt; python3 setup.py sdist bdist_wheel
-pipx &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;dist/example_cli-0.0.1+local&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;-py3-none-any&lt;/span&gt;.whl &lt;span class=&quot;nt&quot;&gt;--force&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;pipx will create the binary cli tool. Now we can run it as a standalone application:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;example-cli hello &lt;span class=&quot;nt&quot;&gt;--user&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;test
-&lt;/span&gt;2022-12-13T15:40:23.029Z | Hello &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="python" /><category term="cli" /><category term="click" /><category term="python" /><category term="cli" /><category term="click" /><summary type="html">I have been developing an Python application to be able to be run as a CLI tool. In this article I speak about how I implement that using click library.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Python app structure</title><link href="https://www.agalera.eu/python-app-structure/" rel="alternate" type="text/html" title="Python app structure" /><published>2022-12-13T00:00:00+01:00</published><updated>2022-12-13T00:00:00+01:00</updated><id>https://www.agalera.eu/python-app-structure</id><content type="html" xml:base="https://www.agalera.eu/python-app-structure/">&lt;p&gt;Recently I was starting a Python application project from scratch and I had some issues understanding the correct project structure. Here’s what I have learnt.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://www.agalera.eu/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.agalera.eu/" rel="alternate" type="text/html" /><updated>2022-12-14T11:11:36+01:00</updated><id>https://www.agalera.eu/feed.xml</id><title type="html">Adrian Galera blog</title><subtitle>My personal developer blog page</subtitle><entry><title type="html">Python app structure</title><link href="https://www.agalera.eu/python-app-structure/" rel="alternate" type="text/html" title="Python app structure" /><published>2022-12-13T00:00:00+01:00</published><updated>2022-12-13T00:00:00+01:00</updated><id>https://www.agalera.eu/python-app-structure</id><content type="html" xml:base="https://www.agalera.eu/python-app-structure/">&lt;p&gt;Recently I was starting a Python application project from scratch and I had some issues understanding the correct project structure. Here’s what I have learnt.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
@@ -264,7 +150,349 @@ Commands:
 &lt;p&gt;In order to generate the wheel file, the user should run the following command:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;EXAMPLE_CLI_VERSION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$VERSION&lt;/span&gt; python3 setup.py sdist bdist_wheel
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="python" /><category term="architecture" /><category term="cli" /><category term="python" /><category term="architecture" /><category term="cli" /><summary type="html">Recently I was starting a Python application project from scratch and I had some issues understanding the correct project structure. Here’s what I have learnt.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/python-app-structure/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/python-app-structure/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Password protection for Github Pages</title><link href="https://www.agalera.eu/github-pages-password/" rel="alternate" type="text/html" title="Password protection for Github Pages" /><published>2022-09-06T00:00:00+02:00</published><updated>2022-09-06T00:00:00+02:00</updated><id>https://www.agalera.eu/github-pages-password</id><content type="html" xml:base="https://www.agalera.eu/github-pages-password/">&lt;p&gt;In this article I implement a workaround to protect with password a static page stored in Github pages.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="python" /><category term="architecture" /><category term="cli" /><category term="python" /><category term="architecture" /><category term="cli" /><summary type="html">Recently I was starting a Python application project from scratch and I had some issues understanding the correct project structure. Here’s what I have learnt.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/python-app-structure/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/python-app-structure/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Python cli application</title><link href="https://www.agalera.eu/python-cli-application/" rel="alternate" type="text/html" title="Python cli application" /><published>2022-12-13T00:00:00+01:00</published><updated>2022-12-13T00:00:00+01:00</updated><id>https://www.agalera.eu/python-cli-application</id><content type="html" xml:base="https://www.agalera.eu/python-cli-application/">&lt;p&gt;I have been developing an Python application to be able to be run as a CLI tool. In this article I speak about how I implement that using click library.&lt;/p&gt;
+
+&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;p&gt;Since I want to create a nice CLI tool, I search some libraries and found the click library: &lt;a href=&quot;https://pypi.org/project/click/&quot;&gt;https://pypi.org/project/click/&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This tool allows the developer to create a beatiful CLI interaction with minimal code.&lt;/p&gt;
+
+&lt;p&gt;Each operation you can perform with the application is called Command. In thise case we want to perform two operations: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hello&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bye&lt;/code&gt;, so we’ll create two commands for that.&lt;/p&gt;
+
+&lt;p&gt;To define a command, we need to do two things:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Create the source and annotate it with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@click.group()&lt;/code&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bye_source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Create the command method and annotate it with the source created before&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bye_source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_option_required&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;verbose_option&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bye&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;opts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;opts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;user&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;say_bye&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;say_bye&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Saying bye to &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Bye &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;I decide to separate the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bye&lt;/code&gt; in two methods because this way testing the actual logic is way easier. If we have it only in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bye&lt;/code&gt;, we need to use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;click&lt;/code&gt; library in testing as well.&lt;/p&gt;
+
+&lt;p&gt;Once we have created the commands, we must define an entrypoint which imports them and setup click library:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;click&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;examplecli.commands.hello&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hello_source&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;examplecli.commands.bye&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bye_source&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;WELCOME_MESSAGE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
+Welcome to Example CLI!
+&quot;&quot;&quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cli&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CommandCollection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;sources&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hello_source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bye_source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;help&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WELCOME_MESSAGE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cli&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;__main__&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we can run the program directly from the console:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python3 examplecli/entrypoint.py      
+Usage: entrypoint.py &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;OPTIONS] COMMAND &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;ARGS]...
+
+  Welcome to Example CLI!
+
+Options:
+  &lt;span class=&quot;nt&quot;&gt;--help&lt;/span&gt;  Show this message and exit.
+
+Commands:
+  bye
+  hello
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If we want to package the application, we need to do one more thing. In the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;setup.py&lt;/code&gt; file we must specify the console entrypoiny:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#!/usr/bin/env python
+&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;setuptools&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;find_packages&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;requirements.txt&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;install_requires&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;requirements_test.txt&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;tests_require&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;example-cli&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;EXAMPLE_CLI_VERSION&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;0.0.1&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Example CLI&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;author&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Adrian Galera&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;author_email&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;python_requires&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&amp;gt;=3.6.*&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_packages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;install_requires&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;install_requires&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;tests_require&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tests_require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;entry_points&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;&apos;console_scripts&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+              &lt;span class=&quot;s&quot;&gt;&apos;example-cli = examplecli.entrypoint:start&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we can build the app and install it using pipx:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;EXAMPLE_CLI_VERSION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$VERSION&lt;/span&gt; python3 setup.py sdist bdist_wheel
+pipx &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;dist/example_cli-0.0.1+local&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;-py3-none-any&lt;/span&gt;.whl &lt;span class=&quot;nt&quot;&gt;--force&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;pipx will create the binary cli tool. Now we can run it as a standalone application:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;example-cli hello &lt;span class=&quot;nt&quot;&gt;--user&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;test
+&lt;/span&gt;2022-12-13T15:40:23.029Z | Hello &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="python" /><category term="cli" /><category term="click" /><category term="python" /><category term="cli" /><category term="click" /><summary type="html">I have been developing an Python application to be able to be run as a CLI tool. In this article I speak about how I implement that using click library.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hack the box cheatsheet</title><link href="https://www.agalera.eu/hack-the-box-cheatsheet/" rel="alternate" type="text/html" title="Hack the box cheatsheet" /><published>2022-12-12T00:00:00+01:00</published><updated>2022-12-12T00:00:00+01:00</updated><id>https://www.agalera.eu/hack-the-box-cheatsheet</id><content type="html" xml:base="https://www.agalera.eu/hack-the-box-cheatsheet/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the things I am learning.&lt;/p&gt;
+
+&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;telnet&quot;&gt;telnet&lt;/h2&gt;
+
+&lt;p&gt;Telnet is a very old way of connecting to computer and by default listens on port 23.&lt;/p&gt;
+
+&lt;p&gt;Usage:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;telnet &amp;lt;ip&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The prompty will ask for user/password:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;telnet &amp;lt;ip&amp;gt;
+Trying &amp;lt;ip&amp;gt;...
+Connected to &amp;lt;ip&amp;gt;.
+Escape character is &apos;^]&apos;.
+
+  █  █         ▐▌     ▄█▄ █          ▄▄▄▄
+  █▄▄█ ▀▀█ █▀▀ ▐▌▄▀    █  █▀█ █▀█    █▌▄█ ▄▀▀▄ ▀▄▀
+  █  █ █▄█ █▄▄ ▐█▀▄    █  █ █ █▄▄    █▌▄█ ▀▄▄▀ █▀█
+
+
+Meow login: root
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;nmap&quot;&gt;nmap&lt;/h2&gt;
+
+&lt;p&gt;nmap is a port scanner tool. By default it scan ports from 0-1000.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nmap -sV &amp;lt;ip&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;-sV flag does scanning and prints service and version on the found open port&lt;/p&gt;
+
+&lt;p&gt;To scan all the ports, we need to specify this flags:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;namp -sV -p- -T5 &amp;lt;ip&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Take into account that this operation will take a long time to complete.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-T5&lt;/code&gt; control the timeout to consider a port closed.&lt;/p&gt;
+
+&lt;h2 id=&quot;ftp&quot;&gt;ftp&lt;/h2&gt;
+
+&lt;p&gt;Stands for File transfer protocol. It listens on port 21 by deault and is unencrypted (the secure version is called sftp)&lt;/p&gt;
+
+&lt;p&gt;The first thing to try while trying to access ftp is user &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;anonymous&lt;/code&gt; whitout password.&lt;/p&gt;
+
+&lt;p&gt;Commands:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ls&lt;/code&gt;: list directory contents&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pass&lt;/code&gt;: set passive mode&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get&lt;/code&gt;: retrieve file to computer&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Examples&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ftp &amp;lt;ip&amp;gt;
+Connected to &amp;lt;ip&amp;gt;.
+220 (vsFTPd 3.0.3)
+Name (&amp;lt;ip&amp;gt;:gal): anonymous
+331 Please specify the password.
+Password:
+230 Login successful.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+ftp&amp;gt; ls
+500 Illegal PORT command.
+ftp: bind: Address already in use
+ftp&amp;gt; pass
+Passive mode on.
+ftp&amp;gt; ls
+227 Entering Passive Mode (10,129,103,239,82,68).
+150 Here comes the directory listing.
+-rw-r--r--    1 0        0              32 Jun 04  2021 flag.txt
+226 Directory send OK.
+ftp&amp;gt; get flag.txt /tmp/flag.txt
+local: /tmp/flag.txt remote: flag.txt
+227 Entering Passive Mode (10,129,103,239,159,232).
+150 Opening BINARY mode data connection for flag.txt (32 bytes).
+226 Transfer complete.
+32 bytes received in 0.00 secs (21.1291 kB/s)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;in order to use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ls&lt;/code&gt; command, we need to set the Passive mode by issuing the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pass&lt;/code&gt; command&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;smb&quot;&gt;smb&lt;/h2&gt;
+
+&lt;p&gt;Stands for Server Message Block and is a protocol for file sharing between computers. It runs on port 445 by default.&lt;/p&gt;
+
+&lt;p&gt;The command line tool to interact with it, it’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;smbclient&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To list shared directories:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;smbclient -L \\&amp;lt;ip&amp;gt;
+Enter WORKGROUP\gal&apos;s password:
+
+        Sharename       Type      Comment
+        ---------       ----      -------
+        ADMIN$          Disk      Remote Admin
+        C$              Disk      Default share
+        IPC$            IPC       Remote IPC
+        WorkShares      Disk
+SMB1 disabled -- no workgroup available
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Note the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;\\&lt;/code&gt; prefix, this comes from Windows slahes.&lt;/p&gt;
+
+&lt;p&gt;Now, let’s connect to the shared:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;smbclient \\\\&amp;lt;ip&amp;gt;\\WorkShares
+Enter WORKGROUP\gal&apos;s password:
+Try &quot;help&quot; to get a list of possible commands.
+smb: \&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The commands to use once inside are the same as ftp&lt;/p&gt;
+
+&lt;h2 id=&quot;redis&quot;&gt;redis&lt;/h2&gt;
+
+&lt;p&gt;Redis is an in-memory key-value (NoSQL) database running on 6379 port by default&lt;/p&gt;
+
+&lt;p&gt;To connect to the database, we must use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;redis-cli&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;redis-cli -h &amp;lt;ip&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Once inside we can retrieve more information by using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;info&lt;/code&gt; command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;ip&amp;gt;:6379&amp;gt; info
+# Server
+redis_version:5.0.7
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:66bd629f924ac924
+redis_mode:standalone
+os:Linux 5.4.0-77-generic x86_64
+arch_bits:64
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To enumerate the database with some entries, we can use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;info keyspace&lt;/code&gt; command. This information is present in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;info&lt;/code&gt; response as well.&lt;/p&gt;
+
+&lt;p&gt;To retrieve all the keys in a given database, we can use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;keys *&lt;/code&gt; command once we have selected the database. To access a particular key, we use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get&lt;/code&gt; command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;redis-cli -h &amp;lt;ip&amp;gt;
+&amp;lt;ip&amp;gt;:6379&amp;gt; select 0
+OK
+&amp;lt;ip&amp;gt;:6379&amp;gt; keys *
+1) &quot;numb&quot;
+2) &quot;temp&quot;
+3) &quot;flag&quot;
+4) &quot;stor&quot;
+&amp;lt;ip&amp;gt;:6379&amp;gt; keys flag
+1) &quot;flag&quot;
+&amp;lt;ip&amp;gt;:6379&amp;gt; get flag
+&quot;flag&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;rdp&quot;&gt;rdp&lt;/h2&gt;
+
+&lt;p&gt;Stands for Remote Desktop Protocol and runs on port 3389.&lt;/p&gt;
+
+&lt;p&gt;To connect, you can use Windows tool or if in Linux, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xfreerdp&lt;/code&gt; or any other alternative.&lt;/p&gt;
+
+&lt;p&gt;If checking a Windows machine, try first the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Administrator&lt;/code&gt; user.&lt;/p&gt;
+
+&lt;h2 id=&quot;mongodb&quot;&gt;MongoDB&lt;/h2&gt;
+
+&lt;p&gt;MongoDB is a document based (NoSQL) database that runs by default on port 27017.&lt;/p&gt;
+
+&lt;p&gt;To connect to it, we should use the mongo shell, currently &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mongosh&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To show all the database in the instance, use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;show dbs&lt;/code&gt; command.&lt;/p&gt;
+
+&lt;p&gt;To select a database: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;use &amp;lt;db&amp;gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;To show all the collections in a database use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;show collections&lt;/code&gt; commands.&lt;/p&gt;
+
+&lt;p&gt;To show contents of all the documents inside a collection use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;db.&amp;lt;collection&amp;gt;.find().pretty()&lt;/code&gt;. It will pretty print the results.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mongosh &amp;lt;ip&amp;gt;
+Current Mongosh Log ID: 63999d00a5b1f19a65a9d84b
+Connecting to:          mongodb://&amp;lt;ip&amp;gt;:27017/?directConnection=true&amp;amp;appName=mongosh+1.6.1
+Using MongoDB:          3.6.8
+Using Mongosh:          1.6.1
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+test&amp;gt; show dbs
+admin                  32.00 KiB
+config                 72.00 KiB
+local                  72.00 KiB
+sensitive_information  32.00 KiB
+users                  32.00 KiB
+test&amp;gt; show collections
+
+test&amp;gt; use sensitive_information
+switched to db sensitive_information
+sensitive_information&amp;gt; show collections
+flag
+sensitive_information&amp;gt; db.flag.find().pretty()
+[
+  {
+    _id: ObjectId(&quot;630e3dbcb82540ebbd1748c5&quot;),
+    flag: &apos;flag&apos;
+  }
+]
+sensitive_information&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;directory-brute-force&quot;&gt;Directory brute force&lt;/h2&gt;
+
+&lt;p&gt;This is a technique useful to detect available paths for a web application. Also known as dir busting.&lt;/p&gt;
+
+&lt;p&gt;The technique consist in applying a directory and try all the combinations in the directoy to see if the web server returns a positive (200 OK) answer to the page. If so, we discover a page in that path.&lt;/p&gt;
+
+&lt;p&gt;A tool to perform this technique is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gobuster&lt;/code&gt;: &lt;a href=&quot;https://github.com/OJ/gobuster&quot;&gt;https://github.com/OJ/gobuster&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The following examples checks all the words in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/usr/share/dict/american-english-small&lt;/code&gt; dictionary and searches for paths with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;php&lt;/code&gt; extensions and stores the results in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/tmp/found&lt;/code&gt; and uses 20 threads:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gobuster -x php -u http://&amp;lt;ip&amp;gt; -w /usr/share/dict/american-english-small -o /tmp/found -t 20  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the things I am learning.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Password protection for Github Pages</title><link href="https://www.agalera.eu/github-pages-password/" rel="alternate" type="text/html" title="Password protection for Github Pages" /><published>2022-09-06T00:00:00+02:00</published><updated>2022-09-06T00:00:00+02:00</updated><id>https://www.agalera.eu/github-pages-password</id><content type="html" xml:base="https://www.agalera.eu/github-pages-password/">&lt;p&gt;In this article I implement a workaround to protect with password a static page stored in Github pages.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
@@ -346,75 +574,75 @@ cb1dc474e185777dad218b7d60f2781723d8190b
     &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;This piece of the code reads the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nva&lt;/code&gt; parameter from the URL and checks if it’s not present or if it’s too late. In any of those cases, it redirects to the root; where the password form appears.&lt;/p&gt;</content><author><name></name></author><category term="javascript" /><category term="browser" /><category term="github-pages" /><category term="security" /><category term="javascript" /><category term="browser" /><category term="github-pages" /><category term="security" /><summary type="html">In this article I implement a workaround to protect with password a static page stored in Github pages.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/github-password/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/github-password/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Browser storage</title><link href="https://www.agalera.eu/browser-storage/" rel="alternate" type="text/html" title="Browser storage" /><published>2022-07-23T00:00:00+02:00</published><updated>2022-07-23T00:00:00+02:00</updated><id>https://www.agalera.eu/browser-storage</id><content type="html" xml:base="https://www.agalera.eu/browser-storage/">In this article I discuss some techniques to store data in the browser. This way the web applications do not require a expensive backend, every customer stores its information in the browser.
+&lt;p&gt;This piece of the code reads the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nva&lt;/code&gt; parameter from the URL and checks if it’s not present or if it’s too late. In any of those cases, it redirects to the root; where the password form appears.&lt;/p&gt;</content><author><name></name></author><category term="javascript" /><category term="browser" /><category term="github-pages" /><category term="security" /><category term="javascript" /><category term="browser" /><category term="github-pages" /><category term="security" /><summary type="html">In this article I implement a workaround to protect with password a static page stored in Github pages.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/github-password/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/github-password/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Browser storage</title><link href="https://www.agalera.eu/browser-storage/" rel="alternate" type="text/html" title="Browser storage" /><published>2022-07-23T00:00:00+02:00</published><updated>2022-07-23T00:00:00+02:00</updated><id>https://www.agalera.eu/browser-storage</id><content type="html" xml:base="https://www.agalera.eu/browser-storage/">&lt;p&gt;In this article I discuss some techniques to store data in the browser. This way the web applications do not require a expensive backend, every customer stores its information in the browser.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
-This is part of my series of articles about leaflet:
+&lt;p&gt;This is part of my series of articles about leaflet:&lt;/p&gt;
 
-- &lt;a href=&quot;/leaflet-fog-of-war&quot;&gt;Leaflet fog of war&lt;/a&gt;
-- &lt;a href=&quot;/leaflet-draw-polygon-markers&quot;&gt;Draw a polygon from markers in leaflet&lt;/a&gt;
-- &lt;a href=&quot;/leaflet-load-gpx&quot;&gt;Load and display GPX in leaflet&lt;/a&gt;
-- &lt;a href=&quot;/browser-storage&quot;&gt;Browser storage&lt;/a&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/leaflet-fog-of-war&quot;&gt;Leaflet fog of war&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/leaflet-draw-polygon-markers&quot;&gt;Draw a polygon from markers in leaflet&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/leaflet-load-gpx&quot;&gt;Load and display GPX in leaflet&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/browser-storage&quot;&gt;Browser storage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
-For the implementation of fog of war map, I do not want to spend any time dealing with the backend. Besides that, I don&apos;t want to spent not even a cent on the storage of data.
+&lt;p&gt;For the implementation of fog of war map, I do not want to spend any time dealing with the backend. Besides that, I don’t want to spent not even a cent on the storage of data.&lt;/p&gt;
 
-In this scenario, the visited areas are stored into a huge GeoJSON document. The persistence should store that document so the user does not need to re-create it every time.
+&lt;p&gt;In this scenario, the visited areas are stored into a huge GeoJSON document. The persistence should store that document so the user does not need to re-create it every time.&lt;/p&gt;
 
-However, how the can the data be persisted without any backend? It turns out the browser offers some persistence capabilities, let&apos;s analyse them.
+&lt;p&gt;However, how the can the data be persisted without any backend? It turns out the browser offers some persistence capabilities, let’s analyse them.&lt;/p&gt;
 
-## Local storage
+&lt;h2 id=&quot;local-storage&quot;&gt;Local storage&lt;/h2&gt;
 
-The first approach is to use browser&apos;s local storage. This storage is a key-value storage which has a very simple synchronous contract:
+&lt;p&gt;The first approach is to use browser’s local storage. This storage is a key-value storage which has a very simple synchronous contract:&lt;/p&gt;
 
-```javascript
-window.localStorage.setItem(&quot;a&quot;,&quot;b&quot;)
-window.localStorage
-&gt; Storage {a: &apos;b&apos;, length: 1}
-window.localStorage.getItem(&quot;a&quot;)
-&gt; &apos;b&apos;
-```
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;localStorage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setItem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;localStorage&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Storage&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;localStorage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getItem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-This storage is really simple and easy to use, however it comes at the cost of have a very limited space in the order of few MBs.
+&lt;p&gt;This storage is really simple and easy to use, however it comes at the cost of have a very limited space in the order of few MBs.&lt;/p&gt;
 
-The original approach was to use this type of storage, however I reached the size limit really fast when I started to import GPX files.
+&lt;p&gt;The original approach was to use this type of storage, however I reached the size limit really fast when I started to import GPX files.&lt;/p&gt;
 
-## Caches
+&lt;h2 id=&quot;caches&quot;&gt;Caches&lt;/h2&gt;
 
-Reading a little bit more on browser storage capabilities, I discovered the caching mechanism. This is designed to store the answers from HTTP calls, hence its name. However, its original purpose can be violated to store any kind of data, not only HTTP responses.
+&lt;p&gt;Reading a little bit more on browser storage capabilities, I discovered the caching mechanism. This is designed to store the answers from HTTP calls, hence its name. However, its original purpose can be violated to store any kind of data, not only HTTP responses.&lt;/p&gt;
 
-This new API is asynchronous, that make the transition from local storage to caches a little bit painful, but it&apos;s a price we have to pay for having a massive amount of storage capability. According to &lt;a href=&quot;https://web.dev/cache-api-quick-guide/&quot;&gt;this article&lt;/a&gt; the storage availability is based on the amount of storage available on the disk.
+&lt;p&gt;This new API is asynchronous, that make the transition from local storage to caches a little bit painful, but it’s a price we have to pay for having a massive amount of storage capability. According to &lt;a href=&quot;https://web.dev/cache-api-quick-guide/&quot;&gt;this article&lt;/a&gt; the storage availability is based on the amount of storage available on the disk.&lt;/p&gt;
 
-```javascript
-function GeoJsonStorage() {
-    const CACHE_NAME = &quot;geojson&quot;
-    const CACHE_KEY = &quot;https://xxxx/geojson.json&quot;
-    return {
-        set: function (geojson) {
-            caches.open(CACHE_NAME)
-                .then(function (cache) {
-                    cache.put(CACHE_KEY, new Response(JSON.stringify(geojson)));
-                })
-                .catch(err =&gt; console.log(`Cannot open the cache, error: ${err}`))
-        },
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;GeoJsonStorage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;CACHE_NAME&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;geojson&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;CACHE_KEY&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;https://xxxx/geojson.json&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;geojson&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;caches&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CACHE_NAME&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;nx&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;put&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CACHE_KEY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stringify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;geojson&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)));&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`Cannot open the cache, error: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
 
-        get: async function () {
-            return caches.open(CACHE_NAME)
-                .then(cache =&gt; cache.match(CACHE_KEY))
-                .then(response =&gt; {
-                    if (response)
-                        return response.json()
-                    return undefined
-                })
-                .catch(err =&gt; console.log(`Cannot get the contents from the cache, error: ${err}`))
-        },
-        clear: function () {
-            caches.delete(CACHE_NAME)
-        }
-    }
-}
-```
-The key to store arbitrary data into the caches mechanism is to trick the system saying that the cache key is an HTTP request: `https://xxxx/geojson.json`. This way, you can put and retrieve a JSON inside the caching mechanism</content><author><name></name></author><category term="javascript" /><category term="browser" /><category term="persistence" /><category term="javascript" /><category term="browser" /><category term="persistence" /><summary type="html">In this article I discuss some techniques to store data in the browser. This way the web applications do not require a expensive backend, every customer stores its information in the browser.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/browser-storage/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/browser-storage/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Load GPX in leaflet</title><link href="https://www.agalera.eu/leaflet-load-gpx/" rel="alternate" type="text/html" title="Load GPX in leaflet" /><published>2022-07-22T00:00:00+02:00</published><updated>2022-07-22T00:00:00+02:00</updated><id>https://www.agalera.eu/leaflet-load-gpx</id><content type="html" xml:base="https://www.agalera.eu/leaflet-load-gpx/">&lt;style type=&quot;text/css&quot;&gt;
+        &lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;caches&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CACHE_NAME&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cache&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CACHE_KEY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+                    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;undefined&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`Cannot get the contents from the cache, error: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;clear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;caches&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CACHE_NAME&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;The key to store arbitrary data into the caches mechanism is to trick the system saying that the cache key is an HTTP request: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://xxxx/geojson.json&lt;/code&gt;. This way, you can put and retrieve a JSON inside the caching mechanism&lt;/p&gt;</content><author><name></name></author><category term="javascript" /><category term="browser" /><category term="persistence" /><category term="javascript" /><category term="browser" /><category term="persistence" /><summary type="html">In this article I discuss some techniques to store data in the browser. This way the web applications do not require a expensive backend, every customer stores its information in the browser.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/browser-storage/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/browser-storage/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Load GPX in leaflet</title><link href="https://www.agalera.eu/leaflet-load-gpx/" rel="alternate" type="text/html" title="Load GPX in leaflet" /><published>2022-07-22T00:00:00+02:00</published><updated>2022-07-22T00:00:00+02:00</updated><id>https://www.agalera.eu/leaflet-load-gpx</id><content type="html" xml:base="https://www.agalera.eu/leaflet-load-gpx/">&lt;style type=&quot;text/css&quot;&gt;
 .image-table td{
     border: 0px;
 }
@@ -422,99 +650,101 @@ The key to store arbitrary data into the caches mechanism is to trick the system
     text-align: center;
 }
 &lt;/style&gt;
-Following up from the previous article about implementing the fog of war in leaflet, I want to be able to load a GPX file and display it in the map.
+
+&lt;p&gt;Following up from the previous article about implementing the fog of war in leaflet, I want to be able to load a GPX file and display it in the map.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
-This is part of my series of articles about leaflet:
+&lt;p&gt;This is part of my series of articles about leaflet:&lt;/p&gt;
 
-- &lt;a href=&quot;/leaflet-fog-of-war&quot;&gt;Leaflet fog of war&lt;/a&gt;
-- &lt;a href=&quot;/leaflet-draw-polygon-markers&quot;&gt;Draw a polygon from markers in leaflet&lt;/a&gt;
-- &lt;a href=&quot;/leaflet-load-gpx&quot;&gt;Load and display GPX in leaflet&lt;/a&gt;
-- &lt;a href=&quot;/browser-storage&quot;&gt;Browser storage&lt;/a&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/leaflet-fog-of-war&quot;&gt;Leaflet fog of war&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/leaflet-draw-polygon-markers&quot;&gt;Draw a polygon from markers in leaflet&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/leaflet-load-gpx&quot;&gt;Load and display GPX in leaflet&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/browser-storage&quot;&gt;Browser storage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
-Now, that I can draw paths with some distance in the map, I want to be able to load &lt;a href=&quot;https://en.wikipedia.org/wiki/GPS_Exchange_Format&quot;&gt;GPX files&lt;/a&gt;. Those files store geographical information in the way of latitude,longitude and optionally elevation, time and other information. Those documents are XML based, so it should be easy to parse.
+&lt;p&gt;Now, that I can draw paths with some distance in the map, I want to be able to load &lt;a href=&quot;https://en.wikipedia.org/wiki/GPS_Exchange_Format&quot;&gt;GPX files&lt;/a&gt;. Those files store geographical information in the way of latitude,longitude and optionally elevation, time and other information. Those documents are XML based, so it should be easy to parse.&lt;/p&gt;
 
-## Load file
+&lt;h2 id=&quot;load-file&quot;&gt;Load file&lt;/h2&gt;
 
-How to load any file from the computer from the browser? `window.showOpenFilePicker` allows the browser to opens a file picker. That file picker can be customised to load files of only one type, to allow multiple files, etc. Take into account that is an async operation, so you&apos;ll have to deal with promises:
+&lt;p&gt;How to load any file from the computer from the browser? &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;window.showOpenFilePicker&lt;/code&gt; allows the browser to opens a file picker. That file picker can be customised to load files of only one type, to allow multiple files, etc. Take into account that is an async operation, so you’ll have to deal with promises:&lt;/p&gt;
 
-```javascript
-const gpxPickerOpts = {
-    types: [
-        {
-            description: &apos;GPX Files&apos;,
-            accept: {
-                &apos;application/gpx+xml&apos;: [&apos;.gpx&apos;]
-            }
-        }
-    ],
-    multiple: true
-};
-const fileHandlers = await window.showOpenFilePicker(gpxPickerOpts);
-for (let fh of fileHandlers) {
-    const file = await fh.getFile();
-    const content = await file.text();
-}
-```
-In this case, we want to load multiple GPX files. The `window.showOpenFilePicker` methods returns an array of file handlers which later we need to open and consume. `file.text()` operation returns the full contents of the file in text.
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;gpxPickerOpts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;types&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;GPX Files&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;accept&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;application/gpx+xml&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;.gpx&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;multiple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fileHandlers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;showOpenFilePicker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;gpxPickerOpts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fh&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fileHandlers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;In this case, we want to load multiple GPX files. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;window.showOpenFilePicker&lt;/code&gt; methods returns an array of file handlers which later we need to open and consume. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file.text()&lt;/code&gt; operation returns the full contents of the file in text.&lt;/p&gt;
 
-## Parse the GPX
+&lt;h2 id=&quot;parse-the-gpx&quot;&gt;Parse the GPX&lt;/h2&gt;
 
-Now that we have the text contents of the file, we must extract the relevant information, i.e. latitude and longitude of the points stored. Since GPX is XML-based, we can use two approaches to parse the file:
+&lt;p&gt;Now that we have the text contents of the file, we must extract the relevant information, i.e. latitude and longitude of the points stored. Since GPX is XML-based, we can use two approaches to parse the file:&lt;/p&gt;
 
-- SAX: Simple API for XML. Event based, when a new node is detected, an event is generated and passed to the event handler. Extremely efficient but complicated to implement.
-- DOM: Document Object Mapper. It parses the file in one go. If the documents are big can lead to performance decrease, but it&apos;s extremely easy to implement.
+&lt;ul&gt;
+  &lt;li&gt;SAX: Simple API for XML. Event based, when a new node is detected, an event is generated and passed to the event handler. Extremely efficient but complicated to implement.&lt;/li&gt;
+  &lt;li&gt;DOM: Document Object Mapper. It parses the file in one go. If the documents are big can lead to performance decrease, but it’s extremely easy to implement.&lt;/li&gt;
+&lt;/ul&gt;
 
-Since this is a toy project, let&apos;s use DOM because of its simplicity:
+&lt;p&gt;Since this is a toy project, let’s use DOM because of its simplicity:&lt;/p&gt;
 
-```javascript
-const _xmlTrackPointToLatLng = (trkpoint) =&gt; {
-    return [parseFloat(trkpoint.attributes.lat.nodeValue), parseFloat(trkpoint.attributes.lon.nodeValue)]
-}
-var gpxDom = (new DOMParser()).parseFromString(content, &apos;text/xml&apos;);
-const trackPoints = Array.from(gpxDoc.getElementsByTagName(&quot;trkpt&quot;));
-const latlngs = trackPoints.map((trkpnt) =&gt; container._xmlTrackPointToLatLng(trkpnt))
-```
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;_xmlTrackPointToLatLng&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;trkpoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;parseFloat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;trkpoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attributes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;nodeValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;parseFloat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;trkpoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attributes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;nodeValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;gpxDom&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;DOMParser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;parseFromString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;text/xml&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;trackPoints&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;from&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;gpxDoc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementsByTagName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;trkpt&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;latlngs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;trackPoints&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;trkpnt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_xmlTrackPointToLatLng&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;trkpnt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-This snippet generated the DOM from the contents of the GPX file. Later extract the elements in the DOM tree that belongs to points in the track: `&lt;trkpt&gt;`. Then, every tag is processed to extract latitude and longitude.
+&lt;p&gt;This snippet generated the DOM from the contents of the GPX file. Later extract the elements in the DOM tree that belongs to points in the track: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;trkpt&amp;gt;&lt;/code&gt;. Then, every tag is processed to extract latitude and longitude.&lt;/p&gt;
 
-In this point, we have an array of points with latitude/longitude pairs.
+&lt;p&gt;In this point, we have an array of points with latitude/longitude pairs.&lt;/p&gt;
 
-## Display the GPX
+&lt;h2 id=&quot;display-the-gpx&quot;&gt;Display the GPX&lt;/h2&gt;
 
-GPX can have a massive amounts of points, I have some of them with 20k points. In order to display it smoothly, I&apos;m grouping the points in groups of 200 to draw the polygon like in the previous article (&lt;a href=&quot;/leaflet-draw-polygon-markers&quot;&gt;Draw a polygon from markers in leaflet&lt;/a&gt;):
+&lt;p&gt;GPX can have a massive amounts of points, I have some of them with 20k points. In order to display it smoothly, I’m grouping the points in groups of 200 to draw the polygon like in the previous article (&lt;a href=&quot;/leaflet-draw-polygon-markers&quot;&gt;Draw a polygon from markers in leaflet&lt;/a&gt;):&lt;/p&gt;
 
-```javascript
-const  _group = (arr, n) =&gt; {
-    const res = [];
-    let limit = 0;
-    while (limit + n &lt;= arr.length) {
-        res.push(arr.slice(limit, n + limit));
-        limit += n
-    }
-    return res
-}
-const groups = container._group(latlngs, 200)
-var polygonGeoJSON = undefined
-for (let group of groups) {
-    const polLatLng = _joinLinesInPolygon(group) //from previous article
-    const pol = L.polygon(polLatLng).toGeoJSON()
-    if (!polygonGeoJSON) {
-        polygonGeoJSON = pol
-    } else {
-        polygonGeoJSON = turf.union(pol, polygonGeoJSON)
-    }
-}
-```
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt;  &lt;span class=&quot;nx&quot;&gt;_group&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;limit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;limit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;slice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;limit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;limit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;limit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;groups&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_group&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;latlngs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;polygonGeoJSON&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;undefined&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;group&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;groups&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;polLatLng&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;_joinLinesInPolygon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//from previous article&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pol&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;polygon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;polLatLng&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toGeoJSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;polygonGeoJSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;polygonGeoJSON&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pol&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;polygonGeoJSON&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;turf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;union&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pol&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;polygonGeoJSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-This `_group` function creates batches of 200 points in order to perform the joinin of those points into a polygon. Once a polygon is created, I&apos;m merging them with the &lt;a href=&quot;https://turfjs.org/docs/#union&quot;&gt;turf library&lt;/a&gt; by performing a union.
+&lt;p&gt;This &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_group&lt;/code&gt; function creates batches of 200 points in order to perform the joinin of those points into a polygon. Once a polygon is created, I’m merging them with the &lt;a href=&quot;https://turfjs.org/docs/#union&quot;&gt;turf library&lt;/a&gt; by performing a union.&lt;/p&gt;
 
-This way of displaying GPX files produces very appealing representation such as:
+&lt;p&gt;This way of displaying GPX files produces very appealing representation such as:&lt;/p&gt;
 
-&lt;img src=&quot;/assets/img/posts/leaflet-load-gpx/gpx.png&quot; alt=&quot;GPX representation in leaflet map&quot;/&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/posts/leaflet-load-gpx/gpx.png&quot; alt=&quot;GPX representation in leaflet map&quot; /&gt;&lt;/p&gt;
 
-Here you can see it in action: &lt;a href=&quot;https://www.agalera.eu/leaflet-fogofwar/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.agalera.eu/leaflet-fogofwar/&lt;/a&gt;</content><author><name></name></author><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><category term="gpx" /><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><category term="gpx" /><summary type="html">Following up from the previous article about implementing the fog of war in leaflet, I want to be able to load a GPX file and display it in the map.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/leaflet-load-gpx/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/leaflet-load-gpx/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Draw a polygon from markers in leaflet</title><link href="https://www.agalera.eu/leaflet-draw-polygon-markers/" rel="alternate" type="text/html" title="Draw a polygon from markers in leaflet" /><published>2022-07-21T00:00:00+02:00</published><updated>2022-07-21T00:00:00+02:00</updated><id>https://www.agalera.eu/leaflet-draw-polygon-markers</id><content type="html" xml:base="https://www.agalera.eu/leaflet-draw-polygon-markers/">&lt;style type=&quot;text/css&quot;&gt;
+&lt;p&gt;Here you can see it in action: &lt;a href=&quot;https://www.agalera.eu/leaflet-fogofwar/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.agalera.eu/leaflet-fogofwar/&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><category term="gpx" /><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><category term="gpx" /><summary type="html">Following up from the previous article about implementing the fog of war in leaflet, I want to be able to load a GPX file and display it in the map.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/leaflet-load-gpx/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/leaflet-load-gpx/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Draw a polygon from markers in leaflet</title><link href="https://www.agalera.eu/leaflet-draw-polygon-markers/" rel="alternate" type="text/html" title="Draw a polygon from markers in leaflet" /><published>2022-07-21T00:00:00+02:00</published><updated>2022-07-21T00:00:00+02:00</updated><id>https://www.agalera.eu/leaflet-draw-polygon-markers</id><content type="html" xml:base="https://www.agalera.eu/leaflet-draw-polygon-markers/">&lt;style type=&quot;text/css&quot;&gt;
 .image-table td{
     border: 0px;
 }
@@ -522,28 +752,31 @@ Here you can see it in action: &lt;a href=&quot;https://www.agalera.eu/leaflet-f
     text-align: center;
 }
 &lt;/style&gt;
-Following up from the previous article about implementing the fog of war in leaflet, I want to add some markers to the map and to create a polygon that joins them.
 
-Let&apos;s see how I manage to do that.
+&lt;p&gt;Following up from the previous article about implementing the fog of war in leaflet, I want to add some markers to the map and to create a polygon that joins them.&lt;/p&gt;
+
+&lt;p&gt;Let’s see how I manage to do that.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
-This is part of my series of articles about leaflet:
+&lt;p&gt;This is part of my series of articles about leaflet:&lt;/p&gt;
 
-- &lt;a href=&quot;/leaflet-fog-of-war&quot;&gt;Leaflet fog of war&lt;/a&gt;
-- &lt;a href=&quot;/leaflet-draw-polygon-markers&quot;&gt;Draw a polygon from markers in leaflet&lt;/a&gt;
-- &lt;a href=&quot;/leaflet-load-gpx&quot;&gt;Load and display GPX in leaflet&lt;/a&gt;
-- &lt;a href=&quot;/browser-storage&quot;&gt;Browser storage&lt;/a&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/leaflet-fog-of-war&quot;&gt;Leaflet fog of war&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/leaflet-draw-polygon-markers&quot;&gt;Draw a polygon from markers in leaflet&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/leaflet-load-gpx&quot;&gt;Load and display GPX in leaflet&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/browser-storage&quot;&gt;Browser storage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
-The user can click the map to generate markers that follow a route, e.g. a road, a trail, etc.. and later join those markers to create a complex polygon. This reflects the fact that you have visited the road, but you only have certain visibility of the environment (maybe 10 meters or so):
+&lt;p&gt;The user can click the map to generate markers that follow a route, e.g. a road, a trail, etc.. and later join those markers to create a complex polygon. This reflects the fact that you have visited the road, but you only have certain visibility of the environment (maybe 10 meters or so):&lt;/p&gt;
 
 &lt;table class=&quot;image-table&quot;&gt;
 &lt;tr&gt;
 &lt;td&gt;
-&lt;img src=&quot;/assets/img/posts/draw-polygon-markers/1.png&quot; alt=&quot;Markers&quot;/&gt;
+&lt;img src=&quot;/assets/img/posts/draw-polygon-markers/1.png&quot; alt=&quot;Markers&quot; /&gt;
 &lt;/td&gt;
 &lt;td&gt;
-&lt;img src=&quot;/assets/img/posts/draw-polygon-markers/2.png&quot; alt=&quot;Joined markers into a polygon&quot;/&gt;
+&lt;img src=&quot;/assets/img/posts/draw-polygon-markers/2.png&quot; alt=&quot;Joined markers into a polygon&quot; /&gt;
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -556,44 +789,42 @@ The user can click the map to generate markers that follow a route, e.g. a road,
 &lt;/tr&gt;
 &lt;/table&gt;
 
-## Join markers into a polygon
+&lt;h2 id=&quot;join-markers-into-a-polygon&quot;&gt;Join markers into a polygon&lt;/h2&gt;
 
-When a new marker is added, it is added to the map and to an internal array:
-```javascript
-        onAdd: function (e) {
-            const marker = new L.Marker(e.latlng)
-            container.markers.push(marker.addTo(map))
-        }
-```
-When the user click on a button, those markers are processed and joined into a polygon by using the &lt;a href=&quot;https://github.com/bjornharrtell/jsts&quot;&gt;jsts&lt;/a&gt; library
+&lt;p&gt;When a new marker is added, it is added to the map and to an internal array:&lt;/p&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;        &lt;span class=&quot;nx&quot;&gt;onAdd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;marker&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Marker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;latlng&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;markers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;marker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;addTo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;When the user click on a button, those markers are processed and joined into a polygon by using the &lt;a href=&quot;https://github.com/bjornharrtell/jsts&quot;&gt;jsts&lt;/a&gt; library&lt;/p&gt;
 
-```javascript
-const _joinLinesInPolygon = (points) =&gt; {
-    const pointToGeomCoordinate = (p) =&gt; {
-        if (p.lat &amp;&amp; p.lng)
-            return new jsts.geom.Coordinate(p.lat, p.lng)
-        return new jsts.geom.Coordinate(p[0], p[1])
-    }
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;_joinLinesInPolygon&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;points&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pointToGeomCoordinate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lng&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jsts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;geom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Coordinate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lng&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jsts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;geom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Coordinate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-    const toLeafletPoint = (p) =&gt; {
-        return [p.x, p.y]
-    }
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;toLeafletPoint&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-    const meters = 40 //the user can selected the width of the generated polygon
-    const distance = (meters * 0.0001) / 111.12; //Geometry aproximations
-    const geometryFactory = new jsts.geom.GeometryFactory();
-    const pathCoords = points.map((p) =&gt; pointToGeomCoordinate(p));
-    const shell = geometryFactory.createLineString(pathCoords);
-    const polygon = shell.buffer(distance);
-    const polygonCoords = polygon.getCoordinates();
-    return polygonCoords.map((coord) =&gt; toLeafletPoint(coord))
-}
-```
-This method converts the leaflet points into a format the jsts libray can understand and perform the `buffer` operation in jsts which does all the magic. From the API definition: buffer computes a buffer area around this geometry having the given width.
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;meters&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//the user can selected the width of the generated polygon&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;distance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;meters&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0001&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;111.12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//Geometry aproximations&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;geometryFactory&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jsts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;geom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;GeometryFactory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pathCoords&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;points&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pointToGeomCoordinate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;shell&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;geometryFactory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createLineString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pathCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;polygon&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;shell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;distance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;polygonCoords&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;polygon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getCoordinates&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;polygonCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;coord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;toLeafletPoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;coord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;This method converts the leaflet points into a format the jsts libray can understand and perform the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;buffer&lt;/code&gt; operation in jsts which does all the magic. From the API definition: buffer computes a buffer area around this geometry having the given width.&lt;/p&gt;
 
-Later the coordinates are transformed into the leaflet format.
+&lt;p&gt;Later the coordinates are transformed into the leaflet format.&lt;/p&gt;
 
-Here you can see it in action: &lt;a href=&quot;https://www.agalera.eu/leaflet-fogofwar/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.agalera.eu/leaflet-fogofwar/&lt;/a&gt;</content><author><name></name></author><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><summary type="html">Following up from the previous article about implementing the fog of war in leaflet, I want to add some markers to the map and to create a polygon that joins them. Let’s see how I manage to do that.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/draw-polygon-markers/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/draw-polygon-markers/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Leaflet fog of war</title><link href="https://www.agalera.eu/leaflet-fog-of-war/" rel="alternate" type="text/html" title="Leaflet fog of war" /><published>2022-07-20T00:00:00+02:00</published><updated>2022-07-20T00:00:00+02:00</updated><id>https://www.agalera.eu/leaflet-fog-of-war</id><content type="html" xml:base="https://www.agalera.eu/leaflet-fog-of-war/">&lt;style&gt;
+&lt;p&gt;Here you can see it in action: &lt;a href=&quot;https://www.agalera.eu/leaflet-fogofwar/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.agalera.eu/leaflet-fogofwar/&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><summary type="html">Following up from the previous article about implementing the fog of war in leaflet, I want to add some markers to the map and to create a polygon that joins them. Let’s see how I manage to do that.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/draw-polygon-markers/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/draw-polygon-markers/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Leaflet fog of war</title><link href="https://www.agalera.eu/leaflet-fog-of-war/" rel="alternate" type="text/html" title="Leaflet fog of war" /><published>2022-07-20T00:00:00+02:00</published><updated>2022-07-20T00:00:00+02:00</updated><id>https://www.agalera.eu/leaflet-fog-of-war</id><content type="html" xml:base="https://www.agalera.eu/leaflet-fog-of-war/">&lt;style&gt;
 iframe {
     padding: 0;
     border-width: 0;
@@ -609,603 +840,274 @@ iframe {
 }
 &lt;/style&gt;
 
-When I was playing age of empires the map was all in black color at the beginning. As long as you explore the map, the black color is removed discovering what it was hidden behind.
+&lt;p&gt;When I was playing age of empires the map was all in black color at the beginning. As long as you explore the map, the black color is removed discovering what it was hidden behind.&lt;/p&gt;
 
-I wanted to implement something similar to show all the trails, routes, paths, roads, streets, etc that I have discovered. I&apos;ll describe the callenges I have found in a series of articles.
+&lt;p&gt;I wanted to implement something similar to show all the trails, routes, paths, roads, streets, etc that I have discovered. I’ll describe the callenges I have found in a series of articles.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
-This is part of my series of articles about leaflet:
+&lt;p&gt;This is part of my series of articles about leaflet:&lt;/p&gt;
 
-- &lt;a href=&quot;/leaflet-fog-of-war&quot;&gt;Leaflet fog of war&lt;/a&gt;
-- &lt;a href=&quot;/leaflet-draw-polygon-markers&quot;&gt;Draw a polygon from markers in leaflet&lt;/a&gt;
-- &lt;a href=&quot;/leaflet-load-gpx&quot;&gt;Load and display GPX in leaflet&lt;/a&gt;
-- &lt;a href=&quot;/browser-storage&quot;&gt;Browser storage&lt;/a&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/leaflet-fog-of-war&quot;&gt;Leaflet fog of war&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/leaflet-draw-polygon-markers&quot;&gt;Draw a polygon from markers in leaflet&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/leaflet-load-gpx&quot;&gt;Load and display GPX in leaflet&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/browser-storage&quot;&gt;Browser storage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
-Age of empires... what a great game
+&lt;p&gt;Age of empires… what a great game&lt;/p&gt;
 
-&lt;img src=&quot;/assets/img/posts/leaflet-fog-of-war/age-of-empires.jpeg&quot; alt=&quot;Age of Empires map&quot;/&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/posts/leaflet-fog-of-war/age-of-empires.jpeg&quot; alt=&quot;Age of Empires map&quot; /&gt;&lt;/p&gt;
 
-I want to create something similar to the map in Age of Empires. A map where everything is hidden until you discovered. This way you could check how much of your city you know, or where to search for new places to visit.
+&lt;p&gt;I want to create something similar to the map in Age of Empires. A map where everything is hidden until you discovered. This way you could check how much of your city you know, or where to search for new places to visit.&lt;/p&gt;
 
-I have worked many times before with &lt;a href=&quot;https://leafletjs.com/&quot;&gt;leaflet js&lt;/a&gt;, a nice library to display maps and geographic information. It has a nice ecosystem of plugins, so I&apos;ve checked if someone has something similar implemented and YES!
+&lt;p&gt;I have worked many times before with &lt;a href=&quot;https://leafletjs.com/&quot;&gt;leaflet js&lt;/a&gt;, a nice library to display maps and geographic information. It has a nice ecosystem of plugins, so I’ve checked if someone has something similar implemented and YES!&lt;/p&gt;
 
-&lt;a href=&quot;https://github.com/ptma/Leaflet.Mask&quot;&gt;Leaflet.Mask&lt;/a&gt; already implemented a plugin that mask all the map and displays the area specified in the begining.
+&lt;p&gt;&lt;a href=&quot;https://github.com/ptma/Leaflet.Mask&quot;&gt;Leaflet.Mask&lt;/a&gt; already implemented a plugin that mask all the map and displays the area specified in the begining.&lt;/p&gt;
 
 &lt;div class=&quot;iframe-holder&quot;&gt;
 &lt;iframe src=&quot;https://ptma.github.io/Leaflet.Mask/examples/mask.html&quot;&gt;&lt;/iframe&gt;
 &lt;/div&gt;
 
-However, it does not fit my requirements as I want to add places dynamically. So, let&apos;s implement our own thing ...
+&lt;p&gt;However, it does not fit my requirements as I want to add places dynamically. So, let’s implement our own thing …&lt;/p&gt;
 
-## Implementing my own Leaflet Mask
+&lt;h2 id=&quot;implementing-my-own-leaflet-mask&quot;&gt;Implementing my own Leaflet Mask&lt;/h2&gt;
 
-Taking &lt;a href=&quot;https://github.com/ptma/Leaflet.Mask&quot;&gt;Leaflet.Mask&lt;/a&gt; as a base, I will modify it a bit in order to be able to add the visited area dynamically.
+&lt;p&gt;Taking &lt;a href=&quot;https://github.com/ptma/Leaflet.Mask&quot;&gt;Leaflet.Mask&lt;/a&gt; as a base, I will modify it a bit in order to be able to add the visited area dynamically.&lt;/p&gt;
 
-The key for this to succeed was to understand how the polygon has to be created in leaflet:
+&lt;p&gt;The key for this to succeed was to understand how the polygon has to be created in leaflet:&lt;/p&gt;
 
-```javascript
-scotland = L.polygon([
-  [
-    [60, -13],
-    [60, 0],
-    [50, 4],
-    [50, -13],
-  ],
-  [
-    [55.7, -4.5],
-    [56, -4.5],
-    [56, -4],
-    [55.7, -4],
-  ],
-]);
-scotland.addTo(map);
-```
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;scotland&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;polygon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;55.7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;4.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;56&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;4.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;56&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;55.7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;scotland&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;addTo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;img src=&quot;/assets/img/posts/leaflet-fog-of-war/holes.png&quot; alt=&quot;Polygon with holes&quot;/&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/posts/leaflet-fog-of-war/holes.png&quot; alt=&quot;Polygon with holes&quot; /&gt;&lt;/p&gt;
 
-In order to draw the polygon, the user might pass the list of latitude longitudes and a second optional argument that defines the holes of that polygon.
+&lt;p&gt;In order to draw the polygon, the user might pass the list of latitude longitudes and a second optional argument that defines the holes of that polygon.&lt;/p&gt;
 
-Finally the code looked something similar to:
+&lt;p&gt;Finally the code looked something similar to:&lt;/p&gt;
 
-```javascript
- _setMaskLayer: function () {
-            if (this.masklayer) {
-                this.removeLayer(this.masklayer)
-            }
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;nx&quot;&gt;_setMaskLayer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;masklayer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;removeLayer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;masklayer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-            var allWorld = this._coordsToLatLngs(this._allWorldCoordinates)
-            var latlngs = [allWorld]
+            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;allWorld&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_coordsToLatLngs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_allWorldCoordinates&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;latlngs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;allWorld&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
 
-            this._holes.forEach((hole) =&gt; latlngs.push(this._coordsToLatLngs(hole)))
+            &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_holes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;forEach&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hole&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;latlngs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_coordsToLatLngs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hole&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
 
-            var layer = new L.Polygon(latlngs, this.options);
-            this.masklayer = layer
-            this.addLayer(layer);
-        },
-```
+            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;layer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Polygon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;latlngs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;masklayer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;layer&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;addLayer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;layer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-The plugin reads the input data as &lt;a href=&quot;https://en.wikipedia.org/wiki/GeoJSON&quot;&gt;GeoJSON&lt;/a&gt; and store the visited places latitude and longitude in the `this._holes` variable. Later on, this array is iterated in order to build the holes that leaflet will draw into the polygon. Finally the created polygon is added to the map. When the method is called, the polygon is removed to be able to redraw it.
+&lt;p&gt;The plugin reads the input data as &lt;a href=&quot;https://en.wikipedia.org/wiki/GeoJSON&quot;&gt;GeoJSON&lt;/a&gt; and store the visited places latitude and longitude in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this._holes&lt;/code&gt; variable. Later on, this array is iterated in order to build the holes that leaflet will draw into the polygon. Finally the created polygon is added to the map. When the method is called, the polygon is removed to be able to redraw it.&lt;/p&gt;
 
-Here you can see it in action: &lt;a href=&quot;https://www.agalera.eu/leaflet-fogofwar/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.agalera.eu/leaflet-fogofwar/&lt;/a&gt;
+&lt;p&gt;Here you can see it in action: &lt;a href=&quot;https://www.agalera.eu/leaflet-fogofwar/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.agalera.eu/leaflet-fogofwar/&lt;/a&gt;&lt;/p&gt;
 
-But wait ... that&apos;s not all, I want the fulfill the following requirements:
-- I need a way to draw the areas I visisted, covered in the article: &lt;a href=&quot;/leaflet-draw-polygon-markers/&quot;&gt;Draw a polygon from markers in leaflet&lt;/a&gt;
-- Load a GPX and display it in the map, covered in the article: &lt;a href=&quot;/leaflet-draw-polygon-markers/&quot;&gt;Load and display GPX in leaflet&lt;/a&gt;
-- I don&apos;t want to spent any money in this, so the storage will be browser based. This is covered in the article: &lt;a href=&quot;/browser-storage&quot;&gt;Browser storage&lt;/a&gt;</content><author><name></name></author><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><summary type="html">When I was playing age of empires the map was all in black color at the beginning. As long as you explore the map, the black color is removed discovering what it was hidden behind. I wanted to implement something similar to show all the trails, routes, paths, roads, streets, etc that I have discovered. I’ll describe the callenges I have found in a series of articles.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/leaflet-fog-of-war/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/leaflet-fog-of-war/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Combine two Java Optionals</title><link href="https://www.agalera.eu/combine-two-optionals/" rel="alternate" type="text/html" title="Combine two Java Optionals" /><published>2022-06-03T00:00:00+02:00</published><updated>2022-06-03T00:00:00+02:00</updated><id>https://www.agalera.eu/combine-two-optionals</id><content type="html" xml:base="https://www.agalera.eu/combine-two-optionals/">I was implementing a searching algorithm and I had to search for two things. In this article I describe how I implemented combining two Java optionals.
-
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
-
-The algorithm had to do something similar to:
-
-1. Search inside an array the first item starting by A
-2. If none is found, search the first item starting by B
-3. If none is found, throw an Exception
-
-Common code:
-
-```java
-public abstract class ItemFinder {
-
-    protected abstract String findItem(List&lt;String&gt; items);
-
-    protected Optional&lt;String&gt; findFirstItemStartingWithA(List&lt;String&gt; items) {
-        return findFirstItemStartingWith(&quot;A&quot;, items);
-    }
-
-    protected Optional&lt;String&gt; findFirstItemStartingWithB(List&lt;String&gt; items) {
-        return findFirstItemStartingWith(&quot;B&quot;, items);
-    }
-
-    private Optional&lt;String&gt; findFirstItemStartingWith(String letter, List&lt;String&gt; items) {
-        return items.stream()
-            .filter(item -&gt; item.startsWith(letter))
-            .findFirst();
-    }
-}
-```
-
-## Java 8
-
-The only way to achieve this with Optionals before Java 9 was to cascade the Optional call:
-
-```java
-     public String findItem(List&lt;String&gt; items) {
-        return findFirstItemStartingWithA(items)
-            .orElseGet(() -&gt; findFirstItemStartingWithB(items)
-                .orElseThrow(() -&gt; new RuntimeException(&quot;no item found&quot;)));
-    }
-```
-
-The alternative flow is cascaded in the `orElseGet`, which is a little bit hard to read
-
-## Java &gt; 9
-
-In Java 9, the `Optional.or` method is introduced, which enhaces a lot the code for these scenarios. The code above can be rewritten in a much more understandable fashion:
-
-```java
-    public String findItem(List&lt;String&gt; items) {
-        return findFirstItemStartingWithA(items)
-            .or(() -&gt; findFirstItemStartingWithB(items))
-            .orElseThrow(() -&gt; new RuntimeException(&quot;no item found&quot;));
-    }
-```</content><author><name></name></author><category term="java9" /><category term="optional" /><category term="java9" /><category term="optional" /><summary type="html">I was implementing a searching algorithm and I had to search for two things. In this article I describe how I implemented combining two Java optionals.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/combine-optional/featured-image.jpeg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/combine-optional/featured-image.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Golang abstract class</title><link href="https://www.agalera.eu/golang-abstract-class/" rel="alternate" type="text/html" title="Golang abstract class" /><published>2021-09-24T00:00:00+02:00</published><updated>2021-09-24T00:00:00+02:00</updated><id>https://www.agalera.eu/golang-abstract-class</id><content type="html" xml:base="https://www.agalera.eu/golang-abstract-class/">I&apos;m doing a side project using golang, and I have a use case where I&apos;d use an abstract class in Java.  Unfortunately, in golang the concept of classes does not exist.
-
-In this article I describe how can I implement the behaviour I want without abstract class.
+&lt;p&gt;But wait … that’s not all, I want the fulfill the following requirements:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;I need a way to draw the areas I visisted, covered in the article: &lt;a href=&quot;/leaflet-draw-polygon-markers/&quot;&gt;Draw a polygon from markers in leaflet&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Load a GPX and display it in the map, covered in the article: &lt;a href=&quot;/leaflet-draw-polygon-markers/&quot;&gt;Load and display GPX in leaflet&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;I don’t want to spent any money in this, so the storage will be browser based. This is covered in the article: &lt;a href=&quot;/browser-storage&quot;&gt;Browser storage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><summary type="html">When I was playing age of empires the map was all in black color at the beginning. As long as you explore the map, the black color is removed discovering what it was hidden behind. I wanted to implement something similar to show all the trails, routes, paths, roads, streets, etc that I have discovered. I’ll describe the callenges I have found in a series of articles.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/leaflet-fog-of-war/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/leaflet-fog-of-war/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Combine two Java Optionals</title><link href="https://www.agalera.eu/combine-two-optionals/" rel="alternate" type="text/html" title="Combine two Java Optionals" /><published>2022-06-03T00:00:00+02:00</published><updated>2022-06-03T00:00:00+02:00</updated><id>https://www.agalera.eu/combine-two-optionals</id><content type="html" xml:base="https://www.agalera.eu/combine-two-optionals/">&lt;p&gt;I was implementing a searching algorithm and I had to search for two things. In this article I describe how I implemented combining two Java optionals.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
-I&apos;m implementing an alert system in golang. When the alert needs to be activated, I want to play a sound through speakers and blink some LEDs for some period of time.
+&lt;p&gt;The algorithm had to do something similar to:&lt;/p&gt;
 
-The behavior is quite simple, it needs to provide an implementation to enable the signaler, disable and query.
+&lt;ol&gt;
+  &lt;li&gt;Search inside an array the first item starting by A&lt;/li&gt;
+  &lt;li&gt;If none is found, search the first item starting by B&lt;/li&gt;
+  &lt;li&gt;If none is found, throw an Exception&lt;/li&gt;
+&lt;/ol&gt;
 
-We will create two clases, one for playing sounds and another one for blinking the LEDs. And an abstract class to implement the shutdown after some period of time. Something similar to:
+&lt;p&gt;Common code:&lt;/p&gt;
 
-```java
-abstract class Signaler {
-    public void enableForTime(int seconds) {
-        //Implementation to enable the signaler for x seconds
-    }
-    public void disable() {
-        //Disable the signalers and cancel any pending timer
-    }
-    abstract void enable();
-    abstract void disableSignaler();
-}
-class LedSignaler extends Signaler {
-    @Override
-    void enable() {
-        //enable the LEDs
-    }
-    @Override
-    void disableSignaler() {
-        //disable the LEDs
-    }
-}
-class SoundSignaler extends Signaler {
-    @Override
-    void enable() {
-        //enable the speaker
-    }
-    @Override
-    void disableSignaler() {
-        //disable the speaker
-    }
-}
-```
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ItemFinder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
 
-The idea of this is to abstract the concrete implementation to the caller of the signaler. 
+    &lt;span class=&quot;kd&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findItem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
 
-This representation will work in any language that supports inheritance and abstract classes.
+    &lt;span class=&quot;kd&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findFirstItemStartingWithA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findFirstItemStartingWith&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;A&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-## Decorator pattern
+    &lt;span class=&quot;kd&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findFirstItemStartingWithB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findFirstItemStartingWith&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;B&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-In golang, the concept of classes does not exist. So, we need to re-architecture the pattern. 
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findFirstItemStartingWith&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;letter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;item&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;startsWith&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;letter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;findFirst&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-Instead of using the abstract class, we can re-think the implementation to use a decorator pattern: &lt;a href=&quot;https://en.wikipedia.org/wiki/Decorator_pattern&quot;&gt;https://en.wikipedia.org/wiki/Decorator_pattern&lt;/a&gt;.
+&lt;h2 id=&quot;java-8&quot;&gt;Java 8&lt;/h2&gt;
 
-&gt; The decorator pattern is a design pattern that allows behavior to be added to an individual object, dynamically, without affecting the behavior of other objects from the same class
+&lt;p&gt;The only way to achieve this with Optionals before Java 9 was to cascade the Optional call:&lt;/p&gt;
 
-It works by defining an interface that will have multiple implementation, we can add new functionalities by adding new implementations. Let&apos;s go define the interface of the signaler:
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findItem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findFirstItemStartingWithA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;orElseGet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;findFirstItemStartingWithB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;orElseThrow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;RuntimeException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;no item found&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)));&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-```golang
-type Signaler interface {
-	Enable()
-	IsEnabled() bool
-	Disable()
-}
-```
-Now, we can do the implementation of the sound signaler. To implement and interface in golang you need to provide a struct that has the same methods as the interface.
+&lt;p&gt;The alternative flow is cascaded in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;orElseGet&lt;/code&gt;, which is a little bit hard to read&lt;/p&gt;
 
-```golang
-type soundSignaler struct {
+&lt;h2 id=&quot;java--9&quot;&gt;Java &amp;gt; 9&lt;/h2&gt;
+
+&lt;p&gt;In Java 9, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Optional.or&lt;/code&gt; method is introduced, which enhaces a lot the code for these scenarios. The code above can be rewritten in a much more understandable fashion:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findItem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findFirstItemStartingWithA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;or&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;findFirstItemStartingWithB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;orElseThrow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;RuntimeException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;no item found&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="java9" /><category term="optional" /><category term="java9" /><category term="optional" /><summary type="html">I was implementing a searching algorithm and I had to search for two things. In this article I describe how I implemented combining two Java optionals.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/combine-optional/featured-image.jpeg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/combine-optional/featured-image.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Golang abstract class</title><link href="https://www.agalera.eu/golang-abstract-class/" rel="alternate" type="text/html" title="Golang abstract class" /><published>2021-09-24T00:00:00+02:00</published><updated>2021-09-24T00:00:00+02:00</updated><id>https://www.agalera.eu/golang-abstract-class</id><content type="html" xml:base="https://www.agalera.eu/golang-abstract-class/">&lt;p&gt;I’m doing a side project using golang, and I have a use case where I’d use an abstract class in Java.  Unfortunately, in golang the concept of classes does not exist.&lt;/p&gt;
+
+&lt;p&gt;In this article I describe how can I implement the behaviour I want without abstract class.&lt;/p&gt;
+
+&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;p&gt;I’m implementing an alert system in golang. When the alert needs to be activated, I want to play a sound through speakers and blink some LEDs for some period of time.&lt;/p&gt;
+
+&lt;p&gt;The behavior is quite simple, it needs to provide an implementation to enable the signaler, disable and query.&lt;/p&gt;
+
+&lt;p&gt;We will create two clases, one for playing sounds and another one for blinking the LEDs. And an abstract class to implement the shutdown after some period of time. Something similar to:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Signaler&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;enableForTime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//Implementation to enable the signaler for x seconds&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;disable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//Disable the signalers and cancel any pending timer&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;enable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;disableSignaler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;LedSignaler&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Signaler&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;enable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//enable the LEDs&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;disableSignaler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//disable the LEDs&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SoundSignaler&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Signaler&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;enable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//enable the speaker&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;disableSignaler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//disable the speaker&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The idea of this is to abstract the concrete implementation to the caller of the signaler.&lt;/p&gt;
+
+&lt;p&gt;This representation will work in any language that supports inheritance and abstract classes.&lt;/p&gt;
+
+&lt;h2 id=&quot;decorator-pattern&quot;&gt;Decorator pattern&lt;/h2&gt;
+
+&lt;p&gt;In golang, the concept of classes does not exist. So, we need to re-architecture the pattern.&lt;/p&gt;
+
+&lt;p&gt;Instead of using the abstract class, we can re-think the implementation to use a decorator pattern: &lt;a href=&quot;https://en.wikipedia.org/wiki/Decorator_pattern&quot;&gt;https://en.wikipedia.org/wiki/Decorator_pattern&lt;/a&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The decorator pattern is a design pattern that allows behavior to be added to an individual object, dynamically, without affecting the behavior of other objects from the same class&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;It works by defining an interface that will have multiple implementation, we can add new functionalities by adding new implementations. Let’s go define the interface of the signaler:&lt;/p&gt;
+
+&lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Signaler&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;Enable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;IsEnabled&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;Disable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Now, we can do the implementation of the sound signaler. To implement and interface in golang you need to provide a struct that has the same methods as the interface.&lt;/p&gt;
+
+&lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;soundSignaler&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     
-}
-func (s *soundSignaler) Enable() {
-	s.enabled = true
-    //start playing sound
-}
-
-func (s *soundSignaler) Disable() {
-	s.enabled = false
-    //stop playing sound
-}
-
-func (s *soundSignaler) IsEnabled() bool {
-	return s.enabled
-}
-```
-OK, now let&apos;s do the implementation of the temporal execution of the signaler. In order to do so, let&apos;s create a new type that implement `Signaler`:
-
-```golang
-type temporalSignaler struct {
-	config          *config.AlarmConfig
-	timers          []signalerTimer
-	delayedExecutor delayedExecutor
-	signaler        Signaler
-}
-
-func (s *temporalSignaler) Enable() {
-	s.signaler.Enable()
-	var t = s.delayedExecutor.executeAfterSeconds(s.config.SecondsStopSignals, func() {
-		s.Disable()
-	})
-	s.timers = append(s.timers, t)
-}
-
-func (s *temporalSignaler) Disable() {
-	for i := 0; i &lt; len(s.timers); i++ {
-		s.timers[i].Stop()
-	}
-	s.signaler.Disable()
-}
-
-func (s *temporalSignaler) IsEnabled() bool {
-	return s.signaler.IsEnabled()
-}
-```
-The key point of this struct, is that we&apos;re holding a `Signaler` instance on it. We are &quot;decorating&quot; that instance with the temporal disabling functionality. In order to do so, we just need to implement the logic in the type and call the `Signaler` methods of the decorated instance.
-
-The most elegant part of this implementation is that we&apos;re defining all the structs as private (name begins with lower case). So, the external modules cannot instantiate them. We can abstract the creation of the sound signaler by creating a factory:
-
-```golang
-func NewSoundSignaler(config *config.Config) Signaler {
-	return &amp;temporalSignaler{
-		delayedExecutor: &amp;defaultDelayedExecutor{},
-		config:          &amp;config.Alarm,
-		signaler: &amp;soundSignaler{
-			config:   config,
-			executor: &amp;unixCommandExecutor{},
-		},
-	}
-}
-```
-
-External modules can call the factory method, and they will receive a `Signaler` instance, hiding effectively the implementation details of the temporal execution and sound playback.</content><author><name></name></author><category term="golang" /><category term="design-patterns" /><category term="architecture" /><category term="golang" /><category term="design-patterns" /><category term="architecture" /><summary type="html">I’m doing a side project using golang, and I have a use case where I’d use an abstract class in Java. Unfortunately, in golang the concept of classes does not exist. In this article I describe how can I implement the behaviour I want without abstract class.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/golang-abstract/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/golang-abstract/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Implementing a dog bark detector</title><link href="https://www.agalera.eu/bark-detector/" rel="alternate" type="text/html" title="Implementing a dog bark detector" /><published>2021-07-18T00:00:00+02:00</published><updated>2021-07-18T00:00:00+02:00</updated><id>https://www.agalera.eu/bark-detector</id><content type="html" xml:base="https://www.agalera.eu/bark-detector/">&lt;style type=&quot;text/css&quot;&gt;
-.image-table td{
-    border: 0px;
-}
-.image-table .center{
-    text-align: center;
-}
-&lt;/style&gt;
-
-&lt;p&gt;My dog has a little bit of separation anxiety so when we leave him alone, he barks some times.&lt;/p&gt;
-
-&lt;p&gt;We are training him to be home-alone and we want to know if he barks or not when we are not home.&lt;/p&gt;
-
-&lt;p&gt;Let&apos;s implement a bark detector!&lt;/p&gt;
-
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
-
-## Basics
-
-### Time representation
-
-What is audio and how is its digital representation? It&apos;s basically an array of float values containing a value from -1 to 1.
-
-&lt;table class=&quot;image-table&quot;&gt;
-&lt;tr&gt;
-&lt;td&gt;
-&lt;img src=&quot;/assets/img/posts/bark-detector/wave.png&quot; alt=&quot;Sound wave&quot;/&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td class=&quot;center&quot;&gt;
-&lt;small&gt;Temporal representation of an audio signal&lt;/small&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/table&gt;
-
-This representation shows the temporal evolution of the audio signal over time. This is very variable and it&apos;s really difficult to extract any relevant feature from this representation.
-
-### Frequency representation
-
-So, instead of using the temporal representation, let&apos;s observe the frequency representation:
-
-&lt;table class=&quot;image-table&quot;&gt;
-&lt;tr&gt;
-&lt;td&gt;
-&lt;img src=&quot;/assets/img/posts/bark-detector/stft.png&quot; alt=&quot;Frequency representation&quot;/&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td class=&quot;center&quot;&gt;
-&lt;small&gt;Frequency representation of an audio signal&lt;/small&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/table&gt;
-
-The x axis is the time of the audio signal and the y axis is the values of the frequencies. Each color in the vertical axis correspond to a different value of the power on that certain frequency.
-
-Note that the time of the plot is doubled respect with the time representation, this is because the signal is combined with itself to generate the frequency representation.
-
-This representation shows the evolution of the different frequency amplitudes over time.
-
-Without even listening the sound, we can try to analise it checking the time/frequency characteristic. We see some peaks in the time representation that match with high energy in the low frequencies.
-
-The good thing about frequency representation is that it cancel noise because usually its energy is spread over all frequencies. Besides that, each sound has a characteristic frequency footprint. So, it&apos;s very convinient to extract the features of the sound in the frequency domain.
-
-### Mel Frequency Cepstral Co-efficients (MFCC)
-
-Quoting from &lt;a href=&quot;https://iq.opengenus.org/mfcc-audio/&quot;&gt;https://iq.opengenus.org/mfcc-audio/&lt;/a&gt;:
-
-&gt; MFC is a representation of the short-term power spectrum of a sound, based on a linear cosine transform of a log power spectrum on a nonlinear mel scale of frequency.
-
-Ok, what does it mean? It&apos;s an improved frequency representation but applying optimizations based on the characteristics of human hearing. Usually MFCC are obtained like this:
-
-1. Take the Fourier transform of the audio signal to get the frequency representation.
-2. Map the powers of the spectrum to the &lt;a href=&quot;https://en.wikipedia.org/wiki/Mel_scale&quot;&gt;mel scale&lt;/a&gt;. This scale approximates the spectrum to be more like what humans hear.
-3. Take the logs of the powers at each of the mel frequencies.
-4. Take the discrete cosine transform (DCT) of the list of mel log powers. This will remove redudant information as in non-changing information.
-5. The MFCCs are the amplitudes of the resulting spectrum.
-
-&lt;table class=&quot;image-table&quot;&gt;
-&lt;tr&gt;
-&lt;td&gt;
-&lt;img src=&quot;/assets/img/posts/bark-detector/mfcc.png&quot; alt=&quot;MFCC&quot;/&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td class=&quot;center&quot;&gt;
-&lt;small&gt;MFCC representation of an audio signal&lt;/small&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/table&gt;
-
-We can use &lt;a href=&quot;https://librosa.org/doc/latest/index.html&quot;&gt;librosa&lt;/a&gt; library to load the audio and extract the MFCC features.
-
-The x axis is time, the y axis is the different MFCC coefficients computed (20 in this example). The color shows the value MFCC coefficient for certain time and coefficient.
-
-It&apos;s not obvious to see anything in this plot, but it represents the frequency information in a format the computer can use to understand the characteristics of this sound.
-
-## Getting the dataset
-
-In &lt;a href=&quot;https://www.agalera.eu/standalone-app-raspberry-pi&quot;&gt;this&lt;/a&gt; article I describe the little device I made to feed my dog while I&apos;m away. So I&apos;ll re-use the same device and plug it an old unused webcam that has a microphone.
-
-I did not want to complicate my life much and I created a simple script that uses vlc to stream the audio obtained by the webcam mic and store it as mp3. In order to analyse the files easier I run the script every minute so I have recordings of 60 seconds duration:
-
-```bash
-#!/bin/bash
-TIMEOUT=60
-FILE_NAME=&quot;/home/pi/dogfeeder-audios/dogfeeder-audio-$(date +&apos;%Y_%m_%d_%H_%M_%S&apos;).mp3&quot;
-timeout &quot;$TIMEOUT&quot; cvlc --no-video alsa://plughw:1 --sout=&quot;#transcode{vcodec=none,acodec=mp3,ab=128,
-channels=2,samplerate=44100}:duplicate{dst=std{access=http,mux=mp3,dst=:8087},dst=std{access=file,mux=wav,
-dst=$FILE_NAME}}&quot; &amp;
-```
-
-The syntax of vlc is really ugly :( . But if you read it carefully, you will see that we&apos;re telling vlc to transcode the audio coming from `alsa://plughw:1` device (webcam microphone) to mp3 at 128 kbps (decent compression rate). After that, stream the generated mp3 via HTTP on port 8087 and store the mp3 data on the given filename.
-
-In order to don&apos;t flood the SD card of the Raspberry Pi I run the following script each 15 minutes. It gets the files older than 15 minutes, copy them to a NAS and remove them from the Raspberry Pi disk.
-
-```bash
-#!/bin/bash
-MINUTES_ALLOWED=15
-FILES_TO_DELETE=$(find /home/pi/dogfeeder-audios -type f -mmin +&quot;$MINUTES_ALLOWED&quot; -exec ls {} +)
-
-for file in $FILES_TO_DELETE; do
-    scp &quot;$file&quot; admin@diskstation.local:/volume1/data/dogfeeder-audios/.
-    rm &quot;$file&quot;
-done
-```
-
-## Training the model
-
-I&apos;ve been recording for 3 days and we made some exits to keep him alone. Up to this point we have enough data to train the model. However, we have `60 min * 24 h * 3 days = 4320 files` and need to classify them manually. Will we do that manually? Absolutely not!
-
-We can pre-process the dataset and check for files that have something different than noise.
-
-&lt;table class=&quot;image-table&quot;&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;img src=&quot;/assets/img/posts/bark-detector/noise.png&quot; alt=&quot;Signal wit noise&quot;/&gt;&lt;/td&gt;
-&lt;td&gt;&lt;img src=&quot;/assets/img/posts/bark-detector/wave.png&quot; alt=&quot;Signal wit unclassified audio event&quot;/&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td class=&quot;center&quot;&gt;&lt;small&gt;File with only noise&lt;/small&gt;&lt;/td&gt;
-&lt;td class=&quot;center&quot;&gt;&lt;small&gt;File with unclassified audio event&lt;/small&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;/table&gt;
-
-Since my dog&apos;s barks are quite loud we can safely discard all files whose maximum amplitude is lower than 0.25. This way, we could reduce a lot the amount of files that need to be manually classified as bark.
-
-### Characterization of a bark
-
-As mentioned before, we&apos;ll discard files whose amplitude is lower than 0.25. Listening to multiple files with bark, we can observe that each bark more or less lasts for 1 second.
-
-&lt;table class=&quot;image-table&quot;&gt;
-&lt;tr&gt;
-&lt;td&gt;
-&lt;img src=&quot;/assets/img/posts/bark-detector/bark.png&quot; alt=&quot;Bark signal/&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td class=&quot;center&quot;&gt;
-&lt;audio controls&gt;
-    &lt;source src=&quot;/assets/sounds/posts/bark-detector/bark.wav&quot; type=&quot;audio/wav&quot;/&gt;
-&lt;/audio&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td class=&quot;center&quot;&gt;
-&lt;small&gt;Time representation of an audio signal containing a bark&lt;/small&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/table&gt;
-
-### Labelling the dataset
-
-So, the strategy for labelling the dataset will be:
-
-1. Download the whole dataset.
-2. Discard the not interesting files (files without any sound event) by checking the maximum amplitude.
-3. Extract chunks of 1 seconds from them, run again the algorithm to check sound events on the one-second chunks.
-4. Manually listen to the chunks and classify them as bark or not. You can default the labelling to &quot;Not Bark&quot; and this way you only classify events that are barks.
-
-The implementation of this is quite simple: write every chunk filename in a CSV and and a 0 or 1 signaling the presence of a bark or not:
-
-```
-chunks/dogfeeder-audio-2021_07_16_18_49_01_23.wav,0
-chunks/dogfeeder-audio-2021_07_16_18_49_01_24.wav,1
-chunks/dogfeeder-audio-2021_07_16_18_49_01_25.wav,0
-```
-
-Once we have the dataset labelled, we can go file by file and extract the MFCC features of every one-second file:
-
-```python
-def extract_mfcc(filename):
-    y, __ = librosa.load(filename, mono=True, sr=sample_rate)
-    mfcc_2D = librosa.feature.mfcc(y, sr=sample_rate, n_mfcc=100)
-    mfcc_1D = mfcc_2D.flatten()
-    scaler = MinMaxScaler()
-    mfccs_sc = scaler.fit_transform(np.array(mfcc_1D).reshape(-1, 1))
-    return mfccs_sc.flatten()
-```
-
-MFCC values can go from [-Inf, Inf], however when I was playing with different algorithms, some of them did not accept negative values, so I scaled the values of MFCC to [0, Inf] using `MinMaxScaler`.
-
-Once we have the MFCC features for all the dataset, we can split the dataset into training and test dataset using:
-
-```python
-from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(
-        X, Y, random_state=42, test_size=0.33)
-```
-
-After that, I&apos;ve assesed the prediction performance of `Naive Bayes` classifier and `Logistic Regression` classifiers:
-
-```python
-    # Naive bayes
-    print(&quot;Training naive bayes ...&quot;)
-    mnb = MultinomialNB().fit(X_train, y_train)
-    print(&quot;score on test: &quot; + str(mnb.score(X_test, y_test)))
-    print(&quot;score on train: &quot; + str(mnb.score(X_train, y_train)))
-    print(&quot;***************&quot;)
-
-    # Logistic regression
-    print(&quot;Training logistic regression ...&quot;)
-    lr = LogisticRegression(max_iter=1000)
-    lr.fit(X_train, y_train)
-    print(&quot;score on test: &quot; + str(lr.score(X_test, y_test)))
-    print(&quot;score on train: &quot; + str(lr.score(X_train, y_train)))
-```
-
-Getting a very good score with the logistic regression, I don&apos;t remember exactly the numbers but were more or less:
-
-- Score on test: 0.992
-- Score on traing: 0.996
-
-### Dataset imbalance
-
-The number of events with barks will be very reduced compared with the events that does not contain a bark. This can present a huge problem depending on the machine learning algorithm returning a totally biased model.
-
-In order to fix that, you can do two things:
-
-1. Oversample: create positive samples by synthetically creating new positive samples
-2. Undersample: discard samples from the negative ones
-
-More info: &lt;a href=&quot;https://towardsdatascience.com/having-an-imbalanced-dataset-here-is-how-you-can-solve-it-1640568947eb&quot;&gt;https://towardsdatascience.com/having-an-imbalanced-dataset-here-is-how-you-can-solve-it-1640568947eb&lt;/a&gt;
-
-I&apos;ve used `SMOTE` (Synthetic Minority Over-sampling Technique) technique to perform the oversampling with very satisfactory results. In simple terms, SMOTE looks at the feature space for the minority class data points and considers its k nearest neighbours. 
-
-To do that I&apos;ve used &lt;a href=&quot;https://imbalanced-learn.org/stable/&quot;&gt;imbalanced-learn&lt;/a&gt; python libary and it&apos;s really simple:
-
-```python
-def fix_imbalance(X, Y):
-    over = SMOTE(sampling_strategy=0.1)
-    under = RandomUnderSampler(sampling_strategy=0.5)
-    steps = [(&apos;o&apos;, over), (&apos;u&apos;, under)]
-    pipeline = Pipeline(steps=steps)
-    X_fix, Y_fix = pipeline.fit_resample(X, Y)
-    return X_fix, Y_fix
-```
-
-Note that the library also provides a module to perform majority under sampling. The two methods are combined in a pipeline to fix the dataset imbalance problem.
-
-## Using the training model
-
-Now we have our logistic regression model trained and is working quite well. It&apos;s time to put it on the Raspberry Pi.
-
-First of all, we need a way to export the model outside of the training python code. In order to do that, I use the &lt;a href=&quot;https://joblib.readthedocs.io/en/latest/&quot;&gt;joblib&lt;/a&gt; library:
-
-```python
-# Write the model
-lr = LogisticRegression(max_iter=1000)
-lr.fit(X_train, y_train)
-joblib.dump(lr, &apos;lr.pkl&apos;, compress=9)
-```
-
-joblib serialize the object into that file and then Raspberry Pi can load the model object:
-
-```python
-model = joblib.load(&apos;lr.pkl&apos;)
-```
-
-Now we can retrieve the more recent fully recorded audio file:
-
-```python
-def last_fully_written_file():
-    return audios_path + &quot;/&quot; + sorted(os.listdir(audios_path))[-2]
-```
-If the script query the last file, it might happen that is not fully written by that time.
-
-
-Split it into chunks of one second and for each chunk run the prediction:
-
-```python
-def has_bark_in_minute(filename):
-    model = joblib.load(&apos;lr.pkl&apos;)
-
-    audio_data, __ = load_audio_from_file(filename)
-    chunks = split_in_one_second_chunks(audio_data, sample_rate)
-    chunk_predictions = []
-    for chunk in chunks:
-        if len(chunk) == sample_rate:
-            mfccs = extract_mfcc(chunk)
-            chunk_predictions.append(model.predict(np.array([mfccs]))[0])
-
-    return chunk_predictions.count(1) &gt; 2, chunk_predictions
-```
-
-Since the model is probabilistic, it might happen to have false positive or negatives. In order to avoid that, the function `has_bark_in_minute` will only return `True` when more than two barks are detected for one minute.
-
-Last but not least, when a bark is detected, the script will send me a message over telegram:
-
-```python
-def send_to_telegram(predictions, filename):
-    date = filename.split(&quot;-&quot;)[-1].split(&quot;.mp3&quot;)[0]
-
-    welcome_msg = f&quot;Detected {predictions.count(1)} barks on {date}&quot;
-
-    response = requests.post(
-        f&quot;https://api.telegram.org/bot{get_token()}/sendMessage&quot;,
-        data={&quot;chat_id&quot;: telegram_group_id, &quot;text&quot;: welcome_msg},
-    )
-    print(response.text)
-```
-
-&lt;table class=&quot;image-table&quot;&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;img src=&quot;/assets/img/posts/bark-detector/telegram.png&quot; alt=&quot;Telegram message when a bark occurs&quot;/&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td class=&quot;center&quot;&gt;&lt;small&gt;Example of messages in Telegram&lt;/small&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/table&gt;</content><author><name></name></author><category term="python" /><category term="ml" /><category term="audio" /><category term="raspberry-pi" /><category term="bash" /><category term="python" /><category term="ml" /><category term="audio" /><category term="scikit" /><category term="librosa" /><category term="raspberry-pi" /><category term="vlc" /><category term="bash" /><summary type="html">My dog has a little bit of separation anxiety so when we leave him alone, he barks some times. We are training him to be home-alone and we want to know if he barks or not when we are not home. Let&apos;s implement a bark detector!</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/bark-detector/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/bark-detector/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;soundSignaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Enable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;enabled&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;//start playing sound&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;soundSignaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Disable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;enabled&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;false&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;//stop playing sound&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;soundSignaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IsEnabled&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;enabled&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;OK, now let’s do the implementation of the temporal execution of the signaler. In order to do so, let’s create a new type that implement &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Signaler&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temporalSignaler&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;          &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AlarmConfig&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;timers&lt;/span&gt;          &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;signalerTimer&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;delayedExecutor&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;delayedExecutor&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;signaler&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;Signaler&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temporalSignaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Enable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;signaler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Enable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;delayedExecutor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executeAfterSeconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SecondsStopSignals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Disable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;timers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;timers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temporalSignaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Disable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;timers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;timers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Stop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;signaler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Disable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temporalSignaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IsEnabled&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;signaler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IsEnabled&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;The key point of this struct, is that we’re holding a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Signaler&lt;/code&gt; instance on it. We are “decorating” that instance with the temporal disabling functionality. In order to do so, we just need to implement the logic in the type and call the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Signaler&lt;/code&gt; methods of the decorated instance.&lt;/p&gt;
+
+&lt;p&gt;The most elegant part of this implementation is that we’re defining all the structs as private (name begins with lower case). So, the external modules cannot instantiate them. We can abstract the creation of the sound signaler by creating a factory:&lt;/p&gt;
+
+&lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NewSoundSignaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Signaler&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temporalSignaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;delayedExecutor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;defaultDelayedExecutor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;          &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Alarm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;signaler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;soundSignaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;executor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;unixCommandExecutor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;External modules can call the factory method, and they will receive a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Signaler&lt;/code&gt; instance, hiding effectively the implementation details of the temporal execution and sound playback.&lt;/p&gt;</content><author><name></name></author><category term="golang" /><category term="design-patterns" /><category term="architecture" /><category term="golang" /><category term="design-patterns" /><category term="architecture" /><summary type="html">I’m doing a side project using golang, and I have a use case where I’d use an abstract class in Java. Unfortunately, in golang the concept of classes does not exist. In this article I describe how can I implement the behaviour I want without abstract class.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/golang-abstract/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/golang-abstract/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
