@@ -109,7 +109,7 @@
 <lastmod>2022-09-06T00:00:00+02:00</lastmod>
 </url>
 <url>
-<loc>https://www.agalera.eu/hack-the-box-cheatsheet/</loc>
+<loc>https://www.agalera.eu/pentesting-techniques/</loc>
 <lastmod>2022-12-12T00:00:00+01:00</lastmod>
 </url>
 <url>
@@ -119,6 +119,10 @@
 <url>
 <loc>https://www.agalera.eu/python-cli-application/</loc>
 <lastmod>2022-12-13T00:00:00+01:00</lastmod>
+</url>
+<url>
+<loc>https://www.agalera.eu/pentesting-tools/</loc>
+<lastmod>2022-12-16T00:00:00+01:00</lastmod>
 </url>
 <url>
 <loc>https://www.agalera.eu/about/</loc>
@@ -152,5 +156,8 @@
 </url>
 <url>
 <loc>https://www.agalera.eu/blog/page6/</loc>
+</url>
+<url>
+<loc>https://www.agalera.eu/blog/page7/</loc>
 </url>
 </urlset>

