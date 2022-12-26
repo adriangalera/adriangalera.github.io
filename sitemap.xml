@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>https://www.agalera.eu/pentesting-resources/</loc>
+<lastmod>2012-12-25T00:00:00+01:00</lastmod>
+</url>
+<url>
 <loc>https://www.agalera.eu/raspberry-pi-qa/</loc>
 <lastmod>2018-09-21T00:00:00+02:00</lastmod>
 </url>
@@ -109,10 +113,6 @@
 <lastmod>2022-09-06T00:00:00+02:00</lastmod>
 </url>
 <url>
-<loc>https://www.agalera.eu/pentesting-techniques/</loc>
-<lastmod>2022-12-12T00:00:00+01:00</lastmod>
-</url>
-<url>
 <loc>https://www.agalera.eu/python-app-structure/</loc>
 <lastmod>2022-12-13T00:00:00+01:00</lastmod>
 </url>
@@ -123,6 +123,10 @@
 <url>
 <loc>https://www.agalera.eu/pentesting-tools/</loc>
 <lastmod>2022-12-16T00:00:00+01:00</lastmod>
+</url>
+<url>
+<loc>https://www.agalera.eu/pentesting-playbook/</loc>
+<lastmod>2022-12-25T00:00:00+01:00</lastmod>
 </url>
 <url>
 <loc>https://www.agalera.eu/about/</loc>

