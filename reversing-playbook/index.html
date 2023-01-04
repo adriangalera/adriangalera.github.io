@@ -85,23 +85,23 @@
     <meta property="og:type" content="website" />
     
     <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>Pentesting interesting links | Adrian Galera blog</title>
+<title>Reversing playbook | Adrian Galera blog</title>
 <meta name="generator" content="Jekyll v4.3.1" />
-<meta property="og:title" content="Pentesting interesting links" />
+<meta property="og:title" content="Reversing playbook" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="I keep this page as a reference to the different pentesting links I have used while doing the capture the flag exercises in https://www.hackthebox.com/" />
-<meta property="og:description" content="I keep this page as a reference to the different pentesting links I have used while doing the capture the flag exercises in https://www.hackthebox.com/" />
-<link rel="canonical" href="https://www.agalera.eu/pentesting-resources/" />
-<meta property="og:url" content="https://www.agalera.eu/pentesting-resources/" />
+<meta name="description" content="I keep this page as a reference to the steps I take to solve puzzles from https://www.hackthebox.com/" />
+<meta property="og:description" content="I keep this page as a reference to the steps I take to solve puzzles from https://www.hackthebox.com/" />
+<link rel="canonical" href="https://www.agalera.eu/reversing-playbook/" />
+<meta property="og:url" content="https://www.agalera.eu/reversing-playbook/" />
 <meta property="og:site_name" content="Adrian Galera blog" />
 <meta property="og:image" content="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2012-12-25T00:00:00+01:00" />
+<meta property="article:published_time" content="2023-01-04T00:00:00+01:00" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" />
-<meta property="twitter:title" content="Pentesting interesting links" />
+<meta property="twitter:title" content="Reversing playbook" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/pentesting-resources/"},"url":"https://www.agalera.eu/pentesting-resources/","@type":"BlogPosting","description":"I keep this page as a reference to the different pentesting links I have used while doing the capture the flag exercises in https://www.hackthebox.com/","image":"https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg","headline":"Pentesting interesting links","dateModified":"2012-12-25T00:00:00+01:00","datePublished":"2012-12-25T00:00:00+01:00","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/reversing-playbook/"},"url":"https://www.agalera.eu/reversing-playbook/","@type":"BlogPosting","description":"I keep this page as a reference to the steps I take to solve puzzles from https://www.hackthebox.com/","image":"https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg","headline":"Reversing playbook","dateModified":"2023-01-04T00:00:00+01:00","datePublished":"2023-01-04T00:00:00+01:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -110,12 +110,12 @@
     <link type="application/atom+xml" rel="alternate" href="https://www.agalera.eu/feed.xml" title="Adrian Galera blog" />
 
     <!-- Twitter Cards -->
-    <meta name="twitter:title" content="Pentesting interesting links">
-    <meta name="twitter:description" content="I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the pentesting interesting links I found.Resources...">
+    <meta name="twitter:title" content="Reversing playbook">
+    <meta name="twitter:description" content="I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the steps I take to complete the challenges relate...">
     
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg">
-    <meta name="twitter:image:alt" content="Pentesting interesting links">
+    <meta name="twitter:image:alt" content="Reversing playbook">
 </head>
 
   <body>
@@ -217,7 +217,7 @@
         
         
         <li class="separator"> | </li>
-        <li><a id="theme-toggle" title="Pentesting interesting links " aria-label="Pentesting interesting links" onclick="themeToggle()"></a></li>
+        <li><a id="theme-toggle" title="Reversing playbook " aria-label="Reversing playbook" onclick="themeToggle()"></a></li>
         
     </ul>
 
@@ -229,7 +229,7 @@
   <header id="main" style="">
     <div class="title-padder">
       
-      <h1 id="Pentesting+interesting+links" class="title">Pentesting interesting links</h1>
+      <h1 id="Reversing+playbook" class="title">Reversing playbook</h1>
       
 
 
@@ -237,7 +237,7 @@
     <p class="meta">
       
       
-      December 25, 2012
+      January 04, 2023
     </p></div>
 
       
@@ -246,37 +246,21 @@
 
   <section class="post-content">
   
-      <p>I have started playing around in <a href="https://www.hackthebox.com/">https://www.hackthebox.com</a> platform and I’ll use this article to save all the pentesting interesting links I found.</p>
+      <p>I have started playing around in <a href="https://www.hackthebox.com/">https://www.hackthebox.com</a> platform and I’ll use this article to save all the steps I take to complete the challenges related with reversing.</p>
 
 <p><!--more--></p>
 
-<h2 id="resources">Resources</h2>
+<p>There are a series of challenges where you are given a binary file and you need to be able to obtain the flag inside. In order to do so, you need to perform Reverse engineering. In order to do so, you should use a debugger or a decompiler (or both).</p>
 
-<p>General guides on pentesting: <a href="https://pentestbook.six2dez.com/">https://pentestbook.six2dez.com/</a></p>
+<p>The first step is to use regularly and pay attention to the strings appearing in the UI. Later, we can search those strings in the decompiler.</p>
 
-<p>List of reverse shells: <a href="https://www.revshells.com/">https://www.revshells.com/</a></p>
+<p>One useful tool to perform this kind of analysis is ghidra: <a href="https://github.com/NationalSecurityAgency/ghidra">https://github.com/NationalSecurityAgency/ghidra</a>.</p>
 
-<p>Hack tricks: <a href="https://book.hacktricks.xyz/welcome/readme">https://book.hacktricks.xyz/welcome/readme</a></p>
+<p>For instance, you can search for references, memory addresses, search for strings, etc..</p>
 
-<p>SecLists: <a href="https://github.com/danielmiessler/SecLists">https://github.com/danielmiessler/SecLists</a></p>
+<p>Another interesting tool is <code class="language-plaintext highlighter-rouge">gdb</code>, the gnu debugger. More on this to come, when i’m not familiar.</p>
 
-<p>Revershe shells: <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md">https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md</a></p>
-
-<p>Pentest monkey: <a href="https://pentestmonkey.net/">https://pentestmonkey.net/</a></p>
-
-<p>List of UNIX binaries that can be used to bypass local security restrictions: GTObins <a href="https://gtfobins.github.io/">https://gtfobins.github.io/</a></p>
-
-<p>Same for Windows: <a href="https://lolbas-project.github.io/">https://lolbas-project.github.io/</a></p>
-
-<p>Red team notes: <a href="https://www.ired.team/">https://www.ired.team/</a></p>
-
-<p>SQL Injections: <a href="https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/">https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/</a></p>
-
-<p>Search CVEs: <a href="https://cve.mitre.org/cve/search_cve_list.html">https://cve.mitre.org/cve/search_cve_list.html</a></p>
-
-<p>GTFObins: <a href="https://gtfobins.github.io/">https://gtfobins.github.io/</a></p>
-
-<p>Lolbas (Equivalent of GTFObins for Windows): <a href="https://lolbas-project.github.io/#">https://lolbas-project.github.io/#</a></p>
+<p>To debug Windows binaries, you can use <code class="language-plaintext highlighter-rouge">ollydbg</code>, analyse the code and place the breakpoints in the interesting addresses.</p>
 
     
   </section>
@@ -289,7 +273,7 @@
         <li class="meta">Share</li>
         
         <li>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.agalera.eu/pentesting-resources/" target="_blank"
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.agalera.eu/reversing-playbook/" target="_blank"
                title=" Facebook">
                 <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
                 <span class="sr-only">Share on Facebook</span>
@@ -297,7 +281,7 @@
         </li>
          
         <li>
-            <a href="https://twitter.com/intent/tweet?text=Pentesting+interesting+links%20https%3A%2F%2Fwww.agalera.eu%2Fpentesting-resources%2F"
+            <a href="https://twitter.com/intent/tweet?text=Reversing+playbook%20https%3A%2F%2Fwww.agalera.eu%2Freversing-playbook%2F"
                target="_blank" title="">
                 <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
                 <span class="sr-only">Tweet</span>
@@ -305,7 +289,7 @@
         </li>
          
         <li>
-            <a href="https://www.tumblr.com/share?v=3&u=https://www.agalera.eu/pentesting-resources/&quote=Pentesting+interesting+links%20%7C%20Adrian+Galera+blog&s="
+            <a href="https://www.tumblr.com/share?v=3&u=https://www.agalera.eu/reversing-playbook/&quote=Reversing+playbook%20%7C%20Adrian+Galera+blog&s="
                target="_blank" title=" Tumblr">
                 <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
                 <span class="sr-only">Share on Tumblr</span>
@@ -313,7 +297,7 @@
         </li>
          
         <li>
-            <a href="https://pinterest.com/pin/create/button/?url=https://www.agalera.eu/pentesting-resources/&media=https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg$description=I+have+started+playing+around+in+https%3A%2F%2Fwww.hackthebox.com+platform+and+I%E2%80%99ll+use+this+article+to+save+all+the+pentesting+interesting+links+I+found.%0A%0A%0A%0A"
+            <a href="https://pinterest.com/pin/create/button/?url=https://www.agalera.eu/reversing-playbook/&media=https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg$description=I+have+started+playing+around+in+https%3A%2F%2Fwww.hackthebox.com+platform+and+I%E2%80%99ll+use+this+article+to+save+all+the+steps+I+take+to+complete+the+challenges+related+with+reversing.%0A%0A%0A%0A"
                target="_blank" title="">
                 <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
                 <span class="sr-only">Pin it</span>
@@ -321,7 +305,7 @@
         </li>
           
         <li>
-            <a href="https://www.reddit.com/submit?url=https://www.agalera.eu/pentesting-resources/&title=Pentesting+interesting+links%20%7C%20Adrian+Galera+blog"
+            <a href="https://www.reddit.com/submit?url=https://www.agalera.eu/reversing-playbook/&title=Reversing+playbook%20%7C%20Adrian+Galera+blog"
                target="_blank" title=" Reddit">
                 <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
                 <span class="sr-only">Share on Reddit</span>
@@ -329,7 +313,7 @@
         </li>
          
         <li>
-            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.agalera.eu/pentesting-resources/&title=Pentesting+interesting+links%20%7C%20Adrian+Galera+blog&summary=&source=https://www.agalera.eu/pentesting-resources/"
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.agalera.eu/reversing-playbook/&title=Reversing+playbook%20%7C%20Adrian+Galera+blog&summary=&source=https://www.agalera.eu/reversing-playbook/"
                target="_blank" title=" LinkedIn">
                 <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
                 <span class="sr-only">Share on LinkedIn</span>
@@ -337,7 +321,7 @@
         </li>
           
         <li>
-            <a href="mailto:?subject=Pentesting interesting links%20%7C%20Adrian Galera blog&body=https://www.agalera.eu/pentesting-resources/"
+            <a href="mailto:?subject=Reversing playbook%20%7C%20Adrian Galera blog&body=https://www.agalera.eu/reversing-playbook/"
                target="_blank" title="">
                 <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
                 <span class="sr-only">Email</span></a>
@@ -373,8 +357,8 @@
           <p><i class="fas fa-tag fa-fw fa-sm"></i> linux</p>
         </a></li>
       
-        <li><a class="button" href="/tags#pentesting">
-          <p><i class="fas fa-tag fa-fw fa-sm"></i> pentesting</p>
+        <li><a class="button" href="/tags#reverse-engineering">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> reverse-engineering</p>
         </a></li>
       
     </ul>
@@ -388,14 +372,14 @@
 
 <div id="post-nav">
     
-    <div id="previous-post">
-        <a alt="Raspberry Pi for QA" href="/raspberry-pi-qa/">
-            <p>Previous post</p>
-            Raspberry Pi for QA
+
+    
+    <div id="next-post">
+        <a alt="Pentesting playbook" href="/pentesting-playbook/">
+            <p>Next post</p>
+            Pentesting playbook
         </a>
     </div>
-    
-
     
 </div>
 

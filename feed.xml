@@ -1,4 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://www.agalera.eu/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.agalera.eu/" rel="alternate" type="text/html" /><updated>2022-12-26T13:51:12+01:00</updated><id>https://www.agalera.eu/feed.xml</id><title type="html">Adrian Galera blog</title><subtitle>My personal developer blog page</subtitle><entry><title type="html">Pentesting playbook</title><link href="https://www.agalera.eu/pentesting-playbook/" rel="alternate" type="text/html" title="Pentesting playbook" /><published>2022-12-25T00:00:00+01:00</published><updated>2022-12-25T00:00:00+01:00</updated><id>https://www.agalera.eu/pentesting-playbook</id><content type="html" xml:base="https://www.agalera.eu/pentesting-playbook/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the steps I take to complete the challenges.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://www.agalera.eu/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.agalera.eu/" rel="alternate" type="text/html" /><updated>2023-01-04T12:58:49+01:00</updated><id>https://www.agalera.eu/feed.xml</id><title type="html">Adrian Galera blog</title><subtitle>My personal developer blog page</subtitle><entry><title type="html">Reversing playbook</title><link href="https://www.agalera.eu/reversing-playbook/" rel="alternate" type="text/html" title="Reversing playbook" /><published>2023-01-04T00:00:00+01:00</published><updated>2023-01-04T00:00:00+01:00</updated><id>https://www.agalera.eu/reversing-playbook</id><content type="html" xml:base="https://www.agalera.eu/reversing-playbook/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the steps I take to complete the challenges related with reversing.&lt;/p&gt;
+
+&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;p&gt;There are a series of challenges where you are given a binary file and you need to be able to obtain the flag inside. In order to do so, you need to perform Reverse engineering. In order to do so, you should use a debugger or a decompiler (or both).&lt;/p&gt;
+
+&lt;p&gt;The first step is to use regularly and pay attention to the strings appearing in the UI. Later, we can search those strings in the decompiler.&lt;/p&gt;
+
+&lt;p&gt;One useful tool to perform this kind of analysis is ghidra: &lt;a href=&quot;https://github.com/NationalSecurityAgency/ghidra&quot;&gt;https://github.com/NationalSecurityAgency/ghidra&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;For instance, you can search for references, memory addresses, search for strings, etc..&lt;/p&gt;
+
+&lt;p&gt;Another interesting tool is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gdb&lt;/code&gt;, the gnu debugger. More on this to come, when i’m not familiar.&lt;/p&gt;
+
+&lt;p&gt;To debug Windows binaries, you can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ollydbg&lt;/code&gt;, analyse the code and place the breakpoints in the interesting addresses.&lt;/p&gt;</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="reverse-engineering" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="reverse-engineering" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the steps I take to complete the challenges related with reversing.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Pentesting playbook</title><link href="https://www.agalera.eu/pentesting-playbook/" rel="alternate" type="text/html" title="Pentesting playbook" /><published>2022-12-25T00:00:00+01:00</published><updated>2022-12-25T00:00:00+01:00</updated><id>https://www.agalera.eu/pentesting-playbook</id><content type="html" xml:base="https://www.agalera.eu/pentesting-playbook/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the steps I take to complete the challenges.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
@@ -82,6 +96,8 @@
 &lt;h4 id=&quot;poorly-configured-access-&quot;&gt;Poorly configured access &lt;a name=&quot;anonymous-access&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
 
 &lt;p&gt;The user might have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ftp&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tftp&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;smb&lt;/code&gt; shares with anonymous access. It’s worth taking a look because those access might leak some valuable information. Additionally, you can also check &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;metasploit&lt;/code&gt; to check for this kind of access.&lt;/p&gt;
+
+&lt;p&gt;You can also check if the page is using php to abuse the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;strcmp&lt;/code&gt; function. Example: &lt;a href=&quot;https://www.doyler.net/security-not-included/bypassing-php-strcmp-abctf2016&quot;&gt;https://www.doyler.net/security-not-included/bypassing-php-strcmp-abctf2016&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;&lt;/p&gt;
 
@@ -582,6 +598,8 @@ smb: \&amp;gt;
 
 &lt;p&gt;You can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-N&lt;/code&gt; flag to don’t use any password&lt;/p&gt;
 
+&lt;p&gt;If you see this error: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;protocol negotiation failed: NT_STATUS_NOT_SUPPORTED&lt;/code&gt;, you need to configure min/max protocol versions, see: &lt;a href=&quot;https://unix.stackexchange.com/questions/562550/smbclient-protocol-negotiation-failed&quot;&gt;https://unix.stackexchange.com/questions/562550/smbclient-protocol-negotiation-failed&lt;/a&gt;&lt;/p&gt;
+
 &lt;h2 id=&quot;redis&quot;&gt;redis&lt;/h2&gt;
 
 &lt;p&gt;Redis is an in-memory key-value (NoSQL) database running on 6379 port by default&lt;/p&gt;
@@ -719,6 +737,8 @@ public         	Anonymous Share
 
 &lt;p&gt;Make sure to install a version &amp;gt;= 1.9.0, which enables support for many hash formats. In my case for 1.8.0 version I couldn’t crack a NTLMv2 hash.&lt;/p&gt;
 
+&lt;p&gt;You can also use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zip2john&lt;/code&gt; tool to brute-force zip files with passwords.&lt;/p&gt;
+
 &lt;p&gt;You can find here &lt;a href=&quot;https://github.com/openwall/john&quot;&gt;https://github.com/openwall/john&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;evil-winrm&quot;&gt;evil-winrm&lt;/h2&gt;
@@ -831,6 +851,37 @@ SQL&amp;gt;
 stty raw -echo
 fg
 export TERM=xterm
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;searchsploit&quot;&gt;Searchsploit&lt;/h2&gt;
+
+&lt;p&gt;Once the enumeration succeded and you have the service and version, you can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;searchsploit&lt;/code&gt; to search for possible sploits, see example:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;segal@gal-Modern-14-C12M:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;searchsploit vsFTPd 2.3.4
+&lt;span class=&quot;nt&quot;&gt;----------------------------------------------&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;---------------------------------&lt;/span&gt;
+ Exploit Title                                |  Path
+&lt;span class=&quot;nt&quot;&gt;----------------------------------------------&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;---------------------------------&lt;/span&gt;
+vsftpd 2.3.4 - Backdoor Command Execution     | unix/remote/49757.py
+vsftpd 2.3.4 - Backdoor Command Execution &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Me | unix/remote/17491.rb
+&lt;span class=&quot;nt&quot;&gt;----------------------------------------------&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;---------------------------------&lt;/span&gt;
+Shellcodes: No Results
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;ghidra&quot;&gt;Ghidra&lt;/h2&gt;
+
+&lt;p&gt;Is a decompiler/debugger tool very useful to analyse binaries and understand the logic inside&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/NationalSecurityAgency/ghidra&quot;&gt;https://github.com/NationalSecurityAgency/ghidra&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;rsactftool&quot;&gt;RsaCtfTool&lt;/h2&gt;
+
+&lt;p&gt;Is a tool to check/attack RSA keys.&lt;/p&gt;
+
+&lt;p&gt;I have used it to retrieve a private key from a weak RSA public key. The key pair are generated by multiplying two prime numbers, if the prime numbers are not big enough, they can be guessed and reveal the private key.&lt;/p&gt;
+
+&lt;p&gt;To decypher the file encrypted with the private key use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;openssl&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;openssl rsautl -in flag.enc -out flag.txt -decrypt -inkey key.priv
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the pentesting tools I am learning.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Python app structure</title><link href="https://www.agalera.eu/python-app-structure/" rel="alternate" type="text/html" title="Python app structure" /><published>2022-12-13T00:00:00+01:00</published><updated>2022-12-13T00:00:00+01:00</updated><id>https://www.agalera.eu/python-app-structure</id><content type="html" xml:base="https://www.agalera.eu/python-app-structure/">&lt;p&gt;Recently I was starting a Python application project from scratch and I had some issues understanding the correct project structure. Here’s what I have learnt.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
@@ -1530,60 +1581,4 @@ iframe {
   &lt;li&gt;I need a way to draw the areas I visisted, covered in the article: &lt;a href=&quot;/leaflet-draw-polygon-markers/&quot;&gt;Draw a polygon from markers in leaflet&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Load a GPX and display it in the map, covered in the article: &lt;a href=&quot;/leaflet-draw-polygon-markers/&quot;&gt;Load and display GPX in leaflet&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;I don’t want to spent any money in this, so the storage will be browser based. This is covered in the article: &lt;a href=&quot;/browser-storage&quot;&gt;Browser storage&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><summary type="html">When I was playing age of empires the map was all in black color at the beginning. As long as you explore the map, the black color is removed discovering what it was hidden behind. I wanted to implement something similar to show all the trails, routes, paths, roads, streets, etc that I have discovered. I’ll describe the callenges I have found in a series of articles.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/leaflet-fog-of-war/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/leaflet-fog-of-war/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Combine two Java Optionals</title><link href="https://www.agalera.eu/combine-two-optionals/" rel="alternate" type="text/html" title="Combine two Java Optionals" /><published>2022-06-03T00:00:00+02:00</published><updated>2022-06-03T00:00:00+02:00</updated><id>https://www.agalera.eu/combine-two-optionals</id><content type="html" xml:base="https://www.agalera.eu/combine-two-optionals/">&lt;p&gt;I was implementing a searching algorithm and I had to search for two things. In this article I describe how I implemented combining two Java optionals.&lt;/p&gt;
-
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
-
-&lt;p&gt;The algorithm had to do something similar to:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Search inside an array the first item starting by A&lt;/li&gt;
-  &lt;li&gt;If none is found, search the first item starting by B&lt;/li&gt;
-  &lt;li&gt;If none is found, throw an Exception&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Common code:&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ItemFinder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findItem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findFirstItemStartingWithA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findFirstItemStartingWith&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;A&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findFirstItemStartingWithB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findFirstItemStartingWith&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;B&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findFirstItemStartingWith&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;letter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
-            &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;item&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;startsWith&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;letter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
-            &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;findFirst&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;java-8&quot;&gt;Java 8&lt;/h2&gt;
-
-&lt;p&gt;The only way to achieve this with Optionals before Java 9 was to cascade the Optional call:&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findItem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findFirstItemStartingWithA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;orElseGet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;findFirstItemStartingWithB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-                &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;orElseThrow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;RuntimeException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;no item found&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)));&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The alternative flow is cascaded in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;orElseGet&lt;/code&gt;, which is a little bit hard to read&lt;/p&gt;
-
-&lt;h2 id=&quot;java--9&quot;&gt;Java &amp;gt; 9&lt;/h2&gt;
-
-&lt;p&gt;In Java 9, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Optional.or&lt;/code&gt; method is introduced, which enhaces a lot the code for these scenarios. The code above can be rewritten in a much more understandable fashion:&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findItem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findFirstItemStartingWithA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;or&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;findFirstItemStartingWithB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
-            &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;orElseThrow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;RuntimeException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;no item found&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="java9" /><category term="optional" /><category term="java9" /><category term="optional" /><summary type="html">I was implementing a searching algorithm and I had to search for two things. In this article I describe how I implemented combining two Java optionals.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/combine-optional/featured-image.jpeg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/combine-optional/featured-image.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><summary type="html">When I was playing age of empires the map was all in black color at the beginning. As long as you explore the map, the black color is removed discovering what it was hidden behind. I wanted to implement something similar to show all the trails, routes, paths, roads, streets, etc that I have discovered. I’ll describe the callenges I have found in a series of articles.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/leaflet-fog-of-war/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/leaflet-fog-of-war/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
