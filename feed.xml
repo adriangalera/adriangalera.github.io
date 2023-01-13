@@ -1,4 +1,125 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://www.agalera.eu/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.agalera.eu/" rel="alternate" type="text/html" /><updated>2023-01-05T22:20:44+01:00</updated><id>https://www.agalera.eu/feed.xml</id><title type="html">Adrian Galera blog</title><subtitle>My personal developer blog page</subtitle><entry><title type="html">Reversing playbook</title><link href="https://www.agalera.eu/reversing-playbook/" rel="alternate" type="text/html" title="Reversing playbook" /><published>2023-01-04T00:00:00+01:00</published><updated>2023-01-04T00:00:00+01:00</updated><id>https://www.agalera.eu/reversing-playbook</id><content type="html" xml:base="https://www.agalera.eu/reversing-playbook/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the steps I take to complete the challenges related with reversing.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://www.agalera.eu/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.agalera.eu/" rel="alternate" type="text/html" /><updated>2023-01-13T15:16:46+01:00</updated><id>https://www.agalera.eu/feed.xml</id><title type="html">Adrian Galera blog</title><subtitle>My personal developer blog page</subtitle><entry><title type="html">OWASP Top 10</title><link href="https://www.agalera.eu/owasp-top10/" rel="alternate" type="text/html" title="OWASP Top 10" /><published>2023-01-09T00:00:00+01:00</published><updated>2023-01-09T00:00:00+01:00</updated><id>https://www.agalera.eu/owasp-top10</id><content type="html" xml:base="https://www.agalera.eu/owasp-top10/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the knowledge I’ve got related with OWASP Top 10 vulnerabilities.&lt;/p&gt;
+
+&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;owasp-top-10&quot;&gt;OWASP Top 10&lt;/h2&gt;
+
+&lt;p&gt;In &lt;a href=&quot;https://owasp.org/Top10/&quot;&gt;OWASP Top 10&lt;/a&gt; website, you can see what are the most common vulnerabilities to exploit.&lt;/p&gt;
+
+&lt;p&gt;They are well categorized and they provide examples in website.&lt;/p&gt;
+
+&lt;p&gt;I’ll try to explain the groups sorted by order of occurrence in this article. This should be like a map to follow when pentesting things.&lt;/p&gt;
+
+&lt;h3 id=&quot;broken-access-control&quot;&gt;Broken Access Control&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://owasp.org/Top10/A01_2021-Broken_Access_Control/&quot;&gt;https://owasp.org/Top10/A01_2021-Broken_Access_Control/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Malicious users can manipulate access control mechanisms.&lt;/p&gt;
+
+&lt;p&gt;Examples of this are:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Modify the loging cookie to change from regular user to admin user&lt;/li&gt;
+  &lt;li&gt;Manipulate JWT Tokens&lt;/li&gt;
+  &lt;li&gt;…&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;cryptographic-failures&quot;&gt;Cryptographic Failures&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://owasp.org/Top10/A02_2021-Cryptographic_Failures/&quot;&gt;https://owasp.org/Top10/A02_2021-Cryptographic_Failures/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Examples of this are:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Using old ciphers in symmetric encryption&lt;/li&gt;
+  &lt;li&gt;Using short keys for RSA key: able to generate the private key from the public key&lt;/li&gt;
+  &lt;li&gt;Unsalted passwords&lt;/li&gt;
+  &lt;li&gt;…&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;injection&quot;&gt;Injection&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://owasp.org/Top10/A03_2021-Injection/&quot;&gt;https://owasp.org/Top10/A03_2021-Injection/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;When the user can input some value to the application, the developers should pay extra attention to validate or sanitize it. Otherwise, a malicious user can inject any value on it.&lt;/p&gt;
+
+&lt;p&gt;Examples are:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;SQL injections: break the SQL query syntax to execute arbitrary queries&lt;/li&gt;
+  &lt;li&gt;OS injections: being able to execute os commands via the user input&lt;/li&gt;
+  &lt;li&gt;Server-side template injection: abuse a template engine to inject any code&lt;/li&gt;
+  &lt;li&gt;…&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The injection can be reflected on the screen: the typical use case is for login. You log in with made up username and you see the username back in the UI. This helps a lot because you can test with attack attempts.&lt;/p&gt;
+
+&lt;p&gt;If you don’t see the results back, you can try 2 things:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Write to a public file: if the target has a public endpoint, you can make the injection to write to a file in that public directory to extract the data.&lt;/li&gt;
+  &lt;li&gt;Out of band interaction: if you own a server, you can make the target connect to that server to exfiltrate the data&lt;/li&gt;
+  &lt;li&gt;Abuse of the errors: if you see the stacktrace, you can use it in your favour and throw errors containg the information you want to extract.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;insecure-design&quot;&gt;Insecure Design&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://owasp.org/Top10/A04_2021-Insecure_Design/&quot;&gt;https://owasp.org/Top10/A04_2021-Insecure_Design/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Examples of this are:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Bot detection mechanism&lt;/li&gt;
+  &lt;li&gt;Credentials hardcoded in the code&lt;/li&gt;
+  &lt;li&gt;…&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;security-misconfiguration&quot;&gt;Security Misconfiguration&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://owasp.org/Top10/A05_2021-Security_Misconfiguration/&quot;&gt;https://owasp.org/Top10/A05_2021-Security_Misconfiguration/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This topic is very broad and might include things like:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Default users, passwords&lt;/li&gt;
+  &lt;li&gt;Unprotected paths of the application (remember nginx off-by-slash vulnerability)&lt;/li&gt;
+  &lt;li&gt;Stack traces revealing information to the user&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;vulnerable-and-outdated-components&quot;&gt;Vulnerable and Outdated Components&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/&quot;&gt;https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Using old libraries might cause the application to be vulnerable to new attacks that recent versions of the library fix&lt;/p&gt;
+
+&lt;p&gt;When you are exploring this attack vector, check the repository of the library (if open source) and look for commits for the next versions. If you see something looking like a security fix, it’s worth trying to replicate it in your setup.&lt;/p&gt;
+
+&lt;h3 id=&quot;identification-and-authentication-failures&quot;&gt;Identification and Authentication Failures&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/&quot;&gt;https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Examples:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Default/weak password&lt;/li&gt;
+  &lt;li&gt;Allowing brute force attacks to guess username/password&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;software-and-data-integrity-failures&quot;&gt;Software and Data Integrity Failures&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures/&quot;&gt;https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Application that relies on plugins, libraries, etc.. from third-party must verify the integrity of the component. This also applies to the user input. If the user can see and modified a serialized payload, that payload should be handled with extra care. Additionally, CI/CD pipeline must be well secured, otherwise the attackers might modified the shipped software.&lt;/p&gt;
+
+&lt;h3 id=&quot;security-logging-and-monitoring-failures&quot;&gt;Security Logging and Monitoring Failures&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/&quot;&gt;https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Not enough monitoring for thins like an excessive number of failed login attemps, etc…&lt;/p&gt;
+
+&lt;h3 id=&quot;server-side-request-forgery-ssrf&quot;&gt;Server-Side Request Forgery (SSRF)&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://owasp.org/Top10/A10_2021-Server-Side_Request_Forgery_%28SSRF%29/&quot;&gt;https://owasp.org/Top10/A10&lt;em&gt;2021-Server-Side_Request_Forgery&lt;/em&gt;%28SSRF%29/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This happens when an application fetches a resource from a third-pary from the input provided by a user. For instance, in a template engine, the legitimate users might include an image stored in their webserver. However, an attack might include their own crafted version of the image that includes malicious code.&lt;/p&gt;</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="owasp" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="owasp" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the knowledge I’ve got related with OWASP Top 10 vulnerabilities.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Reversing playbook</title><link href="https://www.agalera.eu/reversing-playbook/" rel="alternate" type="text/html" title="Reversing playbook" /><published>2023-01-04T00:00:00+01:00</published><updated>2023-01-04T00:00:00+01:00</updated><id>https://www.agalera.eu/reversing-playbook</id><content type="html" xml:base="https://www.agalera.eu/reversing-playbook/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the steps I take to complete the challenges related with reversing.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
@@ -354,6 +475,8 @@ password: admin123 (any password will do the trick)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;You can find more SQL injections here: &lt;a href=&quot;https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/&quot;&gt;https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Pay attention when breaking the rest of the query with comments. The standard comment &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--&lt;/code&gt; might not always work, it’s worth trying another kind of comments like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#&lt;/code&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;server-side-template-injection-&quot;&gt;Server side template injection &lt;a name=&quot;ssti&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
 
@@ -989,6 +1112,11 @@ public         	Anonymous Share
 &lt;p&gt;You can also use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zip2john&lt;/code&gt; tool to brute-force zip files with passwords.&lt;/p&gt;
 
 &lt;p&gt;You can find here &lt;a href=&quot;https://github.com/openwall/john&quot;&gt;https://github.com/openwall/john&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can specify the format as well:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;john --format=raw-md5 passwd.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;evil-winrm&quot;&gt;evil-winrm&lt;/h2&gt;
 
@@ -1759,105 +1887,4 @@ cb1dc474e185777dad218b7d60f2781723d8190b
 
 &lt;p&gt;Later the coordinates are transformed into the leaflet format.&lt;/p&gt;
 
-&lt;p&gt;Here you can see it in action: &lt;a href=&quot;https://www.agalera.eu/leaflet-fogofwar/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.agalera.eu/leaflet-fogofwar/&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><summary type="html">Following up from the previous article about implementing the fog of war in leaflet, I want to add some markers to the map and to create a polygon that joins them. Let’s see how I manage to do that.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/draw-polygon-markers/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/draw-polygon-markers/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Leaflet fog of war</title><link href="https://www.agalera.eu/leaflet-fog-of-war/" rel="alternate" type="text/html" title="Leaflet fog of war" /><published>2022-07-20T00:00:00+02:00</published><updated>2022-07-20T00:00:00+02:00</updated><id>https://www.agalera.eu/leaflet-fog-of-war</id><content type="html" xml:base="https://www.agalera.eu/leaflet-fog-of-war/">&lt;style&gt;
-iframe {
-    padding: 0;
-    border-width: 0;
-    width: 60%;
-    height: 400px
-}
-
-.iframe-holder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 5px;
-}
-&lt;/style&gt;
-
-&lt;p&gt;When I was playing age of empires the map was all in black color at the beginning. As long as you explore the map, the black color is removed discovering what it was hidden behind.&lt;/p&gt;
-
-&lt;p&gt;I wanted to implement something similar to show all the trails, routes, paths, roads, streets, etc that I have discovered. I’ll describe the callenges I have found in a series of articles.&lt;/p&gt;
-
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
-
-&lt;p&gt;This is part of my series of articles about leaflet:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;/leaflet-fog-of-war&quot;&gt;Leaflet fog of war&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/leaflet-draw-polygon-markers&quot;&gt;Draw a polygon from markers in leaflet&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/leaflet-load-gpx&quot;&gt;Load and display GPX in leaflet&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/browser-storage&quot;&gt;Browser storage&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Age of empires… what a great game&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/img/posts/leaflet-fog-of-war/age-of-empires.jpeg&quot; alt=&quot;Age of Empires map&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;I want to create something similar to the map in Age of Empires. A map where everything is hidden until you discovered. This way you could check how much of your city you know, or where to search for new places to visit.&lt;/p&gt;
-
-&lt;p&gt;I have worked many times before with &lt;a href=&quot;https://leafletjs.com/&quot;&gt;leaflet js&lt;/a&gt;, a nice library to display maps and geographic information. It has a nice ecosystem of plugins, so I’ve checked if someone has something similar implemented and YES!&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/ptma/Leaflet.Mask&quot;&gt;Leaflet.Mask&lt;/a&gt; already implemented a plugin that mask all the map and displays the area specified in the begining.&lt;/p&gt;
-
-&lt;div class=&quot;iframe-holder&quot;&gt;
-&lt;iframe src=&quot;https://ptma.github.io/Leaflet.Mask/examples/mask.html&quot;&gt;&lt;/iframe&gt;
-&lt;/div&gt;
-
-&lt;p&gt;However, it does not fit my requirements as I want to add places dynamically. So, let’s implement our own thing …&lt;/p&gt;
-
-&lt;h2 id=&quot;implementing-my-own-leaflet-mask&quot;&gt;Implementing my own Leaflet Mask&lt;/h2&gt;
-
-&lt;p&gt;Taking &lt;a href=&quot;https://github.com/ptma/Leaflet.Mask&quot;&gt;Leaflet.Mask&lt;/a&gt; as a base, I will modify it a bit in order to be able to add the visited area dynamically.&lt;/p&gt;
-
-&lt;p&gt;The key for this to succeed was to understand how the polygon has to be created in leaflet:&lt;/p&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;scotland&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;polygon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;55.7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;4.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;56&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;4.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;56&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;55.7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;scotland&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;addTo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/img/posts/leaflet-fog-of-war/holes.png&quot; alt=&quot;Polygon with holes&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;In order to draw the polygon, the user might pass the list of latitude longitudes and a second optional argument that defines the holes of that polygon.&lt;/p&gt;
-
-&lt;p&gt;Finally the code looked something similar to:&lt;/p&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;nx&quot;&gt;_setMaskLayer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;masklayer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;removeLayer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;masklayer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;allWorld&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_coordsToLatLngs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_allWorldCoordinates&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;latlngs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;allWorld&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-
-            &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_holes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;forEach&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hole&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;latlngs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_coordsToLatLngs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hole&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
-
-            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;layer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Polygon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;latlngs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;masklayer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;layer&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;addLayer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;layer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The plugin reads the input data as &lt;a href=&quot;https://en.wikipedia.org/wiki/GeoJSON&quot;&gt;GeoJSON&lt;/a&gt; and store the visited places latitude and longitude in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this._holes&lt;/code&gt; variable. Later on, this array is iterated in order to build the holes that leaflet will draw into the polygon. Finally the created polygon is added to the map. When the method is called, the polygon is removed to be able to redraw it.&lt;/p&gt;
-
-&lt;p&gt;Here you can see it in action: &lt;a href=&quot;https://www.agalera.eu/leaflet-fogofwar/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.agalera.eu/leaflet-fogofwar/&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;But wait … that’s not all, I want the fulfill the following requirements:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;I need a way to draw the areas I visisted, covered in the article: &lt;a href=&quot;/leaflet-draw-polygon-markers/&quot;&gt;Draw a polygon from markers in leaflet&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Load a GPX and display it in the map, covered in the article: &lt;a href=&quot;/leaflet-draw-polygon-markers/&quot;&gt;Load and display GPX in leaflet&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;I don’t want to spent any money in this, so the storage will be browser based. This is covered in the article: &lt;a href=&quot;/browser-storage&quot;&gt;Browser storage&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><summary type="html">When I was playing age of empires the map was all in black color at the beginning. As long as you explore the map, the black color is removed discovering what it was hidden behind. I wanted to implement something similar to show all the trails, routes, paths, roads, streets, etc that I have discovered. I’ll describe the callenges I have found in a series of articles.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/leaflet-fog-of-war/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/leaflet-fog-of-war/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;p&gt;Here you can see it in action: &lt;a href=&quot;https://www.agalera.eu/leaflet-fogofwar/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.agalera.eu/leaflet-fogofwar/&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><summary type="html">Following up from the previous article about implementing the fog of war in leaflet, I want to add some markers to the map and to create a polygon that joins them. Let’s see how I manage to do that.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/draw-polygon-markers/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/draw-polygon-markers/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
