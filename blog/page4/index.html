@@ -99,7 +99,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Adrian Galera blog" />
 <script type="application/ld+json">
-{"url":"https://www.agalera.eu/blog/page4/","@type":"WebPage","description":"My personal developer blog page","headline":"Adrian Galera blog","@context":"https://schema.org"}</script>
+{"url":"https://www.agalera.eu/blog/page4/","headline":"Adrian Galera blog","@type":"WebPage","description":"My personal developer blog page","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -251,6 +251,46 @@
 
     <div class="posts">
     
+    
+    <div class="post-teaser">
+        
+        <div class="post-img">
+            <a aria-label="Java 11 negative symbol in Swedish" href="/java11-negative-symbol-swedish/">
+                <img alt="Java 11 negative symbol in Swedish" src="/assets/img/posts/java11-negative-sv/featured-image.jpg">
+            </a>
+        </div>
+        
+        <span>
+          <header>
+            <h1>
+              <a aria-label="Java 11 negative symbol in Swedish" class="post-link" href="/java11-negative-symbol-swedish/">
+                Java 11 negative symbol in Swedish
+              </a>
+            </h1>
+            
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      May 06, 2021
+    </p></div>
+
+          </header>
+          
+              <div class="excerpt">
+                  
+                     We performed a migration to Java 11 and a bug fix about negative symbol for negative numbers in Java ruined our implementation. This article describes the situation and the lessons learned.
+
+
+
+
+                  
+              </div>
+          
+      </span>
+    </div>
     
     <div class="post-teaser">
         
@@ -409,46 +449,6 @@ In this article I&#39;ll explain all the challenges I found to make this applica
                      Gitlab or any other CI/CD system works really great to have an automated build system. However, you can waste lots of time if you don’t think about carefully. Every job needs to download the build tools and dependencies, so that’s a lot of time that could be reduced.
 
 In this article I describe two techniques to avoid wasting that much time. First one is using a cache for the dependencies and the second is using a pre-built Docker image with the required build tools.
-
-
-
-
-                  
-              </div>
-          
-      </span>
-    </div>
-    
-    <div class="post-teaser">
-        
-        <div class="post-img">
-            <a aria-label="Latitude,longitude bounds" href="/bounds-lat-lng-array/">
-                <img alt="Latitude,longitude bounds" src="/assets/img/posts/bounds-lat-lng/featured-image.jpg">
-            </a>
-        </div>
-        
-        <span>
-          <header>
-            <h1>
-              <a aria-label="Latitude,longitude bounds" class="post-link" href="/bounds-lat-lng-array/">
-                Latitude,longitude bounds
-              </a>
-            </h1>
-            
-
-
-<div class="post-info">
-    <p class="meta">
-      
-      
-      April 25, 2020
-    </p></div>
-
-          </header>
-          
-              <div class="excerpt">
-                  
-                     I’m currently developing an application based on maps. In that application I want to represent a set of markers. In order to do so, the map library I’m using it has a fitBounds method. However, you need to compute the bounds of the map that allow all the markers to be visible. I describe in this article the implemented algorithm.
 
 
 
