@@ -330,6 +330,31 @@ cb1dc474e185777dad218b7d60f2781723d8190b
 </code></pre></div></div>
 <p>This piece of the code reads the <code class="language-plaintext highlighter-rouge">nva</code> parameter from the URL and checks if it’s not present or if it’s too late. In any of those cases, it redirects to the root; where the password form appears.</p>
 
+<p>At the end you should end up with a file structure similar to:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>├── CNAME
+├── f2daa.... (hash)
+│   ├── css
+│   │   ├── style.css
+│   │   └── style.css.map
+│   ├── fonts
+│   │   ├── flaticon.css
+│   │   ├── Flaticon.eot
+│   │   ├── Flaticon.svg
+│   │   ├── Flaticon.ttf
+│   │   ├── Flaticon.woff
+│   ├── images
+│   │   ├── blog
+│   │   │   ├── img-1.jpg
+│   │   │   ├── img-2.jpg
+│   │   │   └── img-3.jpg
+│   ├── index.html (html protected under password)
+│   ├── js
+│   │   ├── bootstrap.min.js
+│   │   ├── script.js
+│   ├── README.md
+└── index.html (html acting as a login page)
+</code></pre></div></div>
+
     
   </section>
 
