@@ -31,7 +31,8 @@
 		"lint": "eslint .",
 		"pre-commit": "lint-staged",
 		"prepare": "husky install",
-		"deploy": "gh-pages -d dist --branch gh-pages --dotfiles"
+		"deploy": "gh-pages -d dist --branch gh-pages --dotfiles",
+		"compare-sitemaps": "node scripts/compare-sitemaps.cjs"
 	},
 	"dependencies": {
 		"@astrojs/rss": "4.0.1",
@@ -63,7 +64,8 @@
 		"tailwind-merge": "2.0.0",
 		"tailwindcss": "3.3.5",
 		"tinacms": "^1.5.21",
-		"typescript": "^5.2.2"
+		"typescript": "^5.2.2",
+		"xml2json": "^0.12.0"
 	},
 	"lint-staged": {
 		"*.{astro,js,jsx,ts,tsx,md,mdx,json}": [
