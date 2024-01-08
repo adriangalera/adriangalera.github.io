@@ -6,5 +6,6 @@ export const CATEGORIES = [
 	'golang',
 	'java',
 	'js',
-	'machine-learning'
+	'machine-learning',
+	'python'
 ] as const
