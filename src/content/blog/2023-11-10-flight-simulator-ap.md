@@ -2,7 +2,7 @@
 slug: flight-simulator-ap
 title: Physical autopilot controls for flight simulators
 description: In this post I describe how I created from scrach a physical controller for autopilot in flight simulators.
-category: Maker
+category: maker
 tags: [flight-sim, maker, electronics, arduino, mobiflight]
 heroImage: '../../assets/img/posts/gal-ap/featured-image.png'
 pubDate: '2023-11-10'

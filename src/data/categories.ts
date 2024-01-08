@@ -1,2 +1,10 @@
 // List of categories for blog posts
-export const CATEGORIES = ['Maker', 'aws', 'github', 'golang', 'java', 'js'] as const
+export const CATEGORIES = [
+	'maker',
+	'aws',
+	'github',
+	'golang',
+	'java',
+	'js',
+	'machine-learning'
+] as const
