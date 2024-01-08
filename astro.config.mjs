@@ -8,6 +8,7 @@ import { remarkReadingTime } from './src/utils/readTime.ts'
 export default defineConfig({
 	site: 'https://www.agalera.eu', // Write here your website url
 	base: '/blog2',
+	output: "static",
 	markdown: {
 		remarkPlugins: [remarkReadingTime],
 		drafts: true,
