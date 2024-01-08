@@ -31,7 +31,7 @@
 		"lint": "eslint .",
 		"pre-commit": "lint-staged",
 		"prepare": "husky install",
-		"deploy": "node deploy.cjs"
+		"deploy": "gh-pages -d dist --branch gh-pages --dotfiles"
 	},
 	"dependencies": {
 		"@astrojs/rss": "4.0.1",
