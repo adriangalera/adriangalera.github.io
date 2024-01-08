@@ -14,8 +14,6 @@ Recently, I was playing the tutorials of FSX and MSFS2020, so I decided to join 
 
 Let's make it!
 
-<p><!--more--></p>
-
 ## Before starting
 
 I checked if there's something already built to achieve this and I found this wonderful DIY project which served as inspiration: [Vizix Autopilot](https://jeffrlatham.wixsite.com/vizix/autopilot)

@@ -1,2 +1,2 @@
 // List of categories for blog posts
-export const CATEGORIES = ['Maker'] as const
+export const CATEGORIES = ['Maker', 'aws'] as const
