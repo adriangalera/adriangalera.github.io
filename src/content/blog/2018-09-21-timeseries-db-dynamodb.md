@@ -48,7 +48,7 @@ Quoting AWS documentation:
 <blockquote>This type of key is composed of two attributes. The first attribute is the <em>partition key</em>, and the second attribute is the<em> sort key</em>.</blockquote>
 Therefore, we can use the metric name as the partition key and the timestamp and the sort key and the sensor value as the DynamoDB object:
 
-[ ![DynamoDB Key Schema](../../assets/img/posts/dynamodbts/dynamo-db-key.png) ](../../assets/img/posts/dynamodbts/dynamo-db-key.png)
+![DynamoDB Key Schema](../../assets/img/posts/dynamodbts/dynamo-db-key.png)
 _DynamoDB Key Schema_
 
 ## Rollup aggregations?
@@ -62,7 +62,7 @@ DynamoDB Streams sends the events generated in the database (new records, edit, 
 Finally, in order to complete the setup we have used a serverless approach in order to allocate the cost of the project to the required capacity.
 The final structure of the implemented solution looked like this:
 
-[![Components of DynamoDB TimeseriesDB](../../assets/img/posts/dynamodbts/dynamo-db-database-2.png)](../../assets/img/posts/dynamodbts/dynamo-db-database-2.png)
+![Components of DynamoDB TimeseriesDB](../../assets/img/posts/dynamodbts/dynamo-db-database-2.png)
 _Components of DynamoDB TimeseriesDB_
 
 1. The service that uses the DynamoDB Timeseries database is a serverless application with an API Gateway calling an Lambda function. One of the steps of the business logic is communicate with the DynamoDB Insert Lambda.
@@ -84,7 +84,7 @@ In order to fix situation, we add another component to the system: an AWS Kinesi
 In the other side of the stream, we place a Kinesis consumer that is able to consume items from the stream in batches of items. Additionally, we are able to control the insertion speed of items in DynamoDB by sleeping some time between batch consumption. Since this consumer needs to be 24/7, it runs on a traditional EC2 instance.
 Now the scheme looks like this:
 
-[![Adding Kinesis into the TimeseriesDB](../../assets/img/posts/dynamodbts/dynamo-db-kinesis-database.png)](../../assets/img/posts/dynamodbts/dynamo-db-kinesis-database.png)
+![Adding Kinesis into the TimeseriesDB](../../assets/img/posts/dynamodbts/dynamo-db-kinesis-database.png)
 _Adding Kinesis into the TimeseriesDB_
 
 The additional point (7) shows the Kinesis stream where the items are being inserted by the Service Lambda function and consumed by the DynamoDB Timeseries DB Kinesis Consumer. The configured batch size (B) and sleep time (T) allows the consumer to buffer the insertion of data up to the reserved DynamoDB capacity.
