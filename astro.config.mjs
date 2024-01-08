@@ -6,7 +6,7 @@ import { remarkReadingTime } from './src/utils/readTime.ts'
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://www.agalera.eu', // Write here your website url
+	site: 'https://www.agalera.eu/blog2', // Write here your website url
 	base: '/blog2',
 	output: "static",
 	markdown: {
