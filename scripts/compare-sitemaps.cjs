@@ -5,12 +5,12 @@ const FgGreen = "\x1b[32m"
 
 
 
-if (process.argv.length === 2) {
-    console.error('Expected at least one argument!');
+if (process.argv.length === 3) {
+    console.error('Expected at least two arguments!');
     process.exit(1);
 }
-const futureSitemap = parser.toJson(fs.readFileSync('./dist/sitemap-0.xml'));
-const currentSitemap = parser.toJson(fs.readFileSync(process.argv[2]));
+const futureSitemap = parser.toJson(fs.readFileSync(process.argv[2]));
+const currentSitemap = parser.toJson(fs.readFileSync(process.argv[3]));
 
 function notTagOrCategory(url) {
     return !(url.includes("/tags/") || url.includes("/category/") || url.includes("/categories/"))
