@@ -1,6 +1,6 @@
 ---
 slug: java11-negative-symbol-swedish
-heroImage: /src/assets/img/posts/java11-negative-sv/featured-image.jpg
+heroImage: ../../assets/img/posts/java11-negative-sv/featured-image.jpg
 category: java
 description: >-
   We performed a migration to Java 11 and a bug fix about negative symbol for
@@ -84,4 +84,4 @@ Now the test passes both in Java 8 and Java 11.
 
 The lesson learned was important: <b>DO NOT HARDCODE NEGATIVE SYMBOL!</b>
 
-You can find the source code here: <a href="https://github.com/adriangalera/java-sandbox/blob/master/src/test/java/SwedishNegativeSymbol.java">SwedishNegativeSymbol.java</a>
+You can find the source code here: <a href="https://github.com/adriangalera/java-sandbox/blob/master../../test/java/SwedishNegativeSymbol.java">SwedishNegativeSymbol.java</a>

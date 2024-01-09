@@ -1,7 +1,7 @@
 ---
 excerpt_separator: <!--more-->
 slug: leaflet-load-gpx
-heroImage: /src/assets/img/posts/leaflet-load-gpx/featured-image.jpg
+heroImage: ../../assets/img/posts/leaflet-load-gpx/featured-image.jpg
 category: js
 description: >-
   Following up from the previous article about implementing the fog of war in
@@ -108,6 +108,6 @@ This `_group` function creates batches of 200 points in order to perform the joi
 
 This way of displaying GPX files produces very appealing representation such as:
 
-![GPX representation in leaflet map](/src/assets/img/posts/leaflet-load-gpx/gpx.png 'GPX representation in leaflet map')
+![GPX representation in leaflet map](../../assets/img/posts/leaflet-load-gpx/gpx.png 'GPX representation in leaflet map')
 
 Here you can see it in action: <a href="https://www.agalera.eu/leaflet-fogofwar/" target="_blank" rel="noopener">[https://www.agalera.eu/leaflet-fogofwar/](https://www.agalera.eu/leaflet-fogofwar/)</a>

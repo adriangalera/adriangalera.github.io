@@ -1,6 +1,6 @@
 ---
 slug: bark-detector
-heroImage: /src/assets/img/posts/bark-detector/featured-image.jpg
+heroImage: ../../assets/img/posts/bark-detector/featured-image.jpg
 category: machine learning
 description: >-
   Using machine learning with python to detect when my dog barks and send a
@@ -30,7 +30,7 @@ Let's implement a bark detector!
 
 What is audio and how is its digital representation? It's basically an array of float values containing a value from -1 to 1.
 
-![Sound wave](/src/assets/img/posts/bark-detector/wave.png 'Sound wave')
+![Sound wave](../../assets/img/posts/bark-detector/wave.png 'Sound wave')
 
 - Temporal representation of an audio signal
 
@@ -40,7 +40,7 @@ This representation shows the temporal evolution of the audio signal over time. 
 
 So, instead of using the temporal representation, let's observe the frequency representation:
 
-![Frequency representation](/src/assets/img/posts/bark-detector/stft.png 'Frequency representation')
+![Frequency representation](../../assets/img/posts/bark-detector/stft.png 'Frequency representation')
 
 - Frequency representation of an audio signal
 
@@ -68,7 +68,7 @@ Ok, what does it mean? It's an improved frequency representation but applying op
 4. Take the discrete cosine transform (DCT) of the list of mel log powers. This will remove redudant information as in non-changing information.
 5. The MFCCs are the amplitudes of the resulting spectrum.
 
-![MFCC](/src/assets/img/posts/bark-detector/mfcc.png 'MFCC')
+![MFCC](../../assets/img/posts/bark-detector/mfcc.png 'MFCC')
 
 - MFCC representation of an audio signal
 
@@ -114,11 +114,11 @@ I've been recording for 3 days and we made some exits to keep him alone. Up to t
 
 We can pre-process the dataset and check for files that have something different than noise.
 
-![Signal with noise](/src/assets/img/posts/bark-detector/noise.png 'Signal with noise')
+![Signal with noise](../../assets/img/posts/bark-detector/noise.png 'Signal with noise')
 
 - File with only noise
 
-![Signal with unclassified audio event](/src/assets/img/posts/bark-detector/wave.png 'Signal with unclassified audio event')
+![Signal with unclassified audio event](../../assets/img/posts/bark-detector/wave.png 'Signal with unclassified audio event')
 
 - File with unclassified audio event
 
@@ -128,7 +128,7 @@ Since my dog's barks are quite loud we can safely discard all files whose maximu
 
 As mentioned before, we'll discard files whose amplitude is lower than 0.25. Listening to multiple files with bark, we can observe that each bark more or less lasts for 1 second.
 
-![Bark signal](/src/assets/img/posts/bark-detector/bark.png 'Bark signal')
+![Bark signal](../../assets/img/posts/bark-detector/bark.png 'Bark signal')
 
 - Time representation of an audio signal containing a bark
 
@@ -283,4 +283,4 @@ def send_to_telegram(predictions, filename):
     print(response.text)
 ```
 
-![Telegram message when a bark occurs](/src/assets/img/posts/bark-detector/telegram.png 'Telegram message when a bark occurs')
+![Telegram message when a bark occurs](../../assets/img/posts/bark-detector/telegram.png 'Telegram message when a bark occurs')

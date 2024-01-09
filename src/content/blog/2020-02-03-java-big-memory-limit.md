@@ -1,6 +1,6 @@
 ---
 slug: java-big-memory-limit
-heroImage: /src/assets/img/posts/java-xms/featured-image.jpg
+heroImage: ../../assets/img/posts/java-xms/featured-image.jpg
 category: java
 description: >-
   Playing around with JVM options, we question ourselves; what would happen if
@@ -56,7 +56,7 @@ java -Xms2G -jar build/libs/boom-1.0-SNAPSHOT.jar
 
 The program is responding, the memory profile seems fine; everything works as expected:
 
-![](/src/assets/img/posts/java-xms/1.png)
+![](../../assets/img/posts/java-xms/1.png)
 
 ## Let's go wild!
 
@@ -68,7 +68,7 @@ java -Xms100G -jar build/libs/boom-1.0-SNAPSHOT.jar
 
 Program is responding, and checking the memory profile I got a surprise: **it is reporting 100GB!**
 
-![](/src/assets/img/posts/java-xms/2.png)
+![](../../assets/img/posts/java-xms/2.png)
 
 After some discussion with some collegues, we agreed that this did not explode at the begining because the JVM is using virtual memory. In Linux setup this allocated in 64 bit for userland processes.
 

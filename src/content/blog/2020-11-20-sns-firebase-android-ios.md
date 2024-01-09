@@ -1,6 +1,6 @@
 ---
 slug: sns-firebase-android-ios
-heroImage: /src/assets/img/posts/sns-push/featured.jpg
+heroImage: ../../assets/img/posts/sns-push/featured.jpg
 category: aws
 description: >-
   This post describe how I setup SNS to communicate with Firebase to send push
@@ -41,7 +41,7 @@ The communication works this way:
 6. SNS forwards the message to FCM
 7. FCM sends the message to the mobile device
 
-![Push notifications communication](/src/assets/img/posts/sns-push/pn.png 'Push push notifications communication')
+![Push notifications communication](../../assets/img/posts/sns-push/pn.png 'Push push notifications communication')
 
 ## Testing FCM device configuration
 

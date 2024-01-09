@@ -1,6 +1,6 @@
 ---
 slug: parse-huge-local-json-file
-heroImage: /src/assets/img/posts/oboe/featured.png
+heroImage: ../../assets/img/posts/oboe/featured.png
 category: js
 description: >-
   How to parse a huge JSON file only in the browser. This implementation uses an

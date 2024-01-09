@@ -1,6 +1,6 @@
 ---
 slug: combine-two-optionals
-heroImage: /src/assets/img/posts/combine-optional/featured-image.jpeg
+heroImage: ../../assets/img/posts/combine-optional/featured-image.jpeg
 category: java
 description: >-
   I was implementing a searching algorithm and I had to search for two things.

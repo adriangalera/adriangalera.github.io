@@ -1,6 +1,6 @@
 ---
 slug: java-test-utf8
-heroImage: /src/assets/img/posts/java-utf8/featured.jpg
+heroImage: ../../assets/img/posts/java-utf8/featured.jpg
 category: java
 description: >-
   We have experienced an issue with UTF-8 characters in Java and we have

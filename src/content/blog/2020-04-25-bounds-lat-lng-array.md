@@ -1,6 +1,6 @@
 ---
 slug: bounds-lat-lng-array
-heroImage: /src/assets/img/posts/bounds-lat-lng/featured-image.jpg
+heroImage: ../../assets/img/posts/bounds-lat-lng/featured-image.jpg
 category: js
 description: >-
   This post describe the basic algorithm to calculate the bounds of a set of

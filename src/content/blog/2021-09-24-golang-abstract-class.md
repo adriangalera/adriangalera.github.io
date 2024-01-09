@@ -1,6 +1,6 @@
 ---
 slug: golang-abstract-class
-heroImage: /src/assets/img/posts/golang-abstract/featured-image.jpg
+heroImage: ../../assets/img/posts/golang-abstract/featured-image.jpg
 category: golang
 description: >-
   I'm doing a side project using golang, and I have a use case where I'd use an

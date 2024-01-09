@@ -1,6 +1,6 @@
 ---
 slug: mockito-argumentcaptor-inheritance
-heroImage: /src/assets/img/posts/mockito-argcaptor-inheritance/featured.jpg
+heroImage: ../../assets/img/posts/mockito-argcaptor-inheritance/featured.jpg
 category: testing
 description: >-
   Working with Mockito's ArgumentCaptor I discover it does not work as expected
@@ -128,7 +128,7 @@ Then the `verify` will successfully capture the two calls and then all the captu
 
 This example comes from:
 
-<a href="https://github.com/adriangalera/java-sandbox/tree/master/src/test/java/mockito/argcaptor">[https://github.com/adriangalera/java-sandbox/tree/master/src/test/java/mockito/argcaptor](https://github.com/adriangalera/java-sandbox/tree/master/src/test/java/mockito/argcaptor)</a>
+<a href="https://github.com/adriangalera/java-sandbox/tree/master../../test/java/mockito/argcaptor">[https://github.com/adriangalera/java-sandbox/tree/master../../test/java/mockito/argcaptor](https://github.com/adriangalera/java-sandbox/tree/master../../test/java/mockito/argcaptor)</a>
 
 This is a known issue (already reported as an issue in their repo):
 

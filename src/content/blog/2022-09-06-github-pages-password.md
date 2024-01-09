@@ -1,6 +1,6 @@
 ---
 slug: github-pages-password
-heroImage: /src/assets/img/posts/github-password/featured.jpg
+heroImage: ../../assets/img/posts/github-password/featured.jpg
 category: github
 description: >-
   How to protect a static page served from Github pages with password and avoid

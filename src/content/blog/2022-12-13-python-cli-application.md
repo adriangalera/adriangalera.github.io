@@ -1,6 +1,6 @@
 ---
 slug: python-cli-application
-heroImage: /src/assets/img/posts/python-cli-app/featured.jpg
+heroImage: ../../assets/img/posts/python-cli-app/featured.jpg
 category: python
 description: >-
   In this article I describe how to create a python cli application using the

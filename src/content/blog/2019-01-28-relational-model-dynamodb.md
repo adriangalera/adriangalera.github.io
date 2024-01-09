@@ -1,5 +1,5 @@
 ---
-heroImage: /src/assets/img/posts/relationalmodel/featured.jpg
+heroImage: ../../assets/img/posts/relationalmodel/featured.jpg
 category: aws
 description: >-
   In this post I implement the persistence of a relational model in DynamoDB.
@@ -24,7 +24,7 @@ Therefore I will persist the model in DynamoDB configured to use the minimum res
 The application consist on three entities: User,Map and Points.
 Users can create multiple maps that contain several points. The following UML schema explain the relationships:
 
-![Relational model UML](/src/assets/img/posts/relationalmodel/estuve-model.png 'Relational model UML')
+![Relational model UML](../../assets/img/posts/relationalmodel/estuve-model.png 'Relational model UML')
 _Relational model UML_
 
 DynamoDB is a key-value store with support for range key. Thanks to that I am able to implement the following queries:

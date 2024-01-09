@@ -1,5 +1,5 @@
 ---
-heroImage: /src/assets/img/posts/wiremock/featured.jpg
+heroImage: ../../assets/img/posts/wiremock/featured.jpg
 category: testing
 description: >-
   Mocking external API with wiremock. Prepare a docker-compose bootstrap project

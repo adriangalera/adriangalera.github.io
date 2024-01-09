@@ -1,6 +1,6 @@
 ---
 slug: raspberry-pi-qa
-heroImage: /src/assets/img/posts/rpiqa/featured-image.jpg
+heroImage: ../../assets/img/posts/rpiqa/featured-image.jpg
 category: raspberrypi
 description: >-
   The design and implementation of multiple QA services (Network tweaking, VPN,
@@ -99,7 +99,7 @@ This snippet blocks the outgoing connections to 8.8.8.8 that goes out from the W
 
 Regarding DNS Spoofing, it's a little bit trickier, however the <strong>dnsmasq</strong> service is very useful in that situation.
 
-![dnsmasq schema](/src/assets/img/posts/rpiqa/dnsmasq.png 'dnsmasq schema')
+![dnsmasq schema](../../assets/img/posts/rpiqa/dnsmasq.png 'dnsmasq schema')
 _dnsmasq schema_
 
 The clients connected to the WiFi will resolve the DNS queries thanks to the dnsmasq client listening to incoming connections. This service is able to perform custom DNS resolutions based on a file that works like a /etc/hosts file.
@@ -111,7 +111,7 @@ The clients connected to the WiFi will resolve the DNS queries thanks to the dns
 
 Regarding the HTTPS Sniffer, the implemented solution implies having the SSL certificates from the company installed in a reverse proxy that terminates the SSL connection and forwards the HTTP traffic to an internal server that stores the decrypted requests on a cache.
 
-![https proxy setup](/src/assets/img/posts/rpiqa/httpsproxy.png 'https proxy setup')
+![https proxy setup](../../assets/img/posts/rpiqa/httpsproxy.png 'https proxy setup')
 HTTPS sniffer setup
 
 This cache can be queried from the GUI to inspect the requests. There's an additional implementation that allows to run pcap capture software directly on the network interface to inspect the packets from the UI.

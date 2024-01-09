@@ -1,6 +1,6 @@
 ---
 slug: standalone-app-raspberry-pi
-heroImage: /src/assets/img/posts/standalone-raspberry/featured-image.jpg
+heroImage: ../../assets/img/posts/standalone-raspberry/featured-image.jpg
 category: raspberrypi
 description: >-
   The design, implementation and continuous integration of a standalone

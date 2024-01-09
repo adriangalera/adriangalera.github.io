@@ -1,6 +1,6 @@
 ---
 slug: python-app-structure
-heroImage: /src/assets/img/posts/python-app-structure/featured.jpg
+heroImage: ../../assets/img/posts/python-app-structure/featured.jpg
 category: python
 description: >-
   Description of how you should organise a Python executable application to

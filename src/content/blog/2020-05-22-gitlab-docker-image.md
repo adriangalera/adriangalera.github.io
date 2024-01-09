@@ -1,6 +1,6 @@
 ---
 slug: gitlab-docker-image
-heroImage: /src/assets/img/posts/docker-gitlab/featured.jpg
+heroImage: ../../assets/img/posts/docker-gitlab/featured.jpg
 category: docker
 description: >-
   This post describe how I can manage to reduce the time consumed by Gitlab

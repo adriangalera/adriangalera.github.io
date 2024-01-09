@@ -1,6 +1,6 @@
 ---
 slug: testing-python-base-http-server
-heroImage: /src/assets/img/posts/test-python-basehttpserver/featured-image.jpg
+heroImage: ../../assets/img/posts/test-python-basehttpserver/featured-image.jpg
 category: testing
 description: >-
   While BaseHttpServer is very fancy for quick and dirty tests, it's not easy to

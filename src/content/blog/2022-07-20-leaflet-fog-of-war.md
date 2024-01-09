@@ -1,6 +1,6 @@
 ---
 slug: leaflet-fog-of-war
-heroImage: /src/assets/img/posts/leaflet-fog-of-war/featured-image.jpg
+heroImage: ../../assets/img/posts/leaflet-fog-of-war/featured-image.jpg
 category: js
 description: >-
   When I was playing age of empires the map was all in black color at the
@@ -46,7 +46,7 @@ This is part of my series of articles about leaflet:
 
 Age of empires... what a great game
 
-![Age of Empires map](/src/assets/img/posts/leaflet-fog-of-war/age-of-empires.jpeg 'Age of Empires map')
+![Age of Empires map](../../assets/img/posts/leaflet-fog-of-war/age-of-empires.jpeg 'Age of Empires map')
 
 I want to create something similar to the map in Age of Empires. A map where everything is hidden until you discovered. This way you could check how much of your city you know, or where to search for new places to visit.
 
@@ -84,7 +84,7 @@ scotland = L.polygon([
 scotland.addTo(map)
 ```
 
-![Polygon with holes](/src/assets/img/posts/leaflet-fog-of-war/holes.png 'Polygon with holes')
+![Polygon with holes](../../assets/img/posts/leaflet-fog-of-war/holes.png 'Polygon with holes')
 
 In order to draw the polygon, the user might pass the list of latitude longitudes and a second optional argument that defines the holes of that polygon.
 

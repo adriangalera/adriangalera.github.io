@@ -1,6 +1,6 @@
 ---
 slug: grafana-nginx-reverse-proxy-docker
-heroImage: /src/assets/img/posts/grafana/featured.jpg
+heroImage: ../../assets/img/posts/grafana/featured.jpg
 category: docker
 description: >-
   Deploy Grafana using Docker and nginx as reverse-proxy providing health-check
