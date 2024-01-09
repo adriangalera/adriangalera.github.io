@@ -1,3 +1,2 @@
 User-agent: *
-Disallow: /
-#Sitemap: https://www.agalera.eu/sitemap-index.xml
+Sitemap: https://www.agalera.eu/sitemap-index.xml
