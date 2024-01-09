@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://www.agalera.eu/sitemap-index.xml
