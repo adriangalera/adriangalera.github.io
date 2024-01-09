@@ -65,12 +65,12 @@ Published <time class="text-sm font-bold text-opacity-60" datetime="2020-02-03T0
 <p>First thing to do is run in a controlled environment, let’s say with 2 GB of initial memory:</p>
 <pre class="astro-code material-theme-palenight" style="background-color:#292D3E;color:#babed8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color:#FFCB6B">java</span><span style="color:#C3E88D"> -Xms2G</span><span style="color:#C3E88D"> -jar</span><span style="color:#C3E88D"> build/libs/boom-1.0-SNAPSHOT.jar</span></span></code></pre>
 <p>The program is responding, the memory profile seems fine; everything works as expected:</p>
-<p><img src="/src/assets/img/posts/java-xms/1.png" alt=""></p>
+<p><img alt=""  src="/_astro/1.AaZFpll8_gl4vM.webp" width="1236" height="708" loading="lazy" decoding="async"></p>
 <h2 id="lets-go-wild">Let’s go wild!</h2>
 <p>Now, I’ll try with more memory than the available for the computer:</p>
 <pre class="astro-code material-theme-palenight" style="background-color:#292D3E;color:#babed8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color:#FFCB6B">java</span><span style="color:#C3E88D"> -Xms100G</span><span style="color:#C3E88D"> -jar</span><span style="color:#C3E88D"> build/libs/boom-1.0-SNAPSHOT.jar</span></span></code></pre>
 <p>Program is responding, and checking the memory profile I got a surprise: <strong>it is reporting 100GB!</strong></p>
-<p><img src="/src/assets/img/posts/java-xms/2.png" alt=""></p>
+<p><img alt=""  src="/_astro/2.5iLYXr8e_Z2mY1Eu.webp" width="1232" height="720" loading="lazy" decoding="async"></p>
 <p>After some discussion with some collegues, we agreed that this did not explode at the begining because the JVM is using virtual memory. In Linux setup this allocated in 64 bit for userland processes.</p>
 <p>The initial assumption also was wrong about swap, we check swap usage and was completely normal.</p>
 <p>Therefore, the JVM does not really reserve the initial memory as it seems initially.</p>

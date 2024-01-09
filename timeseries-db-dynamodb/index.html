@@ -66,7 +66,7 @@ Published <time class="text-sm font-bold text-opacity-60" datetime="2018-09-21T0
 <p>This type of key is composed of two attributes. The first attribute is the partition key and the second attribute is the sort key.</p>
 </blockquote>
 <p>Therefore, we can use the metric name as the partition key and the timestamp as the sort key. The sensor value will be the DynamoDB object.</p>
-<p><img src="/src/assets/img/posts/dynamodbts/dynamo-db-key.png" alt="DynamoDB Key Schema" title="DynamoDB Key Schema">
+<p><img alt="DynamoDB Key Schema" title="DynamoDB Key Schema"  src="/_astro/dynamo-db-key.GDXXOdkM_ZgrXdn.webp" width="581" height="117" loading="lazy" decoding="async">
 <em>DynamoDB Key Schema</em></p>
 <h2 id="rollup-aggregations">Rollup aggregations</h2>
 <p>Now we can store the timestamped data in DynamoDB, however, what happens with the multiple granularity requirement? DynamoDB has a nice feature called DynamoDB Streams.</p>
@@ -74,7 +74,7 @@ Published <time class="text-sm font-bold text-opacity-60" datetime="2018-09-21T0
 <h2 id="dynamodb-timeseries-database">DynamoDB Timeseries Database</h2>
 <p>Finally, in order to complete the setup we have used a serverless approach in order to allocate the cost of the project to the required capacity.
 The final structure of the implemented solution looked like this:</p>
-<p><img src="/src/assets/img/posts/dynamodbts/dynamo-db-database-2.png" alt="Components of DynamoDB TimeseriesDB" title="Components of DynamoDB TimeseriesDB">
+<p><img alt="Components of DynamoDB TimeseriesDB" title="Components of DynamoDB TimeseriesDB"  src="/_astro/dynamo-db-database-2.JCWzJsST_Z1A41E9.webp" width="982" height="581" loading="lazy" decoding="async">
 <em>Components of DynamoDB TimeseriesDB</em></p>
 <ol>
 <li>The service that uses the DynamoDB Timeseries database is a serverless application with an API Gateway calling an Lambda function. One of the steps of the business logic is communicate with the DynamoDB Insert Lambda.</li>
@@ -91,7 +91,7 @@ With this solution we achieve a solution where we can fine tune the capacity of 
 <p>In order to fix situation, we add another component to the system: an AWS Kinesis Stream <a href="https://aws.amazon.com/kinesis"></a><a href="https://aws.amazon.com/kinesis">https://aws.amazon.com/kinesis</a>. Instead of writing directly to the DynamoDB table, the service Lambda function now writes the data into a Kinesis stream.</p>
 <p>In the other side of the stream, we place a Kinesis consumer that is able to consume items from the stream in batches of items. Additionally, we are able to control the insertion speed of items in DynamoDB by sleeping some time between batch consumption. Since this consumer needs to be 24/7, it runs on a traditional EC2 instance.
 Now the scheme looks like this:</p>
-<p><img src="/src/assets/img/posts/dynamodbts/dynamo-db-kinesis-database.png" alt="Adding Kinesis into the TimeseriesDB" title="Adding Kinesis into the TimeseriesDB">
+<p><img alt="Adding Kinesis into the TimeseriesDB" title="Adding Kinesis into the TimeseriesDB"  src="/_astro/dynamo-db-kinesis-database.sx2tyV2v_xeqDm.webp" width="1272" height="600" loading="lazy" decoding="async">
 <em>Adding Kinesis into the TimeseriesDB</em></p>
 <p>The additional point (7) shows the Kinesis stream where the items are being inserted by the Service Lambda function and consumed by the DynamoDB Timeseries DB Kinesis Consumer. The configured batch size (B) and sleep time (T) allows the consumer to buffer the insertion of data up to the reserved DynamoDB capacity.</p>
 <h2 id="show-me-the-code">Show me the code</h2>

@@ -92,13 +92,13 @@ In the majority of the environments the connections with the company server’s 
 <p>This snippet blocks the outgoing connections to 8.8.8.8 that goes out from the WiFi network</p>
 <h3 id="networking-stuff">Networking stuff …</h3>
 <p>Regarding DNS Spoofing, it’s a little bit trickier, however the <strong>dnsmasq</strong> service is very useful in that situation.</p>
-<p><img src="/src/assets/img/posts/rpiqa/dnsmasq.png" alt="dnsmasq schema" title="dnsmasq schema">
+<p><img alt="dnsmasq schema" title="dnsmasq schema"  src="/_astro/dnsmasq.InLO0Yof_1DScFy.webp" width="578" height="301" loading="lazy" decoding="async">
 <em>dnsmasq schema</em></p>
 <p>The clients connected to the WiFi will resolve the DNS queries thanks to the dnsmasq client listening to incoming connections. This service is able to perform custom DNS resolutions based on a file that works like a /etc/hosts file.</p>
 <pre class="astro-code material-theme-palenight" style="background-color:#292D3E;color:#babed8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span>192.168.56.1   ubuntu.tecmint.lan</span></span>
 <span class="line"><span>192.168.56.10  centos.tecmint.lan</span></span></code></pre>
 <p>Regarding the HTTPS Sniffer, the implemented solution implies having the SSL certificates from the company installed in a reverse proxy that terminates the SSL connection and forwards the HTTP traffic to an internal server that stores the decrypted requests on a cache.</p>
-<p><img src="/src/assets/img/posts/rpiqa/httpsproxy.png" alt="https proxy setup" title="https proxy setup">
+<p><img alt="https proxy setup" title="https proxy setup"  src="/_astro/httpsproxy.Nf_J_nQ1_Z1kSekw.webp" width="551" height="201" loading="lazy" decoding="async">
 HTTPS sniffer setup</p>
 <p>This cache can be queried from the GUI to inspect the requests. There’s an additional implementation that allows to run pcap capture software directly on the network interface to inspect the packets from the UI.</p>
 <p>This environment requires a little setup, that is the configuration of the proxy on the computers of the QA team.</p>

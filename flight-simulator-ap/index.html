@@ -50,7 +50,7 @@ Published <time class="text-sm font-bold text-opacity-60" datetime="2023-11-10T0
 <p>This project setups an Arduino board to send/receive control commands to Flight simulators: FSX, MSFS2020, X-Plane, etc…</p>
 <h2 id="what-do-we-want-to-control">What do we want to control?</h2>
 <p>We are trying to mimic a real airplane autopilot panel. For example this is the autopilot panel for a Boeing 777:</p>
-<p><img src="/src/assets/img/posts/gal-ap/autopilot-panel.jpeg" alt=""></p>
+<p><img alt=""  src="/_astro/autopilot-panel.YdpbrKEI_2wnQp0.webp" width="721" height="168" loading="lazy" decoding="async"></p>
 <p>We want to be able to control AP values such as: speed, heading, altitude, vertical speed, etc… We want to have buttons to enable/disable controls, encoders to setup the values and 7-segments to visualize the values.</p>
 <p>In a real airplane, this is a very long component. However, due to the limitations of my 3D printer, I decided to stack the components in more than one row.</p>
 <h2 id="bill-of-materials">Bill of materials</h2>
@@ -76,7 +76,7 @@ Published <time class="text-sm font-bold text-opacity-60" datetime="2023-11-10T0
 <p>This phase really depends on the features of your 3D printer. In mine I couldn’t print a much wider component, therefore I decided to stack the components in some rows.</p>
 <p>To design the components, I used <a href="https://www.tinkercad.com/">tinkercad</a> which is free and very convenient to use to design 3D components.</p>
 <p>I split the whole component in two parts: the front cover and the box. The components will be connected using bolts.</p>
-<p><img src="/src/assets/img/posts/gal-ap/3d.png" alt="3D design" title="3D design"></p>
+<p><img alt="3D design" title="3D design"  src="/_astro/3d.LnFpaV-f_bJRHl.webp" width="1752" height="1312" loading="lazy" decoding="async"></p>
 <p>The box has a small hole that fits the Arduino USB port and it’s used to power up the device and to connect it to the PC.</p>
 <p>The box took 24h to print and the cover was 4-5h aprox. Given the amount of time to print, it was very useful to work on every type of hole separately: it was a matter of 5 minutes to make a small print to test each hole.</p>
 <h2 id="connections">Connections</h2>
@@ -85,7 +85,7 @@ Published <time class="text-sm font-bold text-opacity-60" datetime="2023-11-10T0
 <p>Whenever I solder some device (the LED button or the 7-segment display), first I do a small test to make sure the device works.</p>
 <h3 id="be-very-organized">Be very organized</h3>
 <p>The amount of cables that this project has is huge!</p>
-<p><img src="/src/assets/img/posts/gal-ap/cables.jpeg" alt="Cables" title="Cables"></p>
+<p><img alt="Cables" title="Cables"  src="/_astro/cables.yNeHrdAj_Zz58ls.webp" width="2048" height="1152" loading="lazy" decoding="async"></p>
 <p>The only way to make this work is to be very organized and define a color code for the cables.</p>
 <p>Besides that, keep a note of where you connect each device pin to each Arduino board pin because you’ll need it to configure Mobiflight.</p>
 <p>You can check how it’s done in my case <a href="https://drive.google.com/file/d/1QG7TAg5hI28pMcZRbFPaJpJ_N23UZQ5Z/view?usp=sharing">here</a></p>

@@ -47,14 +47,14 @@ Published <time class="text-sm font-bold text-opacity-60" datetime="2021-07-18T0
 <h2 id="basics">Basics</h2>
 <h3 id="time-representation">Time representation</h3>
 <p>What is audio and how is its digital representation? It’s basically an array of float values containing a value from -1 to 1.</p>
-<p><img src="/src/assets/img/posts/bark-detector/wave.png" alt="Sound wave" title="Sound wave"></p>
+<p><img alt="Sound wave" title="Sound wave"  src="/_astro/wave._60R5jWm_1T1vp8.webp" width="2050" height="1062" loading="lazy" decoding="async"></p>
 <ul>
 <li>Temporal representation of an audio signal</li>
 </ul>
 <p>This representation shows the temporal evolution of the audio signal over time. This is very variable and it’s really difficult to extract any relevant feature from this representation.</p>
 <h3 id="frequency-representation">Frequency representation</h3>
 <p>So, instead of using the temporal representation, let’s observe the frequency representation:</p>
-<p><img src="/src/assets/img/posts/bark-detector/stft.png" alt="Frequency representation" title="Frequency representation"></p>
+<p><img alt="Frequency representation" title="Frequency representation"  src="/_astro/stft.9rU3OTKR_15pMa9.webp" width="1784" height="1166" loading="lazy" decoding="async"></p>
 <ul>
 <li>Frequency representation of an audio signal</li>
 </ul>
@@ -76,7 +76,7 @@ Published <time class="text-sm font-bold text-opacity-60" datetime="2021-07-18T0
 <li>Take the discrete cosine transform (DCT) of the list of mel log powers. This will remove redudant information as in non-changing information.</li>
 <li>The MFCCs are the amplitudes of the resulting spectrum.</li>
 </ol>
-<p><img src="/src/assets/img/posts/bark-detector/mfcc.png" alt="MFCC" title="MFCC"></p>
+<p><img alt="MFCC" title="MFCC"  src="/_astro/mfcc.tO6q8xBb_1xWCex.webp" width="1812" height="1294" loading="lazy" decoding="async"></p>
 <ul>
 <li>MFCC representation of an audio signal</li>
 </ul>
@@ -105,18 +105,18 @@ Published <time class="text-sm font-bold text-opacity-60" datetime="2021-07-18T0
 <h2 id="training-the-model">Training the model</h2>
 <p>I’ve been recording for 3 days and we made some exits to keep him alone. Up to this point we have enough data to train the model. However, we have <code>60 min * 24 h * 3 days = 4320 files</code> and need to classify them manually. Will we do that manually? Absolutely not!</p>
 <p>We can pre-process the dataset and check for files that have something different than noise.</p>
-<p><img src="/src/assets/img/posts/bark-detector/noise.png" alt="Signal with noise" title="Signal with noise"></p>
+<p><img alt="Signal with noise" title="Signal with noise"  src="/_astro/noise.Jc4y0Tph_Z2h74PG.webp" width="1648" height="1076" loading="lazy" decoding="async"></p>
 <ul>
 <li>File with only noise</li>
 </ul>
-<p><img src="/src/assets/img/posts/bark-detector/wave.png" alt="Signal with unclassified audio event" title="Signal with unclassified audio event"></p>
+<p><img alt="Signal with unclassified audio event" title="Signal with unclassified audio event"  src="/_astro/wave._60R5jWm_1T1vp8.webp" width="2050" height="1062" loading="lazy" decoding="async"></p>
 <ul>
 <li>File with unclassified audio event</li>
 </ul>
 <p>Since my dog’s barks are quite loud we can safely discard all files whose maximum amplitude is lower than 0.25. This way, we could reduce a lot the amount of files that need to be manually classified as bark.</p>
 <h3 id="characterization-of-a-bark">Characterization of a bark</h3>
 <p>As mentioned before, we’ll discard files whose amplitude is lower than 0.25. Listening to multiple files with bark, we can observe that each bark more or less lasts for 1 second.</p>
-<p><img src="/src/assets/img/posts/bark-detector/bark.png" alt="Bark signal" title="Bark signal"></p>
+<p><img alt="Bark signal" title="Bark signal"  src="/_astro/bark.6db3mbod_2wj8Xv.webp" width="2090" height="1194" loading="lazy" decoding="async"></p>
 <ul>
 <li>Time representation of an audio signal containing a bark</li>
 </ul>
@@ -220,5 +220,5 @@ Published <time class="text-sm font-bold text-opacity-60" datetime="2021-07-18T0
 <span class="line"><span style="color:#BABED8;font-style:italic">        data</span><span style="color:#89DDFF">={</span><span style="color:#89DDFF">"</span><span style="color:#C3E88D">chat_id</span><span style="color:#89DDFF">"</span><span style="color:#89DDFF">:</span><span style="color:#82AAFF"> telegram_group_id</span><span style="color:#89DDFF">,</span><span style="color:#89DDFF"> "</span><span style="color:#C3E88D">text</span><span style="color:#89DDFF">"</span><span style="color:#89DDFF">:</span><span style="color:#82AAFF"> welcome_msg</span><span style="color:#89DDFF">},</span></span>
 <span class="line"><span style="color:#89DDFF">    )</span></span>
 <span class="line"><span style="color:#82AAFF">    print</span><span style="color:#89DDFF">(</span><span style="color:#82AAFF">response</span><span style="color:#89DDFF">.</span><span style="color:#F07178">text</span><span style="color:#89DDFF">)</span></span></code></pre>
-<p><img src="/src/assets/img/posts/bark-detector/telegram.png" alt="Telegram message when a bark occurs" title="Telegram message when a bark occurs"></p> </div> </article> </div>  </div> </article>  <footer class="flex justify-center items-center w-full px-16 h-28 border-t-2"> 2024 Adrian Galera
+<p><img alt="Telegram message when a bark occurs" title="Telegram message when a bark occurs"  src="/_astro/telegram.2NxDCguP_1VdHwG.webp" width="868" height="600" loading="lazy" decoding="async"></p> </div> </article> </div>  </div> </article>  <footer class="flex justify-center items-center w-full px-16 h-28 border-t-2"> 2024 Adrian Galera
 </footer> </main>    </body> </html> 
