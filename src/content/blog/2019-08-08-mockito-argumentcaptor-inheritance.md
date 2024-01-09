@@ -1,11 +1,16 @@
 ---
-title: Mockito ArgumentCaptor with inheritance
-description: Working with Mockito's ArgumentCaptor I discover it does not work as expected with child classes. This article describe a workaround to keep using it.
-category: java
-tags: [testing, java, mockito]
-heroImage: '../../assets/img/posts/mockito-argcaptor-inheritance/featured.jpg'
-pubDate: 2020-11-20
 slug: mockito-argumentcaptor-inheritance
+heroImage: /src/assets/img/posts/mockito-argcaptor-inheritance/featured.jpg
+category: java
+description: >-
+  Working with Mockito's ArgumentCaptor I discover it does not work as expected
+  with child classes. This article describe a workaround to keep using it.
+pubDate: 2020-11-20T00:00:00.000Z
+tags:
+  - testing
+  - java
+  - mockito
+title: Mockito ArgumentCaptor with inheritance
 ---
 
 Working with Mockito's ArgumentCaptor I discover it has a awful issue with inheritance.
@@ -123,10 +128,10 @@ Then the `verify` will successfully capture the two calls and then all the captu
 
 This example comes from:
 
-<a href="https://github.com/adriangalera/java-sandbox/tree/master/src/test/java/mockito/argcaptor">https://github.com/adriangalera/java-sandbox/tree/master/src/test/java/mockito/argcaptor</a>
+<a href="https://github.com/adriangalera/java-sandbox/tree/master/src/test/java/mockito/argcaptor">[https://github.com/adriangalera/java-sandbox/tree/master/src/test/java/mockito/argcaptor](https://github.com/adriangalera/java-sandbox/tree/master/src/test/java/mockito/argcaptor)</a>
 
 This is a known issue (already reported as an issue in their repo):
 
-<a href="https://github.com/mockito/mockito/issues/565">https://github.com/mockito/mockito/issues/565</a>
+<a href="https://github.com/mockito/mockito/issues/565">[https://github.com/mockito/mockito/issues/565](https://github.com/mockito/mockito/issues/565)</a>
 
 As of the day of writing the article, the issues is still there and it has been opened from 2016 ...

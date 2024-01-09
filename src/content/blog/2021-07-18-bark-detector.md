@@ -1,18 +1,28 @@
 ---
-title: Implementing a dog bark detector
-description: Using machine learning with python to detect when my dog barks and send a telegram message when it happens
-category: 'machine learning'
-tags: [python, ml, audio, scikit, librosa, raspberry-pi, vlc, bash]
-heroImage: '../../assets/img/posts/bark-detector/featured-image.jpg'
-pubDate: 2021-07-18
 slug: bark-detector
+heroImage: /src/assets/img/posts/bark-detector/featured-image.jpg
+category: machine learning
+description: >-
+  Using machine learning with python to detect when my dog barks and send a
+  telegram message when it happens
+pubDate: 2021-07-18T00:00:00.000Z
+tags:
+  - python
+  - ml
+  - audio
+  - scikit
+  - librosa
+  - raspberry-pi
+  - vlc
+  - bash
+title: Implementing a dog bark detector
 ---
 
-<p>My dog has a little bit of separation anxiety so when we leave him alone, he barks some times.</p>
+My dog has a little bit of separation anxiety so when we leave him alone, he barks some times.
 
-<p>We are training him to be home-alone and we want to know if he barks or not when we are not home.</p>
+We are training him to be home-alone and we want to know if he barks or not when we are not home.
 
-<p>Let's implement a bark detector!</p>
+Let's implement a bark detector!
 
 ## Basics
 
@@ -20,7 +30,7 @@ slug: bark-detector
 
 What is audio and how is its digital representation? It's basically an array of float values containing a value from -1 to 1.
 
-![Sound wave](../../assets/img/posts/bark-detector/wave.png)
+![Sound wave](/src/assets/img/posts/bark-detector/wave.png 'Sound wave')
 
 - Temporal representation of an audio signal
 
@@ -30,7 +40,7 @@ This representation shows the temporal evolution of the audio signal over time. 
 
 So, instead of using the temporal representation, let's observe the frequency representation:
 
-![Frequency representation](../../assets/img/posts/bark-detector/stft.png)
+![Frequency representation](/src/assets/img/posts/bark-detector/stft.png 'Frequency representation')
 
 - Frequency representation of an audio signal
 
@@ -46,7 +56,7 @@ The good thing about frequency representation is that it cancel noise because us
 
 ### Mel Frequency Cepstral Co-efficients (MFCC)
 
-Quoting from <a href="https://iq.opengenus.org/mfcc-audio/">https://iq.opengenus.org/mfcc-audio/</a>:
+Quoting from <a href="https://iq.opengenus.org/mfcc-audio/">[https://iq.opengenus.org/mfcc-audio/](https://iq.opengenus.org/mfcc-audio/)</a>:
 
 > MFC is a representation of the short-term power spectrum of a sound, based on a linear cosine transform of a log power spectrum on a nonlinear mel scale of frequency.
 
@@ -58,7 +68,7 @@ Ok, what does it mean? It's an improved frequency representation but applying op
 4. Take the discrete cosine transform (DCT) of the list of mel log powers. This will remove redudant information as in non-changing information.
 5. The MFCCs are the amplitudes of the resulting spectrum.
 
-![MFCC](../../assets/img/posts/bark-detector/mfcc.png)
+![MFCC](/src/assets/img/posts/bark-detector/mfcc.png 'MFCC')
 
 - MFCC representation of an audio signal
 
@@ -74,7 +84,7 @@ In <a href="https://www.agalera.eu/standalone-app-raspberry-pi">this</a> article
 
 I did not want to complicate my life much and I created a simple script that uses vlc to stream the audio obtained by the webcam mic and store it as mp3. In order to analyse the files easier I run the script every minute so I have recordings of 60 seconds duration:
 
-```bash
+```shell
 #!/bin/bash
 TIMEOUT=60
 FILE_NAME="/home/pi/dogfeeder-audios/dogfeeder-audio-$(date +'%Y_%m_%d_%H_%M_%S').mp3"
@@ -87,7 +97,7 @@ The syntax of vlc is really ugly :( . But if you read it carefully, you will see
 
 In order to don't flood the SD card of the Raspberry Pi I run the following script each 15 minutes. It gets the files older than 15 minutes, copy them to a NAS and remove them from the Raspberry Pi disk.
 
-```bash
+```shell
 #!/bin/bash
 MINUTES_ALLOWED=15
 FILES_TO_DELETE=$(find /home/pi/dogfeeder-audios -type f -mmin +"$MINUTES_ALLOWED" -exec ls {} +)
@@ -104,11 +114,11 @@ I've been recording for 3 days and we made some exits to keep him alone. Up to t
 
 We can pre-process the dataset and check for files that have something different than noise.
 
-![Signal with noise](../../assets/img/posts/bark-detector/noise.png)
+![Signal with noise](/src/assets/img/posts/bark-detector/noise.png 'Signal with noise')
 
 - File with only noise
 
-![Signal with unclassified audio event](../../assets/img/posts/bark-detector/wave.png)
+![Signal with unclassified audio event](/src/assets/img/posts/bark-detector/wave.png 'Signal with unclassified audio event')
 
 - File with unclassified audio event
 
@@ -118,7 +128,7 @@ Since my dog's barks are quite loud we can safely discard all files whose maximu
 
 As mentioned before, we'll discard files whose amplitude is lower than 0.25. Listening to multiple files with bark, we can observe that each bark more or less lasts for 1 second.
 
-![Bark signal](../../assets/img/posts/bark-detector/bark.png)
+![Bark signal](/src/assets/img/posts/bark-detector/bark.png 'Bark signal')
 
 - Time representation of an audio signal containing a bark
 
@@ -151,7 +161,7 @@ def extract_mfcc(filename):
     return mfccs_sc.flatten()
 ```
 
-MFCC values can go from [-Inf, Inf], however when I was playing with different algorithms, some of them did not accept negative values, so I scaled the values of MFCC to [0, Inf] using `MinMaxScaler`.
+MFCC values can go from \[-Inf, Inf], however when I was playing with different algorithms, some of them did not accept negative values, so I scaled the values of MFCC to \[0, Inf] using `MinMaxScaler`.
 
 Once we have the MFCC features for all the dataset, we can split the dataset into training and test dataset using:
 
@@ -193,7 +203,7 @@ In order to fix that, you can do two things:
 1. Oversample: create positive samples by synthetically creating new positive samples
 2. Undersample: discard samples from the negative ones
 
-More info: <a href="https://towardsdatascience.com/having-an-imbalanced-dataset-here-is-how-you-can-solve-it-1640568947eb">https://towardsdatascience.com/having-an-imbalanced-dataset-here-is-how-you-can-solve-it-1640568947eb</a>
+More info: <a href="https://towardsdatascience.com/having-an-imbalanced-dataset-here-is-how-you-can-solve-it-1640568947eb">[https://towardsdatascience.com/having-an-imbalanced-dataset-here-is-how-you-can-solve-it-1640568947eb](https://towardsdatascience.com/having-an-imbalanced-dataset-here-is-how-you-can-solve-it-1640568947eb)</a>
 
 I've used `SMOTE` (Synthetic Minority Over-sampling Technique) technique to perform the oversampling with very satisfactory results. In simple terms, SMOTE looks at the feature space for the minority class data points and considers its k nearest neighbours.
 
@@ -273,4 +283,4 @@ def send_to_telegram(predictions, filename):
     print(response.text)
 ```
 
-![Telegram message when a bark occurs](../..//assets/img/posts/bark-detector/telegram.png)
+![Telegram message when a bark occurs](/src/assets/img/posts/bark-detector/telegram.png 'Telegram message when a bark occurs')

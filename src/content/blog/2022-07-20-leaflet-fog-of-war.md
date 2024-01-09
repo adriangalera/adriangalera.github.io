@@ -1,11 +1,20 @@
 ---
-title: Leaflet fog of war
-description: When I was playing age of empires the map was all in black color at the beginning. As long as you explore the map, the black color is removed discovering what it was hidden behind. I wanted to implement something similar in a leaflet map. I'll describe the callenges I have found in a series of articles.
-category: js
-tags: [leaflet, javascript, browser, gis]
-heroImage: '../../assets/img/posts/leaflet-fog-of-war/featured-image.jpg'
-pubDate: 2022-07-20
 slug: leaflet-fog-of-war
+heroImage: /src/assets/img/posts/leaflet-fog-of-war/featured-image.jpg
+category: js
+description: >-
+  When I was playing age of empires the map was all in black color at the
+  beginning. As long as you explore the map, the black color is removed
+  discovering what it was hidden behind. I wanted to implement something similar
+  in a leaflet map. I'll describe the callenges I have found in a series of
+  articles.
+pubDate: 2022-07-20T00:00:00.000Z
+tags:
+  - leaflet
+  - javascript
+  - browser
+  - gis
+title: Leaflet fog of war
 ---
 
 <style>
@@ -28,8 +37,6 @@ When I was playing age of empires the map was all in black color at the beginnin
 
 I wanted to implement something similar to show all the trails, routes, paths, roads, streets, etc that I have discovered. I'll describe the callenges I have found in a series of articles.
 
-<p><!--more--></p>
-
 This is part of my series of articles about leaflet:
 
 - <a href="/leaflet-fog-of-war">Leaflet fog of war</a>
@@ -39,7 +46,7 @@ This is part of my series of articles about leaflet:
 
 Age of empires... what a great game
 
-![Age of Empires map](../../assets/img/posts/leaflet-fog-of-war/age-of-empires.jpeg)
+![Age of Empires map](/src/assets/img/posts/leaflet-fog-of-war/age-of-empires.jpeg 'Age of Empires map')
 
 I want to create something similar to the map in Age of Empires. A map where everything is hidden until you discovered. This way you could check how much of your city you know, or where to search for new places to visit.
 
@@ -77,7 +84,7 @@ scotland = L.polygon([
 scotland.addTo(map)
 ```
 
-![Polygon with holes](../../assets/img/posts/leaflet-fog-of-war/holes.png)
+![Polygon with holes](/src/assets/img/posts/leaflet-fog-of-war/holes.png 'Polygon with holes')
 
 In order to draw the polygon, the user might pass the list of latitude longitudes and a second optional argument that defines the holes of that polygon.
 
@@ -102,7 +109,7 @@ Finally the code looked something similar to:
 
 The plugin reads the input data as <a href="https://en.wikipedia.org/wiki/GeoJSON">GeoJSON</a> and store the visited places latitude and longitude in the `this._holes` variable. Later on, this array is iterated in order to build the holes that leaflet will draw into the polygon. Finally the created polygon is added to the map. When the method is called, the polygon is removed to be able to redraw it.
 
-Here you can see it in action: <a href="https://www.agalera.eu/leaflet-fogofwar/" target="_blank" rel="noopener">https://www.agalera.eu/leaflet-fogofwar/</a>
+Here you can see it in action: <a href="https://www.agalera.eu/leaflet-fogofwar/" target="_blank" rel="noopener">[https://www.agalera.eu/leaflet-fogofwar/](https://www.agalera.eu/leaflet-fogofwar/)</a>
 
 But wait ... that's not all, I want the fulfill the following requirements:
 

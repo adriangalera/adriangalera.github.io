@@ -1,18 +1,23 @@
 ---
-title: Python app structure
-description: Description of how you should organise a Python executable application to publish and generate an executable
-category: python
-tags: [python, architecture, cli]
-heroImage: '../../assets/img/posts/python-app-structure/featured.jpg'
-pubDate: '2022-12-13'
 slug: python-app-structure
+heroImage: /src/assets/img/posts/python-app-structure/featured.jpg
+category: python
+description: >-
+  Description of how you should organise a Python executable application to
+  publish and generate an executable
+pubDate: 2022-12-13T00:00:00.000Z
+tags:
+  - python
+  - architecture
+  - cli
+title: Python app structure
 ---
 
 Recently I was starting a Python application project from scratch and I had some issues understanding the correct project structure. Here's what I have learnt.
 
 ## Project structure
 
-Here you can find the project structure of a python application implementing a cli tool named `examplecli`. You can find that app here: <a href="https://github.com/adriangalera/examplecli">https://github.com/adriangalera/examplecli</a>
+Here you can find the project structure of a python application implementing a cli tool named `examplecli`. You can find that app here: <a href="https://github.com/adriangalera/examplecli">[https://github.com/adriangalera/examplecli](https://github.com/adriangalera/examplecli)</a>
 
 ```
 ├── Makefile
@@ -60,14 +65,14 @@ In order to have a clean environment, it is very recommended to use virtual envi
 
 In order to boostrap the virtual environment, you should create it (if not created) and activate it:
 
-```
+```shell
 python -m venv .venv
 source .venv/bin/activate
 ```
 
 Once the virtual environemnt is setup, you can install the dependencies in:
 
-```
+```shell
 pip install -r requirements.txt
 pip install -r requirements_test.txt
 ```
@@ -113,7 +118,7 @@ This file is importing the methods `debug` and `info` from `logging` file in mod
 
 This file is only needed if we want to package the application. Without it, we are still able to run the application by calling the entrypoint:
 
-```bash
+```shell
 python3 examplecli/entrypoint.py
 Usage: entrypoint.py [OPTIONS] COMMAND [ARGS]...
 
@@ -162,6 +167,6 @@ setup(name='example-cli', # name of the package
 
 In order to generate the wheel file, the user should run the following command:
 
-```bash
+```shell
 EXAMPLE_CLI_VERSION=$VERSION python3 setup.py sdist bdist_wheel
 ```

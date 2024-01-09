@@ -1,16 +1,20 @@
 ---
-title: Combine two Java Optionals
-description: I was implementing a searching algorithm and I had to search for two things. In this article I describe how I implemented combining two Java optionals in Java 9 using Optional.or compared with Java 8
-category: java
-tags: [java9, optional, java]
-heroImage: '../../assets/img/posts/combine-optional/featured-image.jpeg'
-pubDate: '2022-06-03'
 slug: combine-two-optionals
+heroImage: /src/assets/img/posts/combine-optional/featured-image.jpeg
+category: java
+description: >-
+  I was implementing a searching algorithm and I had to search for two things.
+  In this article I describe how I implemented combining two Java optionals in
+  Java 9 using Optional.or compared with Java 8
+pubDate: 2022-06-03T00:00:00.000Z
+tags:
+  - java9
+  - optional
+  - java
+title: Combine two Java Optionals
 ---
 
 I was implementing a searching algorithm and I had to search for two things. In this article I describe how I implemented combining two Java optionals.
-
-<p><!--more--></p>
 
 The algorithm had to do something similar to:
 
@@ -57,7 +61,7 @@ The alternative flow is cascaded in the `orElseGet`, which is a little bit hard 
 
 ## Java > 9
 
-In Java 9, the `Optional.or` method is introduced, which enhaces a lot the code for these scenarios. The code above can be rewritten in a much more understandable fashion:
+In Java 9, the `Optional.or` method is introduced, which enhances a lot the code for these scenarios. The code above can be rewritten in a much more understandable fashion:
 
 ```java
     public String findItem(List<String> items) {

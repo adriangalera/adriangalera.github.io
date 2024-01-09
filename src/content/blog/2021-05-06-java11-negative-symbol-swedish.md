@@ -1,16 +1,20 @@
 ---
-title: Java 11 negative symbol in Swedish
-description: We performed a migration to Java 11 and a bug fix about negative symbol for negative numbers in Java ruined our implementation. This article describes the situation and the lessons learned.
-category: java
-tags: [java, java11, testing]
-heroImage: '../../assets/img/posts/java11-negative-sv/featured-image.jpg'
-pubDate: '2021-05-06'
 slug: java11-negative-symbol-swedish
+heroImage: /src/assets/img/posts/java11-negative-sv/featured-image.jpg
+category: java
+description: >-
+  We performed a migration to Java 11 and a bug fix about negative symbol for
+  negative numbers in Java ruined our implementation. This article describes the
+  situation and the lessons learned.
+pubDate: 2021-05-06T00:00:00.000Z
+tags:
+  - java
+  - java11
+  - testing
+title: Java 11 negative symbol in Swedish
 ---
 
 We performed a migration to Java 11 and a bug fix about negative symbol for negative numbers in Java ruined our implementation. This article describes the situation and the lessons learned.
-
-<p><!--more--></p>
 
 In the middle of a migration of a project to Java 11 a very curious scenario has appeared. We face a bug while dealing with negative numbers. We have a function to convert a positive number to negative. The implementation was working fine for Java 8 but not for Java 11:
 
@@ -64,8 +68,8 @@ org.junit.ComparisonFailure: Negative symbols do not match! expected:<[−]> but
 
 It looks like the negative symbol returned in Java 8 was wrong and Java authors decided to fix that in Java11. The two characters are visually very similar:
 
-- &#8722; <a href="https://unicode-table.com/en/2212/">Minus-sign</a>
-- &#45; <a href="https://unicode-table.com/en/002D/">Hyphen-minus</a>
+- − <a href="https://unicode-table.com/en/2212/">Minus-sign</a>
+- \- <a href="https://unicode-table.com/en/002D/">Hyphen-minus</a>
 
 The solution was straightforward: use the negative symbol provided by NumberFormat
 

@@ -1,18 +1,23 @@
 ---
 slug: golang-abstract-class
-title: Golang abstract class
-description: I'm doing a side project using golang, and I have a use case where I'd use an abstract class in Java. Unfortunately, in golang the concept of classes does not exist. In this article I describe how can I implement the behaviour I want without abstract class.
+heroImage: /src/assets/img/posts/golang-abstract/featured-image.jpg
 category: golang
-tags: [golang, design-patterns, architecture]
-heroImage: '../../assets/img/posts/golang-abstract/featured-image.jpg'
-pubDate: '2021-09-24'
+description: >-
+  I'm doing a side project using golang, and I have a use case where I'd use an
+  abstract class in Java. Unfortunately, in golang the concept of classes does
+  not exist. In this article I describe how can I implement the behaviour I want
+  without abstract class.
+pubDate: 2021-09-24T00:00:00.000Z
+tags:
+  - golang
+  - design-patterns
+  - architecture
+title: Golang abstract class
 ---
 
 I'm doing a side project using golang, and I have a use case where I'd use an abstract class in Java. Unfortunately, in golang the concept of classes does not exist.
 
 In this article I describe how can I implement the behaviour I want without abstract class.
-
-<p><!--more--></p>
 
 I'm implementing an alert system in golang. When the alert needs to be activated, I want to play a sound through speakers and blink some LEDs for some period of time.
 
@@ -61,7 +66,7 @@ This representation will work in any language that supports inheritance and abst
 
 In golang, the concept of classes does not exist. So, we need to re-architecture the pattern.
 
-Instead of using the abstract class, we can re-think the implementation to use a decorator pattern: <a href="https://en.wikipedia.org/wiki/Decorator_pattern">https://en.wikipedia.org/wiki/Decorator_pattern</a>.
+Instead of using the abstract class, we can re-think the implementation to use a decorator pattern: <a href="https://en.wikipedia.org/wiki/Decorator_pattern">[https://en.wikipedia.org/wiki/Decorator_pattern](https://en.wikipedia.org/wiki/Decorator_pattern)</a>.
 
 > The decorator pattern is a design pattern that allows behavior to be added to an individual object, dynamically, without affecting the behavior of other objects from the same class
 

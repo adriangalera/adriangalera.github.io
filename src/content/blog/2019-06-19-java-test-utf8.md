@@ -1,16 +1,20 @@
 ---
-title: Java Unit Test to check UTF-8 chars
-description: We have experienced an issue with UTF-8 characters in Java and we have designed a unit test to prevent that to happen again.
-category: java
-tags: [java, unit-test, utf8, i18n]
-heroImage: '../../assets/img/posts/java-utf8/featured.jpg'
-pubDate: 2020-11-20
 slug: java-test-utf8
+heroImage: /src/assets/img/posts/java-utf8/featured.jpg
+category: java
+description: >-
+  We have experienced an issue with UTF-8 characters in Java and we have
+  designed a unit test to prevent that to happen again.
+pubDate: 2020-11-20T00:00:00.000Z
+tags:
+  - java
+  - unit-test
+  - utf8
+  - i18n
+title: Java Unit Test to check UTF-8 chars
 ---
 
 During a migration to a new plattform, we have detected an issue with the character encoding. Some of the messages contained the UTF-8 replacement character (�)
-
-<!--more-->
 
 Fortunately, we have been able to fix the configuration issue and to make sure it does not happen again we have put in place a variation of the following unit test:
 

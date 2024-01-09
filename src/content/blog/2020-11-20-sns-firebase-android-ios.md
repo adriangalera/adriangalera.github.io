@@ -1,16 +1,22 @@
 ---
-title: 'Push notifications SNS and Firebase'
-description: This post describe how I setup SNS to communicate with Firebase to send push notifications to Android and iOS devices
-category: aws
-tags: [aws, sns, mobile, java, backend, firebase]
-heroImage: '../../assets/img/posts/sns-push/featured.jpg'
-pubDate: 2020-11-20
 slug: sns-firebase-android-ios
+heroImage: /src/assets/img/posts/sns-push/featured.jpg
+category: aws
+description: >-
+  This post describe how I setup SNS to communicate with Firebase to send push
+  notifications to Android and iOS devices
+pubDate: 2020-11-20T00:00:00.000Z
+tags:
+  - aws
+  - sns
+  - mobile
+  - java
+  - backend
+  - firebase
+title: Push notifications SNS and Firebase
 ---
 
 Currently we're investigating usage of SNS to send Push notifications. We have some friends working already with Firebase and recommend us to check it out. We discovered that SNS supports sending messages to Firebase. However, not everything is as easy as it looks like.
-
-<p><!--more--></p>
 
 ## How push notifications work
 
@@ -35,7 +41,7 @@ The communication works this way:
 6. SNS forwards the message to FCM
 7. FCM sends the message to the mobile device
 
-![Push notifications communication](../../assets/img/posts/sns-push/pn.png 'Push push notifications communication')
+![Push notifications communication](/src/assets/img/posts/sns-push/pn.png 'Push push notifications communication')
 
 ## Testing FCM device configuration
 

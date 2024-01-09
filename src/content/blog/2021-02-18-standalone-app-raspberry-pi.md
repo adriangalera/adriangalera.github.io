@@ -1,18 +1,25 @@
 ---
-title: Standalone application for Raspberry Pi
-description: The design, implementation and continuous integration of a standalone application to be run on a Raspberry Pi.
-category: raspberrypi
-tags: [linux, nodejs, raspberry-pi, devops, docker]
-heroImage: '../../assets/img/posts/standalone-raspberry/featured-image.jpg'
-pubDate: 2021-02-18
 slug: standalone-app-raspberry-pi
+heroImage: /src/assets/img/posts/standalone-raspberry/featured-image.jpg
+category: raspberrypi
+description: >-
+  The design, implementation and continuous integration of a standalone
+  application to be run on a Raspberry Pi.
+pubDate: 2021-02-18T00:00:00.000Z
+tags:
+  - linux
+  - nodejs
+  - raspberry-pi
+  - devops
+  - docker
+title: Standalone application for Raspberry Pi
 ---
 
-<p>I'm building a small application to give treats to my dog in a remote manner. </p>
+I'm building a small application to give treats to my dog in a remote manner.
 
-<p>I setup a Raspberry Pi with a very basic HTTP server connected to a servo motor that will open or close the deposit where the treats are stored. </p>
+I setup a Raspberry Pi with a very basic HTTP server connected to a servo motor that will open or close the deposit where the treats are stored.
 
-<p>In this article I'll explain all the challenges I found to make this application standalone.</p>
+In this article I'll explain all the challenges I found to make this application standalone.
 
 ## Requirements
 
@@ -97,9 +104,9 @@ When all the logic is done and the tests are passing, I decided that I wanted to
 
 This has been the most challenging piece of the project. I wanted to create a standalone application so the installation process is keep to the minimum bar. In order to do so, I created a docker image with all the required dependencies to be used by Gitlab pipeline.
 
-<h4>Docker image</h4>
+#### Docker image
 
-```
+```dockerfile
 FROM balenalib/raspberrypi3-python:3.7-buster
 RUN apt update && apt upgrade
 RUN apt install build-essential binutils zlib1g-dev
@@ -111,13 +118,13 @@ It's based on <a href="https://github.com/balena-io-library/base-images/tree/mas
 
 `pyinstaller` is installed in order to generate the executable file of the backend
 
-<h4>Pipeline</h4>
+#### Pipeline
 
 The pipeline contains four stages:
 
 - test: unit tests of the backend and frontend
 - release: to generate semantic versioned tags of the project
-- build: to generate the standalone executable file of the backend and the web site for the frontend. Thanks to <a href="https://threedots.tech/post/automatic-semantic-versioning-in-gitlab-ci/">https://threedots.tech/post/automatic-semantic-versioning-in-gitlab-ci/</a>
+- build: to generate the standalone executable file of the backend and the web site for the frontend. Thanks to <a href="https://threedots.tech/post/automatic-semantic-versioning-in-gitlab-ci/">[https://threedots.tech/post/automatic-semantic-versioning-in-gitlab-ci/](https://threedots.tech/post/automatic-semantic-versioning-in-gitlab-ci/)</a>
 - publish: I decided to store the generated artifacts within the Gitlab Package Registry
 
 ```yaml
@@ -214,7 +221,7 @@ publish:
 
 Now that the packages are stored in Gitlab, the installation is super simple. I created a script that downloads the artifacts from Gitlab and unzip the web into a running nginx and replace the executable file that will be picked up from a `supervisorctl` process:
 
-```bash
+```shell
 VERSION=$1
 TOKEN=${GITLAB_ACCESS_TOKEN}
 

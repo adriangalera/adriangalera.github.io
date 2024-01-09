@@ -1,22 +1,26 @@
 ---
-title: Latitude,longitude bounds
-description: This post describe the basic algorithm to calculate the bounds of a set of points coordinates with latitude and longitude.
-category: js
-tags: [algorithms, typescript, latlng, maps]
-heroImage: '../../assets/img/posts/bounds-lat-lng/featured-image.jpg'
-pubDate: 2020-04-25
 slug: bounds-lat-lng-array
+heroImage: /src/assets/img/posts/bounds-lat-lng/featured-image.jpg
+category: js
+description: >-
+  This post describe the basic algorithm to calculate the bounds of a set of
+  points coordinates with latitude and longitude.
+pubDate: 2020-04-25T00:00:00.000Z
+tags:
+  - algorithms
+  - typescript
+  - latlng
+  - maps
+title: 'Latitude,longitude bounds'
 ---
 
 I'm currently developing an application based on maps. In that application I want to represent a set of markers. In order to do so, the map library I'm using it has a `fitBounds` method. However, you need to compute the bounds of the map that allow all the markers to be visible. I describe in this article the implemented algorithm.
-
-<p><!--more--></p>
 
 ## Abstraction of latitude longitude
 
 First of all, we need to do a nasty approximation. We can represent the earth globe, as a 2-D cartesian axis. In order to do that, we can consider latitude as the y axis and longitude as the x axis.
 
-Longitude will be in range [-180,180] and latitude in the range [-90,90]. We can define the cardinal points in the chart:
+Longitude will be in range \[-180,180] and latitude in the range \[-90,90]. We can define the cardinal points in the chart:
 
 - North -> Point in (0,90)
 - East -> Point in (180,0)
@@ -118,6 +122,7 @@ test('should compute bounds a list of points, each point per quadrant', () => {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
 <script>
 var ctx = 'myChart';
 

@@ -1,12 +1,19 @@
 ---
-title: Load GPX in leaflet
-description: Following up from the previous article about implementing the fog of war in leaflet, I want to be able to load a GPX file and display it in the map
-category: js
-tags: [leaflet, javascript, browser, gis, gpx]
 excerpt_separator: <!--more-->
-heroImage: '../../assets/img/posts/leaflet-load-gpx/featured-image.jpg'
-pubDate: 2022-07-22
 slug: leaflet-load-gpx
+heroImage: /src/assets/img/posts/leaflet-load-gpx/featured-image.jpg
+category: js
+description: >-
+  Following up from the previous article about implementing the fog of war in
+  leaflet, I want to be able to load a GPX file and display it in the map
+pubDate: 2022-07-22T00:00:00.000Z
+tags:
+  - leaflet
+  - javascript
+  - browser
+  - gis
+  - gpx
+title: Load GPX in leaflet
 ---
 
 Following up from the previous article about implementing the fog of war in leaflet, I want to be able to load a GPX file and display it in the map.
@@ -101,6 +108,6 @@ This `_group` function creates batches of 200 points in order to perform the joi
 
 This way of displaying GPX files produces very appealing representation such as:
 
-![GPX representation in leaflet map](../..//assets/img/posts/leaflet-load-gpx/gpx.png)
+![GPX representation in leaflet map](/src/assets/img/posts/leaflet-load-gpx/gpx.png 'GPX representation in leaflet map')
 
-Here you can see it in action: <a href="https://www.agalera.eu/leaflet-fogofwar/" target="_blank" rel="noopener">https://www.agalera.eu/leaflet-fogofwar/</a>
+Here you can see it in action: <a href="https://www.agalera.eu/leaflet-fogofwar/" target="_blank" rel="noopener">[https://www.agalera.eu/leaflet-fogofwar/](https://www.agalera.eu/leaflet-fogofwar/)</a>

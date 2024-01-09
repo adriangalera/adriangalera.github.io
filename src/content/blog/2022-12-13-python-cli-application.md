@@ -1,18 +1,21 @@
 ---
-title: Python cli application
-description: In this article I describe how to create a python cli application using the click library and install it using pipx
-category: python
-tags: [python, cli, click]
-heroImage: '../../assets/img/posts/python-cli-app/featured.jpg'
-pubDate: '2022-12-13'
 slug: python-cli-application
+heroImage: /src/assets/img/posts/python-cli-app/featured.jpg
+category: python
+description: >-
+  In this article I describe how to create a python cli application using the
+  click library and install it using pipx
+pubDate: 2022-12-13T00:00:00.000Z
+tags:
+  - python
+  - cli
+  - click
+title: Python cli application
 ---
 
 I have been developing an Python application to be able to be run as a CLI tool. In this article I speak about how I implement that using click library.
 
-<p><!--more--></p>
-
-Since I want to create a nice CLI tool, I search some libraries and found the click library: <a href="https://pypi.org/project/click/">https://pypi.org/project/click/</a>.
+Since I want to create a nice CLI tool, I search some libraries and found the click library: <a href="https://pypi.org/project/click/">[https://pypi.org/project/click/](https://pypi.org/project/click/)</a>.
 
 This tool allows the developer to create a beatiful CLI interaction with minimal code.
 
@@ -69,7 +72,7 @@ if __name__ == '__main__':
 
 Now we can run the program directly from the console:
 
-```bash
+```shell
 python3 examplecli/entrypoint.py
 Usage: entrypoint.py [OPTIONS] COMMAND [ARGS]...
 
@@ -116,14 +119,14 @@ setup(name='example-cli',
 
 Now we can build the app and install it using pipx:
 
-```bash
+```shell
 EXAMPLE_CLI_VERSION=$VERSION python3 setup.py sdist bdist_wheel
 pipx install dist/example_cli-0.0.1+local*-py3-none-any.whl --force
 ```
 
 pipx will create the binary cli tool. Now we can run it as a standalone application:
 
-```bash
+```shell
 example-cli hello --user test
 2022-12-13T15:40:23.029Z | Hello test
 ```

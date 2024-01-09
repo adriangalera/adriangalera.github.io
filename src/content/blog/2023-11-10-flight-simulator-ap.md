@@ -1,11 +1,18 @@
 ---
 slug: flight-simulator-ap
-title: Physical autopilot controls for flight simulators
-description: In this post I describe how I created from scrach a physical controller for autopilot in flight simulators.
+heroImage: /src/assets/img/posts/gal-ap/featured-image.png
 category: maker
-tags: [flight-sim, maker, electronics, arduino, mobiflight]
-heroImage: '../../assets/img/posts/gal-ap/featured-image.png'
-pubDate: '2023-11-10'
+description: >-
+  In this post I describe how I created from scrach a physical controller for
+  autopilot in flight simulators.
+pubDate: 2023-11-10T00:00:00.000Z
+tags:
+  - flight-sim
+  - maker
+  - electronics
+  - arduino
+  - mobiflight
+title: Physical autopilot controls for flight simulators
 ---
 
 My 3D printer was a little bit bored, long time without anything to print.
@@ -26,7 +33,7 @@ This project setups an Arduino board to send/receive control commands to Flight 
 
 We are trying to mimic a real airplane autopilot panel. For example this is the autopilot panel for a Boeing 777:
 
-[![777 Autopilot](../../assets/img/posts/gal-ap/autopilot-panel.jpeg)](../../assets/img/posts/gal-ap/autopilot-panel.jpeg)
+![](/src/assets/img/posts/gal-ap/autopilot-panel.jpeg)
 
 We want to be able to control AP values such as: speed, heading, altitude, vertical speed, etc... We want to have buttons to enable/disable controls, encoders to setup the values and 7-segments to visualize the values.
 
@@ -64,7 +71,7 @@ To design the components, I used [tinkercad](https://www.tinkercad.com/) which i
 
 I split the whole component in two parts: the front cover and the box. The components will be connected using bolts.
 
-![3D design](../../assets/img/posts/gal-ap/3d.png)
+![3D design](/src/assets/img/posts/gal-ap/3d.png '3D design')
 
 The box has a small hole that fits the Arduino USB port and it's used to power up the device and to connect it to the PC.
 
@@ -82,7 +89,7 @@ Whenever I solder some device (the LED button or the 7-segment display), first I
 
 The amount of cables that this project has is huge!
 
-![Cables](../../assets/img/posts/gal-ap/cables.jpeg)
+![Cables](/src/assets/img/posts/gal-ap/cables.jpeg 'Cables')
 
 The only way to make this work is to be very organized and define a color code for the cables.
 

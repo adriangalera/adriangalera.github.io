@@ -1,26 +1,32 @@
 ---
 slug: github-pages-password
-title: Password protection for Github Pages
-description: How to protect a static page served from Github pages with password and avoid link sharing without using any backend
+heroImage: /src/assets/img/posts/github-password/featured.jpg
 category: github
-tags: [javascript, browser, github-pages, security]
-heroImage: '../../assets/img/posts/github-password/featured.jpg'
-pubDate: '2022-09-06'
+description: >-
+  How to protect a static page served from Github pages with password and avoid
+  link sharing without using any backend
+pubDate: 2022-09-06T00:00:00.000Z
+tags:
+  - javascript
+  - browser
+  - github-pages
+  - security
+title: Password protection for Github Pages
 ---
 
 In this article I implement a workaround to protect with password a static page stored in Github pages.
 
 I am using Github Pages to store static pages without any backend. That's super nice, but now I need to serve a password protected page. What kind I do?
 
-I have found a guy that asked the same question and have a nice proposal: <b>use hashes</b>. You can find his code here: <a href="https://github.com/chrissy-dev/protected-github-pages">https://github.com/chrissy-dev/protected-github-pages</a>. His solution is older than walking.
+I have found a guy that asked the same question and have a nice proposal: <b>use hashes</b>. You can find his code here: <a href="https://github.com/chrissy-dev/protected-github-pages">[https://github.com/chrissy-dev/protected-github-pages](https://github.com/chrissy-dev/protected-github-pages)</a>. His solution is older than walking.
 
 ## Hash to the rescue
 
-The workaround is really simple, you choose a password that can be hard to guess. Hint: use some page that computes the password strength like: <a href="https://www.idstrong.com/tools/password-strength-checker/">https://www.idstrong.com/tools/password-strength-checker/</a>.
+The workaround is really simple, you choose a password that can be hard to guess. Hint: use some page that computes the password strength like: <a href="https://www.idstrong.com/tools/password-strength-checker/">[https://www.idstrong.com/tools/password-strength-checker/](https://www.idstrong.com/tools/password-strength-checker/)</a>.
 
 With that word, you generate the sha1 hash:
 
-```
+```shell
 echo -n "<your-word>" | openssl sha1
 cb1dc474e185777dad218b7d60f2781723d8190b
 ```
