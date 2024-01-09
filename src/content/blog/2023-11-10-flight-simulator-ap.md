@@ -12,7 +12,7 @@ tags:
   - electronics
   - arduino
   - mobiflight
-title: Physical autopilot controls for flight simulators
+title: Custom built autopilot for flight simulators
 ---
 
 My 3D printer was a little bit bored, long time without anything to print.
