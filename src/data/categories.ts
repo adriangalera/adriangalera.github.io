@@ -8,5 +8,7 @@ export const CATEGORIES = [
 	'js',
 	'machine learning',
 	'python',
-	'raspberrypi'
+	'raspberrypi',
+	'testing',
+	'docker'
 ] as const

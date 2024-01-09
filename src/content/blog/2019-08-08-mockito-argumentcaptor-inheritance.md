@@ -1,7 +1,7 @@
 ---
 slug: mockito-argumentcaptor-inheritance
 heroImage: /src/assets/img/posts/mockito-argcaptor-inheritance/featured.jpg
-category: java
+category: testing
 description: >-
   Working with Mockito's ArgumentCaptor I discover it does not work as expected
   with child classes. This article describe a workaround to keep using it.
