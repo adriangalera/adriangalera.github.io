@@ -64,7 +64,7 @@ const siteTitle = `${title} ${titleSeparator} ${siteConfig.title}`
 <script async src='https://www.googletagmanager.com/gtag/js?id=G-S8VGYBN25C'></script>
 <script>
 	const host = window.location.hostname
-	if (host !== 'agalera.eu') {
+	if (!host.includes('agalera.eu')) {
 		console.log('Disabling analytics...')
 		window['ga-disable-G-S8VGYBN25C'] = true
 	}
