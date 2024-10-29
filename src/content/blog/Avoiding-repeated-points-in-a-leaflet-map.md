@@ -8,6 +8,7 @@ description: >-
 pubDate: 2024-10-28T23:00:00.000Z
 draft: false
 tags:
+  - geojson
   - data-structures
   - leaflet
   - js
@@ -65,4 +66,72 @@ test('quad tree can find point after split', () => {
 })
 ```
 
-For example, these two test cases test that the search works fine for both leaf and branch node
+For example, these two test cases test that the search works fine for both leaf and branch node.
+
+## Display points instead of tracks
+
+The first attempt to deduplicate points involved re-using the previous code. For every track a quadtree was built, and every track was compared versus the list of queadtrees.
+
+If more than 80% of points were already included in the quadtree, the tracks were merged. How? Just by adding the different points and appending them to the reference quadtree and re-build the quadtree.
+
+Everything looked good until the display phase. In the display, the library to display GPX in leaflet failed to display the track correctly because in the merge process I removed the time coordinate and the library struggles to find the order of the points of the track.
+
+At this point, I changed the strategy, instead of showing tracks and keep a list of unique quadtress, I will build a single quadtree that contains all the points.
+
+After adding all the track points into the quad tree, I need to retrieve them,
+
+```javascript
+points() {
+  let points = []
+  for (let p of this.values) {
+    points.push([p.lat, p.lng])
+  }
+
+  this._addPoints(this.northEastChild, points)
+  this._addPoints(this.northWestChild, points)
+  this._addPoints(this.southEastChild, points)
+  this._addPoints(this.southWestChild, points)
+  return points
+}
+_addPoints(x, points) {
+  if (x) {
+    for (let pointPair of x.points()) {
+      points.push(pointPair)
+    }
+  }
+}
+```
+
+convert them to GeoJSON:
+
+```javascript
+const savePointsToFile = (points, filePath) => {
+	let geojson = `
+{
+  "type": "FeatureCollection",
+  "features": [
+`
+	points.forEach((point) => {
+		geojson += `
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [${point[1]}, ${point[0]}]
+      }
+    },
+    `
+	})
+	// remove last comma:
+	geojson = geojson.substring(0, geojson.length - 6)
+	geojson += `]}`
+
+	fs.writeFileSync(filePath, geojson)
+}
+```
+
+and display them:![](</src/assets/img/posts/repeated-points-quadtree/Screenshot 2024-10-29 at 18.10.01.png>)
+
+By deduplicating the points the output file size has gone from 250MB to 30MB. If the file is minified, the file size shrinks to 17MB, this means a 93% reduction of size.
+
+You can find the code here: [https://github.com/adriangalera/leaflet-fogofwar](https://github.com/adriangalera/leaflet-fogofwar)
