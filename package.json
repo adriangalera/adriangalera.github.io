@@ -33,7 +33,7 @@
 		"lint": "eslint .",
 		"pre-commit": "lint-staged",
 		"prepare": "husky install",
-		"deploy": "gh-pages -d dist --branch gh-pages --dotfiles",
+		"deploy": "npm run build && gh-pages -d dist --branch gh-pages --dotfiles",
 		"compare-sitemaps": "node scripts/compare-sitemaps.cjs"
 	},
 	"dependencies": {
