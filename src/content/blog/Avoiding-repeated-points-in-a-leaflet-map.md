@@ -2,9 +2,7 @@
 heroImage: >-
   /src/assets/img/posts/repeated-points-quadtree/pexels-geojango-maps-50965933-7663519.jpg
 category: js
-description: >-
-  Leverage the power of the QuadTree to avoid printing repeated points in a
-  leaflet map
+description: Leverage a QuadTree in Leaflet to eliminate repeated points, dramatically reducing file size and boosting performance with efficient data deduplication and smart testing.
 pubDate: 2024-10-28T23:00:00.000Z
 draft: false
 tags:

@@ -7,7 +7,7 @@ tags:
   - testing
   - chatgpt
   - wiremock
-title: Include request body field into wiremock response
+title: Echo request body into wiremock response
 ---
 
 Currently I'm mocking Grafana HTTP API requests and responses into wiremock.

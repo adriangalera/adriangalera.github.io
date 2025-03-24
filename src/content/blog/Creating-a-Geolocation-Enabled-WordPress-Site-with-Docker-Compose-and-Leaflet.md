@@ -14,7 +14,7 @@ tags:
   - php
   - wordpress
   - docker
-title: Creating a Geolocation-Enabled WordPress Site with Docker Compose and Leaflet
+title: Geolocation wordpress with leaflet
 ---
 
 ## Project Overview

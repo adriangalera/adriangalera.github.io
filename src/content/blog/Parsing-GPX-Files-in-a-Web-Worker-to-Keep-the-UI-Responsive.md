@@ -15,7 +15,7 @@ tags:
   - test
   - web-worker
   - js
-title: Parsing GPX Files in a Web Worker to Keep the UI Responsive
+title: Keep the ui responsive by using web worker
 ---
 
 GPX files, which are XML-based, can be quite large, especially when they contain extensive tracking data. Parsing these files on the main thread can block the UI, causing unresponsiveness during the parsing process.
