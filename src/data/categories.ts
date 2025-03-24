@@ -10,5 +10,6 @@ export const CATEGORIES = [
 	'python',
 	'raspberrypi',
 	'testing',
-	'docker'
+	'docker',
+	'development'
 ] as const
