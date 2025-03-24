@@ -1,12 +1,7 @@
 ---
 heroImage: /src/assets/img/posts/wp-docker-map/pexels-pixabay-38271.jpg
 category: docker
-description: >-
-  In this tutorial, we’ll build a geolocation-enabled WordPress site using
-  Docker Compose. Our setup will include a custom "piulada" category, where each
-  post contains latitude and longitude metadata. We'll also create a custom page
-  that displays these posts on a map with markers, each linking to the
-  individual post.
+description: Build a geolocation-enabled WordPress site with Docker Compose. Create a "piulada" category and map posts using custom markers.
 pubDate: 2024-10-30T23:00:00.000Z
 draft: false
 tags:

@@ -27,5 +27,8 @@ export default defineConfig({
 		}),
 		sitemap(),
 		tailwind()
-	]
+	],
+	server: {
+		allowedHosts: ['galblog']
+	}
 })

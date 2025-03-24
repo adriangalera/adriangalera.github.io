@@ -1,7 +1,7 @@
 ---
 heroImage: /src/assets/img/posts/wiremock-response-request-body/pexels-pixabay-373543.jpg
 category: testing
-description: How to include request body field in wiremock response
+description: Echo request fields directly in your Wiremock responses! Learn how to return the data from HTTP request bodies using Wiremock’s response templating.
 pubDate: 2024-10-15T22:00:00.000Z
 tags:
   - testing

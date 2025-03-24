@@ -1,7 +1,7 @@
 ---
 heroImage: /src/assets/img/posts/wayback/pexels-giallo-859895.jpg
 category: python
-description: How to download historic copies of any website from Internet Archive
+description: Automate retrieval of historic website copies from Internet Archive to create ML text datasets using Python, Playwright, and wget.
 pubDate: 2024-05-10T22:00:00.000Z
 draft: false
 tags:

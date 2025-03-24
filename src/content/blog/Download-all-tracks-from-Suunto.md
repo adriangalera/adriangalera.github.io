@@ -1,7 +1,7 @@
 ---
 heroImage: /src/assets/img/posts/suunto/pexels-pixabay-34514.jpg
 category: js
-description: How to download all the stored tracks in Suunto app
+description: Automate downloading Suunto tracks using JS & Playwright. Bypass captchas, extract workout IDs, and export GPX files seamlessly.
 pubDate: 2024-03-29T23:00:00.000Z
 draft: false
 tags:

@@ -1,12 +1,7 @@
 ---
 heroImage: /src/assets/img/posts/web-worker-vite/gpx-web-worker-featured-image.webp
 category: js
-description: >-
-  When developing a Leaflet-based application to display GPX tracks, I
-  encountered a significant issue: parsing large GPX files caused the browser's
-  UI to freeze, leading to a poor user experience. To address this, I leveraged
-  Web Workers to handle the parsing in a background thread, ensuring the UI
-  remained responsive.
+description: Prevent UI freezes in your Leaflet GPX app by offloading large file parsing to Web Workers, ensuring smooth user experience.
 pubDate: 2025-03-23T23:00:00.000Z
 draft: false
 tags:
@@ -15,7 +10,7 @@ tags:
   - test
   - web-worker
   - js
-title: Keep the ui responsive by using web worker
+title: Keep the UI responsive by using web worker
 ---
 
 GPX files, which are XML-based, can be quite large, especially when they contain extensive tracking data. Parsing these files on the main thread can block the UI, causing unresponsiveness during the parsing process.
