@@ -2,7 +2,7 @@
 heroImage: /src/assets/img/posts/thriving-chaos/uncertainty-featured-image.webp
 category: development
 description: Tips and mindset shifts for developers facing messy, unfamiliar code and not knowing where to start in real-world projects.
-pubDate: 2025-03-31T22:00:00.000Z
+pubDate: 2025-03-26T22:00:00.000Z
 draft: false
 tags:
   - testing
