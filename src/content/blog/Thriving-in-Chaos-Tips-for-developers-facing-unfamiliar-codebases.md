@@ -12,9 +12,9 @@ tags:
 title: 'Tips for developers facing unfamiliar codebases'
 ---
 
-**Feeling lost in a sea of unfamiliar code?** This guide is for developers who’ve ever stared at a confusing repo wondering where to even start. Learn practical tips, mindset shifts, and strategies to not just survive — but thrive — in the messy, uncertain world of real-world software development.
+**Feeling lost in a sea of unfamiliar code?** This guide is for developers who’ve ever stared at a confusing repo wondering where to even start. Learn practical tips, mindset shifts, and strategies to not just survive (but thrive) in the messy, uncertain world of real-world software development.
 
-Recently, the company I work for decided to transition from the New Relic observability stack to the [LGTM](https://grafana.com/about/grafana-stack/ 'LGTM stack') stack (Loki, Grafana, Tempo and Mimir). All teams are expected to migrate their services, although some were given higher priority than others. One of the high-priority teams didn’t have the capacity to handle the migration themselves, so I was asked to take it on. Naturally, I was completely unfamiliar with the codebase I needed to work on.
+Recently, the company I work for decided to transition from the New Relic observability stack to the [LGTM](https://grafana.com/about/grafana-stack/ 'LGTM') stack (Loki, Grafana, Tempo, and Mimir). All teams are expected to migrate their services, although some were given higher priority than others. One of the high-priority teams didn’t have the capacity to handle the migration themselves, so I was asked to take it on. Naturally, I was completely unfamiliar with the codebase I needed to work on, fortunately, I had support from the service authors through consultations and code reviews.
 
 In this article, I’d like to share some tips and tricks I used during this assignment that really helped me navigate the migration successfully.
 
@@ -115,6 +115,6 @@ Try to keep tickets as small as possible. This not only reduces the scope of cod
 
 If you’ve made it this far, thank you for reading! I hope these tips help you feel a bit more confident the next time you’re dropped into a codebase you don’t know, working on a feature you’ve never seen, under constraints you didn’t choose.
 
-Real-world software development can be messy, unpredictable, and at times overwhelming—but with the right mindset, some practical habits, and a little patience, you can absolutely navigate the chaos and make meaningful progress.
+Real-world software development can be messy, unpredictable, and at times overwhelming but with the right mindset, some practical habits, and a little patience, you can absolutely navigate the chaos and make meaningful progress.
 
 Good luck out there—and if any of these strategies help you, or you’ve got tips of your own, I’d love to hear about them!
