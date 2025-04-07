@@ -9,5 +9,3 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    # Enable auto-merge if all requirements are met
-    auto-merge: true
