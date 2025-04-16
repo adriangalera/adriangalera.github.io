@@ -20,6 +20,10 @@ A recent organizational shift required all teams to migrate their observability 
 
 In this article, I’d like to share some tips and tricks I used during this assignment that really helped me navigate the migration successfully.
 
+You can think of these tips and tricks as an iterative cycle:
+
+![](</src/assets/img/posts/thriving-chaos/Screenshot 2025-04-16 at 12.47.55.png>)
+
 ## Create a proof of concept
 
 The service I had to migrate only required integration with a specific part of the observability stack: the synhetic monitoring component. I had never worked with that product suite before, so my first step was to get familiar with it.
@@ -78,6 +82,28 @@ In some cases, backend applications process messages from queues, such as AWS SQ
 For frontend changes, Chrome Developer Tools comes in handy again. Inspect the HTML to find a visual element close to the part you need to update. Look for unique identifiers such as element IDs or class names that you can search for in your IDE to trace back to the relevant code.
 
 This is the most "fun" part of the migration; finding the exact places to make changes can feel more like an art than a science. So be patient, and don’t panic. You’ll find your way eventually.
+
+## TODO and failing tests
+
+This part is essential if you don’t want to miss things. When you're navigating unfamiliar code, you'll explore many classes and components. As you go, you might spot areas that need attention but aren't urgent. In those cases, it's useful to leave a TODO comment with a reference to the relevant JIRA ticket. Later, you can search your codebase to find and address any pending work.
+
+I typically use the following format:
+
+```java
+// TODO TASK-1234: Refactor this algorithm
+```
+
+This makes it easy to search for `// TODO TASK-1234` across your code. It also serves as a visual reminder—during code reviews, an unaddressed TODO will stand out clearly. If you want to add another layer of safety, you can include a comment in your Pull Request indicating that the task must be completed before the PR is merged.
+
+Another effective technique is to create failing tests. This is especially helpful when you're making changes in unfamiliar code. As soon as you create a new class or method, jump straight into writing its test. At this point, you probably have a good idea of what you want to implement, so it’s a great time to try TDD. Even if you don’t follow it strictly, a failing test acts as a reminder. For example:
+
+```java
+void shouldImplementAlgorithmX() {
+  Assertions.fail("I need to implement algorithm X");
+}
+```
+
+This will cause the test suite to fail. If you're using a CI/CD pipeline (and you should be), the failing test will prevent the PR from being merged until you implement the feature and all tests pass.
 
 ## Refactor versus changes
 
