@@ -45,7 +45,7 @@ Published <time class="text-sm font-bold text-opacity-60" datetime="2025-03-26T2
 <p>A recent organizational shift required all teams to migrate their observability tooling to a new platform. While some teams were prioritized over others, one high-priority group didn’t have the capacity to manage the transition themselves, so I stepped in to lead the effort. I wasn’t familiar with the codebase initially, but thanks to regular consultations and code reviews with the original authors, I was able to get up to speed and move the migration forward.</p>
 <p>In this article, I’d like to share some tips and tricks I used during this assignment that really helped me navigate the migration successfully.</p>
 <p>You can think of these tips and tricks as an iterative cycle:</p>
-<p><img src="/src/assets/img/posts/thriving-chaos/Screenshot%202025-04-16%20at%2012.47.55.png" alt=""></p>
+<p><img alt="Iteration cycle" title="iteration cycle" width="2426" height="1614" loading="lazy" decoding="async" src="/_astro/cycle.CHwXOQYU_1smka3.webp" ></p>
 <h2 id="create-a-proof-of-concept">Create a proof of concept</h2>
 <p>The service I had to migrate only required integration with a specific part of the observability stack: the synhetic monitoring component. I had never worked with that product suite before, so my first step was to get familiar with it.</p>
 <p>To do that, I created a separate project where I could experiment freely with it, exploring the available APIs and the Terraform modules. This helped me gather the knowledge I would later need to integrate it into the actual project.</p>
