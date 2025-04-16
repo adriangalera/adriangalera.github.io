@@ -127,7 +127,7 @@ const savePointsToFile = (points, filePath) => {
 }
 ```
 
-and display them:![]("../../assets/img/posts/repeated-points-quadtree/Screenshot 2024-10-29 at 18.10.01.png")
+and display them:![](../../assets/img/posts/repeated-points-quadtree/map.png)
 
 By deduplicating the points the output file size has gone from 250MB to 30MB. If the file is minified, the file size shrinks to 17MB, this means a 93% reduction of size.
 
