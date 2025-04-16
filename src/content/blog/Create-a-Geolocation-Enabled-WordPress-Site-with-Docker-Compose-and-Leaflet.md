@@ -1,5 +1,5 @@
 ---
-heroImage: /src/assets/img/posts/wp-docker-map/pexels-pixabay-38271.jpg
+heroImage: ../../assets/img/posts/wp-docker-map/pexels-pixabay-38271.jpg
 category: docker
 description: Build a geolocation-enabled WordPress site with Docker Compose. Create a "piulada" category and map posts using custom markers.
 pubDate: 2024-10-30T23:00:00.000Z

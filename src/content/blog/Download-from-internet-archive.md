@@ -1,5 +1,5 @@
 ---
-heroImage: /src/assets/img/posts/wayback/pexels-giallo-859895.jpg
+heroImage: ../../assets/img/posts/wayback/pexels-giallo-859895.jpg
 category: python
 description: Automate retrieval of historic website copies from Internet Archive to create ML text datasets using Python, Playwright, and wget.
 pubDate: 2024-05-10T22:00:00.000Z
@@ -29,7 +29,7 @@ Let's take this feed as example: [https://www.elperiodico.com/es/rss/economia/rs
 
 We can go manually to internet archive and search the copies available:
 
-![](</src/assets/img/posts/wayback/Screenshot 2024-05-11 at 14.01.32.png>)
+![](../../assets/img/posts/wayback/wayback.png)
 
 If you click in the days with data, you are able to download the historic copy of the feed.
 

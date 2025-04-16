@@ -33,7 +33,7 @@ This project setups an Arduino board to send/receive control commands to Flight 
 
 We are trying to mimic a real airplane autopilot panel. For example this is the autopilot panel for a Boeing 777:
 
-![](/src/assets/img/posts/gal-ap/autopilot-panel.jpeg)
+![](../../assets/img/posts/gal-ap/autopilot-panel.jpeg)
 
 We want to be able to control AP values such as: speed, heading, altitude, vertical speed, etc... We want to have buttons to enable/disable controls, encoders to setup the values and 7-segments to visualize the values.
 
@@ -71,7 +71,7 @@ To design the components, I used [tinkercad](https://www.tinkercad.com/) which i
 
 I split the whole component in two parts: the front cover and the box. The components will be connected using bolts.
 
-![](/src/assets/img/posts/gal-ap/3d.png)
+![](../../assets/img/posts/gal-ap/3d.png)
 
 The box has a small hole that fits the Arduino USB port and it's used to power up the device and to connect it to the PC.
 

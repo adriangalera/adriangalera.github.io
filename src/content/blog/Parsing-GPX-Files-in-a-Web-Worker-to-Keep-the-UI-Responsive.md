@@ -1,5 +1,5 @@
 ---
-heroImage: /src/assets/img/posts/web-worker-vite/gpx-web-worker-featured-image.webp
+heroImage: ../../assets/img/posts/web-worker-vite/gpx-web-worker-featured-image.webp
 category: js
 description: Prevent UI freezes in your Leaflet GPX app by offloading large file parsing to Web Workers, ensuring smooth user experience.
 pubDate: 2025-03-23T23:00:00.000Z

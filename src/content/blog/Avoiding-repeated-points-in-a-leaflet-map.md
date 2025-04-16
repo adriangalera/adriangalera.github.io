@@ -1,6 +1,5 @@
 ---
-heroImage: >-
-  /src/assets/img/posts/repeated-points-quadtree/pexels-geojango-maps-50965933-7663519.jpg
+heroImage: ../../assets/img/posts/repeated-points-quadtree/pexels-geojango-maps-50965933-7663519.jpg
 category: js
 description: Use a QuadTree in Leaflet to remove duplicate points, significantly reducing file size and boosting performance with smart deduplication and testing.
 pubDate: 2024-10-28T23:00:00.000Z
@@ -39,7 +38,7 @@ Every node has a defined capacity, if the node contains less than maximum capaci
 
 See this example:
 
-![](/src/assets/img/posts/repeated-points-quadtree/2D_Binary_Index.svg.png)
+![](../../assets/img/posts/repeated-points-quadtree/2D_Binary_Index.svg.png)
 
 This structure is very efficient to perform searches since O(n) searches will only be performed in leaf nodes, which will contain a limited amount of nodes.
 
@@ -128,7 +127,7 @@ const savePointsToFile = (points, filePath) => {
 }
 ```
 
-and display them:![](</src/assets/img/posts/repeated-points-quadtree/Screenshot 2024-10-29 at 18.10.01.png>)
+and display them:![]("../../assets/img/posts/repeated-points-quadtree/Screenshot 2024-10-29 at 18.10.01.png")
 
 By deduplicating the points the output file size has gone from 250MB to 30MB. If the file is minified, the file size shrinks to 17MB, this means a 93% reduction of size.
 
