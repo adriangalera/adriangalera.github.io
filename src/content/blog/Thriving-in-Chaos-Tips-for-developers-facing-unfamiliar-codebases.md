@@ -1,5 +1,5 @@
 ---
-heroImage: /src/assets/img/posts/thriving-chaos/uncertainty-featured-image.webp
+heroImage: ../../assets/img/posts/thriving-chaos/uncertainty-featured-image.webp
 category: development
 description: >-
   Tips and mindset shifts for developers facing messy, unfamiliar code and not
@@ -22,7 +22,7 @@ In this article, I’d like to share some tips and tricks I used during this ass
 
 You can think of these tips and tricks as an iterative cycle:
 
-![](</src/assets/img/posts/thriving-chaos/Screenshot 2025-04-16 at 12.47.55.png>)
+![Iteration cycle](../../assets/img/posts/thriving-chaos/cycle.png 'iteration cycle')
 
 ## Create a proof of concept
 
