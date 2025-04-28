@@ -19,8 +19,8 @@ importers:
         specifier: ^4.2.4
         version: 4.2.4(astro@5.7.6(jiti@1.21.7)(rollup@4.40.1)(typescript@5.8.3)(yaml@2.7.1))
       '@astrojs/sitemap':
-        specifier: ^3.3.0
-        version: 3.3.0
+        specifier: ^3.3.1
+        version: 3.3.1
       '@astrojs/tailwind':
         specifier: ^6.0.2
         version: 6.0.2(astro@5.7.6(jiti@1.21.7)(rollup@4.40.1)(typescript@5.8.3)(yaml@2.7.1))(tailwindcss@3.4.17)
@@ -153,8 +153,8 @@ packages:
   '@astrojs/rss@4.0.11':
     resolution: {integrity: sha512-3e3H8i6kc97KGnn9iaZBJpIkdoQi8MmR5zH5R+dWsfCM44lLTszOqy1OBfGGxDt56mpQkYVtZJWoxMyWuUZBfw==}
 
-  '@astrojs/sitemap@3.3.0':
-    resolution: {integrity: sha512-nYE4lKQtk+Kbrw/w0G0TTgT724co0jUsU4tPlHY9au5HmTBKbwiCLwO/15b1/y13aZ4Kr9ZbMeMHlXuwn0ty4Q==}
+  '@astrojs/sitemap@3.3.1':
+    resolution: {integrity: sha512-GRnDUCTviBSNfXJ0Jmur+1/C+z3g36jy79VyYggfe1uNyEYSTcmAfTTCmbytrRvJRNyJJnSfB/77Gnm9PiXRRg==}
 
   '@astrojs/tailwind@6.0.2':
     resolution: {integrity: sha512-j3mhLNeugZq6A8dMNXVarUa8K6X9AW+QHU9u3lKNrPLMHhOQ0S7VeWhHwEeJFpEK1BTKEUY1U78VQv2gN6hNGg==}
@@ -7509,11 +7509,11 @@ snapshots:
       fast-xml-parser: 4.5.3
       kleur: 4.1.5
 
-  '@astrojs/sitemap@3.3.0':
+  '@astrojs/sitemap@3.3.1':
     dependencies:
       sitemap: 8.0.0
       stream-replace-string: 2.0.0
-      zod: 3.24.2
+      zod: 3.24.3
 
   '@astrojs/tailwind@6.0.2(astro@5.7.6(jiti@1.21.7)(rollup@4.40.1)(typescript@5.8.3)(yaml@2.7.1))(tailwindcss@3.4.17)':
     dependencies:
@@ -9213,7 +9213,7 @@ snapshots:
       react-router-dom: 6.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       tinacms: 2.7.5(@types/react@19.1.0)(abstract-level@1.0.4)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(sucrase@3.35.0)(typescript@5.8.3)
       typescript: 5.8.3
-      zod: 3.24.2
+      zod: 3.24.3
     transitivePeerDependencies:
       - '@codemirror/language'
       - '@types/node'
@@ -9425,7 +9425,7 @@ snapshots:
       react: 18.3.1
       url-pattern: 1.0.3
       yup: 0.32.11
-      zod: 3.24.2
+      zod: 3.24.3
 
   '@tinacms/schema-tools@1.7.3(react@18.3.1)(yup@1.6.1)':
     dependencies:
@@ -9433,7 +9433,7 @@ snapshots:
       react: 18.3.1
       url-pattern: 1.0.3
       yup: 1.6.1
-      zod: 3.24.2
+      zod: 3.24.3
 
   '@tinacms/search@1.0.43(abstract-level@1.0.4)(react@18.3.1)(sucrase@3.35.0)(typescript@5.8.3)(yup@1.6.1)':
     dependencies:
