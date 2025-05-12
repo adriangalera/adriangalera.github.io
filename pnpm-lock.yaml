@@ -34,7 +34,7 @@ importers:
         specifier: ^1.9.5
         version: 1.9.5(@codemirror/language@6.0.0)(@types/node@22.15.17)(@types/react@19.0.12)(abstract-level@1.0.4)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.40.2)(scheduler@0.25.0)(sucrase@3.35.0)
       '@typescript-eslint/parser':
-        specifier: ^8.31.1
+        specifier: ^8.32.0
         version: 8.32.0(eslint@9.26.0(jiti@1.21.7))(typescript@5.8.3)
       clsx:
         specifier: ^2.1.1
