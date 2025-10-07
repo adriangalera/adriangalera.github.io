@@ -5,7 +5,7 @@ description: >-
   Ever wondered how AI can filter out those annoying spam SMS? In this post, I
   explore how machine learning models are trained to detect spam SMS using
   real-world techniques
-pubDate: 2025-10-06T22:00:00.000Z
+pubDate: 2025-10-06T00:00:00.000Z
 draft: false
 tags:
   - sms
