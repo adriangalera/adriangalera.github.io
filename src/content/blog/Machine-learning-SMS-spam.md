@@ -1,5 +1,5 @@
 ---
-heroImage: '/src/assets/img/posts/sms-spam/ChatGPT Image Oct 7, 2025, 01_11_28 AM.png'
+heroImage: '../../assets/img/posts/sms-spam/ChatGPT Image Oct 7, 2025, 01_11_28 AM.png'
 category: machine learning
 description: >-
   Ever wondered how AI can filter out those annoying spam SMS? In this post, I
