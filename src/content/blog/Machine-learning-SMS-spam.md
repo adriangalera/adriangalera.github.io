@@ -178,6 +178,17 @@ print("\n=== AFTER STEMMING ===")
 print(df["message"].head(5))
 ```
 
+Another technique to reduce common words to the root is called `lemmatize`. This technique is similar to `stemming` but keeps better root words at the expense of being more computationally intensive because it takes into account the part of the speech the word belongs. An example of usage can be:
+
+```python
+from nltk.stem import WordNetLemmatizer
+
+nltk.download("wordnet")
+
+lemmatizer = WordNetLemmatizer()
+df["clean_text"] = df["clean_text"].apply(lambda x: [lemmatizer.lemmatize(word) for word in x])
+```
+
 ### Back to string
 
 When all the dataset preparation is done, we can revert the message to string to extract the features in the next stage:
@@ -216,6 +227,14 @@ y = df["label"].apply(lambda x: 1 if x == "spam" else 0)  # Converting labels to
 ```
 
 Similarly, the labels `spam` or `ham` will be converted to 1 or 0.
+
+Another good feature extractor is `TF-IDF` which stands for `Term Frequency - Innverse Document Function`. Citing wikipedia:
+
+> In information retrieval, tf–idf (term frequency–inverse document frequency, TF\*IDF, TFIDF, TF–IDF, or Tf–idf) is a measure of importance of a word to a document in a collection or corpus, adjusted for the fact that some words appear more frequently in general.
+
+A usage example of TF-IDF is very similar to CountVectorizer:
+
+`vectorizer = TfidfVectorizer(min_df=2, max_df=0.85, ngram_range=(1, 2))`
 
 ## Training the model
 
