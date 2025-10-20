@@ -36,7 +36,7 @@
 	},
 	"dependencies": {
 		"@astrojs/rss": "^4.0.12",
-		"astro": "^5.14.4"
+		"astro": "^5.14.6"
 	},
 	"devDependencies": {
 		"@astrojs/mdx": "^4.3.6",
