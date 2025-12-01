@@ -65,11 +65,11 @@ devDependencies:
     specifier: ^1.4.0
     version: 1.4.0
   prettier:
-    specifier: ^3.6.2
-    version: 3.6.2
+    specifier: ^3.7.3
+    version: 3.7.3
   prettier-config-standard:
     specifier: ^7.0.0
-    version: 7.0.0(prettier@3.6.2)
+    version: 7.0.0(prettier@3.7.3)
   prettier-plugin-astro:
     specifier: ^0.14.1
     version: 0.14.1
@@ -10764,12 +10764,12 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /prettier-config-standard@7.0.0(prettier@3.6.2):
+  /prettier-config-standard@7.0.0(prettier@3.7.3):
     resolution: {integrity: sha512-NgZy4TYupJR6aMMuV/Aqs0ONnVhlFT8PXVkYRskxREq8EUhJHOddVfBxPV6fWpgcASpJSgvvhVLk0CBO5M3Hvw==}
     peerDependencies:
       prettier: ^2.6.0 || ^3.0.0
     dependencies:
-      prettier: 3.6.2
+      prettier: 3.7.3
     dev: true
 
   /prettier-plugin-astro@0.14.1:
@@ -10777,7 +10777,7 @@ packages:
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
       '@astrojs/compiler': 2.13.0
-      prettier: 3.6.2
+      prettier: 3.7.3
       sass-formatter: 0.7.9
     dev: true
 
@@ -10787,8 +10787,8 @@ packages:
     hasBin: true
     dev: true
 
-  /prettier@3.6.2:
-    resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
+  /prettier@3.7.3:
+    resolution: {integrity: sha512-QgODejq9K3OzoBbuyobZlUhznP5SKwPqp+6Q6xw6o8gnhr4O85L2U915iM2IDcfF2NPXVaM9zlo9tdwipnYwzg==}
     engines: {node: '>=14'}
     hasBin: true
     dev: true
