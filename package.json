@@ -39,7 +39,7 @@
 		"astro": "^5.16.5"
 	},
 	"devDependencies": {
-		"@astrojs/mdx": "^4.3.12",
+		"@astrojs/mdx": "^4.3.13",
 		"@astrojs/sitemap": "^3.6.0",
 		"@astrojs/tailwind": "^6.0.2",
 		"@pagefind/default-ui": "^1.4.0",
