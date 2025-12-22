@@ -59,8 +59,8 @@ devDependencies:
     specifier: ^4.0.0
     version: 4.0.0
   motion:
-    specifier: ^12.23.25
-    version: 12.23.25(react-dom@18.3.1)(react@18.3.1)
+    specifier: ^12.23.26
+    version: 12.23.26(react-dom@18.3.1)(react@18.3.1)
   pagefind:
     specifier: ^1.4.0
     version: 1.4.0
@@ -452,7 +452,7 @@ packages:
     resolution: {integrity: sha512-rtjk5ifyMzOna1c7PBu7J1VCt0PvA5wy3o8eMVnxMKb7z8KA7JFecvD04dSn14vj/bBaAbqRsGed5OjtofEnLA==}
     dependencies:
       '@codemirror/state': 6.5.2
-      '@codemirror/view': 6.39.4
+      '@codemirror/view': 6.39.5
       '@lezer/common': 1.4.0
       '@lezer/highlight': 1.2.3
       '@lezer/lr': 1.4.5
@@ -465,8 +465,8 @@ packages:
       '@marijn/find-cluster-break': 1.0.2
     dev: true
 
-  /@codemirror/view@6.39.4:
-    resolution: {integrity: sha512-xMF6OfEAUVY5Waega4juo1QGACfNkNF+aJLqpd8oUJz96ms2zbfQ9Gh35/tI3y8akEV31FruKfj7hBnIU/nkqA==}
+  /@codemirror/view@6.39.5:
+    resolution: {integrity: sha512-A2MwwJB5vC0UeOKHTsB0ZX19DH3/0KMaPgz45r0wd+SRwjk8x3KvYVQ/lYHRdZXxE59H0eUea1ANPqIPxX7QTw==}
     dependencies:
       '@codemirror/state': 6.5.2
       crelt: 1.0.6
@@ -6926,8 +6926,8 @@ packages:
     resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
     dev: true
 
-  /framer-motion@12.23.25(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-gUHGl2e4VG66jOcH0JHhuJQr6ZNwrET9g31ZG0xdXzT0CznP7fHX4P8Bcvuc4MiUB90ysNnWX2ukHRIggkl6hQ==}
+  /framer-motion@12.23.26(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-cPcIhgR42xBn1Uj+PzOyheMtZ73H927+uWPDVhUMqxy8UHt6Okavb6xIz9J/phFUHUj0OncR6UvMfJTXoc/LKA==}
     peerDependencies:
       '@emotion/is-prop-valid': '*'
       react: ^18.0.0 || ^19.0.0
@@ -9594,8 +9594,8 @@ packages:
     resolution: {integrity: sha512-eAWoPgr4eFEOFfg2WjIsMoqJTW6Z8MTUCgn/GZ3VRpClWBdnbjryiA3ZSNLyxCTmCQx4RmYX6jX1iWHbenUPNQ==}
     dev: true
 
-  /motion@12.23.25(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-Fk5Y1kcgxYiTYOUjmwfXQAP7tP+iGqw/on1UID9WEL/6KpzxPr9jY2169OsjgZvXJdpraKXy0orkjaCVIl5fgQ==}
+  /motion@12.23.26(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-Ll8XhVxY8LXMVYTCfme27WH2GjBrCIzY4+ndr5QKxsK+YwCtOi2B/oBi5jcIbik5doXuWT/4KKDOVAZJkeY5VQ==}
     peerDependencies:
       '@emotion/is-prop-valid': '*'
       react: ^18.0.0 || ^19.0.0
@@ -9608,7 +9608,7 @@ packages:
       react-dom:
         optional: true
     dependencies:
-      framer-motion: 12.23.25(react-dom@18.3.1)(react@18.3.1)
+      framer-motion: 12.23.26(react-dom@18.3.1)(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       tslib: 2.8.1
