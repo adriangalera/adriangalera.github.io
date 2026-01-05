@@ -44,7 +44,7 @@
 		"@astrojs/tailwind": "^6.0.2",
 		"@pagefind/default-ui": "^1.4.0",
 		"@tailwindcss/typography": "^0.5.19",
-		"@tinacms/cli": "^2.0.5",
+		"@tinacms/cli": "^2.0.6",
 		"@typescript-eslint/parser": "^8.51.0",
 		"clsx": "^2.1.1",
 		"eslint": "^9.39.2",
