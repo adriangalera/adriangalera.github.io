@@ -35,7 +35,7 @@
 		"test": "vitest --no-watch"
 	},
 	"dependencies": {
-		"@astrojs/rss": "^4.0.14",
+		"@astrojs/rss": "^4.0.15",
 		"astro": "^5.16.8"
 	},
 	"devDependencies": {
