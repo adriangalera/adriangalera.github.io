@@ -9,19 +9,19 @@ dependencies:
     specifier: ^4.0.15
     version: 4.0.15
   astro:
-    specifier: ^5.16.11
-    version: 5.16.11(typescript@5.9.3)
+    specifier: ^5.16.15
+    version: 5.16.15(typescript@5.9.3)
 
 devDependencies:
   '@astrojs/mdx':
     specifier: ^4.3.13
-    version: 4.3.13(astro@5.16.11)
+    version: 4.3.13(astro@5.16.15)
   '@astrojs/sitemap':
     specifier: ^3.6.0
     version: 3.6.0
   '@astrojs/tailwind':
     specifier: ^6.0.2
-    version: 6.0.2(astro@5.16.11)(tailwindcss@3.4.19)
+    version: 6.0.2(astro@5.16.15)(tailwindcss@3.4.19)
   '@pagefind/default-ui':
     specifier: ^1.4.0
     version: 1.4.0
@@ -215,7 +215,7 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@astrojs/mdx@4.3.13(astro@5.16.11):
+  /@astrojs/mdx@4.3.13(astro@5.16.15):
     resolution: {integrity: sha512-IHDHVKz0JfKBy3//52JSiyWv089b7GVSChIXLrlUOoTLWowG3wr2/8hkaEgEyd/vysvNQvGk+QhysXpJW5ve6Q==}
     engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0}
     peerDependencies:
@@ -224,7 +224,7 @@ packages:
       '@astrojs/markdown-remark': 6.3.10
       '@mdx-js/mdx': 3.1.1
       acorn: 8.15.0
-      astro: 5.16.11(typescript@5.9.3)
+      astro: 5.16.15(typescript@5.9.3)
       es-module-lexer: 1.7.0
       estree-util-visit: 2.0.0
       hast-util-to-html: 9.0.5
@@ -260,13 +260,13 @@ packages:
       zod: 3.25.76
     dev: true
 
-  /@astrojs/tailwind@6.0.2(astro@5.16.11)(tailwindcss@3.4.19):
+  /@astrojs/tailwind@6.0.2(astro@5.16.15)(tailwindcss@3.4.19):
     resolution: {integrity: sha512-j3mhLNeugZq6A8dMNXVarUa8K6X9AW+QHU9u3lKNrPLMHhOQ0S7VeWhHwEeJFpEK1BTKEUY1U78VQv2gN6hNGg==}
     peerDependencies:
       astro: ^3.0.0 || ^4.0.0 || ^5.0.0
       tailwindcss: ^3.0.24
     dependencies:
-      astro: 5.16.11(typescript@5.9.3)
+      astro: 5.16.15(typescript@5.9.3)
       autoprefixer: 10.4.21(postcss@8.5.6)
       postcss: 8.5.6
       postcss-load-config: 4.0.2(postcss@8.5.6)
@@ -4282,7 +4282,7 @@ packages:
       react-dom: '>=18.0.0'
     dependencies:
       '@udecode/plate': 48.0.5(react-dom@18.3.1)(react@18.3.1)(scheduler@0.27.0)(slate-dom@0.123.0)(slate@0.123.0)
-      lodash: 4.17.21
+      lodash: 4.17.23
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
     dev: true
@@ -4393,7 +4393,7 @@ packages:
       react-dom: '>=18.0.0'
     dependencies:
       '@udecode/plate': 48.0.5(react-dom@18.3.1)(react@18.3.1)(scheduler@0.27.0)(slate-dom@0.123.0)(slate@0.123.0)
-      lodash: 4.17.21
+      lodash: 4.17.23
       raf: 3.4.1
       react: 18.3.1
       react-dnd: 16.0.1(react@18.3.1)
@@ -4489,7 +4489,7 @@ packages:
     dependencies:
       '@udecode/plate': 48.0.5(react-dom@18.3.1)(react@18.3.1)(scheduler@0.27.0)(slate-dom@0.123.0)(slate@0.123.0)
       '@udecode/plate-reset-node': 48.0.0(@udecode/plate@48.0.5)(react-dom@18.3.1)(react@18.3.1)
-      lodash: 4.17.21
+      lodash: 4.17.23
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
     dev: true
@@ -4502,7 +4502,7 @@ packages:
       react-dom: '>=18.0.0'
     dependencies:
       '@udecode/plate': 48.0.5(react-dom@18.3.1)(react@18.3.1)(scheduler@0.27.0)(slate-dom@0.123.0)(slate@0.123.0)
-      lodash: 4.17.21
+      lodash: 4.17.23
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
     dev: true
@@ -4580,7 +4580,7 @@ packages:
       '@udecode/plate': 48.0.5(react-dom@18.3.1)(react@18.3.1)(scheduler@0.27.0)(slate-dom@0.123.0)(slate@0.123.0)
       '@udecode/plate-node-id': 48.0.6(@udecode/plate@48.0.5)(react-dom@18.3.1)(react@18.3.1)
       '@udecode/plate-resizable': 48.0.0(@udecode/plate@48.0.5)(react-dom@18.3.1)(react@18.3.1)
-      lodash: 4.17.21
+      lodash: 4.17.23
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
     dev: true
@@ -5029,8 +5029,8 @@ packages:
       - supports-color
     dev: true
 
-  /astro@5.16.11(typescript@5.9.3):
-    resolution: {integrity: sha512-Z7kvkTTT5n6Hn5lCm6T3WU6pkxx84Hn25dtQ6dR7ATrBGq9eVa8EuB/h1S8xvaoVyCMZnIESu99Z9RJfdLRLDA==}
+  /astro@5.16.15(typescript@5.9.3):
+    resolution: {integrity: sha512-+X1Z0NTi2pa5a0Te6h77Dgc44fYj63j1yx6+39Nvg05lExajxSq7b1Uj/gtY45zoum8fD0+h0nak+DnHighs3A==}
     engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
     dependencies:
@@ -5086,7 +5086,7 @@ packages:
       tsconfck: 3.1.6(typescript@5.9.3)
       ultrahtml: 1.6.0
       unifont: 0.7.3
-      unist-util-visit: 5.0.0
+      unist-util-visit: 5.1.0
       unstorage: 1.17.4
       vfile: 6.0.3
       vite: 6.4.1
@@ -6995,8 +6995,8 @@ packages:
     resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==}
     dev: true
 
-  /eventemitter3@5.0.2:
-    resolution: {integrity: sha512-RQ5d+HfzVjGO537vWau+KVFHUSj3sBOzd1nVQcnRMCak/OyXwwUTBh++rZrI3un9gtfSpg63jjOHUvhQnQBuAA==}
+  /eventemitter3@5.0.4:
+    resolution: {integrity: sha512-mlsTRyGaPBjPedk6Bvw+aqbsXDtoAyAzm5MO7JgU+yVRyMQ5O8bD4Kcci7BS85f93veegeCPkL8R4GLClnjLFw==}
 
   /events@3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
@@ -7685,7 +7685,7 @@ packages:
       mdast-util-to-hast: 13.2.1
       parse5: 7.3.0
       unist-util-position: 5.0.0
-      unist-util-visit: 5.0.0
+      unist-util-visit: 5.1.0
       vfile: 6.0.3
       web-namespaces: 2.0.1
       zwitch: 2.0.4
@@ -8610,8 +8610,8 @@ packages:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
     dev: true
 
-  /lodash@4.17.21:
-    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+  /lodash@4.17.23:
+    resolution: {integrity: sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==}
     dev: true
 
   /lodash@4.17.23:
@@ -8656,8 +8656,8 @@ packages:
     engines: {node: 14 || >=16.14}
     dev: true
 
-  /lru-cache@11.2.4:
-    resolution: {integrity: sha512-B5Y16Jr9LB9dHVkh6ZevG+vAbOsNOYCX+sXvFWFu7B3Iz5mijW3zdbMyhsh8ANd2mSWBYdJgnqi+mL7/LrOPYg==}
+  /lru-cache@11.2.5:
+    resolution: {integrity: sha512-vFrFJkWtJvJnD5hg+hJvVE8Lh/TcMzKnTgCWmtBipwI5yLX/iX+5UB2tfuyODF5E7k9xEzMdYgGqaSb1c0c5Yw==}
     engines: {node: 20 || >=22}
 
   /lru-cache@5.1.1:
@@ -8770,7 +8770,7 @@ packages:
     dependencies:
       '@types/mdast': 4.0.4
       '@types/unist': 3.0.3
-      unist-util-visit: 5.0.0
+      unist-util-visit: 5.1.0
 
   /mdast-util-directive@2.2.4:
     resolution: {integrity: sha512-sK3ojFP+jpj1n7Zo5ZKvoxP1MvLyzVG63+gm40Z/qI00avzdPCYxt7RBMgofwAva9gBjbDBWVRB/i+UD+fUCzQ==}
@@ -9105,7 +9105,7 @@ packages:
       micromark-util-sanitize-uri: 2.0.1
       trim-lines: 3.0.1
       unist-util-position: 5.0.0
-      unist-util-visit: 5.0.0
+      unist-util-visit: 5.1.0
       vfile: 6.0.3
 
   /mdast-util-to-markdown@1.5.0:
@@ -9131,7 +9131,7 @@ packages:
       mdast-util-to-string: 4.0.0
       micromark-util-classify-character: 2.0.1
       micromark-util-decode-string: 2.0.1
-      unist-util-visit: 5.0.0
+      unist-util-visit: 5.1.0
       zwitch: 2.0.4
 
   /mdast-util-to-string@3.2.0:
@@ -10345,7 +10345,7 @@ packages:
     resolution: {integrity: sha512-aNZ+VfjobsWryoiPnEApGGmf5WmNsCo9xu8dfaYamG5qaLP7ClhLN6NgsFe6SwJ2UbLEBK5dv9x8Mn5+RVhMWQ==}
     engines: {node: '>=18'}
     dependencies:
-      eventemitter3: 5.0.2
+      eventemitter3: 5.0.4
       p-timeout: 6.1.4
 
   /p-timeout@5.1.0:
@@ -11464,7 +11464,7 @@ packages:
     dependencies:
       '@types/nlcst': 2.0.3
       nlcst-to-string: 4.0.0
-      unist-util-visit: 5.0.0
+      unist-util-visit: 5.1.0
 
   /retext-stringify@4.0.0:
     resolution: {integrity: sha512-rtfN/0o8kL1e+78+uxPTqu1Klt0yPzKuQ2BfWwwfgIUSayyzxpM1PJzkKt4V8803uB9qSy32MvI7Xep9khTpiA==}
@@ -13038,7 +13038,7 @@ packages:
     resolution: {integrity: sha512-Hp5Kh3wLxv0PHj9m2yZhhLt58KzPtEYKQQ4yxfYFEO7EvHwzyDYnduhHnY1mDxoqr7VUwVuHXk9RXKIiYS1N8Q==}
     dependencies:
       '@types/unist': 3.0.3
-      unist-util-visit: 5.0.0
+      unist-util-visit: 5.1.0
 
   /unist-util-source@4.0.2:
     resolution: {integrity: sha512-J7jAaCer3fTQCH6sW2oIs6fcgiuglp1GnbnFKGc1DVA5fjfkXmh/K5mRw1636lTZ4P3wvLVBTcF3aTWtB7AFEQ==}
@@ -13087,6 +13087,13 @@ packages:
 
   /unist-util-visit@5.0.0:
     resolution: {integrity: sha512-MR04uvD+07cwl/yhVuVWAtw+3GOR/knlL55Nd/wAdblk27GCVt3lqpTivy/tkJcZoNPzTwS1Y+KMojlLDhoTzg==}
+    dependencies:
+      '@types/unist': 3.0.3
+      unist-util-is: 6.0.1
+      unist-util-visit-parents: 6.0.2
+
+  /unist-util-visit@5.1.0:
+    resolution: {integrity: sha512-m+vIdyeCOpdr/QeQCu2EzxX/ohgS8KbnPDgFni4dQsfSCtpz8UqDyY5GjRru8PDKuYn7Fq19j1CQ+nJSsGKOzg==}
     dependencies:
       '@types/unist': 3.0.3
       unist-util-is: 6.0.1
@@ -13175,7 +13182,7 @@ packages:
       chokidar: 5.0.0
       destr: 2.0.5
       h3: 1.15.5
-      lru-cache: 11.2.4
+      lru-cache: 11.2.5
       node-fetch-native: 1.6.7
       ofetch: 1.5.1
       ufo: 1.6.3
