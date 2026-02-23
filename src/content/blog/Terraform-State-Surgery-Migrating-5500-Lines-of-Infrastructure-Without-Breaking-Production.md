@@ -1,6 +1,5 @@
 ---
-heroImage: >-
-  /src/assets/img/posts/terraform-state-migration/95def0cc-f2bd-4b04-98da-4dc5d817dc13.jpeg
+heroImage: ../../assets/img/posts/terraform-state-migration/95def0cc-f2bd-4b04-98da-4dc5d817dc13.jpeg
 category: development
 description: >-
   When your Terraform configuration grows to manage dozens of environments
