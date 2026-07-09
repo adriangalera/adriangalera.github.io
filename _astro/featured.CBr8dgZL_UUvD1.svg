@@ -1,0 +1,104 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" font-family="'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#232741"/>
+      <stop offset="55%" stop-color="#1c2038"/>
+      <stop offset="100%" stop-color="#14172a"/>
+    </linearGradient>
+    <linearGradient id="tile" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3b4066"/>
+      <stop offset="100%" stop-color="#2e3252"/>
+    </linearGradient>
+    <linearGradient id="dupTile" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffb454"/>
+      <stop offset="100%" stop-color="#f7924a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffb454" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#ffb454" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#00000055"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+
+  <!-- subtle dot grid texture -->
+  <g fill="#ffffff" opacity="0.05">
+    <pattern id="dots" width="34" height="34" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="2"/>
+    </pattern>
+    <rect width="1600" height="900" fill="url(#dots)"/>
+  </g>
+
+  <!-- faint code brackets left/right -->
+  <text x="70" y="560" font-size="340" font-weight="700" fill="#ffffff" opacity="0.05">{</text>
+  <text x="1360" y="560" font-size="340" font-weight="700" fill="#ffffff" opacity="0.05">}</text>
+
+  <!-- eyebrow label -->
+  <text x="800" y="200" text-anchor="middle" font-size="30" letter-spacing="6" font-weight="600" fill="#9aa4d6" opacity="0.85">LEETCODE  //  HASHING</text>
+
+  <!-- glow behind duplicate pair -->
+  <circle cx="616" cy="470" r="230" fill="url(#glow)"/>
+
+  <!-- array tiles -->
+  <g filter="url(#softShadow)">
+    <!-- index 0 -->
+    <rect x="330" y="390" width="140" height="140" rx="22" fill="url(#tile)"/>
+    <text x="400" y="482" text-anchor="middle" font-size="66" font-weight="700" fill="#e7e9fb">4</text>
+
+    <!-- index 1 (duplicate) -->
+    <rect x="490" y="390" width="140" height="140" rx="22" fill="url(#dupTile)"/>
+    <text x="560" y="482" text-anchor="middle" font-size="66" font-weight="700" fill="#2a1c07">7</text>
+
+    <!-- index 2 -->
+    <rect x="650" y="390" width="140" height="140" rx="22" fill="url(#tile)"/>
+    <text x="720" y="482" text-anchor="middle" font-size="66" font-weight="700" fill="#e7e9fb">1</text>
+
+    <!-- index 3 -->
+    <rect x="810" y="390" width="140" height="140" rx="22" fill="url(#tile)"/>
+    <text x="880" y="482" text-anchor="middle" font-size="66" font-weight="700" fill="#e7e9fb">9</text>
+
+    <!-- index 4 (duplicate) -->
+    <rect x="970" y="390" width="140" height="140" rx="22" fill="url(#dupTile)"/>
+    <text x="1040" y="482" text-anchor="middle" font-size="66" font-weight="700" fill="#2a1c07">7</text>
+
+    <!-- index 5 -->
+    <rect x="1130" y="390" width="140" height="140" rx="22" fill="url(#tile)"/>
+    <text x="1200" y="482" text-anchor="middle" font-size="66" font-weight="700" fill="#e7e9fb">3</text>
+  </g>
+
+  <!-- connecting arc between the two duplicate tiles -->
+  <path d="M 560 372 C 700 260, 900 260, 1040 372" fill="none" stroke="#ffb454" stroke-width="5" stroke-dasharray="2 14" stroke-linecap="round" opacity="0.9"/>
+  <circle cx="560" cy="372" r="7" fill="#ffb454"/>
+  <circle cx="1040" cy="372" r="7" fill="#ffb454"/>
+
+  <!-- duplicate found badge -->
+  <g transform="translate(800,255)">
+    <rect x="-118" y="-34" width="236" height="68" rx="34" fill="#ffb454"/>
+    <text x="0" y="10" text-anchor="middle" font-size="30" font-weight="700" fill="#2a1c07">duplicate!</text>
+  </g>
+
+  <!-- index labels under tiles -->
+  <g font-size="22" fill="#7d86b8" font-weight="600" text-anchor="middle">
+    <text x="400" y="562">i=0</text>
+    <text x="560" y="562">i=1</text>
+    <text x="720" y="562">i=2</text>
+    <text x="880" y="562">i=3</text>
+    <text x="1040" y="562">i=4</text>
+    <text x="1200" y="562">i=5</text>
+  </g>
+
+  <!-- bottom caption row: complexity -->
+  <g transform="translate(800,660)" text-anchor="middle">
+    <rect x="-360" y="-38" width="270" height="70" rx="16" fill="#ffffff" opacity="0.06"/>
+    <text x="-225" y="8" font-size="30" font-weight="700" fill="#8be9c8" font-family="monospace">Set&lt;Integer&gt;</text>
+
+    <rect x="-70" y="-38" width="150" height="70" rx="16" fill="#ffffff" opacity="0.06"/>
+    <text x="5" y="8" font-size="30" font-weight="700" fill="#ffd479" font-family="monospace">O(n)</text>
+
+    <rect x="100" y="-38" width="260" height="70" rx="16" fill="#ffffff" opacity="0.06"/>
+    <text x="230" y="8" font-size="30" font-weight="700" fill="#9db4ff" font-family="monospace">add() == false</text>
+  </g>
+</svg>
