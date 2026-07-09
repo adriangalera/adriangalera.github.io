@@ -3,7 +3,16 @@ import * as path from 'path'
 import { expect, test } from 'vitest'
 
 const getAllFilesInDirectory = async (directory: string): Promise<string[]> => {
-	return await fs.readdirSync(directory).map((file) => path.join(directory, file))
+	let results: string[] = []
+	for (const entry of fs.readdirSync(directory)) {
+		const fullPath = path.join(directory, entry)
+		if (fs.statSync(fullPath).isDirectory()) {
+			results = results.concat(await getAllFilesInDirectory(fullPath))
+		} else {
+			results.push(fullPath)
+		}
+	}
+	return results
 }
 
 const extractImageLinks = (content: string): string[] => {

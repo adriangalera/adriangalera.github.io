@@ -36,6 +36,15 @@ directly as Markdown or via TinaCMS (`npx tinacms dev -c "astro dev"`, see
   paths/markdown) before considering a post done. `npx astro check` will
   prompt to install `@astrojs/check`/`typescript` interactively — avoid it
   unless that's already installed, since it hangs waiting for a y/n prompt.
+- Also run `npm test` (vitest) before considering a post done, and definitely
+  before `npm run deploy` — the `deploy` script runs `npm run build`, which
+  is `vitest --no-watch && astro build`, so a vitest failure blocks deploy
+  even when `npx astro build` alone was clean. In particular
+  `test/assetlocation.test.ts` walks every file under `src/content/blog`
+  (including subfolders like `coding-interview-prep/`) checking for stray
+  `/src/assets` references and unescaped spaces in image links — it will
+  surface issues `astro build` doesn't catch, so don't skip it just because
+  the Astro build passed.
 
 ## Related
 
