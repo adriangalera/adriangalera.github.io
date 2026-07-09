@@ -1,6 +1,6 @@
 ---
 slug: coding-interview-prep/top-k-frequent-elements
-heroImage: ../../assets/img/posts/top-k-frequent-elements/pexels-goumbik-669612.jpg
+heroImage: ../../../assets/img/posts/top-k-frequent-elements/pexels-goumbik-669612.jpg
 category: development
 description: >-
   A walkthrough of "Top K Frequent Elements": why sorting by frequency costs

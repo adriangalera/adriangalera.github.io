@@ -1,6 +1,6 @@
 ---
 slug: coding-interview-prep/two-sum
-heroImage: ../../assets/img/posts/two-sum/pexels-pixabay-534216.jpg
+heroImage: ../../../assets/img/posts/two-sum/pexels-pixabay-534216.jpg
 category: development
 description: >-
   A walkthrough of "Two Sum": why checking every pair is wasteful, and how

@@ -1,6 +1,6 @@
 ---
 slug: coding-interview-prep/valid-anagram
-heroImage: ../../assets/img/posts/valid-anagram/pexels-pixabay-278890.jpg
+heroImage: ../../../assets/img/posts/valid-anagram/pexels-pixabay-278890.jpg
 category: development
 description: >-
   A walkthrough of "Valid Anagram": why sorting two strings works but isn't

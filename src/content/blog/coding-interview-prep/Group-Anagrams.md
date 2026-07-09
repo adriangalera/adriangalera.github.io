@@ -1,6 +1,6 @@
 ---
 slug: coding-interview-prep/group-anagrams
-heroImage: ../../assets/img/posts/group-anagrams/pexels-suki-lee-15555328.jpg
+heroImage: ../../../assets/img/posts/group-anagrams/pexels-suki-lee-15555328.jpg
 category: development
 description: >-
   A walkthrough of "Group Anagrams": why comparing every pair of strings is

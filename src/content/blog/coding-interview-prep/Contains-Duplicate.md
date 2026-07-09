@@ -1,6 +1,6 @@
 ---
 slug: coding-interview-prep/contains-duplicate
-heroImage: ../../assets/img/posts/contains-duplicate/featured.svg
+heroImage: ../../../assets/img/posts/contains-duplicate/featured.svg
 category: development
 description: >-
   A deeper look at "Contains Duplicate": why the brute force and sorting
