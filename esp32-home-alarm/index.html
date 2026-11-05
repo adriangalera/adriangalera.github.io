@@ -1,0 +1,444 @@
+<!DOCTYPE html><html lang="en" class="scroll-smooth" data-astro-cid-z4jru4n3><head><!-- ClientRouter  --><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.DXqcZz58.js"></script><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v7.4.5"><!-- Canonical URL --><link rel="canonical" href="https://www.agalera.eu/esp32-home-alarm/"><!-- SEO --><meta name="title" content="Building a home alarm with an ESP32 and a testable state machine • agalera.eu"><meta name="description" content="How I designed a home alarm on an ESP32-S3: an explicit state machine, a hardware abstraction layer that lets me run the firmware on my laptop, and a Telegram integration that can never block the siren."><meta name="author" content="Adrian Galera"><!-- Open Graph / Facebook --><meta property="og:type" content="article"><meta property="og:url" content="https://www.agalera.eu/esp32-home-alarm/"><meta property="og:title" content="Building a home alarm with an ESP32 and a testable state machine"><meta property="og:description" content="How I designed a home alarm on an ESP32-S3: an explicit state machine, a hardware abstraction layer that lets me run the firmware on my laptop, and a Telegram integration that can never block the siren."><meta property="og:image" content="https://www.agalera.eu/_astro/featured.Dx-IEIwh.jpg"><meta property="article:author" content="Adrian Galera"><meta property="article:published_time" content="2026-11-05T20:00:00.000Z"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://www.agalera.eu/esp32-home-alarm/"><meta property="twitter:title" content="Building a home alarm with an ESP32 and a testable state machine"><meta property="twitter:description" content="How I designed a home alarm on an ESP32-S3: an explicit state machine, a hardware abstraction layer that lets me run the firmware on my laptop, and a Telegram integration that can never block the siren."><meta property="twitter:image" content="https://www.agalera.eu/_astro/featured.Dx-IEIwh.jpg"><!-- RSS auto-discovery --><link rel="alternate" type="application/rss+xml" title="agalera.eu" href="/rss.xml"><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-S8VGYBN25C"></script><script type="module">window.location.hostname.includes(`agalera.eu`)||(console.log(`Disabling analytics...`),window[`ga-disable-G-S8VGYBN25C`]=!0),window.dataLayer=window.dataLayer||[];function e(){dataLayer.push(arguments)}e(`js`,new Date),e(`config`,`G-S8VGYBN25C`);</script><!-- Primary Meta Tags --><title>Building a home alarm with an ESP32 and a testable state machine • agalera.eu</title><script>
+	function getTheme() {
+		const storedTheme = typeof localStorage !== 'undefined' && localStorage.getItem('theme')
+
+		return (
+			storedTheme || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'dark' : 'light')
+		)
+	}
+
+	function setTheme(newTheme) {
+		const html = document.documentElement
+		const isDark = newTheme === 'dark'
+
+		html.classList.toggle('dark', isDark)
+		html.classList.toggle('light', !isDark)
+
+		localStorage.setItem('theme', newTheme)
+	}
+
+	// set initial theme
+	setTheme(getTheme())
+	document.addEventListener('astro:after-swap', () => setTheme(getTheme()))
+
+	document.addEventListener('theme-change', (e) => {
+		setTheme(e.detail.theme)
+	})
+</script><script>
+	if (!('animations' in localStorage)) {
+		localStorage.setItem('animations', 'true')
+	} else {
+		localStorage.setItem('animations', 'false')
+	}
+</script><link rel="stylesheet" href="/_astro/BaseLayout.BBUf-8Mh.css"></head><body class="bg-white text-stone-950 dark:bg-[#0a0910] dark:text-white" data-astro-cid-z4jru4n3><main class="px-5 sm:mx-auto sm:max-w-2xl sm:px-8 lg:px-0 antialiased md:max-w-6xl grid gap-12 mt-4 overflow-hidden md:overflow-visible" data-astro-cid-z4jru4n3><header class="relative flex items-center h-12 font-semibold"><a class="text-lg mr-auto" href="/">Home</a><div id="astro-header-drawer" class="shadow-sm rounded-l-lg md:bg-transparent dark:md:bg-transparent bg-white dark:bg-[#0a0910] md:shadow-none md:rounded-none md:border-none md:h-auto md:static absolute transition-transform duration-300 ease-in translate-x-96 md:translate-x-0 top-12 -right-5 pl-4 pt-6 pb-4 md:p-0 h-[200px] w-[200px] z-50"><nav class="flex h-full flex-col justify-between gap-12 text-left md:flex-row md:w-full md:gap-5"><div class="flex flex-col gap-8 md:flex-row md:border-r-2 border-black pr-4 dark:border-white"><a href="/tags" class="text-opacity-60 flex items-center gap-1 text-2xl md:text-base" rel="noopener noreferrer "><svg xmlns="http://www.w3.org/2000/svg" class="w-8 md:w-6" viewBox="0 0 24 24" stroke-width="1.25" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7.859 6h-2.834a2.025 2.025 0 0 0 -2.025 2.025v2.834c0 .537 .213 1.052 .593 1.432l6.116 6.116a2.025 2.025 0 0 0 2.864 0l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-6.117 -6.116a2.025 2.025 0 0 0 -1.431 -.593z"></path><path d="M17.573 18.407l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-7.117 -7.116"></path><path d="M6 9h-.01"></path></svg> Tags
+				</a></div><div class="flex justify-center items-center md:justify-end gap-4 md:p-0"><a href="https://github.com/adriangalera" class="text-opacity-60" rel="noopener noreferrer " target="_blank" aria-label="Github"><span><svg xmlns="http://www.w3.org/2000/svg" class="w-8 md:w-6" viewBox="0 0 24 24" stroke-width="1.3" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path></svg> </span></a><a href="https://www.linkedin.com/in/adriangalera" class="text-opacity-60" rel="noopener noreferrer " target="_blank" aria-label="Twitter"><span><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-linkedin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path><path d="M8 11l0 5"></path><path d="M8 8l0 .01"></path><path d="M12 16l0 -5"></path><path d="M16 16v-3a2 2 0 0 0 -4 0"></path></svg> </span></a></div></nav></div><div data-astro-transition-persist="navbar" class="flex items-center gap-3 md:pl-3"><div><site-search id="search" class="ms-auto"><button data-open-modal disabled class="flex items-center justify-center rounded-md gap-1"><svg aria-label="search" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M3 10a7 7 0 1 0 14 0 7 7 0 1 0-14 0M21 21l-6-6"></path></svg><!-- <span class='md:hidden text-2xl'> Search</span> --></button><dialog aria-label="search" class="h-full max-h-full w-full max-w-full border border-zinc-400 bg-white dark:bg-[#0a0910ec] shadow-sm backdrop:backdrop-blur sm:mx-auto sm:mb-auto sm:mt-16 sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-[15rem] sm:w-5/6 sm:max-w-[48rem] sm:rounded-md opacity-0"><div class="dialog-frame flex flex-col gap-4 p-6 pt-12 sm:pt-6"><button data-close-modal class="ms-auto cursor-pointer rounded-full bg-black text-white px-4 py-2 dark:bg-white dark:text-black">Close</button><div class="search-container dark:text-white"><div id="pagefind__search"></div></div></div></dialog></site-search><script type="module" src="/_astro/Search.astro_astro_type_script_index_0_lang.B-8sM42O.js"></script></div><script type="module">var e=class extends HTMLElement{constructor(){super();let e=this.querySelector(`button`);e&&e.addEventListener(`click`,t=>{if(t.currentTarget instanceof HTMLButtonElement){let n=t.currentTarget.getAttribute(`aria-pressed`)===`true`,r=new CustomEvent(`theme-change`,{detail:{theme:n?`light`:`dark`}});document.dispatchEvent(r),e.setAttribute(`aria-pressed`,String(!n))}})}};`customElements`in window&&customElements.define(`theme-toggle`,e);</script><theme-toggle class="relative h-6 w-6"><button id="toggle-theme" class="group"><span class="absolute left-0 right-0 top-0 opacity-0 group-aria-pressed:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun-high" width="24" height="24" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z"></path><path d="M6.343 17.657l-1.414 1.414"></path><path d="M6.343 6.343l-1.414 -1.414"></path><path d="M17.657 6.343l1.414 -1.414"></path><path d="M17.657 17.657l1.414 1.414"></path><path d="M4 12h-2"></path><path d="M12 4v-2"></path><path d="M20 12h2"></path><path d="M12 20v2"></path></svg></span><span class="absolute left-0 right-0 top-0 opacity-0 group-aria-[pressed=false]:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.25" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path></svg></span></button></theme-toggle><script>
+	const button = document.getElementById('toggle-theme')
+
+	function setButtonPresssed() {
+		const bodyThemeIsDark = document.documentElement.classList.contains('dark')
+		button.setAttribute('aria-pressed', String(bodyThemeIsDark))
+	}
+	setButtonPresssed()
+</script><button id="astro-header-drawer-button" type="button" class="md:ml-6 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.25" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 6l16 0"></path><path d="M4 12l16 0"></path><path d="M4 18l16 0"></path></svg><span class="sr-only">Show Menu</span></button></div></header><script type="module">document.addEventListener(`click`,e=>{let t=document.getElementById(`astro-header-drawer`),n=document.getElementById(`astro-header-drawer-button`);t?.contains(e.target)||n?.contains(e.target)?t?.classList.toggle(`translate-x-96`):t?.classList.add(`translate-x-96`)});</script><article class="min-w-full md:py-4 sm:max-w-none md:max-w-none"><header class="mb-3 flex flex-col justify-center items-center gap-6"><div class="flex flex-col gap-2"><div class="flex items-center justify-center gap-x-1"><p class="text-center text-sm text-opacity-50">Published <time class="text-sm font-bold text-opacity-60" datetime="2026-11-05T20:00:00.000Z">Nov 5, 2026</time></p><p class="text-center text-sm text-opacity-50 font-bold">- 19 min read</p></div><h1 class="text-center text-4xl md:text-6xl md:pb-2.5 font-semibold">Building a home alarm with an ESP32 and a testable state machine</h1></div><div class="flex flex-wrap justify-center items-center gap-2 gap-y-4 md:gap-5"><a href="/tags/esp32" aria-label="esp32"><span class="bg-indigo-600 font-semibold text-white dark:bg-indigo-900 dark:text-white shadow-sm text-sm w-fit px-2 py-1 md:px-5 md:py-2 rounded-full">esp32</span></a><a href="/tags/cpp" aria-label="cpp"><span class="bg-indigo-600 font-semibold text-white dark:bg-indigo-900 dark:text-white shadow-sm text-sm w-fit px-2 py-1 md:px-5 md:py-2 rounded-full">cpp</span></a><a href="/tags/platformio" aria-label="platformio"><span class="bg-indigo-600 font-semibold text-white dark:bg-indigo-900 dark:text-white shadow-sm text-sm w-fit px-2 py-1 md:px-5 md:py-2 rounded-full">platformio</span></a><a href="/tags/state-machine" aria-label="state-machine"><span class="bg-indigo-600 font-semibold text-white dark:bg-indigo-900 dark:text-white shadow-sm text-sm w-fit px-2 py-1 md:px-5 md:py-2 rounded-full">state-machine</span></a><a href="/tags/telegram" aria-label="telegram"><span class="bg-indigo-600 font-semibold text-white dark:bg-indigo-900 dark:text-white shadow-sm text-sm w-fit px-2 py-1 md:px-5 md:py-2 rounded-full">telegram</span></a><a href="/tags/testing" aria-label="testing"><span class="bg-indigo-600 font-semibold text-white dark:bg-indigo-900 dark:text-white shadow-sm text-sm w-fit px-2 py-1 md:px-5 md:py-2 rounded-full">testing</span></a></div></header><img src="/_astro/featured.Dx-IEIwh_ZDrOQH.jpg" loading="eager" alt="img of Building a home alarm with an ESP32 and a testable state machine" decoding="async" width="1000" height="500" class="rounded-md w-full max-h-[300px]  md:max-h-[500px] my-8 object-cover"><hr><div><div class="grid grid-cols-1 md:grid-cols-[20%_auto] gap-10 mt-8"><!-- aside  --><aside class="md:flex flex-col gap-8 hidden"><div class="flex flex-col gap-2"><span class="mb-1 font-bold text-2xl">Share</span><ul class="flex gap-3 text-black dark:text-white"><li><a href="https://twitter.com/intent/tweet?text=Share this post https://www.agalera.eu/esp32-home-alarm/" aria-label="Share on Twitter"><!--?xml version="1.0" ?--><svg height="32px" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M448,512l-384,0c-35.328,0 -64,-28.672 -64,-64l0,-384c0,-35.328 28.672,-64 64,-64l384,0c35.328,0 64,28.672 64,64l0,384c0,35.328 -28.672,64 -64,64Z" id="Dark_Blue" style="fill:#1da1f2;fill-rule:nonzero;"></path><path d="M196.608,386.048c120.704,0 186.752,-100.096 186.752,-186.752c0,-2.816 0,-5.632 -0.128,-8.448c12.8,-9.216 23.936,-20.864 32.768,-34.048c-11.776,5.248 -24.448,8.704 -37.76,10.368c13.568,-8.064 23.936,-20.992 28.928,-36.352c-12.672,7.552 -26.752,12.928 -41.728,15.872c-12.032,-12.8 -29.056,-20.736 -47.872,-20.736c-36.224,0 -65.664,29.44 -65.664,65.664c0,5.12 0.64,10.112 1.664,14.976c-54.528,-2.688 -102.912,-28.928 -135.296,-68.608c-5.632,9.728 -8.832,20.992 -8.832,33.024c0,22.784 11.648,42.88 29.184,54.656c-10.752,-0.384 -20.864,-3.328 -29.696,-8.192l0,0.896c0,31.744 22.656,58.368 52.608,64.384c-5.504,1.536 -11.264,2.304 -17.28,2.304c-4.224,0 -8.32,-0.384 -12.288,-1.152c8.32,26.112 32.64,45.056 61.312,45.568c-22.528,17.664 -50.816,28.16 -81.536,28.16c-5.248,0 -10.496,-0.256 -15.616,-0.896c28.928,18.432 63.488,29.312 100.48,29.312" id="Logo__x2014__FIXED" style="fill:#fff;fill-rule:nonzero;"></path></g></svg></a></li><li><a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://www.agalera.eu/esp32-home-alarm/" aria-label="Share on LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-linkedin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path><path d="M8 11l0 5"></path><path d="M8 8l0 .01"></path><path d="M12 16l0 -5"></path><path d="M16 16v-3a2 2 0 0 0 -4 0"></path></svg></a></li></ul></div><div class="sticky top-24 self-start hidden md:block transition-all duration-200"><nav class="max-w-xs dark:text-black"><h2 class="font-bold mb-3 text-2xl dark:text-white">Index</h2><ul class="[text-wrap:balance] flex flex-col gap-1"><li class="flex flex-col"><a href="#the-requirement-that-shaped-everything" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">The requirement that shaped everything</a></li><li class="flex flex-col"><a href="#the-state-machine" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">The state machine</a><ul class="ml-3"><li class="flex flex-col"><a href="#events-not-readings" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">Events, not readings</a></li><li class="flex flex-col"><a href="#decisions-i-took-and-why" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">Decisions I took (and why)</a></li><li class="flex flex-col"><a href="#surviving-a-reboot" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">Surviving a reboot</a></li></ul></li><li class="flex flex-col"><a href="#hardware-abstraction-layer" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">Hardware abstraction layer</a><ul class="ml-3"><li class="flex flex-col"><a href="#dependency-injection-by-hand" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">Dependency injection by hand</a></li><li class="flex flex-col"><a href="#two-layers-between-the-state-machine-and-the-hardware" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">Two layers between the state machine and the hardware</a></li><li class="flex flex-col"><a href="#cooperative-scheduling-and-a-clock-that-is-a-parameter" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">Cooperative scheduling and a clock that is a parameter</a></li><li class="flex flex-col"><a href="#input-processors-turn-noise-into-events" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">Input processors: turn noise into events</a><ul class="ml-3"><li class="flex flex-col"><a href="#debouncing-the-door" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">Debouncing the door</a></li><li class="flex flex-col"><a href="#tap-or-hold-the-card" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">Tap or hold the card</a></li></ul></li></ul></li><li class="flex flex-col"><a href="#telegram-must-never-block-the-siren" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">Telegram must never block the siren</a></li><li class="flex flex-col"><a href="#what-an-intrusion-looks-like" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">What an intrusion looks like</a></li><li class="flex flex-col"><a href="#testing-without-a-board" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">Testing without a board</a></li><li class="flex flex-col"><a href="#hardware-briefly" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">Hardware, briefly</a></li><li class="flex flex-col"><a href="#the-case-3d-design-with-chatgpt-and-openscad" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">The case: 3D design with ChatGPT and OpenSCAD</a><ul class="ml-3"><li class="flex flex-col"><a href="#writing-the-brief" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">Writing the brief</a></li><li class="flex flex-col"><a href="#an-ai-that-has-to-prove-its-work" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">An AI that has to prove its work</a></li><li class="flex flex-col"><a href="#iterating" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">Iterating</a></li><li class="flex flex-col"><a href="#what-i-learned-from-designing-with-an-ai" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">What I learned from designing with an AI</a></li></ul></li><li class="flex flex-col"><a href="#lessons-learned" class="bg-slate-200 dark:bg-slate-800 dark:hover:bg-indigo-400 hover:bg-indigo-300 hover:text-white py-1 px-4 dark:text-white rounded-full mb-2 first-letter:uppercase w-fit line-clamp-2">Lessons learned</a></li></ul></nav></div></aside><!-- post --><article class="max-w-full w-full"><div class="prose prose-lg md:prose-xl dark:prose-invert mb-12 min-w-full"><p>I built a home alarm called <strong>galitas32</strong>. It runs on an ESP32-S3 board with a camera, reads a reed switch on the door, flashes a LED strip, screams through a buzzer, is armed and disarmed with an RFID card and talks to me via Telegram.</p>
+<p>The hardware is the easy part: a handful of cheap modules and some wires. This post is about the design decisions that made the software something I trust to guard my front door: the state machine, the hardware abstraction layer and the rules about what is allowed to block what. The code is on <a href="https://github.com/adriangalera/galitas32">GitHub</a>.</p>
+<h2 id="the-requirement-that-shaped-everything">The requirement that shaped everything</h2>
+<p>The first line of my requirements says it all:</p>
+<blockquote>
+<p>The physical mechanisms must work regardless of the network connection. When the network is enabled, it will act as an enhancement.</p>
+</blockquote>
+<p>An alarm that stops working when the router reboots is useless. So Wi-Fi and Telegram are optional extras and the door sensor, the LED, the buzzer and the RFID reader must work with the network cable pulled. This single rule drives most of the decisions below.</p>
+<h2 id="the-state-machine">The state machine</h2>
+<p>A few booleans (<code>armed</code>, <code>doorOpen</code>, <code>alerting</code>…) fall apart the moment you ask <em>“what happens if I arm it while the door is open?”</em>. So I describe the behaviour as an explicit state machine, in a Markdown document that lives in the repo and acts as the specification the tests are written against.</p>
+<p>There are five states:</p>
+<p><img alt="State machine of the alarm" title="The five states and their transitions" loading="lazy" decoding="async" width="1600" height="786" src="/_astro/state-machine.0dnTFN-b_1h3avX.webp"></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>State</th><th>Meaning</th></tr></thead><tbody><tr><td><code>IDLE</code></td><td>Disarmed. A white light turns on when the door is open.</td></tr><tr><td><code>EXIT_DELAY</code></td><td>I asked to arm, I have 30 seconds to leave and close the door.</td></tr><tr><td><code>CHECKING</code></td><td>Armed. Silently watching the door.</td></tr><tr><td><code>ENTRY_DELAY</code></td><td>The door opened while armed, 10 seconds to disarm.</td></tr><tr><td><code>ALERTING</code></td><td>Intrusion. Siren, lights, Telegram alerts, photos.</td></tr></tbody></table>
+<p>The state is just an enum:</p>
+<pre class="astro-code material-theme-palenight" style="background-color:#292D3E;color:#babed8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="cpp"><code><span class="line"><span style="color:#C792EA">enum</span><span style="color:#C792EA"> class</span><span style="color:#FFCB6B"> AlarmState</span><span style="color:#89DDFF"> :</span><span style="color:#C792EA"> uint8_t</span></span>
+<span class="line"><span style="color:#89DDFF">{</span></span>
+<span class="line"><span style="color:#BABED8">    Idle</span><span style="color:#89DDFF"> =</span><span style="color:#F78C6C"> 0</span><span style="color:#89DDFF">,</span></span>
+<span class="line"><span style="color:#BABED8">    ExitDelay</span><span style="color:#89DDFF"> =</span><span style="color:#F78C6C"> 1</span><span style="color:#89DDFF">,</span></span>
+<span class="line"><span style="color:#BABED8">    Checking</span><span style="color:#89DDFF"> =</span><span style="color:#F78C6C"> 2</span><span style="color:#89DDFF">,</span></span>
+<span class="line"><span style="color:#BABED8">    EntryDelay</span><span style="color:#89DDFF"> =</span><span style="color:#F78C6C"> 3</span><span style="color:#89DDFF">,</span></span>
+<span class="line"><span style="color:#BABED8">    Alerting</span><span style="color:#89DDFF"> =</span><span style="color:#F78C6C"> 4</span></span>
+<span class="line"><span style="color:#89DDFF">};</span></span></code></pre>
+<p>Having exit and entry delays as <em>states</em> instead of timers hanging off a boolean is what makes the rest tractable: each state has clear entry actions, clear exit actions and a closed list of events it reacts to.</p>
+<h3 id="events-not-readings">Events, not readings</h3>
+<p>The state machine only knows five events: <code>door opened</code>, <code>door closed</code>, <code>arm</code>, <code>arm now</code> and <code>disarm</code>. It never sees a raw sensor reading and it does not know whether a command came from the RFID card or from Telegram. That is enforced by two tiny observer interfaces:</p>
+<pre class="astro-code material-theme-palenight" style="background-color:#292D3E;color:#babed8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="cpp"><code><span class="line"><span style="color:#C792EA">class</span><span style="color:#FFCB6B"> DoorObserver</span></span>
+<span class="line"><span style="color:#89DDFF">{</span></span>
+<span class="line"><span style="color:#C792EA">public</span><span style="color:#89DDFF">:</span></span>
+<span class="line"><span style="color:#C792EA">    virtual</span><span style="color:#C792EA"> void</span><span style="color:#82AAFF"> onDoorStateChanged</span><span style="color:#89DDFF">(</span><span style="color:#FFCB6B">DoorState</span><span style="color:#BABED8;font-style:italic"> state</span><span style="color:#89DDFF">,</span><span style="color:#C792EA"> uint32_t</span><span style="color:#BABED8;font-style:italic"> now</span><span style="color:#89DDFF">)</span><span style="color:#89DDFF"> =</span><span style="color:#F78C6C"> 0</span><span style="color:#89DDFF">;</span></span>
+<span class="line"><span style="color:#89DDFF">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C792EA">class</span><span style="color:#FFCB6B"> ArmDisarmObserver</span></span>
+<span class="line"><span style="color:#89DDFF">{</span></span>
+<span class="line"><span style="color:#C792EA">public</span><span style="color:#89DDFF">:</span></span>
+<span class="line"><span style="color:#C792EA">    virtual</span><span style="color:#C792EA"> void</span><span style="color:#82AAFF"> arm</span><span style="color:#89DDFF">(</span><span style="color:#C792EA">uint32_t</span><span style="color:#BABED8;font-style:italic"> now</span><span style="color:#89DDFF">)</span><span style="color:#89DDFF"> =</span><span style="color:#F78C6C"> 0</span><span style="color:#89DDFF">;</span></span>
+<span class="line"><span style="color:#C792EA">    virtual</span><span style="color:#C792EA"> void</span><span style="color:#82AAFF"> armNow</span><span style="color:#89DDFF">(</span><span style="color:#C792EA">uint32_t</span><span style="color:#BABED8;font-style:italic"> now</span><span style="color:#89DDFF">)</span><span style="color:#89DDFF"> =</span><span style="color:#F78C6C"> 0</span><span style="color:#89DDFF">;</span></span>
+<span class="line"><span style="color:#C792EA">    virtual</span><span style="color:#C792EA"> void</span><span style="color:#82AAFF"> disarm</span><span style="color:#89DDFF">(</span><span style="color:#C792EA">uint32_t</span><span style="color:#BABED8;font-style:italic"> now</span><span style="color:#89DDFF">)</span><span style="color:#89DDFF"> =</span><span style="color:#F78C6C"> 0</span><span style="color:#89DDFF">;</span></span>
+<span class="line"><span style="color:#89DDFF">};</span></span></code></pre>
+<p><code>Alarm</code> implements both. Something has to turn the raw, noisy hardware into those clean events: for the door that is a debouncer, described in <a href="#debouncing-the-door">Debouncing the door</a>.</p>
+<h3 id="decisions-i-took-and-why">Decisions I took (and why)</h3>
+<p>Writing the transition tables forced me to take decisions I would have otherwise taken accidentally, in the middle of the code. These are my favourites:</p>
+<p><strong>Closing the door does not cancel an intrusion.</strong> Once the door opens, the entry delay is running, and shutting the door again doesn’t stop it: if nobody disarms within 10 seconds, the siren and the lights are triggered anyway. Only <code>disarm</code> can stop it. If closing the door were enough, an intruder could simply open it, step back and close it again to silence the alarm.</p>
+<p><strong>Repeated events never restart timers.</strong> Pressing arm twice, or the door bouncing open/closed during the exit delay, does not give an intruder (or me) extra time. <code>transitionTo</code> just ignores a transition to the current state:</p>
+<pre class="astro-code material-theme-palenight" style="background-color:#292D3E;color:#babed8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="cpp"><code><span class="line"><span style="color:#C792EA">void</span><span style="color:#82AAFF"> transitionTo</span><span style="color:#89DDFF">(</span><span style="color:#FFCB6B">AlarmState</span><span style="color:#BABED8;font-style:italic"> next</span><span style="color:#89DDFF">,</span><span style="color:#C792EA"> uint32_t</span><span style="color:#BABED8;font-style:italic"> now</span><span style="color:#89DDFF">)</span></span>
+<span class="line"><span style="color:#89DDFF">{</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic">    // Repeated commands never restart timers or entry actions.</span></span>
+<span class="line"><span style="color:#89DDFF;font-style:italic">    if</span><span style="color:#89DDFF"> (</span><span style="color:#BABED8">next </span><span style="color:#89DDFF">==</span><span style="color:#BABED8"> state_</span><span style="color:#89DDFF">)</span></span>
+<span class="line"><span style="color:#89DDFF;font-style:italic">        return</span><span style="color:#89DDFF">;</span></span>
+<span class="line"><span style="color:#BABED8">    ...</span></span>
+<span class="line"><span style="color:#89DDFF">}</span></span></code></pre>
+<p><strong>The system does not wait forever for the door to close.</strong> If I arm and the door is still open after 30 seconds, arming is cancelled, I get a distinctive beep pattern and a Telegram message. Silently staying in <code>EXIT_DELAY</code> forever, or worse, arming with an open door, are both worse.</p>
+<p><strong>The door can be <code>UNKNOWN</code>.</strong> The door has three states, not two: <code>Open</code>, <code>Closed</code> and <code>Unknown</code> (no valid reading yet). I refuse to <em>assume</em> the door is closed, so arming with an unknown door fails the same way as arming with an open one.</p>
+<p><strong>Two ways to arm.</strong> The RFID card arms with an exit delay because I’m about to walk out. The Telegram <code>/arm</code> command is “Arm Now”: it skips the exit delay and checks the door immediately, because if I’m using the phone it’s because I forgot to arm it and I’m already away.</p>
+<p><strong>Disarming works from any state</strong>, even <code>CHECKING</code> with the door closed. And it always wins: if the entry timeout and a disarm are processed in the same loop iteration, you end up in <code>IDLE</code>.</p>
+<h3 id="surviving-a-reboot">Surviving a reboot</h3>
+<p>An alarm that forgets it was armed when the power blinks is a bad alarm. Every transition persists the state to the ESP32 flash (NVS, behind an <code>AlarmStateStorage</code> interface). Timers are <em>not</em> persisted, so recovery has to decide what a restart means for each state:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Saved state</th><th>Restored state</th><th>Why</th></tr></thead><tbody><tr><td><code>IDLE</code></td><td><code>IDLE</code></td><td></td></tr><tr><td><code>EXIT_DELAY</code></td><td><code>IDLE</code></td><td>Arming was interrupted: cancel it and tell me.</td></tr><tr><td><code>CHECKING</code></td><td><code>CHECKING</code></td><td>Still armed.</td></tr><tr><td><code>ENTRY_DELAY</code></td><td><code>CHECKING</code></td><td>The interrupted entry delay is discarded. If the door is still open, a fresh one starts.</td></tr><tr><td><code>ALERTING</code></td><td><code>ALERTING</code></td><td>Resume the siren immediately, without waiting for a door reading.</td></tr></tbody></table>
+<p>The whole policy is a 30-line pure function that is trivially testable:</p>
+<pre class="astro-code material-theme-palenight" style="background-color:#292D3E;color:#babed8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="cpp"><code><span class="line"><span style="color:#89DDFF;font-style:italic">if</span><span style="color:#89DDFF"> (</span><span style="color:#BABED8">saved </span><span style="color:#89DDFF">==</span><span style="color:#FFCB6B"> AlarmState</span><span style="color:#89DDFF">::</span><span style="color:#BABED8">ExitDelay</span><span style="color:#89DDFF">)</span></span>
+<span class="line"><span style="color:#89DDFF">{</span></span>
+<span class="line"><span style="color:#BABED8">    result</span><span style="color:#89DDFF">.</span><span style="color:#BABED8">state</span><span style="color:#89DDFF"> =</span><span style="color:#FFCB6B"> AlarmState</span><span style="color:#89DDFF">::</span><span style="color:#BABED8">Idle</span><span style="color:#89DDFF">;</span></span>
+<span class="line"><span style="color:#BABED8">    result</span><span style="color:#89DDFF">.</span><span style="color:#BABED8">armingCancelled</span><span style="color:#89DDFF"> =</span><span style="color:#89DDFF"> true;</span></span>
+<span class="line"><span style="color:#89DDFF">}</span></span>
+<span class="line"><span style="color:#89DDFF;font-style:italic">else</span><span style="color:#89DDFF;font-style:italic"> if</span><span style="color:#89DDFF"> (</span><span style="color:#BABED8">saved </span><span style="color:#89DDFF">==</span><span style="color:#FFCB6B"> AlarmState</span><span style="color:#89DDFF">::</span><span style="color:#BABED8">EntryDelay</span><span style="color:#89DDFF">)</span></span>
+<span class="line"><span style="color:#89DDFF">{</span></span>
+<span class="line"><span style="color:#BABED8">    result</span><span style="color:#89DDFF">.</span><span style="color:#BABED8">state</span><span style="color:#89DDFF"> =</span><span style="color:#FFCB6B"> AlarmState</span><span style="color:#89DDFF">::</span><span style="color:#BABED8">Checking</span><span style="color:#89DDFF">;</span></span>
+<span class="line"><span style="color:#89DDFF">}</span></span></code></pre>
+<p>The interesting one is <code>ENTRY_DELAY</code> → <code>CHECKING</code>. Is it a hole? Cutting the power during the entry delay resets the 10 seconds, but the door is still open on boot, so a new entry delay starts right away. An intruder gains 10 seconds, nothing else.</p>
+<h2 id="hardware-abstraction-layer">Hardware abstraction layer</h2>
+<p>Here is the question that changed the project: <em>how do I test a state machine that talks to a buzzer, a LED strip and an RFID reader?</em></p>
+<p>Flashing the board for every change gets old very fast, especially when the scenario I want to test is “arm, wait 30 seconds, open the door, wait 10 seconds”. The answer is the classic one: the logic must not know the hardware exists.</p>
+<p>The project is split in two:</p>
+<ul>
+<li><code>lib/AlarmCore</code>: the state machine, the controllers and all the interfaces. <strong>Pure C++, there is not a single <code>#include &#x3C;Arduino.h></code> in it.</strong></li>
+<li><code>src/</code>: the ESP32-only code: the adapters that implement those interfaces with real hardware, plus the Telegram integration and the wiring in <code>main.cpp</code>.</li>
+</ul>
+<p><img alt="Hardware abstraction layers" title="Interfaces separate the logic from the hardware" loading="lazy" decoding="async" width="1600" height="1019" src="/_astro/architecture.CGk7_X1n_Z27tLSb.webp"></p>
+<p>Every device is reduced to the smallest interface the logic needs. For example, the door sensor:</p>
+<pre class="astro-code material-theme-palenight" style="background-color:#292D3E;color:#babed8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="cpp"><code><span class="line"><span style="color:#C792EA">enum</span><span style="color:#C792EA"> class</span><span style="color:#FFCB6B"> DoorState</span><span style="color:#89DDFF"> {</span><span style="color:#BABED8"> Unknown</span><span style="color:#89DDFF">,</span><span style="color:#BABED8"> Closed</span><span style="color:#89DDFF">,</span><span style="color:#BABED8"> Open</span><span style="color:#89DDFF"> };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C792EA">class</span><span style="color:#FFCB6B"> DoorSensor</span></span>
+<span class="line"><span style="color:#89DDFF">{</span></span>
+<span class="line"><span style="color:#C792EA">public</span><span style="color:#89DDFF">:</span></span>
+<span class="line"><span style="color:#C792EA">    virtual</span><span style="color:#82AAFF"> ~DoorSensor</span><span style="color:#89DDFF">()</span><span style="color:#89DDFF"> =</span><span style="color:#F78C6C"> default</span><span style="color:#89DDFF">;</span></span>
+<span class="line"><span style="color:#C792EA">    virtual</span><span style="color:#FFCB6B"> DoorState</span><span style="color:#82AAFF"> read</span><span style="color:#89DDFF">()</span><span style="color:#C792EA"> const</span><span style="color:#89DDFF"> =</span><span style="color:#F78C6C"> 0</span><span style="color:#89DDFF">;</span></span>
+<span class="line"><span style="color:#89DDFF">};</span></span></code></pre>
+<p>And the real implementation is the only place that knows about pins, pull-ups and polarity:</p>
+<pre class="astro-code material-theme-palenight" style="background-color:#292D3E;color:#babed8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="cpp"><code><span class="line"><span style="color:#FFCB6B">DoorState</span><span style="color:#82AAFF"> read</span><span style="color:#89DDFF">()</span><span style="color:#C792EA"> const</span><span style="color:#C792EA"> override</span></span>
+<span class="line"><span style="color:#89DDFF">{</span></span>
+<span class="line"><span style="color:#89DDFF;font-style:italic">    return</span><span style="color:#82AAFF"> digitalRead</span><span style="color:#89DDFF">(</span><span style="color:#BABED8">pin_</span><span style="color:#89DDFF">)</span><span style="color:#89DDFF"> ==</span><span style="color:#BABED8"> LOW</span></span>
+<span class="line"><span style="color:#89DDFF">               ?</span><span style="color:#FFCB6B"> DoorState</span><span style="color:#89DDFF">::</span><span style="color:#BABED8">Closed</span></span>
+<span class="line"><span style="color:#89DDFF">               :</span><span style="color:#FFCB6B"> DoorState</span><span style="color:#89DDFF">::</span><span style="color:#BABED8">Open</span><span style="color:#89DDFF">;</span></span>
+<span class="line"><span style="color:#89DDFF">}</span></span></code></pre>
+<p>The buzzer is one method (<code>setEnabled(bool)</code>), the LED strip is another (<code>setColor(LedColor)</code>), the camera is <code>takePicture</code> / <code>releasePicture</code>… Keeping them this dumb has a nice side effect: swapping the WS2812 strip for another thing, or the RFID module, only touches one small adapter.</p>
+<h3 id="dependency-injection-by-hand">Dependency injection by hand</h3>
+<p>No framework, no singletons. Everything is wired in the constructor, and <code>main.cpp</code> is the only place where concrete types are named:</p>
+<pre class="astro-code material-theme-palenight" style="background-color:#292D3E;color:#babed8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="cpp"><code><span class="line"><span style="color:#676E95;font-style:italic">// board hardware</span></span>
+<span class="line"><span style="color:#FFCB6B">NeoPixelLed</span><span style="color:#82AAFF"> led</span><span style="color:#89DDFF">(</span><span style="color:#FFCB6B">LED_PIN</span><span style="color:#89DDFF">,</span><span style="color:#FFCB6B"> LED_COUNT</span><span style="color:#89DDFF">);</span></span>
+<span class="line"><span style="color:#FFCB6B">MFRC522CardReader</span><span style="color:#82AAFF"> cardReader</span><span style="color:#89DDFF">(</span><span style="color:#FFCB6B">RFID_PINS</span><span style="color:#89DDFF">);</span></span>
+<span class="line"><span style="color:#FFCB6B">ReedSwitchDoorSensor</span><span style="color:#82AAFF"> doorSensor</span><span style="color:#89DDFF">(</span><span style="color:#FFCB6B">DOOR_SENSOR_PIN</span><span style="color:#89DDFF">);</span></span>
+<span class="line"><span style="color:#FFCB6B">GpioBuzzer</span><span style="color:#82AAFF"> buzzer</span><span style="color:#89DDFF">(</span><span style="color:#FFCB6B">BUZZER_PIN</span><span style="color:#89DDFF">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#676E95;font-style:italic">// actuators</span></span>
+<span class="line"><span style="color:#FFCB6B">LedController</span><span style="color:#82AAFF"> ledController</span><span style="color:#89DDFF">(</span><span style="color:#FFCB6B">led</span><span style="color:#89DDFF">,</span><span style="color:#BABED8"> {}</span><span style="color:#89DDFF">);</span></span>
+<span class="line"><span style="color:#FFCB6B">BuzzerController</span><span style="color:#82AAFF"> buzzerController</span><span style="color:#89DDFF">(</span><span style="color:#FFCB6B">buzzer</span><span style="color:#89DDFF">,</span><span style="color:#BABED8"> {}</span><span style="color:#89DDFF">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#676E95;font-style:italic">// state machine</span></span>
+<span class="line"><span style="color:#FFCB6B">Alarm</span><span style="color:#82AAFF"> galitasAlarm</span><span style="color:#89DDFF">(</span><span style="color:#FFCB6B">ledController</span><span style="color:#89DDFF">,</span><span style="color:#FFCB6B"> buzzerController</span><span style="color:#89DDFF">,</span><span style="color:#FFCB6B"> telegramNotifier</span><span style="color:#89DDFF">,</span></span>
+<span class="line"><span style="color:#FFCB6B">                   nvsStorage</span><span style="color:#89DDFF">,</span><span style="color:#FFCB6B"> photoSender</span><span style="color:#89DDFF">,</span><span style="color:#BABED8"> {}</span><span style="color:#89DDFF">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#676E95;font-style:italic">// input processors</span></span>
+<span class="line"><span style="color:#FFCB6B">CardHoldDetector</span><span style="color:#82AAFF"> cardHoldDetector</span><span style="color:#89DDFF">(</span><span style="color:#FFCB6B">galitasAlarm</span><span style="color:#89DDFF">,</span><span style="color:#FFCB6B"> cardReader</span><span style="color:#89DDFF">);</span></span>
+<span class="line"><span style="color:#FFCB6B">DoorDebouncer</span><span style="color:#82AAFF"> doorDebouncer</span><span style="color:#89DDFF">(</span><span style="color:#FFCB6B">galitasAlarm</span><span style="color:#89DDFF">,</span><span style="color:#FFCB6B"> doorSensor</span><span style="color:#89DDFF">);</span></span></code></pre>
+<h3 id="two-layers-between-the-state-machine-and-the-hardware">Two layers between the state machine and the hardware</h3>
+<p>The state machine does not tell the LED “be red”. It says <em>“I’m alerting”</em>. Between the two there are two thin layers:</p>
+<ul>
+<li><code>AlarmSignals</code> translates alarm events (<code>enter(state)</code>, <code>leave(state)</code>, <code>disarmed()</code>, <code>warning()</code>…) into calls to the LED and buzzer controllers. <code>Alarm</code> only ever talks to <code>AlarmSignals</code>.</li>
+<li><code>LedController</code> and <code>BuzzerController</code> own <em>how</em> things look and sound: beep patterns, the 250 ms red/blue alternation, the yellow flash. They only talk to the dumb <code>Led</code> / <code>Buzzer</code> interfaces.</li>
+</ul>
+<p>Several things can ask for the same LED at the same time (the door is open <em>and</em> I just disarmed <em>and</em> an exit countdown is running), so each controller has a priority list and picks the strongest active signal on every <code>update</code>:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Priority</th><th>LED</th><th>Buzzer</th></tr></thead><tbody><tr><td>1 (highest)</td><td>red/blue blinking (alerting)</td><td>continuous siren</td></tr><tr><td>2</td><td>green for 10 s (disarm confirmation)</td><td>confirmation beeps (armed, disarmed, warning)</td></tr><tr><td>3</td><td>yellow flash (exit countdown)</td><td>countdown beeps</td></tr><tr><td>4</td><td>white (door open)</td><td>silence</td></tr><tr><td>5</td><td>off</td><td></td></tr></tbody></table>
+<p>When a higher-priority signal ends, the controller naturally falls back to whatever is next. There is no “restore previous colour” code to get wrong. It also gives me the rule that closing the door never kills the green disarm confirmation, for free.</p>
+<h3 id="cooperative-scheduling-and-a-clock-that-is-a-parameter">Cooperative scheduling and a clock that is a parameter</h3>
+<p>The firmware has no RTOS tasks for the core logic. <code>loop()</code> is a plain sequence, and it is the <em>only</em> thing that moves the state machine forward:</p>
+<pre class="astro-code material-theme-palenight" style="background-color:#292D3E;color:#babed8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="cpp"><code><span class="line"><span style="color:#C792EA">void</span><span style="color:#82AAFF"> loop</span><span style="color:#89DDFF">()</span></span>
+<span class="line"><span style="color:#89DDFF">{</span></span>
+<span class="line"><span style="color:#C792EA">    const</span><span style="color:#C792EA"> unsigned</span><span style="color:#C792EA"> long</span><span style="color:#BABED8"> now </span><span style="color:#89DDFF">=</span><span style="color:#82AAFF"> millis</span><span style="color:#89DDFF">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BABED8">    doorDebouncer</span><span style="color:#89DDFF">.</span><span style="color:#82AAFF">update</span><span style="color:#89DDFF">(</span><span style="color:#BABED8">now</span><span style="color:#89DDFF">);</span></span>
+<span class="line"><span style="color:#BABED8">    cardHoldDetector</span><span style="color:#89DDFF">.</span><span style="color:#82AAFF">update</span><span style="color:#89DDFF">(</span><span style="color:#BABED8">now</span><span style="color:#89DDFF">);</span></span>
+<span class="line"><span style="color:#BABED8">    telegramCommandsReceiver</span><span style="color:#89DDFF">.</span><span style="color:#82AAFF">processTelegramCommands</span><span style="color:#89DDFF">(</span><span style="color:#BABED8">now</span><span style="color:#89DDFF">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BABED8">    galitasAlarm</span><span style="color:#89DDFF">.</span><span style="color:#82AAFF">update</span><span style="color:#89DDFF">(</span><span style="color:#BABED8">now</span><span style="color:#89DDFF">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BABED8">    ledController</span><span style="color:#89DDFF">.</span><span style="color:#82AAFF">update</span><span style="color:#89DDFF">(</span><span style="color:#BABED8">now</span><span style="color:#89DDFF">);</span></span>
+<span class="line"><span style="color:#BABED8">    buzzerController</span><span style="color:#89DDFF">.</span><span style="color:#82AAFF">update</span><span style="color:#89DDFF">(</span><span style="color:#BABED8">now</span><span style="color:#89DDFF">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#82AAFF">    delay</span><span style="color:#89DDFF">(</span><span style="color:#F78C6C">1</span><span style="color:#89DDFF">);</span></span>
+<span class="line"><span style="color:#89DDFF">}</span></span></code></pre>
+<p>Notice that <code>millis()</code> is read <strong>once</strong> and passed down as <code>now</code> to everyone. No class in the core calls a clock itself. That has three nice consequences:</p>
+<ol>
+<li>Every component sees a consistent instant within one iteration.</li>
+<li>Tests control time. “Wait 30 seconds” is <code>alarm.update(30100)</code>, not a 30 second sleep.</li>
+<li>Rollover is handled in one place. <code>millis()</code> wraps every ~49 days, and an alarm should survive that. All durations use unsigned subtraction:</li>
+</ol>
+<pre class="astro-code material-theme-palenight" style="background-color:#292D3E;color:#babed8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="cpp"><code><span class="line"><span style="color:#C792EA">inline</span><span style="color:#C792EA"> bool</span><span style="color:#82AAFF"> hasElapsed</span><span style="color:#89DDFF">(</span><span style="color:#C792EA">uint32_t</span><span style="color:#BABED8;font-style:italic"> now</span><span style="color:#89DDFF">,</span><span style="color:#C792EA"> uint32_t</span><span style="color:#BABED8;font-style:italic"> startedAt</span><span style="color:#89DDFF">,</span><span style="color:#C792EA"> uint32_t</span><span style="color:#BABED8;font-style:italic"> duration</span><span style="color:#89DDFF">)</span></span>
+<span class="line"><span style="color:#89DDFF">{</span></span>
+<span class="line"><span style="color:#89DDFF;font-style:italic">    return</span><span style="color:#89DDFF"> static_cast&#x3C;</span><span style="color:#C792EA">uint32_t</span><span style="color:#89DDFF">>(</span><span style="color:#BABED8">now </span><span style="color:#89DDFF">-</span><span style="color:#BABED8"> startedAt</span><span style="color:#89DDFF">)</span><span style="color:#89DDFF"> >=</span><span style="color:#BABED8"> duration</span><span style="color:#89DDFF">;</span></span>
+<span class="line"><span style="color:#89DDFF">}</span></span></code></pre>
+<h3 id="input-processors-turn-noise-into-events">Input processors: turn noise into events</h3>
+<p>Two small classes sit between hardware and the state machine and are where the “physical world” gets cleaned up.</p>
+<h4 id="debouncing-the-door">Debouncing the door</h4>
+<p>A reed switch is a mechanical contact. When the magnet moves away (or slams back because the door was closed hard), the contact doesn’t change cleanly from closed to open: it chatters for a few milliseconds, and a vibrating door frame can add more noise on top. The microcontroller polls the pin thousands of times per second, so it would happily see <code>open, closed, open, open, closed...</code> for a single physical event.</p>
+<p>If those readings went straight into the state machine, one door slam could produce a burst of “door opened” / “door closed” events, and with them a burst of Telegram messages and spurious transitions. So <code>DoorDebouncer</code> sits between the sensor and the <code>Alarm</code>. It only reports a change once the new reading has been stable for 50 ms:</p>
+<pre class="astro-code material-theme-palenight" style="background-color:#292D3E;color:#babed8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="cpp"><code><span class="line"><span style="color:#C792EA">void</span><span style="color:#82AAFF"> update</span><span style="color:#89DDFF">(</span><span style="color:#C792EA">uint32_t</span><span style="color:#BABED8;font-style:italic"> now</span><span style="color:#89DDFF">)</span></span>
+<span class="line"><span style="color:#89DDFF">{</span></span>
+<span class="line"><span style="color:#C792EA">    const</span><span style="color:#FFCB6B"> DoorState</span><span style="color:#BABED8"> reading </span><span style="color:#89DDFF">=</span><span style="color:#BABED8"> sensor_</span><span style="color:#89DDFF">.</span><span style="color:#82AAFF">read</span><span style="color:#89DDFF">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#676E95;font-style:italic">    // Every time the reading changes, we reset the candidate and the timer.</span></span>
+<span class="line"><span style="color:#89DDFF;font-style:italic">    if</span><span style="color:#89DDFF"> (</span><span style="color:#BABED8">reading </span><span style="color:#89DDFF">!=</span><span style="color:#BABED8"> candidate_</span><span style="color:#89DDFF">)</span></span>
+<span class="line"><span style="color:#89DDFF">    {</span></span>
+<span class="line"><span style="color:#BABED8">        candidate_</span><span style="color:#89DDFF"> =</span><span style="color:#BABED8"> reading</span><span style="color:#89DDFF">;</span></span>
+<span class="line"><span style="color:#BABED8">        candidateSince_</span><span style="color:#89DDFF"> =</span><span style="color:#BABED8"> now</span><span style="color:#89DDFF">;</span></span>
+<span class="line"><span style="color:#89DDFF">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#676E95;font-style:italic">    // only accept a different state if it has been stable for the debounce period</span></span>
+<span class="line"><span style="color:#89DDFF;font-style:italic">    if</span><span style="color:#89DDFF"> (</span><span style="color:#BABED8">candidate_ </span><span style="color:#89DDFF">!=</span><span style="color:#BABED8"> stable_ </span><span style="color:#89DDFF">&#x26;&#x26;</span></span>
+<span class="line"><span style="color:#89DDFF">        static_cast&#x3C;</span><span style="color:#C792EA">uint32_t</span><span style="color:#89DDFF">>(</span><span style="color:#BABED8">now </span><span style="color:#89DDFF">-</span><span style="color:#BABED8"> candidateSince_</span><span style="color:#89DDFF">)</span><span style="color:#89DDFF"> >=</span><span style="color:#BABED8"> debounceMs_</span><span style="color:#89DDFF">)</span></span>
+<span class="line"><span style="color:#89DDFF">    {</span></span>
+<span class="line"><span style="color:#BABED8">        stable_</span><span style="color:#89DDFF"> =</span><span style="color:#BABED8"> candidate_</span><span style="color:#89DDFF">;</span></span>
+<span class="line"><span style="color:#BABED8">        observer_</span><span style="color:#89DDFF">.</span><span style="color:#82AAFF">onDoorStateChanged</span><span style="color:#89DDFF">(</span><span style="color:#82AAFF">state</span><span style="color:#89DDFF">(),</span><span style="color:#BABED8"> now</span><span style="color:#89DDFF">);</span></span>
+<span class="line"><span style="color:#89DDFF">    }</span></span>
+<span class="line"><span style="color:#89DDFF">}</span></span></code></pre>
+<p>There are no <code>delay()</code> calls and no interrupts: the debouncer just remembers a <em>candidate</em> reading and when it first appeared, and is polled from <code>loop()</code> like everything else. The state machine then only ever sees confirmed changes, and <code>Alarm</code> ignores a notification that repeats the state it already has. Because it is a plain class that reads a <code>DoorSensor</code> and takes the time as a parameter, it is unit tested with a fake sensor that flips values at chosen instants.</p>
+<h4 id="tap-or-hold-the-card">Tap or hold the card</h4>
+<p><strong><code>CardHoldDetector</code></strong> turns “the RFID reader sees a card” into a gesture:</p>
+<ul>
+<li>Tap the card (release before 5 seconds): <strong>disarm</strong>.</li>
+<li>Hold the card for 5 seconds: <strong>arm</strong>, emitted once, while the card is still on the reader.</li>
+</ul>
+<p>Why hold to arm? Because disarming should be effortless when you walk in and the siren is about to start, while arming should be deliberate. It also means a card lying close to the reader can’t re-arm the alarm by accident. The detector tolerates small gaps in reads (250 ms), because the RFID module misses reads from time to time, and ignores cards that are not in the allow list.</p>
+<h2 id="telegram-must-never-block-the-siren">Telegram must never block the siren</h2>
+<p>Telegram is the part that is allowed to be slow, flaky and sometimes absent. The rule is simple: <strong>nothing in the alarm may wait for the network</strong>.</p>
+<p><img alt="Runtime flow" title="The main loop and the background tasks" loading="lazy" decoding="async" width="1600" height="873" src="/_astro/runtime.CVc6Fds0_2dkqCD.webp"></p>
+<p>An HTTPS request to Telegram can take seconds, and a photo upload even more. Doing that from <code>loop()</code> would freeze the siren and the door debouncing. So the network work lives in FreeRTOS tasks and talks to the main loop through queues:</p>
+<ul>
+<li><strong>Outgoing messages.</strong> <code>AlarmNotifier::notify()</code> copies the text into a queue (capacity 8) and returns immediately. A worker task delivers it, retrying with backoff. The interface documents the contract: <em>“Must not wait for the network.”</em></li>
+<li><strong>Incoming commands.</strong> A second task long-polls Telegram’s <code>getUpdates</code> and pushes each command it recognises into another queue. It never touches the alarm. The consuming side is <code>TelegramCommandReceiver</code>, which runs inside <code>loop()</code>: on every iteration it drains that queue without blocking and translates each command into a call on the alarm (<code>armNow()</code>, <code>disarm()</code>, and so on). The state machine is therefore only ever driven from the main loop, so the core needs no locks.</li>
+<li><strong>Photos.</strong> Taking a JPEG is slow, so <code>BackgroundPhotoSender::send()</code> only does <code>xTaskNotifyGive()</code> on a photo task and returns. If several requests arrive while a capture is running, they are coalesced into one.</li>
+</ul>
+<p>Two more details I like:</p>
+<p><strong>Stale notifications are dropped.</strong> Telegram being slow can leave messages in the queue. Delivering “Door opened” after I’ve already disarmed would be confusing. So every state change calls <code>cancelPendingNotifications()</code>, which drains the queue and aborts any retrying delivery (a generation counter makes the in-flight retry give up). Messages describe the state they were sent from, or they don’t get sent.</p>
+<p><strong>A watchdog for connectivity.</strong> If Telegram doesn’t answer at all for 2 minutes, the firmware re-associates the Wi-Fi. After 10 minutes, it reboots. That is safe precisely <em>because</em> the state is persisted and recovered as described above: a reboot in <code>ALERTING</code> resumes the siren immediately.</p>
+<h2 id="what-an-intrusion-looks-like">What an intrusion looks like</h2>
+<p>Putting it all together, this is the timeline of the happy path: I arm, the house is quiet for a while, someone opens the door and nobody disarms.</p>
+<p><img alt="Timeline of an intrusion" title="LED, buzzer and Telegram per state" loading="lazy" decoding="async" width="1600" height="611" src="/_astro/timeline.zMR3gEvm_nfPHf.webp"></p>
+<p>While alerting, reminders are sent every 5 seconds and a photo is requested every 5 seconds too, so I get a stream of pictures of whoever is in the hallway. The local siren does not depend on any of that arriving.</p>
+<h2 id="testing-without-a-board">Testing without a board</h2>
+<p>Because the core is pure C++ and takes the clock as a parameter, the whole state machine runs natively on my laptop. PlatformIO lets you define several build environments in <code>platformio.ini</code>, each with its own platform, source filter and flags, so I defined three:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Environment</th><th>What it does</th></tr></thead><tbody><tr><td><code>esp32s3</code></td><td>The real firmware for the board.</td></tr><tr><td><code>native</code></td><td>Builds <code>lib/AlarmCore</code> for the host and runs the Unity tests.</td></tr><tr><td><code>sim</code></td><td>A small terminal program that wires the real <code>Alarm</code> to fake hardware, so I can press keys to open the door, tap a card and watch the LED and buzzer logs.</td></tr></tbody></table>
+<p>For every interface there is a fake in <code>sim/mocks/</code> that records what happened. The buzzer fake, for instance, is just:</p>
+<pre class="astro-code material-theme-palenight" style="background-color:#292D3E;color:#babed8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="cpp"><code><span class="line"><span style="color:#C792EA">class</span><span style="color:#FFCB6B"> RecordingBuzzer</span><span style="color:#89DDFF"> :</span><span style="color:#C792EA"> public</span><span style="color:#FFCB6B"> Buzzer</span></span>
+<span class="line"><span style="color:#89DDFF">{</span></span>
+<span class="line"><span style="color:#C792EA">public</span><span style="color:#89DDFF">:</span></span>
+<span class="line"><span style="color:#C792EA">    void</span><span style="color:#82AAFF"> setup</span><span style="color:#89DDFF">()</span><span style="color:#C792EA"> override</span><span style="color:#89DDFF"> {}</span></span>
+<span class="line"><span style="color:#C792EA">    void</span><span style="color:#82AAFF"> setEnabled</span><span style="color:#89DDFF">(</span><span style="color:#C792EA">bool</span><span style="color:#BABED8;font-style:italic"> enabled</span><span style="color:#89DDFF">)</span><span style="color:#C792EA"> override</span></span>
+<span class="line"><span style="color:#89DDFF">    {</span></span>
+<span class="line"><span style="color:#BABED8">        enabled_</span><span style="color:#89DDFF"> =</span><span style="color:#BABED8"> enabled</span><span style="color:#89DDFF">;</span></span>
+<span class="line"><span style="color:#89DDFF">        ++</span><span style="color:#BABED8">writeCount_</span><span style="color:#89DDFF">;</span></span>
+<span class="line"><span style="color:#89DDFF">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C792EA">    bool</span><span style="color:#BABED8"> enabled_</span><span style="color:#89DDFF"> =</span><span style="color:#89DDFF"> false;</span></span>
+<span class="line"><span style="color:#C792EA">    unsigned</span><span style="color:#BABED8"> writeCount_</span><span style="color:#89DDFF"> =</span><span style="color:#F78C6C"> 0</span><span style="color:#89DDFF">;</span></span>
+<span class="line"><span style="color:#89DDFF">};</span></span></code></pre>
+<p>A test then reads like the specification. This one checks that the exit delay arms <em>exactly</em> at the deadline when the door is closed, and not one millisecond before:</p>
+<pre class="astro-code material-theme-palenight" style="background-color:#292D3E;color:#babed8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="cpp"><code><span class="line"><span style="color:#C792EA">void</span><span style="color:#82AAFF"> test_exit_delay_arms_at_exact_deadline_when_door_is_closed</span><span style="color:#89DDFF">()</span></span>
+<span class="line"><span style="color:#89DDFF">{</span></span>
+<span class="line"><span style="color:#FFCB6B">    Fixture</span><span style="color:#BABED8"> f</span><span style="color:#89DDFF">;</span></span>
+<span class="line"><span style="color:#BABED8">    f</span><span style="color:#89DDFF">.</span><span style="color:#82AAFF">begin</span><span style="color:#89DDFF">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BABED8">    f</span><span style="color:#89DDFF">.</span><span style="color:#BABED8">alarm</span><span style="color:#89DDFF">.</span><span style="color:#82AAFF">onDoorStateChanged</span><span style="color:#89DDFF">(</span><span style="color:#FFCB6B">DoorState</span><span style="color:#89DDFF">::</span><span style="color:#BABED8">Closed</span><span style="color:#89DDFF">,</span><span style="color:#F78C6C"> 0</span><span style="color:#89DDFF">);</span></span>
+<span class="line"><span style="color:#BABED8">    f</span><span style="color:#89DDFF">.</span><span style="color:#BABED8">alarm</span><span style="color:#89DDFF">.</span><span style="color:#82AAFF">arm</span><span style="color:#89DDFF">(</span><span style="color:#F78C6C">100</span><span style="color:#89DDFF">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BABED8">    f</span><span style="color:#89DDFF">.</span><span style="color:#BABED8">alarm</span><span style="color:#89DDFF">.</span><span style="color:#82AAFF">update</span><span style="color:#89DDFF">(</span><span style="color:#F78C6C">30099</span><span style="color:#89DDFF">);</span></span>
+<span class="line"><span style="color:#82AAFF">    assertState</span><span style="color:#89DDFF">(</span><span style="color:#FFCB6B">State</span><span style="color:#89DDFF">::</span><span style="color:#BABED8">ExitDelay</span><span style="color:#89DDFF">,</span><span style="color:#BABED8"> f</span><span style="color:#89DDFF">.</span><span style="color:#BABED8">alarm</span><span style="color:#89DDFF">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BABED8">    f</span><span style="color:#89DDFF">.</span><span style="color:#BABED8">alarm</span><span style="color:#89DDFF">.</span><span style="color:#82AAFF">update</span><span style="color:#89DDFF">(</span><span style="color:#F78C6C">30100</span><span style="color:#89DDFF">);</span></span>
+<span class="line"><span style="color:#82AAFF">    assertState</span><span style="color:#89DDFF">(</span><span style="color:#FFCB6B">State</span><span style="color:#89DDFF">::</span><span style="color:#BABED8">Checking</span><span style="color:#89DDFF">,</span><span style="color:#BABED8"> f</span><span style="color:#89DDFF">.</span><span style="color:#BABED8">alarm</span><span style="color:#89DDFF">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#82AAFF">    TEST_ASSERT_EQUAL_UINT32</span><span style="color:#89DDFF">(</span><span style="color:#F78C6C">1</span><span style="color:#89DDFF">,</span><span style="color:#BABED8"> f</span><span style="color:#89DDFF">.</span><span style="color:#BABED8">notifier</span><span style="color:#89DDFF">.</span><span style="color:#82AAFF">count</span><span style="color:#89DDFF">(</span><span style="color:#89DDFF">"</span><span style="color:#C3E88D">Alarm armed</span><span style="color:#89DDFF">"</span><span style="color:#89DDFF">));</span></span>
+<span class="line"><span style="color:#82AAFF">    TEST_ASSERT_TRUE</span><span style="color:#89DDFF">(</span><span style="color:#BABED8">f</span><span style="color:#89DDFF">.</span><span style="color:#BABED8">stateStorage</span><span style="color:#89DDFF">.</span><span style="color:#BABED8">savedState </span><span style="color:#89DDFF">==</span><span style="color:#FFCB6B"> State</span><span style="color:#89DDFF">::</span><span style="color:#BABED8">Checking</span><span style="color:#89DDFF">);</span></span>
+<span class="line"><span style="color:#89DDFF">}</span></span></code></pre>
+<p>There are over 120 of them: exit and entry delays, recovery after reboot for every state, <code>millis()</code> rollover, the card gestures, LED and buzzer priorities… Native line coverage of the core is about 98%. CI runs the tests, the coverage report and static analysis (<code>clang-tidy</code>) on every push, and also compiles both the simulator and the real firmware, so a change that breaks the board build is caught even if the tests pass.</p>
+<p>The time I save is real. The scenarios that matter for an alarm (what happens at second 29.9? what if the power dies during the entry delay? what if I disarm at the same millisecond the alert starts?) are exactly the ones I would never test by hand.</p>
+<h2 id="hardware-briefly">Hardware, briefly</h2>
+<p>Since the post is about software I only sketch the hardware. The board is an ESP32-S3 with camera. It’s wired like this:</p>
+<ul>
+<li><strong>Door:</strong> a reed switch between a GPIO and GND, using <code>INPUT_PULLUP</code>. A closed contact reads <code>LOW</code>. The downside, which I documented as an explicit limitation, is that an open door and a cut wire look the same. Both are treated as an open door, which is the safe failure mode for an alarm.</li>
+<li><strong>LED strip:</strong> WS2812 on one data pin through a 330 Ω resistor, powered by an external 5 V supply with a common ground.</li>
+<li><strong>Buzzer:</strong> driven through a TIP120 transistor (the GPIO can’t power it directly) with a 1 kΩ resistor on the base.</li>
+<li><strong>RFID:</strong> an MFRC522 over SPI.</li>
+</ul>
+<h2 id="the-case-3d-design-with-chatgpt-and-openscad">The case: 3D design with ChatGPT and OpenSCAD</h2>
+<p>A bare ESP32 board with a camera taped to a door frame is not something I want in my hallway, so the project needed a proper enclosure. I’m not a 3D designer, so I let ChatGPT do the modelling: instead of drawing in a CAD tool, I asked it to write <a href="https://openscad.org/">OpenSCAD</a> code. OpenSCAD describes solids with code (cubes, cylinders, unions, differences), which is a format a language model is quite good at, and a parametric one: every dimension is a variable I can tweak and re-render. Then I exported the STL files and printed them on my 3D printer.</p>
+<h3 id="writing-the-brief">Writing the brief</h3>
+<p>The result is only as good as the specification. I wrote a long brief (it’s in the repo as <code>case/case.md</code>) that read more like a requirements document than a prompt:</p>
+<ul>
+<li><strong>Looks:</strong> it should look like a commercial wall-mounted detector, not a generic project box: vertical, rounded, around 190 × 74 × 44 mm, no visible screws or vents on the front and a clean surface with only the camera opening.</li>
+<li><strong>Maintenance:</strong> the rear shell stays on the wall and the electronics live in it. The front shell comes off to open the alarm, so the only thing connecting both halves is the camera ribbon.</li>
+<li><strong>Closing system:</strong> two hooks at the top, and two M3 screws at the bottom that thread into heat-set inserts. The hooks must physically overlap their catches: no decorative hooks.</li>
+<li><strong>Printability:</strong> it has to print on a regular FDM printer without a mess of supports, with realistic tolerances for the inserts.</li>
+<li><strong>Decisions are final:</strong> I wrote explicitly that already-taken decisions must not be reverted. Without that, a chat assistant tends to “improve” something you had already settled when you ask for an unrelated change.</li>
+</ul>
+<h3 id="an-ai-that-has-to-prove-its-work">An AI that has to prove its work</h3>
+<p>A language model writing geometry has no eyes. It can produce code that compiles, renders and is still wrong: a screw that goes through nothing, a hook that doesn’t reach its catch, a wall thinner than the nozzle. So the brief ended with “the goal is not to produce an STL that looks right, but one that can be assembled, disassembled, printed and verified”, and the repo contains the verification scripts that came out of that:</p>
+<ul>
+<li><code>export_parts.py</code> renders each part of the <code>.scad</code> file to STL with OpenSCAD.</li>
+<li><code>verify_meshes.py</code> uses <code>trimesh</code> to check that every mesh is watertight, manifold, has no degenerate faces or stray components and fits in the printer bed.</li>
+<li><code>verify_structure.py</code> checks the assembly: the USB opening, the screw paths, whether the hooks really overlap their catches, and so on.</li>
+</ul>
+<p>It’s the same philosophy as the rest of the project: don’t trust it because it looks right, make a machine check it.</p>
+<h3 id="iterating">Iterating</h3>
+<p>It was not one prompt. The history of the <code>case/</code> folder in the repo is a list of rounds: a first version, fixes to the board bed sizing, and a redesign of the mounting. My original idea was an adjustable camera cradle with a pivot so I could aim it between 10° and 35° downward. In the end I simplified it: the camera stays on its board and the whole case is tilted <strong>20° downward</strong> by its wall bracket, which hangs from a screw through a keyhole slot. The final <code>.scad</code> file is sized around my own door: the distance from the screw to the top of the door frame (measured) and the clearance the door needs when it opens. Some values, like how far the frame protrudes from the wall, are still marked as assumptions in the code.</p>
+<p>Here is the result, printed. The front shell on the left has the camera window and, in the two bosses at the bottom, the brass heat-set inserts that the M3 screws thread into. The rear shell on the right holds the ESP32-S3-CAM board in its rails, with the slots for the Dupont connectors along both sides and the catches for the hooks at the top:</p>
+<p><img alt="The printed case, open" title="Front shell on the left and rear shell on the right with the ESP32-S3-CAM mounted" loading="lazy" decoding="async" width="800" height="1422" src="/_astro/case-open.DcOGJ9AL_1MUbgb.webp"></p>
+<p>And closed, with the camera looking through the window. The diagonal marks on the surface are just the print’s infill pattern showing through the top layers; you only notice them if you look for them:</p>
+<p><img alt="The printed case, closed" title="The closed case with the camera visible through the window" loading="lazy" decoding="async" width="800" height="1422" src="/_astro/case-closed.RLckhUl1_1UgJYs.webp"></p>
+<h3 id="what-i-learned-from-designing-with-an-ai">What I learned from designing with an AI</h3>
+<ul>
+<li><strong>Parameters beat prompts.</strong> Having <code>case_w</code>, <code>wall</code>, <code>wall_tilt</code>, <code>camera_window_w</code>… as variables at the top of the file means changing the design is a one-line edit and a re-render, not a new conversation with the model.</li>
+<li><strong>Make it flag its assumptions.</strong> The code is full of comments like “ASSUMED protrusion from wall” or “estimated, check against the real board before printing”. Those comments are a to-do list of things to measure.</li>
+<li><strong>Verify with tools, not with your eyes.</strong> Render, run the scripts and only then waste plastic on a print.</li>
+<li><strong>Print the risky part first.</strong> The tolerances of heat-set inserts and hooks are what the digital model can’t tell you; a small test print can.</li>
+</ul>
+<h2 id="lessons-learned">Lessons learned</h2>
+<ul>
+<li><strong>Write the state machine down.</strong> A table of states, events and transitions forces you to answer the awkward questions (arm with the door open? reboot mid-alert?) on paper instead of in production.</li>
+<li><strong>A hardware abstraction layer is mostly about testing.</strong> I expected to swap a component someday, but what I actually got is the ability to run the alarm on a laptop with a fake clock.</li>
+<li><strong>Inject time.</strong> Passing <code>now</code> around costs nothing and makes timers, rollover and recovery testable.</li>
+<li><strong>Decide what is allowed to block what.</strong> Everything that can be slow (network, camera) lives behind a queue or a task notification, and everything safety-critical stays in a loop that never waits.</li>
+<li><strong>Make failure modes explicit.</strong> Unknown door, cut wire, interrupted arming, reboot while alerting. The unhappy paths are what an alarm is for.</li>
+</ul>
+<p>The things on my list are first-startup policy (currently it starts disarmed when there is no saved state) and cable supervision for the door sensor. The full source, the state machine document and the wiring diagrams are in the <a href="https://github.com/adriangalera/galitas32">repository</a>.</p></div></article></div></div></article><footer class="flex justify-center items-center w-full px-16 h-28 border-t-2">2026 Adrian Galera</footer></main></body></html><script type="module">var e=()=>{function e(e,t){e.forEach(e=>{let t=document.querySelector(`aside a[href="#${e.target.id}"]`);e.isIntersecting?(t?.classList.remove(`bg-slate-200`,`dark:bg-slate-800`),t?.classList.add(`bg-indigo-600`,`dark:bg-indigo-700`,`text-white`,`font-bold`,`transition-colors`,`duration-200`)):(t?.classList.add(`bg-slate-200`,`dark:bg-slate-800`),t?.classList.remove(`bg-indigo-600`,`dark:bg-indigo-700`,`text-white`,`font-bold`,`transition-colors`,`duration-200`))})}let t=document.querySelectorAll(`div.prose h1, div.prose h2, div.prose h3, div.prose h4, div.prose h5, div.prose h6`),n=new IntersectionObserver(e,{root:null,rootMargin:` 15% 0px 0% 0px `,threshold:1});t.forEach(e=>{n.observe(e)})};e(),document.addEventListener(`astro:after-swap`,e);</script>
